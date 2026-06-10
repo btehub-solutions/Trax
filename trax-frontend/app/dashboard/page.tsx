@@ -25,7 +25,7 @@ import {
   FileText,
   User
 } from 'lucide-react';
-import { api, fetchApi } from '@/lib/api';
+import { api, fetchApi, BASE_URL } from '@/lib/api';
 
 type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile';
 
@@ -96,6 +96,8 @@ export default function DashboardPage() {
   const [profileError, setProfileError] = useState<string | null>(null);
   const [profileSuccess, setProfileSuccess] = useState<string | null>(null);
   const [updatingProfile, setUpdatingProfile] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [avatarUploadError, setAvatarUploadError] = useState<string | null>(null);
 
   // Validate Authentication
   useEffect(() => {
@@ -262,7 +264,7 @@ export default function DashboardPage() {
     fData.append('file', file);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch('http://localhost:4000/api/v1/uploads', {
+      const res = await fetch(`${BASE_URL}/uploads`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -281,6 +283,41 @@ export default function DashboardPage() {
       setUploadError(err.message || 'Failed to upload image');
     } finally {
       setUploading(false);
+    }
+  };
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setAvatarUploadError('Image must be under 5MB');
+      return;
+    }
+    setAvatarUploading(true);
+    setAvatarUploadError(null);
+    const fData = new FormData();
+    fData.append('file', file);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${BASE_URL}/uploads`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: fData
+      });
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message || 'Upload failed');
+      }
+      const data = await res.json();
+      if (data && data.url) {
+        setProfileData(prev => ({ ...prev, avatar: data.url }));
+      }
+    } catch (err: any) {
+      setAvatarUploadError(err.message || 'Failed to upload avatar');
+    } finally {
+      setAvatarUploading(false);
     }
   };
 
@@ -1234,10 +1271,10 @@ export default function DashboardPage() {
                   <form onSubmit={handleUpdateProfile} className="max-w-xl space-y-5">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                       {/* Left column: Avatar preview */}
-                      <div className="space-y-3 md:col-span-1">
-                        <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Avatar</label>
+                      <div className="space-y-3 md:col-span-1 flex flex-col items-center">
+                        <label className="block text-xs font-semibold uppercase tracking-wider w-full text-left" style={labelStyle}>Avatar</label>
                         <div
-                          className="relative group w-28 h-28 mx-auto rounded-full overflow-hidden border flex items-center justify-center"
+                          className="relative group w-28 h-28 rounded-full overflow-hidden border flex items-center justify-center"
                           style={{ borderColor: 'var(--dash-card-border)', backgroundColor: 'var(--dash-input)' }}
                         >
                           {profileData.avatar ? (
@@ -1248,7 +1285,24 @@ export default function DashboardPage() {
                             </span>
                           )}
                         </div>
-                        <p className="text-[10px] text-center" style={{ color: 'var(--dash-fg-subtle)' }}>Provide an image URL below</p>
+                        
+                        <div className="flex flex-col items-center gap-2">
+                          <label className="cursor-pointer bg-orange-600 hover:bg-orange-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                            <span>Choose Image</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleAvatarUpload}
+                              className="hidden"
+                            />
+                          </label>
+                          <span className="text-[10px]" style={{ color: 'var(--dash-fg-muted)' }}>
+                            {avatarUploading ? 'Uploading...' : 'Upload a local JPEG/PNG/WEBP'}
+                          </span>
+                          {avatarUploadError && (
+                            <p className="text-[10px] text-red-500 font-medium">{avatarUploadError}</p>
+                          )}
+                        </div>
                       </div>
 
                       {/* Right column: Form fields */}
@@ -1266,7 +1320,7 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Avatar Image URL</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Or Avatar Image URL</label>
                           <input
                             type="text"
                             value={profileData.avatar}
