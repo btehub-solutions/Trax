@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsArray,
   IsBoolean,
+  IsDateString,
   IsEnum,
   IsOptional,
   IsString,
@@ -56,6 +57,11 @@ export class CreateArticleDto {
   @IsOptional()
   @IsString()
   readTime?: string;
+
+  @ApiPropertyOptional({ example: '2026-06-11T00:00:00.000Z' })
+  @IsOptional()
+  @IsDateString()
+  publishedAt?: string;
 
   @ApiProperty({ example: 'clxyz123categoryid' })
   @IsString()
@@ -119,6 +125,11 @@ export class UpdateArticleDto {
   @IsOptional()
   @IsString()
   readTime?: string;
+
+  @ApiPropertyOptional({ example: '2026-06-11T00:00:00.000Z' })
+  @IsOptional()
+  @IsDateString()
+  publishedAt?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

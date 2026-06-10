@@ -67,6 +67,7 @@ export default function DashboardPage() {
     trending: false,
     status: 'DRAFT',
     readTime: '5 min read',
+    publishedAt: '',
   });
   const [editorError, setEditorError] = useState<string | null>(null);
   const [editorSuccess, setEditorSuccess] = useState<string | null>(null);
@@ -194,12 +195,17 @@ export default function DashboardPage() {
       return;
     }
 
+    const payload = {
+      ...formData,
+      publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : undefined,
+    };
+
     try {
       if (editingArticleId) {
-        await api.patch(`/articles/${editingArticleId}`, formData);
+        await api.patch(`/articles/${editingArticleId}`, payload);
         setEditorSuccess('Article updated successfully!');
       } else {
-        await api.post('/articles', formData);
+        await api.post('/articles', payload);
         setEditorSuccess('Article created successfully!');
       }
       fetchDashboardData();
@@ -228,6 +234,7 @@ export default function DashboardPage() {
       trending: article.trending,
       status: article.status,
       readTime: article.readTime || '5 min read',
+      publishedAt: article.publishedAt ? new Date(article.publishedAt).toISOString().split('T')[0] : '',
     });
     setEditorError(null);
     setEditorSuccess(null);
@@ -373,6 +380,7 @@ export default function DashboardPage() {
       trending: false,
       status: 'DRAFT',
       readTime: '5 min read',
+      publishedAt: '',
     });
     setEditorError(null);
     setEditorSuccess(null);
@@ -963,6 +971,17 @@ export default function DashboardPage() {
                             value={formData.readTime}
                             onChange={(e) => setFormData(prev => ({ ...prev, readTime: e.target.value }))}
                             placeholder="5 min read"
+                            className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-all border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Publication Date</label>
+                          <input
+                            type="date"
+                            value={formData.publishedAt}
+                            onChange={(e) => setFormData(prev => ({ ...prev, publishedAt: e.target.value }))}
                             className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-all border"
                             style={inputStyle}
                           />

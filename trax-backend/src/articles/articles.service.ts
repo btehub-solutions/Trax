@@ -19,9 +19,16 @@ export class ArticlesService {
 
   async create(dto: CreateArticleDto, authorId: string) {
     const { tagIds, ...data } = dto;
+    const publishedAt = data.publishedAt
+      ? new Date(data.publishedAt)
+      : data.status === ArticleStatus.PUBLISHED
+      ? new Date()
+      : undefined;
+
     return this.prisma.article.create({
       data: {
         ...data,
+        publishedAt,
         authorId,
         tags: tagIds?.length
           ? { create: tagIds.map((tagId) => ({ tagId })) }
@@ -84,10 +91,21 @@ export class ArticlesService {
     await this.findById(id);
     const { tagIds, ...data } = dto;
 
+    let publishedAt: Date | null | undefined = undefined;
+    if (data.publishedAt !== undefined) {
+      publishedAt = data.publishedAt ? new Date(data.publishedAt) : null;
+    } else if (data.status === ArticleStatus.PUBLISHED) {
+      const existing = await this.prisma.article.findUnique({ where: { id } });
+      if (existing && !existing.publishedAt) {
+        publishedAt = new Date();
+      }
+    }
+
     return this.prisma.article.update({
       where: { id },
       data: {
         ...data,
+        ...(publishedAt !== undefined && { publishedAt }),
         ...(tagIds !== undefined && {
           tags: {
             deleteMany: {},
