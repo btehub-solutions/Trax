@@ -68,6 +68,23 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     fetchAd()
   }, [size])
 
+  if (loading) {
+    return (
+      <div
+        className={`animate-pulse ${className}`}
+        style={{
+          width: preset.width,
+          minHeight: preset.height,
+          maxWidth: '100%',
+          marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
+          marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
+          backgroundColor: 'rgba(255,255,255,0.03)',
+          borderRadius: '12px',
+        }}
+      />
+    )
+  }
+
   if (adHtml) {
     return (
       <div
@@ -85,6 +102,135 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     )
   }
 
+  // Fallback visual advertisement banners
+  let fallbackContent;
+  if (size === 'leaderboard') {
+    fallbackContent = (
+      <div
+        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-white/5 hover:border-[#C84B31]/30"
+        style={{
+          minHeight: preset.height,
+          background: 'linear-gradient(90deg, #111827 0%, #1c1917 50%, #292524 100%)',
+          padding: '12px 24px',
+        }}
+      >
+        <div className="flex flex-col text-center sm:text-left">
+          <span
+            style={{
+              fontSize: '11px',
+              fontWeight: 800,
+              letterSpacing: '0.05em',
+              color: '#C84B31',
+              textTransform: 'uppercase',
+              marginBottom: '2px',
+            }}
+          >
+            ADVERTISEMENT SPACE AVAILABLE
+          </span>
+          <span style={{ fontSize: '12px', color: 'var(--fg-subtle)' }}>
+            Showcase your brand to the Ogun State tech ecosystem.
+          </span>
+        </div>
+        <a
+          href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
+          className="px-4 py-2 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
+          style={{
+            backgroundColor: '#C84B31',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          CONTACT ADMIN
+        </a>
+      </div>
+    );
+  } else if (size === 'rectangle') {
+    fallbackContent = (
+      <div
+        className="w-full h-full flex flex-col items-center justify-center text-center gap-3 rounded-xl select-none transition-all duration-300 border border-[#C84B31]/20 hover:border-[#C84B31]/40"
+        style={{
+          minHeight: preset.height,
+          background: 'linear-gradient(135deg, #1c1917 0%, #292524 100%)',
+          padding: '24px 20px',
+        }}
+      >
+        <span
+          className="px-3 py-1 rounded-full text-[9px] font-bold"
+          style={{
+            backgroundColor: 'rgba(200,75,49,0.1)',
+            color: '#C84B31',
+            border: '1px solid rgba(200,75,49,0.25)',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+          }}
+        >
+          AD SPACE
+        </span>
+        <h4 style={{ fontSize: '16px', fontWeight: 800, margin: 0, color: '#fff' }}>
+          Advertise Here
+        </h4>
+        <p style={{ fontSize: '11px', color: 'var(--fg-subtle)', margin: '0 0 8px 0', lineHeight: 1.4 }}>
+          Promote your startup, programs, or tech products to over thousands of monthly readers.
+        </p>
+        <a
+          href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
+          className="px-5 py-2.5 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
+          style={{
+            backgroundColor: '#C84B31',
+            textDecoration: 'none',
+          }}
+        >
+          Contact admin@trax.co
+        </a>
+      </div>
+    );
+  } else {
+    // inline
+    fallbackContent = (
+      <div
+        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-indigo-500/20 hover:border-indigo-500/40"
+        style={{
+          minHeight: preset.height,
+          background: 'linear-gradient(90deg, #1e1b4b 0%, #312e81 100%)',
+          padding: '16px 24px',
+        }}
+      >
+        <div className="flex flex-col text-center sm:text-left">
+          <span
+            className="px-2.5 py-0.5 rounded-full text-[9px] font-bold mb-2 w-fit mx-auto sm:mx-0"
+            style={{
+              backgroundColor: 'rgba(99,102,241,0.2)',
+              color: '#818cf8',
+              border: '1px solid rgba(99,102,241,0.3)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em',
+              display: 'inline-block',
+            }}
+          >
+            SPONSORSHIP
+          </span>
+          <h4 style={{ fontSize: '14px', fontWeight: 800, margin: '0 0 2px 0', color: '#fff' }}>
+            Partner with Trax
+          </h4>
+          <p style={{ fontSize: '11px', color: '#c7d2fe', margin: 0 }}>
+            Put your brand in front of top developers, founders, and decision makers in Ogun.
+          </p>
+        </div>
+        <a
+          href="mailto:admin@trax.co?subject=Sponsor%20on%20Trax"
+          className="px-4 py-2 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
+          style={{
+            backgroundColor: '#4f46e5',
+            textDecoration: 'none',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Contact Admin
+        </a>
+      </div>
+    );
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -98,58 +244,13 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       style={{
         width:      preset.width,
         minHeight:  preset.height,
-        maxWidth:   '105%',
+        maxWidth:   '100%',
         marginLeft:  typeof preset.width === 'number' ? 'auto'   : undefined,
         marginRight: typeof preset.width === 'number' ? 'auto'   : undefined,
-        display:     'flex',
-        alignItems:  'center',
-        justifyContent: 'center',
       }}
     >
-      <div
-        className="w-full h-full flex flex-col items-center justify-center gap-2 rounded-xl select-none"
-        style={{
-          minHeight:       preset.height,
-          border:          '2px dashed var(--border)',
-          backgroundColor: 'var(--bg-alt)',
-          padding:         '12px',
-        }}
-      >
-        {/* Ad icon */}
-        <svg
-          width="20" height="20" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" strokeWidth="1.5"
-          style={{ color: 'var(--fg-subtle)' }}
-        >
-          <rect x="2" y="4" width="20" height="16" rx="2" />
-          <path d="M8 12h8M12 8v8" />
-        </svg>
-
-        {/* Label */}
-        <p
-          className="text-center leading-snug"
-          style={{
-            color:      'var(--fg-subtle)',
-            fontFamily: 'var(--font-dm-sans)',
-            fontSize:   '11px',
-            fontWeight: 500,
-          }}
-        >
-          {displayLabel}
-        </p>
-
-        {/* Size badge */}
-        <span
-          className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wide"
-          style={{
-            backgroundColor: 'rgba(200,75,49,0.10)',
-            color:           '#C84B31',
-            border:          '1px solid rgba(200,75,49,0.2)',
-          }}
-        >
-          {size}
-        </span>
-      </div>
+      {fallbackContent}
     </motion.div>
   )
 }
+
