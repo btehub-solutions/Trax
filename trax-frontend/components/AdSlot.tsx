@@ -49,7 +49,13 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         const response = await fetch(`${BASE_URL}/ads?size=${uppercaseSize}`)
         if (response.ok) {
           const data = await response.json()
-          if (data && data.code && data.active) {
+          if (Array.isArray(data)) {
+            const activeAds = data.filter((ad: any) => ad.active && ad.code)
+            if (activeAds.length > 0) {
+              const randomIndex = Math.floor(Math.random() * activeAds.length)
+              setAdHtml(activeAds[randomIndex].code)
+            }
+          } else if (data && data.code && data.active) {
             setAdHtml(data.code)
           }
         }
