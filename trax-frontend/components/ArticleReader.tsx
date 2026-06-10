@@ -127,7 +127,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
         variants={pageVariants}
         initial="hidden"
         animate="visible"
-        className="min-h-screen"
+        className="min-h-screen pt-16"
         style={{ backgroundColor: 'var(--bg)' }}
       >
         {/* ── Hero image ───────────────────────────────────────────────── */}
