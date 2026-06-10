@@ -152,7 +152,7 @@ export default function LatestStoriesHero({ articles }: LatestStoriesHeroProps) 
                   src={article.image}
                   width={900}
                   style={{ objectFit: 'cover' }}
-                  unoptimized={article.image?.includes('localhost:4000')}
+                  unoptimized={article.image?.includes('localhost:4000') || article.image?.includes('supabase.co')}
                 />
 
                 {/* Category badge ── #C84B31 accent */}
