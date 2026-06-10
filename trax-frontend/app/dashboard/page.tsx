@@ -84,6 +84,8 @@ export default function DashboardPage() {
   });
   const [adError, setAdError] = useState<string | null>(null);
   const [adSuccess, setAdSuccess] = useState<string | null>(null);
+  const [adUploading, setAdUploading] = useState(false);
+  const [adUploadError, setAdUploadError] = useState<string | null>(null);
 
   // Profile Form State
   const [profileData, setProfileData] = useState({
@@ -318,6 +320,42 @@ export default function DashboardPage() {
       setAvatarUploadError(err.message || 'Failed to upload avatar');
     } finally {
       setAvatarUploading(false);
+    }
+  };
+
+  const handleAdImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setAdUploadError('Image must be under 5MB');
+      return;
+    }
+    setAdUploading(true);
+    setAdUploadError(null);
+    const fData = new FormData();
+    fData.append('file', file);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${BASE_URL}/uploads`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: fData
+      });
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message || 'Upload failed');
+      }
+      const data = await res.json();
+      if (data && data.url) {
+        const adHtml = `<a href="#" target="_blank" rel="noopener noreferrer"><img src="${data.url}" alt="Advertisement" style="max-width: 100%; height: auto; display: block;" /></a>`;
+        setAdFormData(prev => ({ ...prev, code: adHtml }));
+      }
+    } catch (err: any) {
+      setAdUploadError(err.message || 'Failed to upload ad image');
+    } finally {
+      setAdUploading(false);
     }
   };
 
@@ -1207,6 +1245,27 @@ export default function DashboardPage() {
                             <option value="RECTANGLE" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Rectangle (300x250)</option>
                             <option value="INLINE" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Inline Banner (Full Width)</option>
                           </select>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Banner Image File (Optional)</label>
+                          <div className="flex items-center gap-2">
+                            <label className="cursor-pointer bg-orange-600 hover:bg-orange-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                              <span>Choose Image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleAdImageUpload}
+                                className="hidden"
+                              />
+                            </label>
+                            <span className="text-[10px]" style={{ color: 'var(--dash-fg-muted)' }}>
+                              {adUploading ? 'Uploading...' : 'Upload local JPEG/PNG/WEBP'}
+                            </span>
+                          </div>
+                          {adUploadError && (
+                            <p className="text-[10px] text-red-500 font-medium">{adUploadError}</p>
+                          )}
                         </div>
 
                         <div className="space-y-1.5">
