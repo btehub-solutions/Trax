@@ -1,4 +1,5 @@
 import 'dotenv/config'
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { PrismaService } from '../src/prisma/prisma.service'
 import * as crypto from 'crypto'
 
