@@ -6,7 +6,14 @@ import { PrismaPg } from '@prisma/adapter-pg';
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
-    const connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL;
+    let connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL;
+    if (connectionString) {
+      connectionString = connectionString.replace(/sslmode=[^&]+/g, 'sslmode=no-verify');
+      if (!connectionString.includes('sslmode=')) {
+        const separator = connectionString.includes('?') ? '&' : '?';
+        connectionString += `${separator}sslmode=no-verify`;
+      }
+    }
     const pool = new Pool({
       connectionString,
       ssl: { rejectUnauthorized: false },
