@@ -125,10 +125,10 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
               marginBottom: '2px',
             }}
           >
-            ADVERTISEMENT SPACE AVAILABLE
+            AD SPACE AVAILABLE
           </span>
           <span style={{ fontSize: '12px', color: 'var(--fg-subtle)' }}>
-            Showcase your brand to the Ogun State tech ecosystem.
+            You can run your ads here. Contact the admin to get started.
           </span>
         </div>
         <a
@@ -167,10 +167,10 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
           AD SPACE
         </span>
         <h4 style={{ fontSize: '16px', fontWeight: 800, margin: 0, color: '#fff' }}>
-          Advertise Here
+          Run Your Ads Here
         </h4>
         <p style={{ fontSize: '11px', color: 'var(--fg-subtle)', margin: '0 0 8px 0', lineHeight: 1.4 }}>
-          Promote your startup, programs, or tech products to over thousands of monthly readers.
+          Get your message in front of our tech community audience.
         </p>
         <a
           href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
@@ -188,10 +188,10 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     // inline
     fallbackContent = (
       <div
-        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-indigo-500/20 hover:border-indigo-500/40"
+        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-[#C84B31]/20 hover:border-[#C84B31]/40"
         style={{
           minHeight: preset.height,
-          background: 'linear-gradient(90deg, #1e1b4b 0%, #312e81 100%)',
+          background: 'linear-gradient(90deg, #1c1917 0%, #292524 100%)',
           padding: '16px 24px',
         }}
       >
@@ -199,28 +199,28 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
           <span
             className="px-2.5 py-0.5 rounded-full text-[9px] font-bold mb-2 w-fit mx-auto sm:mx-0"
             style={{
-              backgroundColor: 'rgba(99,102,241,0.2)',
-              color: '#818cf8',
-              border: '1px solid rgba(99,102,241,0.3)',
+              backgroundColor: 'rgba(200,75,49,0.1)',
+              color: '#C84B31',
+              border: '1px solid rgba(200,75,49,0.25)',
               textTransform: 'uppercase',
               letterSpacing: '0.05em',
               display: 'inline-block',
             }}
           >
-            SPONSORSHIP
+            AD SPACE
           </span>
           <h4 style={{ fontSize: '14px', fontWeight: 800, margin: '0 0 2px 0', color: '#fff' }}>
-            Partner with Trax
+            Run Your Ads Here
           </h4>
-          <p style={{ fontSize: '11px', color: '#c7d2fe', margin: 0 }}>
-            Put your brand in front of top developers, founders, and decision makers in Ogun.
+          <p style={{ fontSize: '11px', color: 'var(--fg-subtle)', margin: 0 }}>
+            Place your banner within articles. Contact the admin to advertise.
           </p>
         </div>
         <a
-          href="mailto:admin@trax.co?subject=Sponsor%20on%20Trax"
+          href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
           className="px-4 py-2 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
           style={{
-            backgroundColor: '#4f46e5',
+            backgroundColor: '#C84B31',
             textDecoration: 'none',
             whiteSpace: 'nowrap',
           }}
