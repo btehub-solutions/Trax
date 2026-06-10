@@ -24,7 +24,7 @@ async function main() {
     data: {
       email: 'admin@trax.co',
       name: 'Admin Editor',
-      password: hashPassword('password123'),
+      password: hashPassword('trax885152!'),
       role: 'ADMIN',
       bio: 'Editor-in-Chief at Trax.',
       avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&q=80',

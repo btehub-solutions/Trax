@@ -819,9 +819,9 @@ export default function DashboardPage() {
                             className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all border"
                             style={inputStyle}
                           >
-                            <option value="">Select a Category</option>
+                            <option value="" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Select a Category</option>
                             {categories.map((cat) => (
-                              <option key={cat.id} value={cat.id}>
+                              <option key={cat.id} value={cat.id} style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>
                                 {cat.name}
                               </option>
                             ))}
@@ -1166,9 +1166,9 @@ export default function DashboardPage() {
                             className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 border"
                             style={inputStyle}
                           >
-                            <option value="LEADERBOARD">Leaderboard (728x90)</option>
-                            <option value="RECTANGLE">Rectangle (300x250)</option>
-                            <option value="INLINE">Inline Banner (Full Width)</option>
+                            <option value="LEADERBOARD" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Leaderboard (728x90)</option>
+                            <option value="RECTANGLE" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Rectangle (300x250)</option>
+                            <option value="INLINE" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Inline Banner (Full Width)</option>
                           </select>
                         </div>
 
