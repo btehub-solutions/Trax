@@ -5,16 +5,20 @@ import { join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
 
 export function configureApp(app: INestApplication, frontendOrigin: string) {
-  // ── Static Assets ──
-  const uploadsDir = join(process.cwd(), 'uploads');
-  if (!existsSync(uploadsDir)) {
-    mkdirSync(uploadsDir, { recursive: true });
-  }
-  const expressApp = app as unknown as NestExpressApplication;
-  if (typeof expressApp.useStaticAssets === 'function') {
-    expressApp.useStaticAssets(uploadsDir, {
-      prefix: '/uploads',
-    });
+  // ── Static Assets (skip on read-only serverless filesystems) ──
+  try {
+    const uploadsDir = join(process.cwd(), 'uploads');
+    if (!existsSync(uploadsDir)) {
+      mkdirSync(uploadsDir, { recursive: true });
+    }
+    const expressApp = app as unknown as NestExpressApplication;
+    if (typeof expressApp.useStaticAssets === 'function') {
+      expressApp.useStaticAssets(uploadsDir, {
+        prefix: '/uploads',
+      });
+    }
+  } catch {
+    // Vercel / serverless: filesystem is read-only, skip static uploads
   }
 
   // ── CORS ──────────────────────────────────────────────────────────────────
