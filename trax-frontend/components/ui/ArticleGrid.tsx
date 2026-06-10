@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import { ArrowRight } from 'lucide-react'
+import AdSlot from '@/components/AdSlot'
 
 interface ArticleGridProps {
   title: string
@@ -66,10 +67,16 @@ export default function ArticleGrid({
             <div className="lg:col-span-2">
               {featured && <Card article={featured} variant="featured" />}
             </div>
-            <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
-              {rest.slice(0, 3).map((article, i) => (
-                <Card key={article.id} article={article} variant="compact" index={i} />
-              ))}
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
+                {rest.slice(0, 3).map((article, i) => (
+                  <Card key={article.id} article={article} variant="compact" index={i} />
+                ))}
+              </div>
+              {/* Sidebar Square Ad */}
+              <div className="pt-4 border-t flex justify-center" style={{ borderColor: 'var(--border)' }}>
+                <AdSlot size="rectangle" label="Sponsor Advertisement" />
+              </div>
             </div>
           </div>
         </div>

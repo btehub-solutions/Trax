@@ -5,6 +5,7 @@ import TabbedArticlesSection from '@/components/ui/TabbedArticlesSection'
 import ArticleGrid     from '@/components/ui/ArticleGrid'
 import NewsletterSection from '@/components/ui/NewsletterSection'
 import { articles as mockArticles, Article }   from '@/lib/articles'
+import AdSlot          from '@/components/AdSlot'
 
 async function getArticles(): Promise<Article[]> {
   try {
@@ -48,6 +49,11 @@ export default async function HomePage() {
       {/* ── Breaking news ticker (sits behind sticky nav, shifts on scroll) ── */}
       <div className="pt-16">
         <TickerBar />
+      </div>
+
+      {/* ── Homepage Leaderboard Ad Banner ── */}
+      <div className="container py-4 flex justify-center">
+        <AdSlot size="leaderboard" label="Top Advertisement" />
       </div>
 
       {/* ── Hero: latest stories card grid ── */}

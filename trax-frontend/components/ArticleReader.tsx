@@ -1,12 +1,13 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useSpring } from 'framer-motion'
 import { Clock, User, Bookmark, Share2, Link2, Check, ArrowLeft } from 'lucide-react'
 import ArticleCard from '@/components/ArticleCard'
 import type { Article } from '@/lib/articles'
+import AdSlot from '@/components/AdSlot'
 
 // ── Category colour map ───────────────────────────────────────────────────────
 const categoryColors: Record<string, { bg: string; color: string; border: string }> = {
@@ -359,31 +360,39 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               className="pt-8 pb-12"
             >
               {bodyText.map((para, i) => (
-                <p
-                  key={i}
-                  className="mb-6"
-                  style={{
-                    fontFamily:  'var(--font-dm-sans)',
-                    fontSize:    '1.0625rem',
-                    lineHeight:  1.85,
-                    color:       i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
-                    fontWeight:  i === 0 ? 500 : 400,
-                  }}
-                >
-                  {/* Pull-quote style for direct quotes */}
-                  {para.startsWith('"') ? (
-                    <span
-                      className="block pl-5 border-l-4 italic"
-                      style={{
-                        borderColor: '#C84B31',
-                        color:       'var(--fg)',
-                        fontStyle:   'italic',
-                      }}
-                    >
-                      {para}
-                    </span>
-                  ) : para}
-                </p>
+                <React.Fragment key={i}>
+                  <p
+                    className="mb-6"
+                    style={{
+                      fontFamily:  'var(--font-dm-sans)',
+                      fontSize:    '1.0625rem',
+                      lineHeight:  1.85,
+                      color:       i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
+                      fontWeight:  i === 0 ? 500 : 400,
+                    }}
+                  >
+                    {/* Pull-quote style for direct quotes */}
+                    {para.startsWith('"') ? (
+                      <span
+                        className="block pl-5 border-l-4 italic"
+                        style={{
+                          borderColor: '#C84B31',
+                          color:       'var(--fg)',
+                          fontStyle:   'italic',
+                        }}
+                      >
+                        {para}
+                      </span>
+                    ) : para}
+                  </p>
+
+                  {/* Inline ad slot in the middle of the article (after paragraph 2) */}
+                  {i === 1 && (
+                    <div className="my-8 flex justify-center">
+                      <AdSlot size="inline" label="Advertisement" />
+                    </div>
+                  )}
+                </React.Fragment>
               ))}
 
               {/* Article end mark */}
@@ -396,6 +405,11 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   Trax
                 </span>
                 <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
+              </div>
+
+              {/* Post-article Rectangle Ad */}
+              <div className="mt-8 flex justify-center">
+                <AdSlot size="rectangle" label="Sponsor Square" />
               </div>
             </motion.div>
 
