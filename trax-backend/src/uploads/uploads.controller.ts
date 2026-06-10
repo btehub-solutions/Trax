@@ -2,21 +2,11 @@ import {
   Controller, Post, UseInterceptors, UploadedFile, UseGuards, BadRequestException
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles, RolesGuard } from '../auth/roles.guard';
 import { ApiBearerAuth, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-
-const storage = diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './uploads');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, `${uniqueSuffix}${extname(file.originalname)}`);
-  },
-});
+import { createClient } from '@supabase/supabase-js';
+import { extname } from 'path';
 
 const imageFileFilter = (req: any, file: any, callback: any) => {
   if (!file.originalname.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
@@ -28,6 +18,11 @@ const imageFileFilter = (req: any, file: any, callback: any) => {
 @ApiTags('Uploads')
 @Controller('uploads')
 export class UploadsController {
+  private supabase = createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!,
+  );
+
   @Post()
   @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Roles('ADMIN', 'EDITOR', 'WRITER')
@@ -35,17 +30,35 @@ export class UploadsController {
   @ApiConsumes('multipart/form-data')
   @ApiOperation({ summary: 'Upload a cover image (JPEG, PNG, WEBP, GIF)' })
   @UseInterceptors(FileInterceptor('file', {
-    storage,
     fileFilter: imageFileFilter,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   }))
-  uploadFile(@UploadedFile() file: any) {
+  async uploadFile(@UploadedFile() file: any) {
     if (!file) {
       throw new BadRequestException('No file uploaded or invalid file format');
     }
+
+    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
+    const filePath = `articles/${uniqueName}`;
+
+    const { error } = await this.supabase.storage
+      .from('images')
+      .upload(filePath, file.buffer, {
+        contentType: file.mimetype,
+        upsert: false,
+      });
+
+    if (error) {
+      throw new BadRequestException(`Upload failed: ${error.message}`);
+    }
+
+    const { data: publicUrlData } = this.supabase.storage
+      .from('images')
+      .getPublicUrl(filePath);
+
     return {
-      url: `http://localhost:4000/uploads/${file.filename}`,
-      filename: file.filename,
+      url: publicUrlData.publicUrl,
+      filename: uniqueName,
     };
   }
 }
