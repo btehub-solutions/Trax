@@ -1,0 +1,51 @@
+'use client'
+
+import { useState } from 'react'
+import CategoryStrip from '@/components/ui/CategoryStrip'
+import ArticleGrid from '@/components/ui/ArticleGrid'
+import type { Article } from '@/lib/articles'
+
+interface TabbedArticlesSectionProps {
+  articles: Article[]
+}
+
+export default function TabbedArticlesSection({ articles }: TabbedArticlesSectionProps) {
+  const [selectedCategory, setSelectedCategory] = useState('All')
+
+  // Filter articles based on active category
+  const filteredArticles = articles.filter((article) => {
+    if (selectedCategory === 'All') return true
+    
+    const articleCat = article.category.toLowerCase()
+    const selectedCat = selectedCategory.toLowerCase()
+    
+    // Support custom category mapping
+    if (selectedCat === 'startups') {
+      return ['ecosystem', 'profiles', 'funding', 'startups', 'startups'].includes(articleCat)
+    }
+    if (selectedCat === 'people') {
+      return ['profiles', 'interview', 'people'].includes(articleCat)
+    }
+    
+    return articleCat === selectedCat
+  })
+
+  // Display up to 6 articles in the latest stories grid
+  const latestFiltered = filteredArticles.slice(0, 6)
+
+  return (
+    <>
+      <CategoryStrip active={selectedCategory} onChange={setSelectedCategory} />
+      <ArticleGrid
+        id="latest"
+        title={selectedCategory === 'All' ? 'Latest Stories' : `${selectedCategory} Stories`}
+        subtitle={
+          selectedCategory === 'All'
+            ? 'Fresh from our reporters across Ogun State'
+            : `Fresh reporting under ${selectedCategory}`
+        }
+        articles={latestFiltered}
+      />
+    </>
+  )
+}

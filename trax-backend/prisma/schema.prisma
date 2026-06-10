@@ -1,0 +1,141 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────────
+// User
+// ─────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("WRITER")
+  bio       String?
+  avatar    String?
+  twitter   String?
+  linkedin  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  articles  Article[]
+
+  @@map("users")
+}
+
+// ─────────────────────────────────────────────
+// Category
+// ─────────────────────────────────────────────
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  color       String?   // hex colour for UI badges
+  createdAt   DateTime  @default(now())
+
+  articles    Article[]
+
+  @@map("categories")
+}
+
+// ─────────────────────────────────────────────
+// Tag
+// ─────────────────────────────────────────────
+
+model Tag {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+
+  articles ArticleTag[]
+
+  @@map("tags")
+}
+
+// ─────────────────────────────────────────────
+// Article
+// ─────────────────────────────────────────────
+
+model Article {
+  id          String        @id @default(cuid())
+  slug        String        @unique
+  title       String
+  excerpt     String
+  body        String
+  image       String?
+  status      String        @default("DRAFT")
+  featured    Boolean       @default(false)
+  breaking    Boolean       @default(false)
+  trending    Boolean       @default(false)
+  readTime    String?
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  authorId    String
+  author      User          @relation(fields: [authorId], references: [id])
+
+  categoryId  String
+  category    Category      @relation(fields: [categoryId], references: [id])
+
+  tags        ArticleTag[]
+
+  @@map("articles")
+}
+
+// ─────────────────────────────────────────────
+// Article ↔ Tag join table
+// ─────────────────────────────────────────────
+
+model ArticleTag {
+  articleId String
+  tagId     String
+
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([articleId, tagId])
+  @@map("article_tags")
+}
+
+// ─────────────────────────────────────────────
+// Newsletter subscriber
+// ─────────────────────────────────────────────
+
+model Subscriber {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  confirmed   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  @@map("subscribers")
+}
+
+// ─────────────────────────────────────────────
+// Ad slot
+// ─────────────────────────────────────────────
+
+model AdSlot {
+  id        String   @id @default(cuid())
+  name      String
+  size      String   @default("LEADERBOARD")
+  code      String?  // raw embed code / ad tag
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ad_slots")
+}

@@ -1,0 +1,21 @@
+# Dependency directories
+**/node_modules/
+
+# Next.js build output
+**/trax-frontend/.next/
+**/trax-frontend/out/
+
+# NestJS build output
+**/trax-backend/dist/
+
+# Local databases
+**/trax-backend/*.db
+**/trax-backend/*.db-journal
+
+# Environment files
+**/.env
+**/.env.local
+
+# Operating system files
+.DS_Store
+Thumbs.db
