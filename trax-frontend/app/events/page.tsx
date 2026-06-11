@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { articles } from '@/lib/articles'
+import { getDbArticles } from '@/lib/api'
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
@@ -7,15 +7,15 @@ export const metadata: Metadata = {
   description: 'Coverage of major tech events, summits, panels, and developer hackathons across Nigeria and Ogun State.',
 }
 
-export default function EventsPage() {
-  const eventsArticles = articles.filter((a) => a.category === 'Events')
+export default async function EventsPage() {
+  const articles = await getDbArticles('events')
 
   return (
     <CategoryPageLayout
       title="Conferences & Gatherings"
       description="Stay tuned with key summaries, announcements, speaker insights, and coverage from Ogun State's leading tech summits and meetups."
       categoryName="Events"
-      articles={eventsArticles}
+      articles={articles}
     />
   )
 }

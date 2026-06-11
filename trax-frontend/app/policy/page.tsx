@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { articles } from '@/lib/articles'
+import { getDbArticles } from '@/lib/api'
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
@@ -7,15 +7,15 @@ export const metadata: Metadata = {
   description: 'Analysis and reports on tech policy frameworks, ethics, data privacy, and government regulations in Ogun State.',
 }
 
-export default function PolicyPage() {
-  const policyArticles = articles.filter((a) => a.category === 'Policy')
+export default async function PolicyPage() {
+  const articles = await getDbArticles('policy')
 
   return (
     <CategoryPageLayout
       title="Policy & Governance"
       description="In-depth reporting and expert analysis on technology frameworks, ethical guidelines, data security laws, and tech regulations."
       categoryName="Policy"
-      articles={policyArticles}
+      articles={articles}
     />
   )
 }

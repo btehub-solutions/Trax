@@ -121,6 +121,31 @@ export default function DashboardPage() {
       twitter: parsedUser.twitter || '',
       linkedin: parsedUser.linkedin || '',
     });
+
+    const refreshProfile = async () => {
+      try {
+        const freshUser = await fetchApi('/users/me');
+        if (freshUser) {
+          const updatedFullUser = { ...parsedUser, ...freshUser };
+          setUser(updatedFullUser);
+          localStorage.setItem('user', JSON.stringify(updatedFullUser));
+          setProfileData({
+            name: freshUser.name || '',
+            bio: freshUser.bio || '',
+            avatar: freshUser.avatar || '',
+            twitter: freshUser.twitter || '',
+            linkedin: freshUser.linkedin || '',
+          });
+        }
+      } catch (err: any) {
+        console.warn('Failed to refresh user profile from backend:', err.message || err);
+        if (err.message?.includes('Unauthorized') || err.message?.includes('JWT') || err.message?.includes('session') || err.message?.includes('token')) {
+          handleLogout();
+        }
+      }
+    };
+
+    refreshProfile();
     fetchDashboardData();
   }, []);
 

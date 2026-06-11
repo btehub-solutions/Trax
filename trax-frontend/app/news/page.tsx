@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { articles } from '@/lib/articles'
+import { getDbArticles } from '@/lib/api'
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
@@ -7,7 +7,9 @@ export const metadata: Metadata = {
   description: "The latest news, reports, and breakthroughs in the Ogun State's AI ecosystem.",
 }
 
-export default function NewsPage() {
+export default async function NewsPage() {
+  const articles = await getDbArticles()
+
   return (
     <CategoryPageLayout
       title="Latest Tech News"

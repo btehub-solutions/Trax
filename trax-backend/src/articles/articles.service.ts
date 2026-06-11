@@ -58,7 +58,7 @@ export class ArticlesService {
       ...(tag      ? { tags: { some: { tag: { slug: tag } } } }         : {}),
     };
 
-    const [articles, total] = await this.prisma.$transaction([
+    const [articles, total] = await Promise.all([
       this.prisma.article.findMany({ where, skip, take, orderBy: { publishedAt: 'desc' }, include: this.include }),
       this.prisma.article.count({ where }),
     ]);

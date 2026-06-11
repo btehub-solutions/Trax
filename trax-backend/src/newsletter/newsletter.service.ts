@@ -56,7 +56,7 @@ export class NewsletterService {
   }
 
   async count() {
-    const [total, confirmed] = await this.prisma.$transaction([
+    const [total, confirmed] = await Promise.all([
       this.prisma.subscriber.count(),
       this.prisma.subscriber.count({ where: { confirmed: true } }),
     ]);

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { articles } from '@/lib/articles'
+import { getDbArticles } from '@/lib/api'
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
@@ -7,7 +7,8 @@ export const metadata: Metadata = {
   description: 'Track the founders, builders, and platforms creating the next generation of AI products in Ogun State.',
 }
 
-export default function StartupsPage() {
+export default async function StartupsPage() {
+  const articles = await getDbArticles()
   const startupArticles = articles.filter((a) =>
     ['Ecosystem', 'Profiles', 'Funding'].includes(a.category)
   )
