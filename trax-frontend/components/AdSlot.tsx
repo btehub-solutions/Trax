@@ -86,19 +86,38 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
   }
 
   if (adHtml) {
+    const normalizedHtml = adHtml.trim().toLowerCase();
+    const isImageOnly = normalizedHtml.startsWith('<a') && !normalizedHtml.includes('<div') && normalizedHtml.includes('<img');
+    const containerId = id || `ad-slot-${size}-${Math.random().toString(36).substring(2, 7)}`;
     return (
       <div
-        id={id}
+        id={containerId}
         className={`overflow-hidden ${className}`}
         style={{
           width: preset.width,
-          minHeight: preset.height,
+          height: preset.height,
           maxWidth: '100%',
           marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
           marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
         }}
-        dangerouslySetInnerHTML={{ __html: adHtml }}
-      />
+      >
+        {isImageOnly && (
+          <style dangerouslySetInnerHTML={{ __html: `
+            #${containerId} img {
+              width: 100% !important;
+              height: ${preset.height}px !important;
+              object-fit: cover !important;
+              display: block !important;
+            }
+            #${containerId} a {
+              display: block !important;
+              width: 100% !important;
+              height: 100% !important;
+            }
+          `}} />
+        )}
+        <div dangerouslySetInnerHTML={{ __html: adHtml }} style={{ width: '100%', height: '100%' }} />
+      </div>
     )
   }
 
