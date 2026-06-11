@@ -62,6 +62,7 @@ async function main() {
       featured: true,
       breaking: true,
       readTime: '4 min read',
+      publishedAt: new Date('2026-06-05T12:00:00.000Z'),
     },
     {
       slug: 'abeokuta-engineer-ogun-state-first-open-source-software',
@@ -72,6 +73,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&h=500&fit=crop&q=80',
       trending: true,
       readTime: '7 min read',
+      publishedAt: new Date('2026-06-03T12:00:00.000Z'),
     },
     {
       slug: 'ogun-state-healthtech-malaria-diagnosis',
@@ -82,6 +84,7 @@ async function main() {
       image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=900&h=500&fit=crop&q=80',
       trending: true,
       readTime: '5 min read',
+      publishedAt: new Date('2026-06-01T12:00:00.000Z'),
     },
     {
       slug: 'abeokuta-tech-hub-fastest-growing-cluster',
@@ -91,6 +94,7 @@ async function main() {
       categoryName: 'Ecosystem',
       image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=900&h=500&fit=crop&q=80',
       readTime: '6 min read',
+      publishedAt: new Date('2026-05-30T12:00:00.000Z'),
     },
     {
       slug: 'openai-africa-strategy-expansion-interview',
@@ -102,6 +106,7 @@ async function main() {
       featured: true,
       trending: true,
       readTime: '9 min read',
+      publishedAt: new Date('2026-05-28T12:00:00.000Z'),
     },
     {
       slug: 'ogun-west-digital-literacy-program-expansion',
@@ -111,6 +116,7 @@ async function main() {
       categoryName: 'Research',
       image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&h=500&fit=crop&q=80',
       readTime: '6 min read',
+      publishedAt: new Date('2026-05-25T12:00:00.000Z'),
     },
     {
       slug: 'abeokuta-tech-summit-2026-highlights',
@@ -120,6 +126,7 @@ async function main() {
       categoryName: 'Events',
       image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&h=500&fit=crop&q=80',
       readTime: '8 min read',
+      publishedAt: new Date('2026-05-22T12:00:00.000Z'),
     },
     {
       slug: 'nigeria-tech-policy-framework-2026',
@@ -129,6 +136,7 @@ async function main() {
       categoryName: 'Policy',
       image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&h=500&fit=crop&q=80',
       readTime: '5 min read',
+      publishedAt: new Date('2026-05-20T12:00:00.000Z'),
     },
     {
       slug: 'ogun-founders-ecommerce-supply-chains',
@@ -138,6 +146,7 @@ async function main() {
       categoryName: 'Ecosystem',
       image: 'https://images.unsplash.com/photo-1558174685-430919a96c8d?w=900&h=500&fit=crop&q=80',
       readTime: '5 min read',
+      publishedAt: new Date('2026-06-05T12:00:00.000Z'),
     },
     {
       slug: 'ogun-state-tech-funding-q1-2026',
@@ -147,6 +156,7 @@ async function main() {
       categoryName: 'Funding',
       image: 'https://images.unsplash.com/photo-1466228432269-af42b400b934?w=900&h=500&fit=crop&q=80',
       readTime: '6 min read',
+      publishedAt: new Date('2026-05-28T12:00:00.000Z'),
     },
     {
       slug: 'essential-tech-tools-ogun-developers-2026',
@@ -156,6 +166,7 @@ async function main() {
       categoryName: 'Tools',
       image: 'https://images.unsplash.com/photo-1605907126120-f68611516ecc?w=900&h=500&fit=crop&q=80',
       readTime: '7 min read',
+      publishedAt: new Date('2026-05-20T12:00:00.000Z'),
     },
   ]
 
@@ -175,7 +186,7 @@ async function main() {
         trending: article.trending || false,
         readTime: article.readTime,
         status: 'PUBLISHED',
-        publishedAt: new Date(),
+        publishedAt: article.publishedAt,
         categoryId: catId,
         authorId: admin.id,
       },
