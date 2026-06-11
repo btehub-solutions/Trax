@@ -68,6 +68,7 @@ export default function DashboardPage() {
     status: 'DRAFT',
     readTime: '5 min read',
     publishedAt: '',
+    officialLink: '',
   });
   const [editorError, setEditorError] = useState<string | null>(null);
   const [editorSuccess, setEditorSuccess] = useState<string | null>(null);
@@ -160,6 +161,15 @@ export default function DashboardPage() {
       setFormData(prev => ({ ...prev, slug }));
     }
   }, [formData.title, editingArticleId]);
+
+  // Reset scroll to top on tab changes (mobile window & desktop container)
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+    const mainContent = document.querySelector('main');
+    if (mainContent) {
+      mainContent.scrollTop = 0;
+    }
+  }, [activeTab]);
 
   const fetchDashboardData = async () => {
     setLoading(true);
@@ -260,6 +270,7 @@ export default function DashboardPage() {
       status: article.status,
       readTime: article.readTime || '5 min read',
       publishedAt: article.publishedAt ? new Date(article.publishedAt).toISOString().split('T')[0] : '',
+      officialLink: article.officialLink || '',
     });
     setEditorError(null);
     setEditorSuccess(null);
@@ -406,6 +417,7 @@ export default function DashboardPage() {
       status: 'DRAFT',
       readTime: '5 min read',
       publishedAt: '',
+      officialLink: '',
     });
     setEditorError(null);
     setEditorSuccess(null);
@@ -1007,6 +1019,18 @@ export default function DashboardPage() {
                             type="date"
                             value={formData.publishedAt}
                             onChange={(e) => setFormData(prev => ({ ...prev, publishedAt: e.target.value }))}
+                            className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-all border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Official Link (Website)</label>
+                          <input
+                            type="url"
+                            value={formData.officialLink}
+                            onChange={(e) => setFormData(prev => ({ ...prev, officialLink: e.target.value }))}
+                            placeholder="https://example.com"
                             className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-all border"
                             style={inputStyle}
                           />

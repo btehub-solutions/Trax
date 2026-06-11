@@ -6,6 +6,8 @@ export interface Article {
   category: string
   author: string
   authorRole: string
+  authorAvatar?: string | null
+  officialLink?: string | null
   date: string
   readTime: string
   image: string

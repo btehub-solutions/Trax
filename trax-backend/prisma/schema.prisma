@@ -79,6 +79,7 @@ model Article {
   breaking    Boolean       @default(false)
   trending    Boolean       @default(false)
   readTime    String?
+  officialLink String?
   publishedAt DateTime?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt

@@ -63,6 +63,11 @@ export class CreateArticleDto {
   @IsDateString()
   publishedAt?: string;
 
+  @ApiPropertyOptional({ example: 'https://example.com' })
+  @IsOptional()
+  @IsString()
+  officialLink?: string;
+
   @ApiProperty({ example: 'clxyz123categoryid' })
   @IsString()
   categoryId: string;
@@ -130,6 +135,11 @@ export class UpdateArticleDto {
   @IsOptional()
   @IsDateString()
   publishedAt?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  officialLink?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

@@ -73,9 +73,14 @@ export default function LatestStoriesHero({ articles }: LatestStoriesHeroProps) 
         category: (typeof a.category === 'object' ? a.category?.name : a.category)?.toUpperCase() || 'TECH NEWS',
         title: a.title,
         description: a.excerpt,
-        publishDate: a.publishedAt
-          ? new Date(a.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-          : 'Jun 5, 2026',
+        publishDate: (() => {
+          const dateSource = a.publishedAt || a.date || a.createdAt;
+          if (!dateSource) return 'Jun 5, 2026';
+          const parsed = new Date(dateSource);
+          return isNaN(parsed.getTime())
+            ? (typeof dateSource === 'string' ? dateSource : 'Jun 5, 2026')
+            : parsed.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        })(),
         readMoreLink: `/articles/${a.slug}`,
         image: a.image || 'https://images.unsplash.com/photo-1558174685-430919a96c8d?w=900&h=900&fit=crop&q=80',
       }))

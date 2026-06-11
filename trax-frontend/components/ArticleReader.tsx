@@ -177,8 +177,8 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               </Link>
             </motion.div>
 
-            {/* ── Category tag ───────────────────────────────────────────── */}
-            <motion.div variants={fadeUp} className="mb-4">
+            {/* ── Category tag & Official Link ───────────────────────────────── */}
+            <motion.div variants={fadeUp} className="mb-4 flex flex-wrap gap-2 items-center">
               <span
                 className="inline-block text-xs font-semibold px-3 py-1.5 rounded-full border tracking-wide"
                 style={{
@@ -190,6 +190,32 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               >
                 {article.category}
               </span>
+              {article.officialLink && (
+                <a
+                  href={article.officialLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full border tracking-wide transition-all duration-200"
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                    borderColor:     'var(--border)',
+                    color:           'var(--fg-muted)',
+                    fontFamily:      'var(--font-dm-sans)',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(200, 75, 49, 0.1)';
+                    e.currentTarget.style.borderColor = '#C84B31';
+                    e.currentTarget.style.color = '#C84B31';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                    e.currentTarget.style.color = 'var(--fg-muted)';
+                  }}
+                >
+                  Visit Website ↗
+                </a>
+              )}
             </motion.div>
 
             {/* ── Title ──────────────────────────────────────────────────── */}
@@ -216,12 +242,24 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             >
               {/* Author avatar placeholder + info */}
               <div className="flex items-center gap-3">
-                <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
-                  style={{ backgroundColor: '#C84B31', fontFamily: 'var(--font-oxanium)' }}
-                >
-                  {article.author.charAt(0)}
-                </div>
+                {article.authorAvatar ? (
+                  <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0 border border-neutral-800">
+                    <Image
+                      src={article.authorAvatar}
+                      alt={article.author}
+                      fill
+                      className="object-cover"
+                      unoptimized={article.authorAvatar.includes('localhost:4000') || article.authorAvatar.includes('supabase.co')}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
+                    style={{ backgroundColor: '#C84B31', fontFamily: 'var(--font-oxanium)' }}
+                  >
+                    {article.author.charAt(0)}
+                  </div>
+                )}
                 <div>
                   <p
                     className="text-sm font-semibold leading-none mb-0.5"

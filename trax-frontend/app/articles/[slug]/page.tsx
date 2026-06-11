@@ -23,6 +23,8 @@ async function getArticle(slug: string): Promise<Article | null> {
         category: a.category?.name || 'Ecosystem',
         author: a.author?.name || 'Trax Staff',
         authorRole: a.author?.authorRole || 'Reporter',
+        authorAvatar: a.author?.avatar || null,
+        officialLink: a.officialLink || null,
         date: a.publishedAt
           ? new Date(a.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
           : 'June 5, 2026',
