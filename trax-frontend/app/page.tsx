@@ -7,6 +7,8 @@ import NewsletterSection from '@/components/ui/NewsletterSection'
 import { articles as mockArticles, Article }   from '@/lib/articles'
 import AdSlot          from '@/components/AdSlot'
 
+export const dynamic = 'force-dynamic';
+
 async function getArticles(): Promise<Article[]> {
   try {
     const res = await fetch(`${BASE_URL}/articles?limit=50`, {

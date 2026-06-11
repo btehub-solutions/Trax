@@ -1,4 +1,6 @@
 import { notFound } from 'next/navigation'
+
+export const dynamic = 'force-dynamic';
 import type { Metadata } from 'next'
 import { articles as mockArticles, Article } from '@/lib/articles'
 import ArticleReader from '@/components/ArticleReader'

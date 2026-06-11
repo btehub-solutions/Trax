@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { getDbArticles } from '@/lib/api'
+
+export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
