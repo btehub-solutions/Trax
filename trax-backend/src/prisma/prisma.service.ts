@@ -8,6 +8,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     let connectionString = process.env.DATABASE_URL || process.env.POSTGRES_URL || process.env.POSTGRES_PRISMA_URL;
     if (connectionString) {
+      connectionString = connectionString.trim();
       connectionString = connectionString.replace(/sslmode=[^&]+/g, 'sslmode=no-verify');
       if (!connectionString.includes('sslmode=')) {
         const separator = connectionString.includes('?') ? '&' : '?';
