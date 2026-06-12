@@ -102,6 +102,7 @@ export default function DashboardPage() {
   const [updatingProfile, setUpdatingProfile] = useState(false);
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [avatarUploadError, setAvatarUploadError] = useState<string | null>(null);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
 
   // Validate Authentication
   useEffect(() => {
@@ -173,6 +174,7 @@ export default function DashboardPage() {
 
   const fetchDashboardData = async () => {
     setLoading(true);
+    setConnectionError(null);
     try {
       // 1. Fetch categories
       const cats = await api.get('/categories');
@@ -203,8 +205,9 @@ export default function DashboardPage() {
         subscribersCount: subs.length,
         activeAdsCount: ads.filter((a: any) => a.active).length,
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Failed to load dashboard data:', err);
+      setConnectionError(err.message || 'Failed to connect to the backend server. Please verify the API is online.');
     } finally {
       setLoading(false);
     }
@@ -618,6 +621,23 @@ export default function DashboardPage() {
 
       {/* Main Content Area */}
       <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-6xl mx-auto w-full">
+        {connectionError && (
+          <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-sm flex flex-col gap-2 shadow-sm">
+            <div className="flex items-center gap-2 font-bold">
+              <PlusCircle className="h-5 w-5 text-red-500 rotate-45" />
+              <span>Backend API Server Offline</span>
+            </div>
+            <p className="text-xs">{connectionError}</p>
+            <button
+              type="button"
+              onClick={() => fetchDashboardData()}
+              className="mt-2 text-xs bg-red-100 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-900/60 text-red-800 dark:text-red-200 px-3.5 py-1.5 rounded-lg border border-red-200 dark:border-red-800/40 font-semibold self-start transition-all"
+            >
+              Retry Connection
+            </button>
+          </div>
+        )}
+
         {loading ? (
           <div className="h-96 flex items-center justify-center">
             <div className="h-8 w-8 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin" />
@@ -948,9 +968,9 @@ export default function DashboardPage() {
                             className="w-full rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all border"
                             style={inputStyle}
                           >
-                            <option value="" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Select a Category</option>
+                            <option value="" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Select a Category</option>
                             {categories.map((cat) => (
-                              <option key={cat.id} value={cat.id} style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>
+                              <option key={cat.id} value={cat.id} style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>
                                 {cat.name}
                               </option>
                             ))}
@@ -961,7 +981,7 @@ export default function DashboardPage() {
                           <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Cover Image</label>
                           <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2">
-                              <label className="cursor-pointer bg-orange-600 hover:bg-orange-50 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                              <label className="cursor-pointer bg-orange-600 hover:bg-orange-500 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
                                 <span>Choose Image</span>
                                 <input
                                   type="file"
@@ -1318,9 +1338,9 @@ export default function DashboardPage() {
                             className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 border"
                             style={inputStyle}
                           >
-                            <option value="LEADERBOARD" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Leaderboard (728x90)</option>
-                            <option value="RECTANGLE" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Rectangle (300x250)</option>
-                            <option value="INLINE" style={{ backgroundColor: '#1a1a2e', color: '#e0e0e0' }}>Inline Banner (Full Width)</option>
+                            <option value="LEADERBOARD" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Leaderboard (728x90)</option>
+                            <option value="RECTANGLE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Rectangle (300x250)</option>
+                            <option value="INLINE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Inline Banner (Full Width)</option>
                           </select>
                         </div>
 
