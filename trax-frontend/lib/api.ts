@@ -1,4 +1,5 @@
 import { articles as mockArticles, Article } from './articles';
+import { mapApiArticle } from './mapArticle';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
 
@@ -67,25 +68,8 @@ export async function getDbArticles(categorySlug?: string): Promise<Article[]> {
       : '/articles?limit=100';
     const json = await api.get(url);
     if (json && json.data && json.data.length > 0) {
-      const dbData = json.data.map((a: any) => ({
-        id: a.id,
-        slug: a.slug,
-        title: a.title,
-        excerpt: a.excerpt,
-        category: a.category?.name || 'Ecosystem',
-        author: a.author?.name || 'Trax Staff',
-        authorRole: a.author?.role || 'Reporter',
-        date: a.publishedAt
-          ? new Date(a.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-          : 'June 5, 2026',
-        readTime: a.readTime || '5 min read',
-        image: a.image || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&h=500&fit=crop&q=80',
-        featured: a.featured,
-        breaking: a.breaking,
-        trending: a.trending,
-      }));
+      const dbData = json.data.map(mapApiArticle);
 
-      // If categorySlug is specified, filter is already done by the backend, but we can verify it
       return dbData;
     }
   } catch (err: any) {
@@ -99,3 +83,4 @@ export async function getDbArticles(categorySlug?: string): Promise<Article[]> {
   }
   return mockArticles;
 }
+

@@ -1,12 +1,11 @@
 import 'dotenv/config'
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import { PrismaService } from '../src/prisma/prisma.service'
-import * as crypto from 'crypto'
+import * as bcrypt from 'bcryptjs'
 
 const prisma = new PrismaService()
 
-function hashPassword(password: string): string {
-  return crypto.createHash('sha256').update(password).digest('hex')
+async function hashPassword(password: string): Promise<string> {
+  return bcrypt.hash(password, 12)
 }
 
 async function main() {
@@ -24,7 +23,7 @@ async function main() {
     data: {
       email: 'admin@trax.co',
       name: 'Admin Editor',
-      password: hashPassword('trax885152!'),
+      password: await hashPassword('trax885152!'),
       role: 'ADMIN',
       bio: 'Editor-in-Chief at Trax.',
       avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop&q=80',

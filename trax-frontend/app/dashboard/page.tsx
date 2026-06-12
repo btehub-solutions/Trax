@@ -393,7 +393,16 @@ export default function DashboardPage() {
       const data = await res.json();
       if (data && data.url) {
         const adHtml = `<a href="#" target="_blank" rel="noopener noreferrer"><img src="${data.url}" alt="Advertisement" style="max-width: 100%; height: auto; display: block;" /></a>`;
-        setAdFormData(prev => ({ ...prev, code: adHtml }));
+        const updatedCode = adHtml;
+        setAdFormData(prev => ({ ...prev, code: updatedCode }));
+
+        // Auto-save to the backend immediately so switching slots doesn't lose this upload
+        if (editingAdId) {
+          await api.patch(`/ads/${editingAdId}`, { code: updatedCode });
+          setAdSuccess('Image uploaded and saved!');
+          fetchDashboardData();
+          setTimeout(() => setAdSuccess(null), 3000);
+        }
       }
     } catch (err: any) {
       setAdUploadError(err.message || 'Failed to upload ad image');

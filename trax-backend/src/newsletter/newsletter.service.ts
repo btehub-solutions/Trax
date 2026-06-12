@@ -1,10 +1,30 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
 import { SubscribeDto, UnsubscribeDto } from './dto/newsletter.dto';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class NewsletterService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly hmacSecret: string;
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly config: ConfigService,
+  ) {
+    this.hmacSecret = this.config.get<string>('JWT_SECRET', 'newsletter-hmac-fallback');
+  }
+
+  // Generate an HMAC token for email confirmation
+  generateToken(email: string): string {
+    return crypto.createHmac('sha256', this.hmacSecret).update(email.toLowerCase()).digest('hex');
+  }
+
+  // Verify the HMAC token matches the email
+  verifyToken(email: string, token: string): boolean {
+    const expected = this.generateToken(email);
+    return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(token));
+  }
 
   async subscribe(dto: SubscribeDto) {
     const existing = await this.prisma.subscriber.findUnique({
@@ -21,14 +41,28 @@ export class NewsletterService {
       create: { email: dto.email },
     });
 
-    // TODO: send confirmation email via your mail provider (Resend, Mailgun…)
+    const confirmToken = this.generateToken(dto.email);
+
+    // TODO: send confirmation email with link containing ?email=...&token=...
     return {
       message: 'Subscription received. Check your inbox to confirm.',
       id:      subscriber.id,
+      // In development, expose the token so you can test the flow
+      ...(process.env.NODE_ENV !== 'production' && { confirmToken }),
     };
   }
 
-  async confirm(email: string) {
+  async confirm(email: string, token: string) {
+    // Validate token length before timing-safe compare
+    const expected = this.generateToken(email);
+    if (token.length !== expected.length) {
+      throw new BadRequestException('Invalid confirmation token');
+    }
+
+    if (!this.verifyToken(email, token)) {
+      throw new BadRequestException('Invalid confirmation token');
+    }
+
     const subscriber = await this.prisma.subscriber.findUnique({ where: { email } });
     if (!subscriber) throw new NotFoundException('Subscriber not found');
 

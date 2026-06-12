@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   CreateArticleDto,
@@ -87,15 +87,24 @@ export class ArticlesService {
     return article;
   }
 
-  async update(id: string, dto: UpdateArticleDto) {
-    await this.findById(id);
+  // ── Ownership check: WRITERs can only modify their own articles ───────────
+  private assertOwnership(article: any, userId: string, userRole: string) {
+    if (userRole === 'ADMIN' || userRole === 'EDITOR') return;
+    if (article.authorId !== userId) {
+      throw new ForbiddenException('You can only modify your own articles');
+    }
+  }
+
+  async update(id: string, dto: UpdateArticleDto, userId: string, userRole: string) {
+    const existing = await this.findById(id);
+    this.assertOwnership(existing, userId, userRole);
+
     const { tagIds, ...data } = dto;
 
     let publishedAt: Date | null | undefined = undefined;
     if (data.publishedAt !== undefined) {
       publishedAt = data.publishedAt ? new Date(data.publishedAt) : null;
     } else if (data.status === ArticleStatus.PUBLISHED) {
-      const existing = await this.prisma.article.findUnique({ where: { id } });
       if (existing && !existing.publishedAt) {
         publishedAt = new Date();
       }
@@ -117,8 +126,10 @@ export class ArticlesService {
     });
   }
 
-  async remove(id: string) {
-    await this.findById(id);
+  async remove(id: string, userId: string, userRole: string) {
+    const article = await this.findById(id);
+    this.assertOwnership(article, userId, userRole);
+
     await this.prisma.article.delete({ where: { id } });
     return { message: 'Article deleted' };
   }

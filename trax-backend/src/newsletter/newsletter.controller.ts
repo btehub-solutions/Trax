@@ -1,8 +1,9 @@
 import {
-  Body, Controller, Delete, Get, Param, Post, Query, UseGuards,
+  Body, Controller, Delete, Get, Post, Query, UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { Throttle } from '@nestjs/throttler';
 import { NewsletterService } from './newsletter.service';
 import { SubscribeDto, UnsubscribeDto } from './dto/newsletter.dto';
 import { Roles, RolesGuard } from '../auth/roles.guard';
@@ -13,15 +14,18 @@ export class NewsletterController {
   constructor(private readonly newsletterService: NewsletterService) {}
 
   @Post('subscribe')
+  @Throttle({ default: { ttl: 60000, limit: 5 } })
   @ApiOperation({ summary: 'Subscribe an email to the newsletter' })
   subscribe(@Body() dto: SubscribeDto) {
     return this.newsletterService.subscribe(dto);
   }
 
-  @Post('confirm')
-  @ApiOperation({ summary: 'Confirm subscription via email token' })
-  confirm(@Body('email') email: string) {
-    return this.newsletterService.confirm(email);
+  @Get('confirm')
+  @ApiOperation({ summary: 'Confirm subscription via HMAC token' })
+  @ApiQuery({ name: 'email', required: true })
+  @ApiQuery({ name: 'token', required: true })
+  confirm(@Query('email') email: string, @Query('token') token: string) {
+    return this.newsletterService.confirm(email, token);
   }
 
   @Delete('unsubscribe')

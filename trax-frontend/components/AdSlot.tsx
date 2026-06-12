@@ -17,6 +17,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import DOMPurify from 'dompurify'
 import { BASE_URL } from '@/lib/api'
 
 // ── Size presets (IAB standard) ───────────────────────────────────────────────
@@ -53,10 +54,10 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
             const activeAds = data.filter((ad: any) => ad.active && ad.code)
             if (activeAds.length > 0) {
               const randomIndex = Math.floor(Math.random() * activeAds.length)
-              setAdHtml(activeAds[randomIndex].code)
+              setAdHtml(DOMPurify.sanitize(activeAds[randomIndex].code, { ADD_TAGS: ['iframe'], ADD_ATTR: ['target', 'rel'] }))
             }
           } else if (data && data.code && data.active) {
-            setAdHtml(data.code)
+            setAdHtml(DOMPurify.sanitize(data.code, { ADD_TAGS: ['iframe'], ADD_ATTR: ['target', 'rel'] }))
           }
         }
       } catch (err) {
@@ -89,6 +90,58 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     const normalizedHtml = adHtml.trim().toLowerCase();
     const isImageOnly = normalizedHtml.startsWith('<a') && !normalizedHtml.includes('<div') && normalizedHtml.includes('<img');
     const containerId = id || `ad-slot-${size}-${Math.random().toString(36).substring(2, 7)}`;
+    
+    // Parse the img src if it's image only
+    let imageUrl = '';
+    let linkUrl = '';
+    if (isImageOnly) {
+      const srcMatch = adHtml.match(/src=["']([^"']+)["']/i);
+      const hrefMatch = adHtml.match(/href=["']([^"']+)["']/i);
+      if (srcMatch) imageUrl = srcMatch[1];
+      if (hrefMatch) linkUrl = hrefMatch[1];
+    }
+
+    if (isImageOnly && imageUrl) {
+      return (
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-32px' }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          id={containerId}
+          className={`relative overflow-hidden rounded-xl border border-white/5 flex items-center justify-center ${className}`}
+          style={{
+            width: preset.width,
+            height: preset.height,
+            maxWidth: '100%',
+            marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
+            marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
+          }}
+        >
+          {/* Blurred Background Backdrop */}
+          <div
+            className="absolute inset-0 pointer-events-none scale-110 blur-xl opacity-30 select-none bg-center bg-cover bg-no-repeat"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+          />
+          {/* Dark overlay backdrop to keep it unified */}
+          <div className="absolute inset-0 bg-black/60 pointer-events-none" />
+          
+          <a
+            href={linkUrl || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative z-10 w-full h-full flex items-center justify-center"
+          >
+            <img
+              src={imageUrl}
+              alt="Advertisement"
+              className="w-full h-full object-cover block select-none"
+            />
+          </a>
+        </motion.div>
+      )
+    }
+
     return (
       <div
         id={containerId}
@@ -101,21 +154,6 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
           marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
         }}
       >
-        {isImageOnly && (
-          <style dangerouslySetInnerHTML={{ __html: `
-            #${containerId} img {
-              width: 100% !important;
-              height: ${preset.height}px !important;
-              object-fit: cover !important;
-              display: block !important;
-            }
-            #${containerId} a {
-              display: block !important;
-              width: 100% !important;
-              height: 100% !important;
-            }
-          `}} />
-        )}
         <div dangerouslySetInnerHTML={{ __html: adHtml }} style={{ width: '100%', height: '100%' }} />
       </div>
     )

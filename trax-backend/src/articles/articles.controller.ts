@@ -63,8 +63,8 @@ export class ArticlesController {
   @Roles('ADMIN', 'EDITOR', 'WRITER')
   @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Update an article' })
-  update(@Param('id') id: string, @Body() dto: UpdateArticleDto) {
-    return this.articlesService.update(id, dto);
+  update(@Param('id') id: string, @Body() dto: UpdateArticleDto, @Request() req: any) {
+    return this.articlesService.update(id, dto, req.user.id, req.user.role);
   }
 
   @Patch(':id/publish')
@@ -81,7 +81,7 @@ export class ArticlesController {
   @Roles('ADMIN')
   @ApiBearerAuth('access-token')
   @ApiOperation({ summary: 'Delete an article (Admin only)' })
-  remove(@Param('id') id: string) {
-    return this.articlesService.remove(id);
+  remove(@Param('id') id: string, @Request() req: any) {
+    return this.articlesService.remove(id, req.user.id, req.user.role);
   }
 }
