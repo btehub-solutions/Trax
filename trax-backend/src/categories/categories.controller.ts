@@ -14,8 +14,23 @@ export class CategoriesController {
 
   @Get()
   @ApiOperation({ summary: 'List all categories' })
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll() {
+    try {
+      return await this.categoriesService.findAll();
+    } catch (e: any) {
+      return {
+        error: true,
+        message: e.message || 'Unknown error',
+        stack: e.stack,
+        env: {
+          DATABASE_URL_exists: !!process.env.DATABASE_URL,
+          POSTGRES_URL_exists: !!process.env.POSTGRES_URL,
+          POSTGRES_PRISMA_URL_exists: !!process.env.POSTGRES_PRISMA_URL,
+          connectionStringSanitized: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:[^:@]+@/g, ':***@') : null,
+          postgresUrlSanitized: process.env.POSTGRES_URL ? process.env.POSTGRES_URL.replace(/:[^:@]+@/g, ':***@') : null,
+        }
+      };
+    }
   }
 
   @Get(':slug')
