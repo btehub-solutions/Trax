@@ -54,10 +54,10 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
             const activeAds = data.filter((ad: any) => ad.active && ad.code)
             if (activeAds.length > 0) {
               const randomIndex = Math.floor(Math.random() * activeAds.length)
-              setAdHtml(DOMPurify.sanitize(activeAds[randomIndex].code, { ADD_TAGS: ['iframe'], ADD_ATTR: ['target', 'rel'] }))
+              setAdHtml(DOMPurify.sanitize(activeAds[randomIndex].code, { ADD_TAGS: ['iframe', 'style'], ADD_ATTR: ['target', 'rel'] }))
             }
           } else if (data && data.code && data.active) {
-            setAdHtml(DOMPurify.sanitize(data.code, { ADD_TAGS: ['iframe'], ADD_ATTR: ['target', 'rel'] }))
+            setAdHtml(DOMPurify.sanitize(data.code, { ADD_TAGS: ['iframe', 'style'], ADD_ATTR: ['target', 'rel'] }))
           }
         }
       } catch (err) {
