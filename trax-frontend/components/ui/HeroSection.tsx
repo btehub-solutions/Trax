@@ -48,10 +48,8 @@ export default function HeroSection() {
           src={featured.image}
           alt={featured.title}
           fill
-          className="object-cover"
           priority
           sizes="100vw"
-          unoptimized={featured.image?.includes('localhost:4000') || featured.image?.includes('supabase.co')}
         />
         {/* Layered overlays for dramatic effect */}
         <div

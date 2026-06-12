@@ -151,13 +151,12 @@ export default function LatestStoriesHero({ articles }: LatestStoriesHeroProps) 
               {/* ── Image block ─────────────────────────────────────────── */}
               <div className="relative overflow-hidden">
                 <Image
+                  src={article.image}
                   alt={article.title}
                   className="w-full aspect-[16/10] object-cover transition-transform duration-500 group-hover:scale-105"
                   height={560}
-                  src={article.image}
                   width={900}
                   style={{ objectFit: 'cover' }}
-                  unoptimized={article.image?.includes('localhost:4000') || article.image?.includes('supabase.co')}
                 />
 
                 {/* Category badge ── #C84B31 accent */}

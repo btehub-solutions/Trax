@@ -26,6 +26,7 @@ import {
   User
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL } from '@/lib/api';
+import { compressImage } from '@/lib/image-compressor';
 
 type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile';
 
@@ -302,15 +303,12 @@ export default function DashboardPage() {
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      setUploadError('Image must be under 5MB');
-      return;
-    }
     setUploading(true);
     setUploadError(null);
-    const fData = new FormData();
-    fData.append('file', file);
     try {
+      const compressedFile = await compressImage(file);
+      const fData = new FormData();
+      fData.append('file', compressedFile);
       const token = localStorage.getItem('token');
       const res = await fetch(`${BASE_URL}/uploads`, {
         method: 'POST',
@@ -337,15 +335,12 @@ export default function DashboardPage() {
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      setAvatarUploadError('Image must be under 5MB');
-      return;
-    }
     setAvatarUploading(true);
     setAvatarUploadError(null);
-    const fData = new FormData();
-    fData.append('file', file);
     try {
+      const compressedFile = await compressImage(file);
+      const fData = new FormData();
+      fData.append('file', compressedFile);
       const token = localStorage.getItem('token');
       const res = await fetch(`${BASE_URL}/uploads`, {
         method: 'POST',
@@ -372,15 +367,12 @@ export default function DashboardPage() {
   const handleAdImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    if (file.size > 5 * 1024 * 1024) {
-      setAdUploadError('Image must be under 5MB');
-      return;
-    }
     setAdUploading(true);
     setAdUploadError(null);
-    const fData = new FormData();
-    fData.append('file', file);
     try {
+      const compressedFile = await compressImage(file);
+      const fData = new FormData();
+      fData.append('file', compressedFile);
       const token = localStorage.getItem('token');
       const res = await fetch(`${BASE_URL}/uploads`, {
         method: 'POST',
@@ -506,6 +498,9 @@ export default function DashboardPage() {
     const matchesFilter = articleFilter === 'ALL' || article.status === articleFilter;
     return matchesSearch && matchesFilter;
   });
+
+  console.log('Dashboard rendering - raw articles:', articles.length, 'filtered articles:', filteredArticles.length);
+
 
   if (loading && !user) {
     return (

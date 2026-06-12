@@ -44,7 +44,6 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
               sizes="80px"
-              unoptimized={article.image?.includes('localhost:4000') || article.image?.includes('supabase.co')}
             />
           </div>
           <div className="flex flex-col justify-between flex-1 min-w-0">
@@ -91,7 +90,6 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
             className="object-cover transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, 60vw"
             priority
-            unoptimized={article.image?.includes('localhost:4000') || article.image?.includes('supabase.co')}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <span className={`absolute top-4 left-4 text-xs font-semibold px-3 py-1.5 rounded-full border ${badgeClass}`}>
@@ -165,7 +163,6 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           fill
           className="object-cover transition-transform duration-600 group-hover:scale-107"
           sizes="(max-width: 768px) 100vw, 33vw"
-          unoptimized={article.image?.includes('localhost:4000') || article.image?.includes('supabase.co')}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <span className={`absolute top-3 left-3 text-[10px] font-semibold px-2.5 py-1 rounded-full border ${badgeClass}`}>

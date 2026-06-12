@@ -140,7 +140,6 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             priority
             className="object-cover"
             sizes="100vw"
-            unoptimized={article.image?.includes('localhost:4000') || article.image?.includes('supabase.co')}
           />
           {/* gradient scrim */}
           <div
@@ -249,7 +248,6 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                       alt={article.author}
                       fill
                       className="object-cover"
-                      unoptimized={article.authorAvatar.includes('localhost:4000') || article.authorAvatar.includes('supabase.co')}
                     />
                   </div>
                 ) : (
