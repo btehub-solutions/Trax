@@ -18,6 +18,9 @@ export class CategoriesController {
     try {
       return await this.categoriesService.findAll();
     } catch (e: any) {
+      const dbUrl = process.env.DATABASE_URL || '';
+      const match = dbUrl.match(/:([^:@]+)@/);
+      const password = match ? match[1] : '';
       return {
         error: true,
         message: e.message || 'Unknown error',
@@ -26,8 +29,13 @@ export class CategoriesController {
           DATABASE_URL_exists: !!process.env.DATABASE_URL,
           POSTGRES_URL_exists: !!process.env.POSTGRES_URL,
           POSTGRES_PRISMA_URL_exists: !!process.env.POSTGRES_PRISMA_URL,
-          connectionStringSanitized: process.env.DATABASE_URL ? process.env.DATABASE_URL.replace(/:[^:@]+@/g, ':***@') : null,
-          postgresUrlSanitized: process.env.POSTGRES_URL ? process.env.POSTGRES_URL.replace(/:[^:@]+@/g, ':***@') : null,
+          connectionStringSanitized: dbUrl.replace(/:[^:@]+@/g, ':***@'),
+          passwordDetails: {
+            length: password.length,
+            trimmedLength: password.trim().length,
+            startsWithP: password.startsWith('P'),
+            endsWithR: password.endsWith('R'),
+          }
         }
       };
     }
