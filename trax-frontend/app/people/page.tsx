@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function PeoplePage() {
   const articles = await getDbArticles()
   const peopleArticles = articles.filter((a) =>
-    ['Profiles', 'Interview'].includes(a.category)
+    ['Profiles', 'Interview', 'People'].includes(a.category)
   )
 
   return (

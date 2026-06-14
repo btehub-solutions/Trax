@@ -41,6 +41,8 @@ async function main() {
     { name: 'Events', slug: 'events', color: '#0891B2', description: 'tech summits, meetups and hackathons' },
     { name: 'Policy', slug: 'policy', color: '#D97706', description: 'Government roadmaps and regulations' },
     { name: 'Tools', slug: 'tools', color: '#3B82F6', description: 'Libraries, code assets, and platforms' },
+    { name: 'Startups', slug: 'startups', color: '#10B981', description: 'Spotlight on startups and ventures' },
+    { name: 'People', slug: 'people', color: '#8B5CF6', description: 'Profiles and interviews of prominent figures' },
   ]
 
   const categoriesMap: Record<string, string> = {}

@@ -21,6 +21,9 @@ const categoryBadgeClass: Record<string, string> = {
   Ecosystem: 'badge-ecosystem',
   Events: 'badge-events',
   Interview: 'badge-interview',
+  Startups: 'badge-startups',
+  People: 'badge-people',
+  Tools: 'badge-tools',
 }
 
 export default function Card({ article, variant = 'default', index = 0 }: CardProps) {

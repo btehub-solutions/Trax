@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function StartupsPage() {
   const articles = await getDbArticles()
   const startupArticles = articles.filter((a) =>
-    ['Ecosystem', 'Profiles', 'Funding'].includes(a.category)
+    ['Ecosystem', 'Profiles', 'Funding', 'Startups'].includes(a.category)
   )
 
   return (

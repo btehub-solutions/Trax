@@ -1,49 +1,61 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Play, Pause, Disc, Headphones, Calendar } from 'lucide-react'
 
 export default function PodcastPage() {
   const [playingEpisode, setPlayingEpisode] = useState<number | null>(null)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const episodes = [
     {
-      number: 'EP 12',
-      title: 'Training Ogun Agrotech: Low-Resource Language Datasets',
-      guest: 'Kola Tubosun',
-      guestTitle: 'Linguist & LLM Researcher',
-      duration: '45 mins',
-      date: 'June 4, 2026',
-      desc: "In this episode, we talk with Kola about the massive challenge of scraping, cleaning, and validating training datasets for Ogun State's dialects, and how Ogun Agrotech is overcoming these gaps.",
-    },
-    {
-      number: 'EP 11',
-      title: 'The Reality of Institutional AI Investing in Nigeria',
-      guest: 'Chinedu Azikiwe',
-      guestTitle: 'General Partner at WestTech Capital',
-      duration: '58 mins',
-      date: 'May 27, 2026',
-      desc: 'Chinedu joins us to discuss VC perspectives on startups, evaluating technical capability, computing costs, and whether Ogun State models can compete globally.',
-    },
-    {
-      number: 'EP 10',
-      title: 'Ethical Diagnostics: AI in Rural Health Systems',
-      guest: 'Dr. Amina Touré',
-      guestTitle: 'AI Health Systems Advisor',
-      duration: '38 mins',
-      date: 'May 15, 2026',
-      desc: 'Dr. Touré shares deep insights into model drift, diagnostics accuracy, and structural bottlenecks when deploying deep learning medical tools in remote clinics.',
-    },
+      number: 'EP 1',
+      title: 'Welcome to the TRAX Podcast',
+      guest: 'Trax Team',
+      guestTitle: 'Host',
+      duration: '2:38 mins',
+      date: 'June 14, 2026',
+      audioUrl: '/audio/ep1.mp3',
+      desc: `An introduction to the TRAX Podcast, exploring our vision to highlight the innovators, builders, and creators shaping the future of technology in Ogun State.`,
+    }
   ]
 
   const togglePlay = (idx: number) => {
-    setPlayingEpisode(playingEpisode === idx ? null : idx)
+    if (!audioRef.current) return
+
+    if (playingEpisode === idx) {
+      audioRef.current.pause()
+      setPlayingEpisode(null)
+    } else {
+      audioRef.current.src = episodes[idx].audioUrl
+      audioRef.current.play().catch(err => {
+        console.error('Audio playback failed:', err)
+      })
+      setPlayingEpisode(idx)
+    }
   }
+
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return
+
+    const handleEnded = () => {
+      setPlayingEpisode(null)
+    }
+
+    audio.addEventListener('ended', handleEnded)
+    return () => {
+      audio.removeEventListener('ended', handleEnded)
+    }
+  }, [])
 
   return (
     <div className="relative pt-28 pb-20 min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
+
+      {/* Hidden HTML5 Audio Element */}
+      <audio ref={audioRef} />
 
       <div className="container relative z-10">
         {/* Header */}
@@ -132,7 +144,7 @@ export default function PodcastPage() {
                     <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: 'var(--fg-subtle)' }} />
                     <span className="opacity-75">{episode.guestTitle}</span>
                   </div>
-                  <p className="text-xs md:text-sm leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
+                  <p className="text-xs md:text-sm leading-relaxed whitespace-pre-line" style={{ color: 'var(--fg-muted)' }}>
                     {episode.desc}
                   </p>
                 </div>

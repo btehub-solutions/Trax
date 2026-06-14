@@ -29,6 +29,9 @@ const categoryBadgeStyle: Record<string, { bg: string; color: string; border: st
   Ecosystem: { bg: 'rgba(200,75,49,0.18)',    color: '#D96248', border: 'rgba(200,75,49,0.35)'   },
   Events:    { bg: 'rgba(6,182,212,0.18)',   color: '#22D3EE', border: 'rgba(6,182,212,0.35)'  },
   Interview: { bg: 'rgba(99,102,241,0.18)',  color: '#818CF8', border: 'rgba(99,102,241,0.35)' },
+  Startups:  { bg: 'rgba(16,185,129,0.18)',  color: '#10B981', border: 'rgba(16,185,129,0.35)' },
+  People:    { bg: 'rgba(139,92,246,0.18)',  color: '#A78BFA', border: 'rgba(139,92,246,0.35)' },
+  Tools:     { bg: 'rgba(59,130,246,0.18)',  color: '#60A5FA', border: 'rgba(59,130,246,0.35)' },
 }
 
 export default function HeroSection() {

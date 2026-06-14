@@ -225,6 +225,9 @@ img, video {
 .badge-ecosystem  { background: rgba(200, 75, 49, 0.12);    color: #C84B31; border-color: rgba(200, 75, 49, 0.25);   }
 .badge-events     { background: rgba(6, 182, 212, 0.12);   color: #0891B2; border-color: rgba(6, 182, 212, 0.25);  }
 .badge-interview  { background: rgba(99, 102, 241, 0.12);  color: #4F46E5; border-color: rgba(99, 102, 241, 0.25); }
+.badge-startups   { background: rgba(16, 185, 129, 0.12); color: #10B981; border-color: rgba(16, 185, 129, 0.25); }
+.badge-people     { background: rgba(139, 92, 246, 0.12); color: #8B5CF6; border-color: rgba(139, 92, 246, 0.25); }
+.badge-tools      { background: rgba(59, 130, 246, 0.12);  color: #3B82F6; border-color: rgba(59, 130, 246, 0.25); }
 
 /* Dark mode: slightly brighter badge text */
 .dark .badge-funding   { color: #34D399; }
@@ -235,6 +238,9 @@ img, video {
 .dark .badge-ecosystem { color: #D96248; }
 .dark .badge-events    { color: #22D3EE; }
 .dark .badge-interview { color: #818CF8; }
+.dark .badge-startups  { color: #34D399; }
+.dark .badge-people    { color: #A78BFA; }
+.dark .badge-tools     { color: #60A5FA; }
 
 /* ─── Ticker Animation ─── */
 @keyframes ticker {

@@ -16,6 +16,9 @@ const categoryColors: Record<string, { bg: string; color: string; border: string
   Ecosystem: { bg: 'rgba(200,75,49,0.12)',     color: '#C84B31', border: 'rgba(200,75,49,0.25)'   },
   Events:    { bg: 'rgba(6,182,212,0.12)',    color: '#0891B2', border: 'rgba(6,182,212,0.25)'  },
   Interview: { bg: 'rgba(99,102,241,0.12)',   color: '#4F46E5', border: 'rgba(99,102,241,0.25)' },
+  Startups:  { bg: 'rgba(16,185,129,0.12)',  color: '#10B981', border: 'rgba(16,185,129,0.25)' },
+  People:    { bg: 'rgba(139,92,246,0.12)',  color: '#8B5CF6', border: 'rgba(139,92,246,0.25)' },
+  Tools:     { bg: 'rgba(59,130,246,0.12)',   color: '#3B82F6', border: 'rgba(59,130,246,0.25)' },
   // fallback → brand accent
   default:   { bg: 'rgba(200,75,49,0.12)',     color: '#C84B31', border: 'rgba(200,75,49,0.25)'   },
 }
