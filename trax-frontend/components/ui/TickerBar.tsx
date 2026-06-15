@@ -1,11 +1,20 @@
 'use client'
 
-import { breakingHeadlines } from '@/lib/articles'
 import { Zap } from 'lucide-react'
 
-export default function TickerBar() {
+interface TickerBarProps {
+  headlines?: string[]
+}
+
+export default function TickerBar({ headlines = [] }: TickerBarProps) {
+  const displayHeadlines = headlines.length > 0 ? headlines : [
+    "Welcome to the TRAX platform — tracking the Ogun State tech movement",
+    "Subscribe to our newsletter to stay updated on ecosystem stories",
+    "Listen to our first podcast episode EP1 now"
+  ]
+
   // Duplicate items to make the loop seamless
-  const items = [...breakingHeadlines, ...breakingHeadlines]
+  const items = [...displayHeadlines, ...displayHeadlines]
 
   return (
     <div

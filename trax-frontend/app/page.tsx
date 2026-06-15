@@ -28,12 +28,13 @@ export default async function HomePage() {
   const allArticles = await getArticles()
   const featuredArticles = allArticles.filter((a) => a.featured)
   const trendingArticles = allArticles.filter((a) => a.trending)
+  const breakingTitles = allArticles.filter((a) => a.breaking).map((a) => a.title)
 
   return (
     <>
       {/* ── Breaking news ticker (sits behind sticky nav, shifts on scroll) ── */}
       <div className="pt-16">
-        <TickerBar />
+        <TickerBar headlines={breakingTitles} />
       </div>
 
       {/* ── Homepage Leaderboard Ad Banner ── */}
