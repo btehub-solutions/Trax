@@ -32,7 +32,7 @@ export default function NewsletterPage() {
   ]
 
   return (
-    <div className="relative pt-28 pb-20 min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
+    <div className="relative pt-28 pb-20 min-h-screen overflow-hidden" style={{ backgroundColor: 'var(--bg)' }}>
       {/* Background patterns */}
       <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
       <div 
