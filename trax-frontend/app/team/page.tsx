@@ -10,8 +10,8 @@ export default function TeamPage() {
   const team = [
     {
       name: 'Ben Sam Oladoyin',
-      role: 'Founder & Lead Visionary',
-      bio: "AI/ML Engineer and founder of BTEHub Solutions. Ben drives Trax's mission to chronicle and catalyze the technology ecosystem in Nigeria, bringing deep technical expertise in intelligent automation alongside advocacy for digital innovation.",
+      role: 'Founder',
+      bio: "AI/ML Engineer and the Founder of Trax, a tech media platform built under BTEHub Solutions. Ben drives Trax's mission to chronicle and catalyze the technology ecosystem in Nigeria, bringing deep technical expertise in intelligent automation alongside advocacy for digital innovation.",
       image: '/images/founder.jpg'
     }
   ]
@@ -61,13 +61,13 @@ export default function TeamPage() {
               }}
             >
               {/* Profile image with scale transition */}
-              <div className="relative w-full aspect-[5/4] overflow-hidden">
+              <div className="relative w-full aspect-[3/4] overflow-hidden">
                 <Image
                   src={member.image}
                   alt={member.name}
                   fill
                   priority={i === 0}
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
