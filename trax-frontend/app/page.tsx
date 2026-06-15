@@ -15,11 +15,12 @@ async function getArticles(): Promise<Article[]> {
     })
     if (!res.ok) throw new Error('API server returned error')
     const json = await res.json()
-    if (json && json.data && json.data.length > 0) {
+    if (json && json.data) {
       return json.data.map(mapApiArticle)
     }
   } catch (err: any) {
     console.warn('Backend API offline, using static mock articles fallback:', err.message || err)
+    return mockArticles
   }
   return mockArticles
 }

@@ -24,18 +24,24 @@ async function getArticle(slug: string): Promise<Article | null> {
 
 // Fetch all articles to generate related list
 async function getRelatedArticles(currentSlug: string, category: string): Promise<Article[]> {
-  let all = mockArticles
+  let all: Article[] = []
+  let apiSucceeded = false
   try {
     const res = await fetch(`${BASE_URL}/articles?limit=50`, {
       next: { revalidate: 60 },
     })
     if (res.ok) {
       const json = await res.json()
-      if (json && json.data && json.data.length > 0) {
+      if (json && json.data) {
         all = json.data.map(mapApiArticle)
+        apiSucceeded = true
       }
     }
   } catch (_) {}
+
+  if (!apiSucceeded) {
+    all = mockArticles
+  }
 
   return [
     ...all.filter((a) => a.slug !== currentSlug && a.category === category),

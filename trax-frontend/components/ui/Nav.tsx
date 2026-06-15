@@ -26,7 +26,7 @@ export default function Nav() {
         const response = await fetch(`${BASE_URL}/articles?limit=100`)
         if (response.ok) {
           const json = await response.json()
-          if (json && json.data && json.data.length > 0) {
+          if (json && json.data) {
             setDbArticles(json.data.map((a: any) => ({
               id: a.id,
               slug: a.slug,

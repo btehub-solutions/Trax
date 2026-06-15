@@ -67,7 +67,7 @@ export async function getDbArticles(categorySlug?: string): Promise<Article[]> {
       ? `/articles?category=${categorySlug}&limit=100` 
       : '/articles?limit=100';
     const json = await api.get(url);
-    if (json && json.data && json.data.length > 0) {
+    if (json && json.data) {
       const dbData = json.data.map(mapApiArticle);
 
       return dbData;
