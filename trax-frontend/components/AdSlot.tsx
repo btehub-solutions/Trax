@@ -103,13 +103,58 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
 
     if (isImageOnly && imageUrl) {
       return (
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-32px' }}
-          transition={{ duration: 0.4, ease: 'easeOut' }}
+        <div className="w-full flex flex-col items-center">
+          <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
+            Sponsored
+          </span>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: '-32px' }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            id={containerId}
+            className={`relative overflow-hidden rounded-xl border border-white/5 flex items-center justify-center ${className}`}
+            style={{
+              width: preset.width,
+              height: preset.height,
+              maxWidth: '100%',
+              marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
+              marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
+            }}
+          >
+            {/* Blurred Background Backdrop */}
+            <div
+              className="absolute inset-0 pointer-events-none scale-110 blur-xl opacity-30 select-none bg-center bg-cover bg-no-repeat"
+              style={{ backgroundImage: `url(${imageUrl})` }}
+            />
+            {/* Dark overlay backdrop to keep it unified */}
+            <div className="absolute inset-0 bg-black/60 pointer-events-none" />
+            
+            <a
+              href={linkUrl || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 w-full h-full flex items-center justify-center"
+            >
+              <img
+                src={imageUrl}
+                alt="Advertisement"
+                className="w-full h-full object-cover block select-none"
+              />
+            </a>
+          </motion.div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="w-full flex flex-col items-center">
+        <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
+          Sponsored
+        </span>
+        <div
           id={containerId}
-          className={`relative overflow-hidden rounded-xl border border-white/5 flex items-center justify-center ${className}`}
+          className={`overflow-hidden rounded-xl ${className}`}
           style={{
             width: preset.width,
             height: preset.height,
@@ -118,43 +163,8 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
             marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
           }}
         >
-          {/* Blurred Background Backdrop */}
-          <div
-            className="absolute inset-0 pointer-events-none scale-110 blur-xl opacity-30 select-none bg-center bg-cover bg-no-repeat"
-            style={{ backgroundImage: `url(${imageUrl})` }}
-          />
-          {/* Dark overlay backdrop to keep it unified */}
-          <div className="absolute inset-0 bg-black/60 pointer-events-none" />
-          
-          <a
-            href={linkUrl || '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative z-10 w-full h-full flex items-center justify-center"
-          >
-            <img
-              src={imageUrl}
-              alt="Advertisement"
-              className="w-full h-full object-cover block select-none"
-            />
-          </a>
-        </motion.div>
-      )
-    }
-
-    return (
-      <div
-        id={containerId}
-        className={`overflow-hidden ${className}`}
-        style={{
-          width: preset.width,
-          height: preset.height,
-          maxWidth: '100%',
-          marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
-          marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
-        }}
-      >
-        <div dangerouslySetInnerHTML={{ __html: adHtml }} style={{ width: '100%', height: '100%' }} />
+          <div dangerouslySetInnerHTML={{ __html: adHtml }} style={{ width: '100%', height: '100%' }} />
+        </div>
       </div>
     )
   }
@@ -289,25 +299,30 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-32px' }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
-      id={id}
-      role="complementary"
-      aria-label={`Advertisement: ${displayLabel}`}
-      className={`overflow-hidden ${className}`}
-      style={{
-        width:      preset.width,
-        minHeight:  preset.height,
-        maxWidth:   '100%',
-        marginLeft:  typeof preset.width === 'number' ? 'auto'   : undefined,
-        marginRight: typeof preset.width === 'number' ? 'auto'   : undefined,
-      }}
-    >
-      {fallbackContent}
-    </motion.div>
+    <div className="w-full flex flex-col items-center">
+      <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
+        Sponsored
+      </span>
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: '-32px' }}
+        transition={{ duration: 0.4, ease: 'easeOut' }}
+        id={id}
+        role="complementary"
+        aria-label={`Advertisement: ${displayLabel}`}
+        className={`overflow-hidden ${className}`}
+        style={{
+          width:      preset.width,
+          minHeight:  preset.height,
+          maxWidth:   '100%',
+          marginLeft:  typeof preset.width === 'number' ? 'auto'   : undefined,
+          marginRight: typeof preset.width === 'number' ? 'auto'   : undefined,
+        }}
+      >
+        {fallbackContent}
+      </motion.div>
+    </div>
   )
 }
 
