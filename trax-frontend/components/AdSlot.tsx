@@ -168,48 +168,24 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       </div>
     )
   }
-
   // Fallback visual advertisement banners
   let fallbackContent;
+
   if (size === 'leaderboard') {
     fallbackContent = (
-      <div
-        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-white/5 hover:border-[#C84B31]/30"
-        style={{
-          minHeight: preset.height,
-          background: 'linear-gradient(90deg, #111827 0%, #1c1917 50%, #292524 100%)',
-          padding: '12px 24px',
-        }}
+      <a
+        href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full h-full block rounded-xl overflow-hidden border border-white/5 hover:border-[#C84B31]/40 transition-all duration-300 select-none relative"
+        style={{ minHeight: preset.height }}
       >
-        <div className="flex flex-col text-center sm:text-left">
-          <span
-            style={{
-              fontSize: '11px',
-              fontWeight: 800,
-              letterSpacing: '0.05em',
-              color: '#C84B31',
-              textTransform: 'uppercase',
-              marginBottom: '2px',
-            }}
-          >
-            AD SPACE AVAILABLE
-          </span>
-          <span style={{ fontSize: '12px', color: 'var(--fg-subtle)' }}>
-            You can run your ads here. Contact the admin to get started.
-          </span>
-        </div>
-        <a
-          href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
-          className="px-4 py-2 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
-          style={{
-            backgroundColor: '#C84B31',
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          CONTACT ADMIN
-        </a>
-      </div>
+        <img
+          src="/images/ads/stay_connected_leaderboard.png"
+          alt="Stay Connected Wherever You Are - Advertise on Trax"
+          className="w-full h-full object-cover block"
+        />
+      </a>
     );
   } else if (size === 'rectangle') {
     fallbackContent = (
@@ -218,9 +194,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         target="_blank"
         rel="noopener noreferrer"
         className="w-full h-full block rounded-xl overflow-hidden border border-white/5 hover:border-[#C84B31]/40 transition-all duration-300 select-none relative"
-        style={{
-          minHeight: preset.height,
-        }}
+        style={{ minHeight: preset.height }}
       >
         <img
           src="/images/ads/stay_connected_square.jpg"
