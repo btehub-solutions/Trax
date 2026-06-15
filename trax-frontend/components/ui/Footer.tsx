@@ -41,6 +41,15 @@ export default function Footer() {
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState('')
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
+  const [timeoutId, setTimeoutId] = useState<any>(null)
+
+  const showToast = (message: string) => {
+    if (timeoutId) clearTimeout(timeoutId)
+    setToastMessage(message)
+    const id = setTimeout(() => setToastMessage(null), 2500)
+    setTimeoutId(id)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -234,6 +243,10 @@ export default function Footer() {
                 <motion.a
                   key={label}
                   href={href}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    showToast(`${label} page is coming soon!`)
+                  }}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
@@ -297,6 +310,25 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-50 px-4 py-3 rounded-xl border text-sm font-semibold flex items-center gap-2.5 shadow-2xl backdrop-blur-md"
+            style={{
+              backgroundColor: 'rgba(20,20,20,0.85)',
+              borderColor: 'rgba(255,255,255,0.08)',
+              color: '#F4F4F5',
+            }}
+          >
+            <span style={{ color: '#C84B31' }}>✦</span>
+            {toastMessage}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   )
 }
