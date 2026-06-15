@@ -187,6 +187,7 @@ export default function NewsletterBanner({
                       border:     `1px solid ${error ? '#EF4444' : isBanner ? 'rgba(255,255,255,0.15)' : 'var(--border)'}`,
                       color:      isBanner ? '#F0F0F0' : 'var(--fg)',
                       fontFamily: 'var(--font-dm-sans)',
+                      fontSize:   '16px', // prevents iOS Safari auto-zoom on focus
                     }}
                     onFocus={(e) => {
                       if (!error) {

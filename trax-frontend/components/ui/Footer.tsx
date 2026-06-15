@@ -133,6 +133,7 @@ export default function Footer() {
                           border:          '1px solid rgba(255,255,255,0.08)',
                           color:           '#F4F4F5',
                           fontFamily:      'var(--font-dm-sans)',
+                          fontSize:        '16px', // prevents iOS Safari auto-zoom on focus
                           transition:      'border-color 0.2s, box-shadow 0.2s',
                         }}
                         onFocus={(e) => {
