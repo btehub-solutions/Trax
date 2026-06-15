@@ -23,7 +23,7 @@ import { BASE_URL } from '@/lib/api'
 // ── Size presets (IAB standard) ───────────────────────────────────────────────
 const SIZE_MAP = {
   leaderboard: { width: '100%',  height: 90,  label: 'Leaderboard (728×90)'  },
-  rectangle:   { width: 300,     height: 250, label: 'Medium Rectangle (300×250)' },
+  rectangle:   { width: 300,     height: 300, label: 'Square Sidebar Ad (300×300)' },
   inline:      { width: '100%',  height: 120, label: 'Inline Banner (468×120)' },
 } as const
 
@@ -213,43 +213,21 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     );
   } else if (size === 'rectangle') {
     fallbackContent = (
-      <div
-        className="w-full h-full flex flex-col items-center justify-center text-center gap-3 rounded-xl select-none transition-all duration-300 border border-[#C84B31]/20 hover:border-[#C84B31]/40"
+      <a
+        href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full h-full block rounded-xl overflow-hidden border border-white/5 hover:border-[#C84B31]/40 transition-all duration-300 select-none relative"
         style={{
           minHeight: preset.height,
-          background: 'linear-gradient(135deg, #1c1917 0%, #292524 100%)',
-          padding: '24px 20px',
         }}
       >
-        <span
-          className="px-3 py-1 rounded-full text-[9px] font-bold"
-          style={{
-            backgroundColor: 'rgba(200,75,49,0.1)',
-            color: '#C84B31',
-            border: '1px solid rgba(200,75,49,0.25)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-          }}
-        >
-          AD SPACE
-        </span>
-        <h4 style={{ fontSize: '16px', fontWeight: 800, margin: 0, color: '#fff' }}>
-          Run Your Ads Here
-        </h4>
-        <p style={{ fontSize: '11px', color: 'var(--fg-subtle)', margin: '0 0 8px 0', lineHeight: 1.4 }}>
-          Get your message in front of our tech community audience.
-        </p>
-        <a
-          href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
-          className="px-5 py-2.5 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
-          style={{
-            backgroundColor: '#C84B31',
-            textDecoration: 'none',
-          }}
-        >
-          Contact admin@trax.co
-        </a>
-      </div>
+        <img
+          src="/images/ads/stay_connected_square.jpg"
+          alt="Stay Connected Wherever You Are - Advertise on Trax"
+          className="w-full h-full object-cover block"
+        />
+      </a>
     );
   } else {
     // inline
