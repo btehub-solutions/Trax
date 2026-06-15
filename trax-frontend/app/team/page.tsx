@@ -9,35 +9,11 @@ export const metadata: Metadata = {
 export default function TeamPage() {
   const team = [
     {
-      name: 'Ngozi Eze',
-      role: 'Editor-in-Chief',
-      bio: "Leading editorial strategy. Former tech editor at TechCabal with 8+ years covering Ogun State's startups.",
-      image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&h=500&fit=crop&q=80',
-    },
-    {
-      name: 'Amara Nwosu',
-      role: 'Features Editor',
-      bio: 'Loves documenting builders and technical profiles. Former software development writer at AI Ogun State Lab.',
-      image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&h=500&fit=crop&q=80',
-    },
-    {
-      name: 'Chidi Okafor',
-      role: 'Senior Venture Reporter',
-      bio: 'Tracks startup funding and legal frameworks. Has written for Ventureburn and Bloomberg Africa.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop&q=80',
-    },
-    {
-      name: 'Kemi Adeyemi',
-      role: 'Health & Ethics Correspondent',
-      bio: 'Investigates diagnostic models, bias, and algorithmic healthtech solutions across Francophone regions.',
-      image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&h=500&fit=crop&q=80',
-    },
-    {
-      name: 'Tunde Bakare',
-      role: 'East Africa Correspondent',
-      bio: 'Based in Abeokuta. Reporting on collaborations, research centers, and startup hubs in the Rock City tech zone.',
-      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&h=500&fit=crop&q=80',
-    },
+      name: 'Ben Sam Oladoyin',
+      role: 'Founder & Lead Visionary',
+      bio: "AI/ML Engineer and founder of BTEHub Solutions. Ben drives Trax's mission to chronicle and catalyze the technology ecosystem in Nigeria, bringing deep technical expertise in intelligent automation alongside advocacy for digital innovation.",
+      image: '/images/founder.jpg'
+    }
   ]
 
   return (
@@ -90,6 +66,7 @@ export default function TeamPage() {
                   src={member.image}
                   alt={member.name}
                   fill
+                  priority={i === 0}
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
