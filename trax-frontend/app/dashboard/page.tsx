@@ -174,22 +174,29 @@ export default function DashboardPage() {
   }, [activeTab]);
 
   const handleExportCSV = () => {
+    console.log('handleExportCSV clicked. Subscribers:', subscribers);
     try {
-      if (!subscribers || subscribers.length === 0) return;
+      if (!subscribers || subscribers.length === 0) {
+        console.warn('No subscribers to export.');
+        return;
+      }
       
       const headers = ['Email Address', 'Joined Date', 'Confirmed'];
       const rows = subscribers.map(sub => [
-        sub.email,
-        new Date(sub.createdAt).toISOString(),
+        sub.email || '',
+        sub.createdAt ? new Date(sub.createdAt).toLocaleDateString() : '',
         sub.confirmed ? 'Confirmed' : 'Pending'
       ]);
       
       const csvContent = [
-        headers.join(','),
-        ...rows.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(','))
+        headers.map(h => `"${h}"`).join(','),
+        ...rows.map(row => row.map(val => `"${String(val).replace(/"/g, '""')}"`).join(','))
       ].join('\n');
       
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      console.log('Generated CSV content successfully');
+      
+      // Prepend UTF-8 BOM (\uFEFF) to make sure Excel on Windows parses it correctly
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.setAttribute('href', url);
@@ -197,16 +204,21 @@ export default function DashboardPage() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      console.log('Download triggered successfully');
     } catch (err: any) {
+      console.error('CSV export failed:', err);
       alert('Failed to export CSV: ' + err.message);
     }
   };
 
   const handleConfirmSubscriber = async (email: string) => {
+    console.log('handleConfirmSubscriber clicked for email:', email);
     try {
-      await api.post('/newsletter/subscribers/confirm', { email });
+      const res = await api.post('/newsletter/subscribers/confirm', { email });
+      console.log('Confirmation response:', res);
       fetchDashboardData();
     } catch (err: any) {
+      console.error('Confirmation failed:', err);
       alert(err.message || 'Failed to confirm subscriber');
     }
   };
