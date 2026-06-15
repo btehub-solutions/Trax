@@ -203,49 +203,72 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       </a>
     );
   } else {
-    // inline
+    // inline — Option B: image background with branded overlay
     fallbackContent = (
-      <div
-        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-[#C84B31]/20 hover:border-[#C84B31]/40"
-        style={{
-          minHeight: preset.height,
-          background: 'linear-gradient(90deg, #1c1917 0%, #292524 100%)',
-          padding: '16px 24px',
-        }}
+      <a
+        href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative w-full block rounded-xl overflow-hidden select-none group"
+        style={{ height: preset.height, minHeight: preset.height }}
       >
-        <div className="flex flex-col text-center sm:text-left">
+        {/* Background image */}
+        <img
+          src="/images/ads/trax_inline_banner.png"
+          alt="Advertise on Trax"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          style={{ filter: 'brightness(0.45)' }}
+        />
+
+        {/* Dark overlay for readability */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(28,25,23,0.55) 50%, rgba(0,0,0,0.72) 100%)' }}
+        />
+
+        {/* Red left accent bar */}
+        <div className="absolute left-0 top-0 h-full w-1 rounded-l-xl" style={{ backgroundColor: '#C84B31' }} />
+
+        {/* Content row */}
+        <div className="relative z-10 flex items-center justify-between h-full px-6 gap-4">
+
+          {/* Brand + headline */}
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="font-black tracking-tight text-[15px]" style={{ color: '#C84B31', fontFamily: 'sans-serif' }}>
+              TRAX
+            </span>
+            <div className="w-px h-5 bg-white/20" />
+            <span className="text-white font-bold text-[13px] whitespace-nowrap">
+              Your brand could be here
+            </span>
+          </div>
+
+          {/* Stat pills */}
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
+            {['12K Readers', '200+ Articles', "Ogun's #1 Tech Media"].map((stat) => (
+              <span
+                key={stat}
+                className="text-[10px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap"
+                style={{
+                  backgroundColor: 'rgba(200,75,49,0.12)',
+                  border: '1px solid rgba(200,75,49,0.35)',
+                  color: '#f5f5f5',
+                }}
+              >
+                {stat}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA button */}
           <span
-            className="px-2.5 py-0.5 rounded-full text-[9px] font-bold mb-2 w-fit mx-auto sm:mx-0"
-            style={{
-              backgroundColor: 'rgba(200,75,49,0.1)',
-              color: '#C84B31',
-              border: '1px solid rgba(200,75,49,0.25)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              display: 'inline-block',
-            }}
+            className="shrink-0 px-4 py-1.5 rounded-lg text-[11px] font-bold text-white transition-all duration-200 group-hover:scale-105"
+            style={{ backgroundColor: '#C84B31', whiteSpace: 'nowrap' }}
           >
-            AD SPACE
+            Get Started →
           </span>
-          <h4 style={{ fontSize: '14px', fontWeight: 800, margin: '0 0 2px 0', color: '#fff' }}>
-            Run Your Ads Here
-          </h4>
-          <p style={{ fontSize: '11px', color: 'var(--fg-subtle)', margin: 0 }}>
-            Place your banner within articles. Contact the admin to advertise.
-          </p>
         </div>
-        <a
-          href="mailto:admin@trax.co?subject=Advertise%20on%20Trax"
-          className="px-4 py-2 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
-          style={{
-            backgroundColor: '#C84B31',
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          Contact Admin
-        </a>
-      </div>
+      </a>
     );
   }
 
