@@ -173,6 +173,44 @@ export default function DashboardPage() {
     }
   }, [activeTab]);
 
+  const handleExportCSV = () => {
+    try {
+      if (!subscribers || subscribers.length === 0) return;
+      
+      const headers = ['Email Address', 'Joined Date', 'Confirmed'];
+      const rows = subscribers.map(sub => [
+        sub.email,
+        new Date(sub.createdAt).toISOString(),
+        sub.confirmed ? 'Confirmed' : 'Pending'
+      ]);
+      
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(val => `"${val.replace(/"/g, '""')}"`).join(','))
+      ].join('\n');
+      
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.setAttribute('href', url);
+      link.setAttribute('download', `trax_subscribers_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (err: any) {
+      alert('Failed to export CSV: ' + err.message);
+    }
+  };
+
+  const handleConfirmSubscriber = async (email: string) => {
+    try {
+      await api.post('/newsletter/subscribers/confirm', { email });
+      fetchDashboardData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to confirm subscriber');
+    }
+  };
+
   const fetchDashboardData = async () => {
     setLoading(true);
     setConnectionError(null);
@@ -1160,9 +1198,19 @@ export default function DashboardPage() {
               {/* TAB 4: SUBSCRIBERS LOG */}
               {activeTab === 'subscribers' && (
                 <div className="space-y-6">
-                  <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Newsletter Subscribers</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Check email capture lists and metrics</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Newsletter Subscribers</h1>
+                      <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Check email capture lists and metrics</p>
+                    </div>
+                    {subscribers.length > 0 && (
+                      <button
+                        onClick={handleExportCSV}
+                        className="self-start sm:self-center bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                      >
+                        Export CSV
+                      </button>
+                    )}
                   </div>
 
                   <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
@@ -1204,20 +1252,30 @@ export default function DashboardPage() {
                                 </span>
                               </td>
                               <td className="py-4 px-6 text-right">
-                                <button
-                                  onClick={async () => {
-                                    if (!confirm(`Unsubscribe ${sub.email}?`)) return;
-                                    try {
-                                      await api.post('/newsletter/unsubscribe', { email: sub.email });
-                                      fetchDashboardData();
-                                    } catch (err: any) {
-                                      alert(err.message || 'Failed to unsubscribe');
-                                    }
-                                  }}
-                                  className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 text-xs font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/20 px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/30 transition-all"
-                                >
-                                  Remove
-                                </button>
+                                <div className="flex gap-2 justify-end">
+                                  {!sub.confirmed && (
+                                    <button
+                                      onClick={() => handleConfirmSubscriber(sub.email)}
+                                      className="text-emerald-500 hover:text-emerald-600 dark:text-emerald-400 dark:hover:text-emerald-300 text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/20 hover:bg-emerald-100 dark:hover:bg-emerald-900/20 px-3 py-1.5 rounded-lg border border-emerald-200 dark:border-emerald-900/30 transition-all"
+                                    >
+                                      Confirm
+                                    </button>
+                                  )}
+                                  <button
+                                    onClick={async () => {
+                                      if (!confirm(`Unsubscribe ${sub.email}?`)) return;
+                                      try {
+                                        await api.post('/newsletter/unsubscribe', { email: sub.email });
+                                        fetchDashboardData();
+                                      } catch (err: any) {
+                                        alert(err.message || 'Failed to unsubscribe');
+                                      }
+                                    }}
+                                    className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 text-xs font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/20 px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/30 transition-all"
+                                  >
+                                    Remove
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           ))}

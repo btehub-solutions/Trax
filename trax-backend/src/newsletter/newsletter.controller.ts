@@ -34,6 +34,21 @@ export class NewsletterController {
     return this.newsletterService.unsubscribe(dto);
   }
 
+  @Post('unsubscribe')
+  @ApiOperation({ summary: 'Unsubscribe an email (POST alias)' })
+  unsubscribePost(@Body() dto: UnsubscribeDto) {
+    return this.newsletterService.unsubscribe(dto);
+  }
+
+  @Post('subscribers/confirm')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('ADMIN', 'EDITOR')
+  @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: 'Manually confirm a subscriber' })
+  manuallyConfirm(@Body() dto: UnsubscribeDto) {
+    return this.newsletterService.manuallyConfirm(dto.email);
+  }
+
   // Admin only
   @Get('subscribers')
   @UseGuards(AuthGuard('jwt'), RolesGuard)

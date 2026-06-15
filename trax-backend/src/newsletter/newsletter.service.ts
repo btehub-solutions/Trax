@@ -82,6 +82,16 @@ export class NewsletterService {
     return { message: 'Successfully unsubscribed' };
   }
 
+  async manuallyConfirm(email: string) {
+    const subscriber = await this.prisma.subscriber.findUnique({ where: { email } });
+    if (!subscriber) throw new NotFoundException('Email not found in subscriber list');
+
+    return this.prisma.subscriber.update({
+      where: { email },
+      data:  { confirmed: true },
+    });
+  }
+
   async findAll(confirmed?: boolean) {
     return this.prisma.subscriber.findMany({
       where:   confirmed !== undefined ? { confirmed } : undefined,
