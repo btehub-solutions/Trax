@@ -178,7 +178,6 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         target="_blank"
         rel="noopener noreferrer"
         className="w-full h-full block rounded-xl overflow-hidden border border-white/5 hover:border-[#C84B31]/40 transition-all duration-300 select-none relative"
-        style={{ minHeight: preset.height }}
       >
         <img
           src="/images/ads/stay_connected_leaderboard.png"
@@ -265,11 +264,12 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         aria-label={`Advertisement: ${displayLabel}`}
         className={`overflow-hidden ${className}`}
         style={{
-          width:      preset.width,
-          minHeight:  preset.height,
-          maxWidth:   '100%',
-          marginLeft:  typeof preset.width === 'number' ? 'auto'   : undefined,
-          marginRight: typeof preset.width === 'number' ? 'auto'   : undefined,
+          width:       size === 'leaderboard' ? '100%' : preset.width,
+          minHeight:   size === 'leaderboard' ? undefined : preset.height,
+          aspectRatio: size === 'leaderboard' ? '1024 / 409' : undefined,
+          maxWidth:    size === 'leaderboard' ? '1024px' : '100%',
+          marginLeft:  'auto',
+          marginRight: 'auto',
         }}
       >
         {fallbackContent}
