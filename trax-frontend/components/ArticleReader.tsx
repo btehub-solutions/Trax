@@ -97,18 +97,21 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
   const bodyText = generateBody(article)
 
   // Share helpers
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
+  const getShareUrl = () => typeof window !== 'undefined' ? window.location.href : ''
 
   const shareX = () => {
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(shareUrl)}`, '_blank')
+    const url = getShareUrl()
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}`, '_blank')
   }
 
   const shareLinkedIn = () => {
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`, '_blank')
+    const url = getShareUrl()
+    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank')
   }
 
   const copyLink = async () => {
-    await navigator.clipboard.writeText(shareUrl)
+    const url = getShareUrl()
+    await navigator.clipboard.writeText(url)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
