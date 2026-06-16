@@ -23,12 +23,13 @@ import {
   Search,
   BookOpen,
   FileText,
-  User
+  User,
+  UserPlus
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL } from '@/lib/api';
 import { compressImage } from '@/lib/image-compressor';
 
-type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile';
+type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -105,6 +106,18 @@ export default function DashboardPage() {
   const [avatarUploadError, setAvatarUploadError] = useState<string | null>(null);
   const [connectionError, setConnectionError] = useState<string | null>(null);
 
+  // Team Management State
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [teamLoading, setTeamLoading] = useState(false);
+  const [teamError, setTeamError] = useState<string | null>(null);
+  const [teamSuccess, setTeamSuccess] = useState<string | null>(null);
+  const [teamFormData, setTeamFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'WRITER',
+  });
+
   // Validate Authentication
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -149,7 +162,7 @@ export default function DashboardPage() {
     };
 
     refreshProfile();
-    fetchDashboardData();
+    fetchDashboardData(parsedUser.role);
   }, []);
 
   // Sync slug generation in editor
@@ -223,7 +236,7 @@ export default function DashboardPage() {
     }
   };
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = async (userRole?: string) => {
     setLoading(true);
     setConnectionError(null);
     try {
@@ -256,6 +269,13 @@ export default function DashboardPage() {
         subscribersCount: subs.length,
         activeAdsCount: ads.filter((a: any) => a.active).length,
       });
+
+      // 6. Fetch team members (Admin only)
+      const currentRole = userRole || user?.role;
+      if (currentRole === 'ADMIN') {
+        const members = await api.get('/users');
+        setTeamMembers(members);
+      }
     } catch (err: any) {
       console.error('Failed to load dashboard data:', err);
       setConnectionError(err.message || 'Failed to connect to the backend server. Please verify the API is online.');
@@ -542,6 +562,42 @@ export default function DashboardPage() {
     }
   };
 
+  const handleAddTeamMember = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setTeamLoading(true);
+    setTeamError(null);
+    setTeamSuccess(null);
+
+    try {
+      await api.post('/users', teamFormData);
+      setTeamSuccess('Team member added successfully!');
+      setTeamFormData({ name: '', email: '', password: '', role: 'WRITER' });
+      
+      const members = await api.get('/users');
+      setTeamMembers(members);
+    } catch (err: any) {
+      setTeamError(err.message || 'Failed to add team member');
+    } finally {
+      setTeamLoading(false);
+    }
+  };
+
+  const handleDeleteTeamMember = async (id: string, name: string) => {
+    if (id === user?.id) {
+      alert("You cannot remove yourself!");
+      return;
+    }
+    if (!confirm(`Are you sure you want to remove ${name} from the team?`)) return;
+
+    try {
+      await api.delete(`/users/${id}`);
+      const members = await api.get('/users');
+      setTeamMembers(members);
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete team member');
+    }
+  };
+
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(articleSearch.toLowerCase()) || 
                           article.excerpt.toLowerCase().includes(articleSearch.toLowerCase());
@@ -617,6 +673,7 @@ export default function DashboardPage() {
               { id: 'subscribers', label: 'Subscribers', icon: Users },
               { id: 'ads', label: 'Ad Zones', icon: Settings },
               { id: 'profile', label: 'Profile Settings', icon: User },
+              ...(user?.role === 'ADMIN' ? [{ id: 'team', label: 'Team Management', icon: UserPlus }] : []),
             ].map(item => {
               const Icon = item.icon;
               return (
@@ -1606,6 +1663,175 @@ export default function DashboardPage() {
                       </button>
                     </div>
                   </form>
+                </div>
+              )}
+
+              {/* TAB 7: TEAM MANAGEMENT */}
+              {activeTab === 'team' && user?.role === 'ADMIN' && (
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Team Management</h1>
+                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Add, update, and manage team members and their roles</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left: Team Directory Table */}
+                    <div className="lg:col-span-2 space-y-4">
+                      <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left border-collapse">
+                            <thead>
+                              <tr
+                                className="border-b text-xs font-semibold uppercase tracking-wider"
+                                style={{ borderColor: 'var(--dash-divider)', backgroundColor: 'var(--dash-thead)', color: 'var(--dash-fg-muted)' }}
+                              >
+                                <th className="py-4 px-6">Name</th>
+                                <th className="py-4 px-6">Email Address</th>
+                                <th className="py-4 px-6">Role</th>
+                                <th className="py-4 px-6 text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="text-sm" style={{ color: 'var(--dash-fg-secondary)' }}>
+                              {teamMembers.map((member) => (
+                                <tr
+                                  key={member.id}
+                                  className="border-b transition-colors"
+                                  style={{ borderColor: 'var(--dash-divider)' }}
+                                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--dash-hover)'}
+                                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                >
+                                  <td className="py-4 px-6 font-semibold" style={{ color: 'var(--dash-fg)' }}>
+                                    <div className="flex items-center gap-3">
+                                      {member.avatar ? (
+                                        <img src={member.avatar} alt={member.name} className="h-8 w-8 rounded-full object-cover border border-neutral-800" />
+                                      ) : (
+                                        <div className="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-orange-600">
+                                          {member.name.charAt(0)}
+                                        </div>
+                                      )}
+                                      <span>{member.name}</span>
+                                    </div>
+                                  </td>
+                                  <td className="py-4 px-6">{member.email}</td>
+                                  <td className="py-4 px-6">
+                                    <span className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full font-bold ${
+                                      member.role === 'ADMIN'
+                                        ? 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20'
+                                        : 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
+                                    }`}>
+                                      {member.role}
+                                    </span>
+                                  </td>
+                                  <td className="py-4 px-6 text-right font-medium">
+                                    {member.id !== user?.id && (
+                                      <button
+                                        onClick={() => handleDeleteTeamMember(member.id, member.name)}
+                                        className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 text-xs font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/20 px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/30 transition-all font-medium"
+                                      >
+                                        Remove
+                                      </button>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                              {teamMembers.length === 0 && (
+                                <tr>
+                                  <td colSpan={4} className="py-8 text-center" style={{ color: 'var(--dash-fg-subtle)' }}>
+                                    No team members loaded.
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Add Member Form Box */}
+                    <div className="p-6 rounded-2xl h-fit border" style={cardStyle}>
+                      <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--dash-fg)' }}>
+                        Add Team Member
+                      </h3>
+
+                      {teamError && (
+                        <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-xs">
+                          {teamError}
+                        </div>
+                      )}
+
+                      {teamSuccess && (
+                        <div className="mb-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-200 text-xs">
+                          {teamSuccess}
+                        </div>
+                      )}
+
+                      <form onSubmit={handleAddTeamMember} className="space-y-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Full Name</label>
+                          <input
+                            type="text"
+                            required
+                            value={teamFormData.name}
+                            onChange={(e) => setTeamFormData(prev => ({ ...prev, name: e.target.value }))}
+                            placeholder="John Doe"
+                            className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Email Address</label>
+                          <input
+                            type="email"
+                            required
+                            value={teamFormData.email}
+                            onChange={(e) => setTeamFormData(prev => ({ ...prev, email: e.target.value }))}
+                            placeholder="john@trax.co"
+                            className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Password</label>
+                          <input
+                            type="password"
+                            required
+                            value={teamFormData.password}
+                            onChange={(e) => setTeamFormData(prev => ({ ...prev, password: e.target.value }))}
+                            placeholder="••••••••"
+                            className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>System Role</label>
+                          <select
+                            value={teamFormData.role}
+                            onChange={(e) => setTeamFormData(prev => ({ ...prev, role: e.target.value }))}
+                            className="w-full rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-orange-500 border"
+                            style={inputStyle}
+                          >
+                            <option value="WRITER" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Writer (Create & edit articles)</option>
+                            <option value="ADMIN" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Admin (Full system access)</option>
+                          </select>
+                        </div>
+
+                        <button
+                          type="submit"
+                          disabled={teamLoading}
+                          className="w-full bg-orange-600 hover:bg-orange-500 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-lg shadow-orange-600/10 flex items-center justify-center gap-2"
+                        >
+                          {teamLoading ? (
+                            <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          ) : (
+                            'Add Member'
+                          )}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               )}
             </motion.div>
