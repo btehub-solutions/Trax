@@ -33,6 +33,21 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
   // Display up to 6 articles in the latest stories grid
   const latestFiltered = filteredArticles.slice(0, 6)
 
+  // Map category tab names to their corresponding subpages
+  const categoryPaths: Record<string, string> = {
+    'all': '/news',
+    'startups': '/startups',
+    'funding': '/funding',
+    'tools': '/tools',
+    'people': '/people',
+    'policy': '/policy',
+    'ecosystem': '/ecosystem',
+    'events': '/events',
+    'health': '/news',
+    'research': '/news',
+  }
+  const viewAllHref = categoryPaths[selectedCategory.toLowerCase()] || '/news'
+
   return (
     <>
       <CategoryStrip active={selectedCategory} onChange={setSelectedCategory} />
@@ -45,6 +60,7 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
             : `Fresh reporting under ${selectedCategory}`
         }
         articles={latestFiltered}
+        viewAllHref={viewAllHref}
       />
     </>
   )

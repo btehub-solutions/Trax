@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import { ArrowRight } from 'lucide-react'
@@ -12,6 +13,7 @@ interface ArticleGridProps {
   articles: Article[]
   variant?: 'default' | 'featured-first'
   id?: string
+  viewAllHref?: string
 }
 
 const containerVariants = {
@@ -25,6 +27,7 @@ export default function ArticleGrid({
   articles,
   variant = 'default',
   id,
+  viewAllHref = '/news',
 }: ArticleGridProps) {
   if (variant === 'featured-first') {
     const [featured, ...rest] = articles
@@ -53,13 +56,14 @@ export default function ArticleGrid({
                 </p>
               )}
             </div>
-            <motion.button
-              whileHover={{ x: 4, color: '#C84B31' }}
-              className="hidden md:flex items-center gap-1.5 text-sm font-medium transition-colors"
+            <Link
+              href={viewAllHref}
+              className="hidden md:flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-[#C84B31] group"
               style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
             >
-              View all <ArrowRight size={14} />
-            </motion.button>
+              <span>View all</span>
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </Link>
           </motion.div>
 
           {/* Layout: big featured left + sidebar right */}
@@ -113,13 +117,14 @@ export default function ArticleGrid({
               </p>
             )}
           </div>
-          <motion.button
-            whileHover={{ x: 4, color: '#C84B31' }}
-            className="hidden md:flex items-center gap-1.5 text-sm font-medium transition-colors"
+          <Link
+            href={viewAllHref}
+            className="hidden md:flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-[#C84B31] group"
             style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
           >
-            View all <ArrowRight size={14} />
-          </motion.button>
+            <span>View all</span>
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+          </Link>
         </motion.div>
 
         {/* Grid */}

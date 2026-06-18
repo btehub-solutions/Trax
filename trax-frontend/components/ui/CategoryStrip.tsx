@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -23,17 +23,37 @@ interface CategoryStripProps {
 }
 
 export default function CategoryStrip({ active = 'All', onChange }: CategoryStripProps) {
-  const [activeTab, setActiveTab] = useState(active)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  const scroll = (dir: 'left' | 'right') => {
-    const el = scrollRef.current
-    if (!el) return
-    el.scrollBy({ left: dir === 'left' ? -200 : 200, behavior: 'smooth' })
+  const handleArrowClick = (dir: 'left' | 'right') => {
+    const currentIndex = categories.findIndex((c) => c.label === active)
+    if (currentIndex === -1) return
+
+    let nextIndex = currentIndex
+    if (dir === 'left') {
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : categories.length - 1
+    } else {
+      nextIndex = currentIndex < categories.length - 1 ? currentIndex + 1 : 0
+    }
+
+    const nextCategory = categories[nextIndex]
+    handleSelect(nextCategory.label)
+
+    // Scroll active element into center view
+    setTimeout(() => {
+      const activeEl = document.getElementById(
+        `category-tab-${nextCategory.label.toLowerCase().replace(/\s+/g, '-')}`
+      )
+      if (activeEl && scrollRef.current) {
+        scrollRef.current.scrollTo({
+          left: activeEl.offsetLeft - scrollRef.current.offsetWidth / 2 + activeEl.offsetWidth / 2,
+          behavior: 'smooth',
+        })
+      }
+    }, 50)
   }
 
   const handleSelect = (label: string) => {
-    setActiveTab(label)
     onChange?.(label)
   }
 
@@ -60,7 +80,7 @@ export default function CategoryStrip({ active = 'All', onChange }: CategoryStri
           }}
         />
         <button
-          onClick={() => scroll('left')}
+          onClick={() => handleArrowClick('left')}
           aria-label="Scroll categories left"
           className="absolute left-4 top-1/2 -translate-y-1/2 z-20 hidden md:flex items-center justify-center w-7 h-7 rounded-full border transition-all hover:border-accent hover:text-accent"
           style={{
@@ -81,7 +101,7 @@ export default function CategoryStrip({ active = 'All', onChange }: CategoryStri
           aria-label="Filter by category"
         >
           {categories.map((cat) => {
-            const isActive = activeTab === cat.label
+            const isActive = active === cat.label
             return (
               <motion.button
                 key={cat.label}
@@ -114,7 +134,7 @@ export default function CategoryStrip({ active = 'All', onChange }: CategoryStri
           }}
         />
         <button
-          onClick={() => scroll('right')}
+          onClick={() => handleArrowClick('right')}
           aria-label="Scroll categories right"
           className="absolute right-4 top-1/2 -translate-y-1/2 z-20 hidden md:flex items-center justify-center w-7 h-7 rounded-full border transition-all hover:border-accent hover:text-accent"
           style={{
