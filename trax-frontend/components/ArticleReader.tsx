@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useSpring } from 'framer-motion'
 import { Clock, User, Bookmark, Share2, Link2, Check, ArrowLeft } from 'lucide-react'
-import ArticleCard from '@/components/ArticleCard'
+import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import AdSlot from '@/components/AdSlot'
 
@@ -121,12 +121,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
       {/* ── Reading progress bar ─────────────────────────────────────────── */}
       <motion.div
         className="fixed top-0 left-0 right-0 z-[100] origin-left"
-        style={{
-          scaleX,
-          height:          '3px',
-          backgroundColor: '#C84B31',
-          boxShadow:       '0 0 8px rgba(200,75,49,0.6)',
-        }}
+        style={{ scaleX, height: '3px', backgroundColor: '#FF3D16' }}
       />
 
       {/* ── Page ─────────────────────────────────────────────────────────── */}
@@ -138,7 +133,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
         style={{ backgroundColor: 'var(--bg)' }}
       >
         {/* ── Hero image ───────────────────────────────────────────────── */}
-        <motion.div variants={fadeUp} className="relative w-full" style={{ height: 'clamp(280px, 50vw, 560px)' }}>
+        <motion.div variants={fadeUp} className="relative w-full" style={{ height: 'clamp(300px, 48vw, 620px)' }}>
           <Image
             src={article.image}
             alt={article.title}
@@ -157,8 +152,8 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
           {/* Breaking badge */}
           {article.breaking && (
             <span
-              className="absolute top-6 left-6 inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full text-white"
-              style={{ backgroundColor: '#C84B31' }}
+              className="absolute top-6 left-6 inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 text-white"
+              style={{ backgroundColor: '#FF3D16' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               Breaking
@@ -168,13 +163,13 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
 
         {/* ── Article container ─────────────────────────────────────────── */}
         <div className="container">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-3xl mx-auto">
 
             {/* ── Back link ──────────────────────────────────────────────── */}
             <motion.div variants={fadeUp} className="pt-8 mb-6">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 text-sm font-medium transition-colors hover:text-[#C84B31]"
+                className="inline-flex items-center gap-2 text-sm font-bold transition-colors hover:text-[#FF3D16]"
                 style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
               >
                 <ArrowLeft size={15} strokeWidth={1.9} />
@@ -185,11 +180,11 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             {/* ── Category tag & Official Link ───────────────────────────────── */}
             <motion.div variants={fadeUp} className="mb-4 flex flex-wrap gap-2 items-center">
               <span
-                className="inline-block text-xs font-semibold px-3 py-1.5 rounded-full border tracking-wide"
+                className="inline-block text-xs font-extrabold uppercase"
                 style={{
-                  backgroundColor: cat.bg,
-                  color:           cat.color,
-                  borderColor:     cat.border,
+                  backgroundColor: 'transparent',
+                  color:           '#FF3D16',
+                  borderColor:     'transparent',
                   fontFamily:      'var(--font-dm-sans)',
                 }}
               >
@@ -200,7 +195,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   href={article.officialLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full border tracking-wide transition-all duration-200"
+                  className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-md border transition-all duration-200"
                   style={{
                     backgroundColor: 'rgba(255, 255, 255, 0.03)',
                     borderColor:     'var(--border)',
@@ -209,8 +204,8 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = 'rgba(200, 75, 49, 0.1)';
-                    e.currentTarget.style.borderColor = '#C84B31';
-                    e.currentTarget.style.color = '#C84B31';
+                    e.currentTarget.style.borderColor = '#FF3D16';
+                    e.currentTarget.style.color = '#FF3D16';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
@@ -227,12 +222,12 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             <motion.h1
               variants={fadeUp}
               style={{
-                fontFamily:    'var(--font-oxanium)',
+                fontFamily:    'var(--font-dm-sans)',
                 color:         'var(--fg)',
-                fontSize:      'clamp(1.75rem, 4vw, 2.75rem)',
-                lineHeight:    1.1,
-                letterSpacing: '-0.03em',
-                fontWeight:    700,
+                fontSize:      'clamp(2.2rem, 5vw, 4.25rem)',
+                lineHeight:    0.98,
+                letterSpacing: 0,
+                fontWeight:    900,
                 marginBottom:  '1.25rem',
               }}
             >
@@ -259,7 +254,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 ) : (
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
-                    style={{ backgroundColor: '#C84B31', fontFamily: 'var(--font-oxanium)' }}
+                    style={{ backgroundColor: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
                   >
                     {article.author.charAt(0)}
                   </div>
@@ -310,14 +305,14 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 whileTap={{ scale: 0.85 }}
                 className="ml-auto p-2 rounded-lg border transition-all duration-200"
                 style={{
-                  borderColor:     bookmarked ? '#C84B31' : 'var(--border)',
-                  color:           bookmarked ? '#C84B31' : 'var(--fg-muted)',
+                  borderColor:     bookmarked ? '#FF3D16' : 'var(--border)',
+                  color:           bookmarked ? '#FF3D16' : 'var(--fg-muted)',
                   backgroundColor: bookmarked ? 'rgba(200,75,49,0.08)' : 'transparent',
                 }}
               >
                 <Bookmark
                   size={17}
-                  fill={bookmarked ? '#C84B31' : 'none'}
+                  fill={bookmarked ? '#FF3D16' : 'none'}
                   strokeWidth={bookmarked ? 0 : 1.75}
                 />
               </motion.button>
@@ -380,7 +375,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 id="article-share-copy"
                 aria-label="Copy article link"
                 onClick={copyLink}
-                whileHover={{ scale: 1.08, color: '#C84B31', borderColor: '#C84B31' }}
+                whileHover={{ scale: 1.08, color: '#FF3D16', borderColor: '#FF3D16' }}
                 whileTap={{ scale: 0.9 }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-200"
                 style={{
@@ -399,18 +394,18 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             <motion.div
               ref={bodyRef}
               variants={fadeUp}
-              className="pt-8 pb-12"
+              className="pt-10 pb-12"
             >
               {bodyText.map((para, i) => (
                 <React.Fragment key={i}>
                   <p
-                    className="mb-6"
+                    className="mb-7"
                     style={{
                       fontFamily:  'var(--font-dm-sans)',
-                      fontSize:    '1.0625rem',
-                      lineHeight:  1.85,
+                      fontSize:    i === 0 ? '1.25rem' : '1.125rem',
+                      lineHeight:  i === 0 ? 1.65 : 1.85,
                       color:       i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
-                      fontWeight:  i === 0 ? 500 : 400,
+                      fontWeight:  i === 0 ? 650 : 400,
                     }}
                   >
                     {/* Pull-quote style for direct quotes */}
@@ -418,7 +413,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                       <span
                         className="block pl-5 border-l-4 italic"
                         style={{
-                          borderColor: '#C84B31',
+                          borderColor: '#FF3D16',
                           color:       'var(--fg)',
                           fontStyle:   'italic',
                         }}
@@ -430,7 +425,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
 
                   {/* Inline ad slot in the middle of the article (after paragraph 2) */}
                   {i === 1 && (
-                    <div className="my-8 flex justify-center">
+                    <div className="my-10 flex justify-center">
                       <AdSlot size="inline" label="Advertisement" />
                     </div>
                   )}
@@ -441,8 +436,8 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               <div className="flex items-center gap-3 pt-2">
                 <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
                 <span
-                  className="text-xs font-bold tracking-widest uppercase"
-                  style={{ color: '#C84B31', fontFamily: 'var(--font-oxanium)' }}
+                  className="text-xs font-extrabold uppercase"
+                  style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
                 >
                   Trax
                 </span>
@@ -450,7 +445,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               </div>
 
               {/* Post-article Rectangle Ad */}
-              <div className="mt-8 flex justify-center">
+              <div className="mt-10 flex justify-center">
                 <AdSlot size="rectangle" label="Sponsor Square" />
               </div>
             </motion.div>
@@ -462,7 +457,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
         {related.length > 0 && (
           <section
             className="section border-t"
-            style={{ backgroundColor: 'var(--bg-alt)', borderColor: 'var(--border)' }}
+            style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)' }}
           >
             <div className="container">
               {/* Section header */}
@@ -473,30 +468,18 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 transition={{ duration: 0.5 }}
                 className="mb-10"
               >
-                <div className="w-8 h-1 rounded-full mb-4" style={{ backgroundColor: '#C84B31' }} />
                 <h2
-                  className="font-bold"
-                  style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--fg)' }}
+                  className="text-3xl md:text-4xl font-extrabold"
+                  style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
                 >
                   Related Stories
                 </h2>
               </motion.div>
 
               {/* 3-column grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
                 {related.map((rel, i) => (
-                  <ArticleCard
-                    key={rel.id}
-                    image={rel.image}
-                    category={rel.category}
-                    title={rel.title}
-                    author={rel.author}
-                    date={rel.date}
-                    readTime={rel.readTime}
-                    slug={rel.slug}
-                    breaking={rel.breaking}
-                    index={i}
-                  />
+                  <Card key={rel.id} article={rel} index={i} />
                 ))}
               </div>
             </div>

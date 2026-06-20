@@ -40,66 +40,50 @@ export default function NewsletterSection() {
 
   return (
     <section
-      className="relative overflow-hidden dot-grid"
-      style={{ backgroundColor: '#0A0A0A', padding: '96px 0' }}
+      className="relative overflow-hidden"
+      style={{ backgroundColor: 'var(--bg)', padding: '56px 0' }}
       id="newsletter"
     >
-      {/* Glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse 60% 80% at 50% 50%, rgba(200,75,49,0.08) 0%, transparent 70%)',
-        }}
-      />
-
       <div className="container relative z-10">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="grid gap-8 md:grid-cols-[1fr_420px] md:items-center rounded-md p-6 md:p-10" style={{ backgroundColor: '#F7D8CF' }}>
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Icon */}
-            <div
-              className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-8"
-              style={{ backgroundColor: 'rgba(200,75,49,0.15)', border: '1px solid rgba(200,75,49,0.25)' }}
-            >
-              <Mail size={24} color="#C84B31" />
-            </div>
-
             {/* Label */}
             <p
-              className="text-xs font-bold tracking-widest uppercase mb-4"
-              style={{ color: '#C84B31', fontFamily: 'var(--font-oxanium)' }}
+              className="text-xs font-extrabold uppercase mb-4"
+              style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
             >
               Newsletter
             </p>
 
             {/* Headline */}
             <h2
-              className="text-white font-bold mb-4"
-              style={{ fontFamily: 'var(--font-oxanium)', letterSpacing: '-0.025em' }}
+              className="font-extrabold mb-4 max-w-xl"
+              style={{ color: '#1F2933', fontFamily: 'var(--font-dm-sans)', letterSpacing: 0 }}
             >
-              Stay Ahead of the Curve
+              Get the best African tech stories in your inbox
             </h2>
 
             {/* Subtext */}
             <p
               className="mb-10 text-base"
-              style={{ color: '#9CA3AF', fontFamily: 'var(--font-dm-sans)', lineHeight: 1.75 }}
+              style={{ color: '#4A2931', fontFamily: 'var(--font-dm-sans)', lineHeight: 1.65 }}
             >
-              Join <strong style={{ color: '#F0F0F0' }}>12,000+ readers</strong> who get weekly
+              Join <strong style={{ color: '#1F2933' }}>12,000+ readers</strong> who get weekly
               dispatches on Ogun State Tech, covering funding rounds, founder stories, research breakthroughs,
               and the week's essential reads.
             </p>
+          </motion.div>
 
             {/* Form */}
             {!submitted ? (
               <motion.form
                 onSubmit={handleSubmit}
-                className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+                className="flex flex-col gap-3"
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -112,11 +96,11 @@ export default function NewsletterSection() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  className="flex-1 px-4 py-3 rounded-xl text-sm outline-none transition-all"
+                  className="flex-1 px-4 py-3 rounded-md text-sm outline-none transition-all"
                   style={{
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    color: '#F4F4F5',
+                    backgroundColor: '#FFFFFF',
+                    border: '1px solid rgba(42,7,24,0.16)',
+                    color: '#1F2933',
                     fontFamily: 'var(--font-dm-sans)',
                     fontSize: '16px', // prevents iOS Safari auto-zoom on focus
                   }}
@@ -135,7 +119,7 @@ export default function NewsletterSection() {
                   disabled={loading}
                   whileHover={{ opacity: 0.92, y: -1 }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white shrink-0 shadow-lg transition-all"
+                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-md font-extrabold text-sm text-white shrink-0 transition-all"
                   style={{
                     backgroundImage: 'var(--accent-gradient)',
                     fontFamily: 'var(--font-dm-sans)',
@@ -175,13 +159,11 @@ export default function NewsletterSection() {
               </p>
             )}
 
-            {/* Trust note */}
             {!submitted && (
-              <p className="mt-4 text-xs" style={{ color: '#4B5563', fontFamily: 'var(--font-dm-sans)' }}>
+              <p className="mt-4 text-xs" style={{ color: '#6B4A52', fontFamily: 'var(--font-dm-sans)' }}>
                 No spam. Unsubscribe anytime. We send one email per week.
               </p>
             )}
-          </motion.div>
         </div>
       </div>
     </section>

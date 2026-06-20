@@ -80,7 +80,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
           marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
           marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
           backgroundColor: 'rgba(255,255,255,0.03)',
-          borderRadius: '12px',
+          borderRadius: '4px',
         }}
       />
     )
@@ -113,7 +113,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
             viewport={{ once: true, margin: '-32px' }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
             id={containerId}
-            className={`relative overflow-hidden rounded-xl border border-white/5 flex items-center justify-center ${className}`}
+            className={`relative overflow-hidden rounded-md border border-white/5 flex items-center justify-center ${className}`}
             style={{
               width: preset.width,
               height: preset.height,
@@ -154,7 +154,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         </span>
         <div
           id={containerId}
-          className={`overflow-hidden rounded-xl ${className}`}
+          className={`overflow-hidden rounded-md ${className}`}
           style={{
             width: preset.width,
             height: preset.height,
@@ -177,7 +177,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full h-full block rounded-xl overflow-hidden border border-white/5 hover:border-[#C84B31]/40 transition-all duration-300 select-none relative"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[#FF3D16]/50 transition-all duration-300 select-none relative"
       >
         <img
           src="/images/ads/stay_connected_leaderboard.png"
@@ -192,7 +192,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full h-full block rounded-xl overflow-hidden border border-white/5 hover:border-[#C84B31]/40 transition-all duration-300 select-none relative"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[#FF3D16]/50 transition-all duration-300 select-none relative"
         style={{ minHeight: preset.height }}
       >
         <img
@@ -206,7 +206,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     // inline
     fallbackContent = (
       <div
-        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-xl select-none transition-all duration-300 border border-[#C84B31]/20 hover:border-[#C84B31]/40"
+        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-md select-none transition-all duration-300 border border-[#FF3D16]/20 hover:border-[#FF3D16]/50"
         style={{
           minHeight: preset.height,
           background: 'linear-gradient(90deg, #1c1917 0%, #292524 100%)',

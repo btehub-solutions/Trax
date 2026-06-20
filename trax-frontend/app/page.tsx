@@ -29,6 +29,9 @@ export default async function HomePage() {
   const allArticles = await getArticles()
   const featuredArticles = allArticles.filter((a) => a.featured)
   const trendingArticles = allArticles.filter((a) => a.trending)
+  const fundingArticles = allArticles.filter((a) => ['Funding', 'Startups'].includes(a.category))
+  const builderArticles = allArticles.filter((a) => ['People', 'Profiles', 'Interview'].includes(a.category))
+  const ecosystemArticles = allArticles.filter((a) => ['Ecosystem', 'Events', 'Policy'].includes(a.category))
   const breakingTitles = allArticles.filter((a) => a.breaking).map((a) => a.title)
 
   return (
@@ -39,7 +42,7 @@ export default async function HomePage() {
       </div>
 
       {/* ── Homepage Leaderboard Ad Banner ── */}
-      <div className="container py-4 flex justify-center">
+      <div className="container py-6 flex justify-center">
         <AdSlot size="leaderboard" label="Top Advertisement" />
       </div>
 
@@ -49,25 +52,41 @@ export default async function HomePage() {
       {/* ── Interactive Category Strip & Filtered Articles Grid ── */}
       <TabbedArticlesSection articles={allArticles} />
 
-      {/* ── Featured + Sidebar layout ── */}
+      {/* ── Local Intelligence ── */}
       <ArticleGrid
         id="featured"
-        title="Featured Stories"
-        subtitle="The most important tech stories from across the state"
+        title="Editor’s Briefing"
+        subtitle="The most important local intelligence from Ogun State and West Africa"
         articles={featuredArticles}
         variant="featured-first"
+      />
+
+      <ArticleGrid
+        id="funding-watch"
+        title="Funding Watch"
+        subtitle="Capital flows, startup deals, and investor moves shaping the region"
+        articles={fundingArticles.slice(0, 6)}
+        viewAllHref="/funding"
+      />
+
+      <ArticleGrid
+        id="builder-spotlight"
+        title="Builder Spotlight"
+        subtitle="Founders, operators, researchers, and teams building from the ground up"
+        articles={builderArticles.length ? builderArticles.slice(0, 6) : trendingArticles.slice(0, 6)}
+        viewAllHref="/people"
       />
 
       {/* ── Newsletter banner ── */}
       <NewsletterSection />
 
-      {/* ── Trending ── */}
       <ArticleGrid
-        id="trending"
-        title="Trending Now"
-        subtitle="What the Trax community is reading this week"
-        articles={trendingArticles}
+        id="ecosystem-radar"
+        title="Ecosystem Radar"
+        subtitle="Policy, events, infrastructure, and community signals worth tracking"
+        articles={ecosystemArticles.length ? ecosystemArticles.slice(0, 6) : trendingArticles.slice(0, 6)}
         variant="featured-first"
+        viewAllHref="/ecosystem"
       />
     </>
   )

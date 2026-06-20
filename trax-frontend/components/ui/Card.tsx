@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Clock, User, Bookmark } from 'lucide-react'
 import type { Article } from '@/lib/articles'
 
 interface CardProps {
@@ -40,7 +39,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           className="flex gap-4 py-5 border-b group cursor-pointer"
           style={{ borderColor: 'var(--border)' }}
         >
-          <div className="relative w-20 h-20 shrink-0 rounded-lg overflow-hidden">
+          <div className="relative w-24 h-20 shrink-0 overflow-hidden rounded-md">
             <Image
               src={article.image}
               alt={article.title}
@@ -51,18 +50,18 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           </div>
           <div className="flex flex-col justify-between flex-1 min-w-0">
             <div>
-              <span className={`inline-block text-[10px] font-semibold px-2 py-0.5 rounded border mb-2 ${badgeClass}`}>
+              <span className={`inline-block text-[11px] font-extrabold uppercase mb-2 ${badgeClass}`}>
                 {article.category}
               </span>
               <h4
-                className="text-sm font-bold leading-snug line-clamp-2 transition-colors group-hover:text-[#C84B31]"
+                className="text-[15px] font-extrabold leading-snug line-clamp-2 transition-colors group-hover:text-[#FF3D16]"
                 style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
               >
                 {article.title}
               </h4>
             </div>
-            <p className="text-xs" style={{ color: 'var(--fg-muted)' }}>
-              {article.date} · {article.readTime}
+            <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
+              {article.author} <span className="mx-1.5">|</span> {article.date}
             </p>
           </div>
         </motion.article>
@@ -78,14 +77,12 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         whileHover={{ y: -4 }}
-        className="group cursor-pointer rounded-2xl overflow-hidden border"
-        style={{
-          backgroundColor: 'var(--card-bg)',
-          borderColor: 'var(--card-border)',
-          boxShadow: 'var(--shadow-md)',
-        }}
+      className="group cursor-pointer overflow-hidden"
+      style={{
+          backgroundColor: 'transparent',
+      }}
       >
-        <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden">
+        <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden rounded-md">
           <Image
             src={article.image}
             alt={article.title}
@@ -95,7 +92,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <span className={`absolute top-4 left-4 text-xs font-semibold px-3 py-1.5 rounded-full border ${badgeClass}`}>
+          <span className={`absolute top-4 left-4 text-xs font-extrabold uppercase px-3 py-1.5 bg-[#2A0718]/90 ${badgeClass}`}>
             {article.category}
           </span>
           {article.breaking && (
@@ -104,10 +101,10 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
             </span>
           )}
         </Link>
-        <div className="p-6">
+        <div className="pt-5">
           <Link href={`/articles/${article.slug}`} className="block mb-3">
             <h2
-              className="text-xl md:text-2xl font-extrabold tracking-tight leading-snug transition-colors group-hover:text-[#C84B31] line-clamp-3"
+              className="text-xl md:text-3xl font-extrabold leading-tight transition-colors group-hover:text-[#FF3D16] line-clamp-3"
               style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
             >
               {article.title}
@@ -117,26 +114,9 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
             {article.excerpt}
           </p>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4 text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
-              <span className="flex items-center gap-1.5">
-                <User size={12} />
-                {article.author}
-              </span>
-              <span>{article.date}</span>
-              <span className="flex items-center gap-1.5">
-                <Clock size={12} />
-                {article.readTime}
-              </span>
+            <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
+              {article.author} <span className="mx-2">|</span> {article.date}
             </div>
-            <motion.button
-              whileHover={{ scale: 1.1, color: '#C84B31' }}
-              whileTap={{ scale: 0.9 }}
-              aria-label="Bookmark article"
-              style={{ color: 'var(--fg-subtle)' }}
-              className="transition-colors"
-            >
-              <Bookmark size={16} />
-            </motion.button>
           </div>
         </div>
       </motion.article>
@@ -149,17 +129,15 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -6, boxShadow: 'var(--shadow-hover)' }}
-      className="group cursor-pointer rounded-2xl overflow-hidden border flex flex-col"
+      whileHover={{ y: -4 }}
+      className="group cursor-pointer overflow-hidden flex flex-col"
       style={{
-        backgroundColor: 'var(--card-bg)',
-        borderColor: 'var(--card-border)',
-        boxShadow: 'var(--shadow-sm)',
-        transition: 'box-shadow 0.3s ease, transform 0.3s ease',
+        backgroundColor: 'transparent',
+        transition: 'transform 0.3s ease',
       }}
     >
       {/* Image */}
-      <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden shrink-0">
+      <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/10] overflow-hidden shrink-0 rounded-md">
         <Image
           src={article.image}
           alt={article.title}
@@ -168,49 +146,26 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           sizes="(max-width: 768px) 100vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <span className={`absolute top-3 left-3 text-[10px] font-semibold px-2.5 py-1 rounded-full border ${badgeClass}`}>
+        <span className={`absolute top-3 left-3 text-[10px] font-extrabold uppercase px-2.5 py-1 bg-[#2A0718]/90 ${badgeClass}`}>
           {article.category}
         </span>
       </Link>
 
       {/* Content */}
-      <div className="p-5 flex flex-col flex-1">
+      <div className="pt-4 flex flex-col flex-1">
         <Link href={`/articles/${article.slug}`} className="block mb-2">
           <h3
-            className="text-base font-bold leading-snug line-clamp-2 transition-colors group-hover:text-[#C84B31]"
+            className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-[#FF3D16]"
             style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
           >
             {article.title}
           </h3>
         </Link>
-        <p
-          className="text-sm line-clamp-2 mb-4 flex-1"
-          style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-        >
-          {article.excerpt}
-        </p>
-
         {/* Meta */}
-        <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: 'var(--border)' }}>
-          <div className="flex items-center gap-3 text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
-            <span className="flex items-center gap-1">
-              <User size={11} />
-              {article.author}
-            </span>
-            <span className="flex items-center gap-1">
-              <Clock size={11} />
-              {article.readTime}
-            </span>
+        <div className="flex items-center justify-between pt-2">
+          <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
+            {article.author} <span className="mx-2">|</span> {article.date}
           </div>
-          <motion.button
-            whileHover={{ scale: 1.15, color: '#C84B31' }}
-            whileTap={{ scale: 0.85 }}
-            aria-label="Bookmark article"
-            style={{ color: 'var(--fg-subtle)' }}
-            className="transition-colors"
-          >
-            <Bookmark size={15} />
-          </motion.button>
         </div>
       </div>
     </motion.article>

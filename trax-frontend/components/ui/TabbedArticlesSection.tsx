@@ -53,11 +53,11 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
       <CategoryStrip active={selectedCategory} onChange={setSelectedCategory} />
       <ArticleGrid
         id="latest"
-        title={selectedCategory === 'All' ? 'Latest Stories' : `${selectedCategory} Stories`}
+        title={selectedCategory === 'All' ? 'Latest Intelligence' : `${selectedCategory} Intelligence`}
         subtitle={
           selectedCategory === 'All'
-            ? 'Fresh from our reporters across Ogun State'
-            : `Fresh reporting under ${selectedCategory}`
+            ? 'Fresh reporting from Ogun State and West Africa’s startup corridors'
+            : `Fresh reporting and signals under ${selectedCategory}`
         }
         articles={latestFiltered}
         viewAllHref={viewAllHref}

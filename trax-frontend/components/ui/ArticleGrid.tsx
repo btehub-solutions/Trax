@@ -40,13 +40,13 @@ export default function ArticleGrid({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="flex items-end justify-between mb-10"
+            className="flex items-end justify-between mb-8 border-t pt-8"
+            style={{ borderColor: 'var(--border)' }}
           >
             <div>
-              <div className="w-8 h-1 rounded-full mb-4" style={{ backgroundColor: '#C84B31' }} />
               <h2
-                className="font-bold"
-                style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--fg)' }}
+                className="text-2xl md:text-3xl font-extrabold"
+                style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
               >
                 {title}
               </h2>
@@ -58,8 +58,8 @@ export default function ArticleGrid({
             </div>
             <Link
               href={viewAllHref}
-              className="hidden md:flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-[#C84B31] group"
-              style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
+              className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[#FF3D16] group"
+              style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
             >
               <span>View all</span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -67,7 +67,7 @@ export default function ArticleGrid({
           </motion.div>
 
           {/* Layout: big featured left + sidebar right */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <div className="lg:col-span-2">
               {featured && <Card article={featured} variant="featured" />}
             </div>
@@ -78,7 +78,7 @@ export default function ArticleGrid({
                 ))}
               </div>
               {/* Sidebar Square Ad */}
-              <div className="pt-4 border-t flex justify-center" style={{ borderColor: 'var(--border)' }}>
+              <div className="pt-6 border-t flex justify-center" style={{ borderColor: 'var(--border)' }}>
                 <AdSlot size="rectangle" label="Sponsor Advertisement" />
               </div>
             </div>
@@ -92,7 +92,7 @@ export default function ArticleGrid({
     <section
       className="section"
       id={id}
-      style={{ backgroundColor: 'var(--bg-alt)' }}
+      style={{ backgroundColor: 'var(--bg)' }}
     >
       <div className="container">
         {/* Section Header */}
@@ -101,13 +101,13 @@ export default function ArticleGrid({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="flex items-end justify-between mb-10"
+          className="flex items-end justify-between mb-8 border-t pt-8"
+          style={{ borderColor: 'var(--border)' }}
         >
           <div>
-            <div className="w-8 h-1 rounded-full mb-4" style={{ backgroundColor: '#C84B31' }} />
             <h2
-              className="font-bold"
-              style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--fg)' }}
+              className="text-2xl md:text-3xl font-extrabold"
+              style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
             >
               {title}
             </h2>
@@ -119,8 +119,8 @@ export default function ArticleGrid({
           </div>
           <Link
             href={viewAllHref}
-            className="hidden md:flex items-center gap-1.5 text-sm font-medium transition-colors hover:text-[#C84B31] group"
-            style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
+            className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[#FF3D16] group"
+            style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
           >
             <span>View all</span>
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -133,7 +133,7 @@ export default function ArticleGrid({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
         >
           {articles.map((article, i) => (
             <Card key={article.id} article={article} index={i} />

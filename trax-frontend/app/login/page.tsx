@@ -82,7 +82,7 @@ export default function LoginPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-sm flex items-start gap-3"
+            className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm flex items-start gap-3"
           >
             <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
             <span>{error}</span>

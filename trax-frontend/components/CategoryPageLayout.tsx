@@ -31,23 +31,12 @@ export default function CategoryPageLayout({
     <>
       {/* ── Category Header ── */}
       <section
-        className="relative pt-32 pb-16 overflow-hidden border-b"
+        className="relative pt-32 pb-14 overflow-hidden border-b"
         style={{
           backgroundColor: 'var(--bg)',
           borderColor: 'var(--border)',
         }}
       >
-        {/* Animated dot grid background for modern aesthetic */}
-        <div className="absolute inset-0 dot-grid opacity-40 pointer-events-none" />
-        
-        {/* Soft radial ambient glow */}
-        <div 
-          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-20"
-          style={{
-            background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)'
-          }}
-        />
-
         <div className="container relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -55,21 +44,21 @@ export default function CategoryPageLayout({
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-3xl"
           >
-            {/* Tiny accent badge */}
             <span
-              className="inline-block text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full text-white mb-4"
-              style={{ backgroundColor: 'var(--accent)' }}
+              className="inline-block text-xs font-extrabold uppercase mb-4"
+              style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
             >
               {categoryName}
             </span>
             
             <h1
-              className="font-extrabold tracking-tight mb-4"
+              className="font-extrabold mb-4"
               style={{
-                fontFamily: 'var(--font-oxanium)',
-                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                fontFamily: 'var(--font-dm-sans)',
+                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
                 color: 'var(--fg)',
-                lineHeight: 1.1,
+                lineHeight: 0.98,
+                letterSpacing: 0,
               }}
             >
               {title}
@@ -88,7 +77,7 @@ export default function CategoryPageLayout({
       {/* ── Article Feed ── */}
       <section
         className="py-16 min-h-[400px]"
-        style={{ backgroundColor: 'var(--bg-alt)' }}
+        style={{ backgroundColor: 'var(--bg)' }}
       >
         <div className="container">
           {articles.length > 0 ? (
@@ -97,7 +86,7 @@ export default function CategoryPageLayout({
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-40px' }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
             >
               {articles.map((article, index) => (
                 <Card key={article.id} article={article} index={index} />

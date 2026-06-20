@@ -5,29 +5,29 @@
 /* ─── Theme Variables (CSS custom properties) ─── */
 :root {
   /* Background */
-  --bg:         #FCFCFD;
-  --bg-alt:     #F4F4F6;
+  --bg:         #2A0718;
+  --bg-alt:     #210412;
   /* Foreground */
-  --fg:         #121214;
-  --fg-muted:   #52525B;
-  --fg-subtle:  #71717A;
+  --fg:         #FFFFFF;
+  --fg-muted:   #D8CDD3;
+  --fg-subtle:  #A98F9C;
   /* Borders */
-  --border:     #E4E4E7;
+  --border:     rgba(255, 255, 255, 0.12);
   /* Cards */
-  --card-bg:    #FFFFFF;
-  --card-border:#E4E4E7;
+  --card-bg:    transparent;
+  --card-border:rgba(255, 255, 255, 0.10);
   /* Nav / Footer */
-  --nav-bg:     rgba(252, 252, 253, 0.92);
-  --footer-bg:  #09090B;
+  --nav-bg:     rgba(42, 7, 24, 0.94);
+  --footer-bg:  #050005;
   /* Shadows */
   --shadow-sm:    0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
   --shadow-md:    0 4px 20px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.03);
   --shadow-lg:    0 12px 40px rgba(0,0,0,0.08);
   --shadow-hover: 0 16px 48px rgba(0,0,0,0.1);
   /* Brand */
-  --accent:       #C84B31;
-  --accent-hover: #A93B24;
-  --accent-gradient: linear-gradient(135deg, #C84B31 0%, #E25E45 100%);
+  --accent:       #FF3D16;
+  --accent-hover: #D62F10;
+  --accent-gradient: linear-gradient(135deg, #FF3D16 0%, #C84B31 100%);
 }
 
 /* ─── Dark mode ─── */
@@ -50,48 +50,48 @@
 
 /* ─── Dashboard Variables ─── */
 :root {
-  --dash-bg:         var(--bg-alt);
-  --dash-sidebar:    var(--bg);
+  --dash-bg:         var(--bg);
+  --dash-sidebar:    rgba(255, 255, 255, 0.035);
   --dash-sidebar-border: var(--border);
-  --dash-card:       var(--card-bg);
-  --dash-card-border:var(--card-border);
-  --dash-input:      var(--bg-alt);
+  --dash-card:       rgba(255, 255, 255, 0.045);
+  --dash-card-border:var(--border);
+  --dash-input:      rgba(255, 255, 255, 0.06);
   --dash-input-border:var(--border);
-  --dash-thead:      var(--bg-alt);
+  --dash-thead:      rgba(255, 255, 255, 0.05);
   --dash-fg:         var(--fg);
   --dash-fg-secondary: var(--fg-muted);
   --dash-fg-muted:   var(--fg-subtle);
   --dash-fg-subtle:  var(--fg-subtle);
   --dash-divider:    var(--border);
-  --dash-hover:      rgba(200, 75, 49, 0.04);
-  --dash-badge-bg:   var(--bg-alt);
+  --dash-hover:      rgba(255, 61, 22, 0.10);
+  --dash-badge-bg:   rgba(255,255,255,0.06);
   --dash-badge-border:var(--border);
   --dash-badge-text: var(--fg-muted);
   --dash-avatar-border:var(--border);
-  --dash-user-card:  var(--bg-alt);
+  --dash-user-card:  rgba(255,255,255,0.055);
   --dash-user-card-border:var(--border);
 }
 
 .dark {
-  --dash-bg:         var(--bg-alt);
-  --dash-sidebar:    var(--card-bg);
+  --dash-bg:         var(--bg);
+  --dash-sidebar:    rgba(255,255,255,0.035);
   --dash-sidebar-border: var(--border);
-  --dash-card:       var(--card-bg);
+  --dash-card:       rgba(255,255,255,0.045);
   --dash-card-border:var(--card-border);
-  --dash-input:      rgba(255,255,255,0.03);
+  --dash-input:      rgba(255,255,255,0.06);
   --dash-input-border:var(--border);
-  --dash-thead:      rgba(255,255,255,0.02);
+  --dash-thead:      rgba(255,255,255,0.05);
   --dash-fg:         var(--fg);
   --dash-fg-secondary: var(--fg-muted);
   --dash-fg-muted:   var(--fg-subtle);
   --dash-fg-subtle:  var(--fg-subtle);
   --dash-divider:    var(--border);
-  --dash-hover:      rgba(200, 75, 49, 0.08);
-  --dash-badge-bg:   rgba(255,255,255,0.05);
+  --dash-hover:      rgba(255, 61, 22, 0.10);
+  --dash-badge-bg:   rgba(255,255,255,0.06);
   --dash-badge-border:var(--border);
   --dash-badge-text: var(--fg-muted);
   --dash-avatar-border:var(--border);
-  --dash-user-card:  rgba(255,255,255,0.03);
+  --dash-user-card:  rgba(255,255,255,0.055);
   --dash-user-card-border:var(--border);
 }
 
@@ -120,12 +120,20 @@ body {
   overflow-x: hidden;
 }
 
+body {
+  --font-oxanium: var(--font-dm-sans);
+}
+
+.tracking-tight {
+  letter-spacing: 0 !important;
+}
+
 /* ─── Typography ─── */
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-oxanium), 'Oxanium', sans-serif;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.025em;
+  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 0;
   color: var(--fg);
 }
 
@@ -205,29 +213,33 @@ img, video {
 
 /* ─── Section Spacing ─── */
 .section {
-  padding-top: 72px;
-  padding-bottom: 72px;
+  padding-top: 56px;
+  padding-bottom: 56px;
 }
 
 @media (min-width: 768px) {
   .section {
-    padding-top: 96px;
-    padding-bottom: 96px;
+    padding-top: 72px;
+    padding-bottom: 72px;
   }
 }
 
 /* ─── Category Badge Colors ─── */
-.badge-funding    { background: rgba(16, 185, 129, 0.12); color: #059669; border-color: rgba(16, 185, 129, 0.25); }
-.badge-profiles   { background: rgba(139, 92, 246, 0.12); color: #7C3AED; border-color: rgba(139, 92, 246, 0.25); }
-.badge-health     { background: rgba(59, 130, 246, 0.12);  color: #2563EB; border-color: rgba(59, 130, 246, 0.25); }
-.badge-policy     { background: rgba(245, 158, 11, 0.12); color: #D97706; border-color: rgba(245, 158, 11, 0.25); }
-.badge-research   { background: rgba(236, 72, 153, 0.12);  color: #DB2777; border-color: rgba(236, 72, 153, 0.25); }
-.badge-ecosystem  { background: rgba(200, 75, 49, 0.12);    color: #C84B31; border-color: rgba(200, 75, 49, 0.25);   }
-.badge-events     { background: rgba(6, 182, 212, 0.12);   color: #0891B2; border-color: rgba(6, 182, 212, 0.25);  }
-.badge-interview  { background: rgba(99, 102, 241, 0.12);  color: #4F46E5; border-color: rgba(99, 102, 241, 0.25); }
-.badge-startups   { background: rgba(16, 185, 129, 0.12); color: #10B981; border-color: rgba(16, 185, 129, 0.25); }
-.badge-people     { background: rgba(139, 92, 246, 0.12); color: #8B5CF6; border-color: rgba(139, 92, 246, 0.25); }
-.badge-tools      { background: rgba(59, 130, 246, 0.12);  color: #3B82F6; border-color: rgba(59, 130, 246, 0.25); }
+.badge-funding,
+.badge-profiles,
+.badge-health,
+.badge-policy,
+.badge-research,
+.badge-ecosystem,
+.badge-events,
+.badge-interview,
+.badge-startups,
+.badge-people,
+.badge-tools {
+  background: transparent;
+  color: #FF3D16;
+  border-color: transparent;
+}
 
 /* Dark mode: slightly brighter badge text */
 .dark .badge-funding   { color: #34D399; }

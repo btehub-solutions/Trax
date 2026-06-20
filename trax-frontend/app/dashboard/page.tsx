@@ -713,7 +713,7 @@ export default function DashboardPage() {
         <div className="p-6 border-t" style={{ borderColor: 'var(--dash-divider)' }}>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 transition-all border border-transparent hover:border-red-200 dark:hover:border-red-900/30"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/25"
           >
             <LogOut className="h-4.5 w-4.5" />
             Sign Out
@@ -724,7 +724,7 @@ export default function DashboardPage() {
       {/* Main Content Area */}
       <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-6xl mx-auto w-full">
         {connectionError && (
-          <div className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-sm flex flex-col gap-2 shadow-sm">
+          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm flex flex-col gap-2 shadow-sm">
             <div className="flex items-center gap-2 font-bold">
               <PlusCircle className="h-5 w-5 text-red-500 rotate-45" />
               <span>Backend API Server Offline</span>
@@ -733,7 +733,7 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => fetchDashboardData()}
-              className="mt-2 text-xs bg-red-100 hover:bg-red-200 dark:bg-red-900/40 dark:hover:bg-red-900/60 text-red-800 dark:text-red-200 px-3.5 py-1.5 rounded-lg border border-red-200 dark:border-red-800/40 font-semibold self-start transition-all"
+              className="mt-2 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-100 px-3.5 py-1.5 rounded-lg border border-red-500/30 font-semibold self-start transition-all"
             >
               Retry Connection
             </button>
@@ -958,7 +958,7 @@ export default function DashboardPage() {
                                     <button
                                       onClick={() => handleDeleteArticle(article.id)}
                                       title="Delete Article"
-                                      className="p-2 bg-red-50 dark:bg-red-950/40 text-red-500 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 border border-red-200 dark:border-red-900/30 rounded-lg transition-all"
+                                      className="p-2 bg-red-500/10 text-red-300 hover:bg-red-500/20 border border-red-500/25 rounded-lg transition-all"
                                     >
                                       <Trash2 className="h-4 w-4" />
                                     </button>
@@ -992,7 +992,7 @@ export default function DashboardPage() {
                   </div>
 
                   {editorError && (
-                    <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-sm">
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm">
                       {editorError}
                     </div>
                   )}
@@ -1340,7 +1340,7 @@ export default function DashboardPage() {
                                         alert(err.message || 'Failed to unsubscribe');
                                       }
                                     }}
-                                    className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 text-xs font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/20 px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/30 transition-all"
+                                    className="text-red-300 hover:text-red-100 text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/25 transition-all"
                                   >
                                     Remove
                                   </button>
@@ -1427,7 +1427,7 @@ export default function DashboardPage() {
                       </h3>
 
                       {adError && (
-                        <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-xs">
+                        <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-xs">
                           {adError}
                         </div>
                       )}
@@ -1535,7 +1535,7 @@ export default function DashboardPage() {
                   </div>
 
                   {profileError && (
-                    <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-sm">
+                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm">
                       {profileError}
                     </div>
                   )}
@@ -1726,7 +1726,7 @@ export default function DashboardPage() {
                                     {member.id !== user?.id && (
                                       <button
                                         onClick={() => handleDeleteTeamMember(member.id, member.name)}
-                                        className="text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 text-xs font-semibold bg-red-50 dark:bg-red-950/20 hover:bg-red-100 dark:hover:bg-red-900/20 px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/30 transition-all font-medium"
+                                        className="text-red-300 hover:text-red-100 text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/25 transition-all font-medium"
                                       >
                                         Remove
                                       </button>
@@ -1754,7 +1754,7 @@ export default function DashboardPage() {
                       </h3>
 
                       {teamError && (
-                        <div className="mb-4 p-3 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-200 text-xs">
+                        <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-xs">
                           {teamError}
                         </div>
                       )}
