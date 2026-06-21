@@ -45,7 +45,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
               alt={article.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-110"
-              sizes="80px"
+              sizes="96px"
             />
           </div>
           <div className="flex flex-col justify-between flex-1 min-w-0">
@@ -137,13 +137,13 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
       }}
     >
       {/* Image */}
-      <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/10] overflow-hidden shrink-0 rounded-md">
+      <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden shrink-0 rounded-md">
         <Image
           src={article.image}
           alt={article.title}
           fill
-          className="object-cover transition-transform duration-600 group-hover:scale-107"
-          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover transition-transform duration-[600ms] group-hover:scale-[1.07]"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <span className={`absolute top-3 left-3 text-[10px] font-extrabold uppercase px-2.5 py-1 bg-[#2A0718]/90 ${badgeClass}`}>
@@ -162,7 +162,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           </h3>
         </Link>
         {/* Meta */}
-        <div className="flex items-center justify-between pt-2">
+        <div className="flex items-center justify-between pt-2 mt-auto">
           <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
             {article.author} <span className="mx-2">|</span> {article.date}
           </div>

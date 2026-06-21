@@ -168,6 +168,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       </div>
     )
   }
+
   // Fallback visual advertisement banners
   let fallbackContent;
 
@@ -205,49 +206,18 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
   } else {
     // inline
     fallbackContent = (
-      <div
-        className="w-full h-full flex flex-col sm:flex-row items-center justify-between gap-4 rounded-md select-none transition-all duration-300 border border-[#FF3D16]/20 hover:border-[#FF3D16]/50"
-        style={{
-          minHeight: preset.height,
-          background: 'linear-gradient(90deg, #1c1917 0%, #292524 100%)',
-          padding: '16px 24px',
-        }}
+      <a
+        href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[#FF3D16]/50 transition-all duration-300 select-none relative"
       >
-        <div className="flex flex-col text-center sm:text-left">
-          <span
-            className="px-2.5 py-0.5 rounded-full text-[9px] font-bold mb-2 w-fit mx-auto sm:mx-0"
-            style={{
-              backgroundColor: 'rgba(200,75,49,0.1)',
-              color: '#C84B31',
-              border: '1px solid rgba(200,75,49,0.25)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              display: 'inline-block',
-            }}
-          >
-            AD SPACE
-          </span>
-          <h4 style={{ fontSize: '14px', fontWeight: 800, margin: '0 0 2px 0', color: '#fff' }}>
-            Run Your Ads Here
-          </h4>
-          <p style={{ fontSize: '11px', color: 'var(--fg-subtle)', margin: 0 }}>
-            Place your banner within articles. Contact the admin to advertise.
-          </p>
-        </div>
-        <a
-          href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-4 py-2 rounded-lg text-xs font-bold text-white transition-all hover:scale-[1.02]"
-          style={{
-            backgroundColor: '#C84B31',
-            textDecoration: 'none',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          Contact Admin
-        </a>
-      </div>
+        <img
+          src="/images/ads/stay_connected_inline.png"
+          alt="Stay Connected Wherever You Are - Advertise on Trax"
+          className="w-full h-full object-cover block"
+        />
+      </a>
     );
   }
 
@@ -266,10 +236,10 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         aria-label={`Advertisement: ${displayLabel}`}
         className={`overflow-hidden ${className}`}
         style={{
-          width:       size === 'leaderboard' ? '100%' : preset.width,
-          minHeight:   size === 'leaderboard' ? undefined : preset.height,
-          aspectRatio: size === 'leaderboard' ? '1024 / 409' : undefined,
-          maxWidth:    size === 'leaderboard' ? '1024px' : '100%',
+          width:       (size === 'leaderboard' || size === 'inline') ? '100%' : preset.width,
+          minHeight:   (size === 'leaderboard' || size === 'inline') ? undefined : preset.height,
+          aspectRatio: size === 'leaderboard' ? '1024 / 409' : (size === 'inline' ? '468 / 120' : undefined),
+          maxWidth:    size === 'leaderboard' ? '1024px' : (size === 'inline' ? '468px' : '100%'),
           marginLeft:  'auto',
           marginRight: 'auto',
         }}
@@ -279,4 +249,3 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     </div>
   )
 }
-

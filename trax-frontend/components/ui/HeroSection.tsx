@@ -53,6 +53,7 @@ export default function HeroSection() {
           fill
           priority
           sizes="100vw"
+          className="object-cover"
         />
         {/* Layered overlays for dramatic effect */}
         <div

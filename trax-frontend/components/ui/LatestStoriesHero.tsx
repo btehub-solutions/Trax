@@ -97,7 +97,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
             <motion.article variants={itemVariants} className="group lg:col-span-6">
               <Link href={`/articles/${lead.slug}`} className="block">
-                <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-md md:aspect-[16/9]">
+                <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-md">
                   <Image
                     src={lead.image || fallbackImage}
                     alt={lead.title}
@@ -125,7 +125,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
               {secondary.map((article) => (
                 <motion.article key={article.id} variants={itemVariants} className="group">
                   <Link href={`/articles/${article.slug}`} className="block">
-                    <div className="relative mb-4 aspect-[16/10] overflow-hidden rounded-md">
+                    <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-md">
                       <Image
                         src={article.image || fallbackImage}
                         alt={article.title}
