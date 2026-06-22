@@ -115,11 +115,12 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
             id={containerId}
             className={`relative overflow-hidden rounded-md border border-white/5 flex items-center justify-center ${className}`}
             style={{
-              width: preset.width,
-              height: preset.height,
-              maxWidth: '100%',
-              marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
-              marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
+              width:       (size === 'leaderboard' || size === 'inline') ? '100%' : preset.width,
+              minHeight:   (size === 'leaderboard' || size === 'inline') ? undefined : preset.height,
+              aspectRatio: size === 'leaderboard' ? '1024 / 409' : (size === 'inline' ? '468 / 120' : undefined),
+              maxWidth:    size === 'leaderboard' ? '1024px' : (size === 'inline' ? '468px' : '100%'),
+              marginLeft:  'auto',
+              marginRight: 'auto',
             }}
           >
             {/* Blurred Background Backdrop */}
