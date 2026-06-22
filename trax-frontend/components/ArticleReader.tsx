@@ -97,7 +97,10 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
   const bodyText = generateBody(article)
 
   // Share helpers
-  const getShareUrl = () => typeof window !== 'undefined' ? window.location.href : ''
+  const getShareUrl = () => {
+    if (typeof window === 'undefined') return ''
+    return `${window.location.origin}/articles/${article.slug}`
+  }
 
   const shareX = () => {
     const url = getShareUrl()
