@@ -7,10 +7,10 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const stats = [
-    { label: 'Monthly Readers', value: '45,000+' },
-    { label: 'Startups Tracked', value: '120+' },
-    { label: 'Funding Logged', value: '$180M+' },
-    { label: 'Ecosystem Events', value: '25+' },
+    { label: 'Monthly Readers',   value: 'Growing' },
+    { label: 'Startups Tracked',  value: 'Growing' },
+    { label: 'Funding Logged',    value: 'Growing' },
+    { label: 'Ecosystem Events',  value: 'Growing' },
   ]
 
   return (
@@ -63,7 +63,7 @@ export default function AboutPage() {
               }}
             >
               <span
-                className="text-3xl md:text-4xl font-extrabold mb-2"
+                className="text-2xl md:text-3xl font-extrabold mb-2"
                 style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
               >
                 {stat.value}
@@ -77,6 +77,7 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
+
 
         {/* Content sections */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl">

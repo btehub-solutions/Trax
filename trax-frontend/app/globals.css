@@ -14,7 +14,7 @@
   /* Borders */
   --border:     rgba(255, 255, 255, 0.12);
   /* Cards */
-  --card-bg:    transparent;
+  --card-bg:    rgba(42, 7, 24, 0.97);
   --card-border:rgba(255, 255, 255, 0.10);
   /* Nav / Footer */
   --nav-bg:     rgba(42, 7, 24, 0.94);

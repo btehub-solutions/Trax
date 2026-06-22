@@ -269,12 +269,14 @@ export default function Navbar() {
             exit="hidden"
             className="fixed top-16 left-0 right-0 z-40 md:hidden border-b overflow-hidden"
             style={{
-              backgroundColor: 'var(--bg)',
-              borderColor:     'var(--border)',
-              boxShadow:       'var(--shadow-md)',
+              backgroundColor:      'var(--nav-bg)',
+              backdropFilter:       'blur(16px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+              borderColor:          'var(--border)',
+              boxShadow:            'var(--shadow-md)',
             }}
           >
-            <nav className="container py-5 flex flex-col gap-1">
+            <nav className="container py-3 grid grid-cols-2 gap-1">
               {NAV_LINKS.map((link, i) => {
                 const active = isActive(link.href)
                 return (
@@ -288,7 +290,7 @@ export default function Navbar() {
                     <Link
                       href={link.href}
                       onClick={() => setMenuOpen(false)}
-                      className="flex items-center justify-between w-full px-3 py-3 rounded-xl text-base font-medium transition-colors duration-150"
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors duration-150"
                       style={{
                         color:           active ? '#C84B31' : 'var(--fg-muted)',
                         backgroundColor: active ? 'rgba(200,75,49,0.07)' : 'transparent',
@@ -298,7 +300,7 @@ export default function Navbar() {
                       {link.label}
                       {active && (
                         <span
-                          className="w-1.5 h-1.5 rounded-full"
+                          className="w-1.5 h-1.5 rounded-full shrink-0"
                           style={{ backgroundColor: '#C84B31' }}
                         />
                       )}
