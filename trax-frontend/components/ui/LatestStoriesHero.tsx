@@ -47,8 +47,10 @@ interface LatestStoriesHeroProps {
 }
 
 export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroProps) {
-  const [lead, second, third, fourth] = articles
-  const secondary = [second, third, fourth].filter(Boolean)
+  const lead = articles[0]
+  const secondary = articles.slice(1, 3).filter(Boolean)
+  const feedArticles = articles.slice(3, 6).filter(Boolean)
+  const pulse = articles.slice(6, 11).filter(Boolean)
 
   if (!lead) {
     return (
@@ -93,65 +95,132 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
             </Link>
           </motion.div>
 
-          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
-            {/* Left Column: Lead Article */}
-            <motion.article variants={itemVariants} className="group lg:col-span-7">
+          {/* ── Row 1: Featured Hero Grid (Lead + Secondary) ── */}
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-10 mb-12">
+            {/* Lead Article (Left 8 cols) */}
+            <motion.article variants={itemVariants} className="group lg:col-span-8">
               <Link href={`/articles/${lead.slug}`} className="block">
-                <div className="relative mb-5 aspect-[16/10] overflow-hidden rounded-md">
+                <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-md">
                   <Image
                     src={lead.image || fallbackImage}
                     alt={lead.title}
                     fill
                     priority
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    sizes="(max-width: 1024px) 100vw, 66vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
                   />
                 </div>
                 <CategoryLabel>{lead.category}</CategoryLabel>
                 <h2
-                  className="text-3xl font-black leading-tight transition-colors group-hover:text-[#FF3D16] md:text-4xl lg:text-5xl"
-                  style={{ color: 'var(--fg)', letterSpacing: 0, lineHeight: 1.05 }}
+                  className="text-3xl font-black leading-tight transition-colors group-hover:text-[#FF3D16] md:text-5xl"
+                  style={{ color: 'var(--fg)', letterSpacing: 0 }}
                 >
                   {lead.title}
                 </h2>
-                <p className="mt-4 max-w-2xl text-base leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
+                <p className="mt-4 max-w-3xl text-base leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
                   {lead.excerpt}
                 </p>
                 <StoryMeta article={lead} />
               </Link>
             </motion.article>
 
-            {/* Right Column: Stack of 3 secondary articles */}
-            <div className="flex flex-col gap-6 lg:col-span-5 justify-between">
+            {/* Secondary Articles (Right 4 cols) */}
+            <div className="grid gap-8 md:grid-cols-2 lg:col-span-4 lg:grid-cols-1">
               {secondary.map((article) => (
                 <motion.article key={article.id} variants={itemVariants} className="group">
-                  <Link href={`/articles/${article.slug}`} className="flex gap-4 items-start">
-                    {/* Thumbnail Image */}
-                    <div className="relative w-28 h-20 sm:w-36 sm:h-24 shrink-0 overflow-hidden rounded-md">
+                  <Link href={`/articles/${article.slug}`} className="block">
+                    <div className="relative mb-4 aspect-[16/10] overflow-hidden rounded-md">
                       <Image
                         src={article.image || fallbackImage}
                         alt={article.title}
                         fill
-                        sizes="(max-width: 640px) 112px, 144px"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                        sizes="(max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                       />
                     </div>
-                    {/* Text content */}
-                    <div className="flex-1 min-w-0">
-                      <CategoryLabel>{article.category}</CategoryLabel>
-                      <h3
-                        className="text-base sm:text-lg font-black leading-snug transition-colors group-hover:text-[#FF3D16] line-clamp-2"
-                        style={{ color: 'var(--fg)', letterSpacing: 0 }}
-                      >
-                        {article.title}
-                      </h3>
-                      <StoryMeta article={article} />
-                    </div>
+                    <CategoryLabel>{article.category}</CategoryLabel>
+                    <h3
+                      className="text-xl font-black leading-snug transition-colors group-hover:text-[#FF3D16]"
+                      style={{ color: 'var(--fg)', letterSpacing: 0 }}
+                    >
+                      {article.title}
+                    </h3>
+                    <StoryMeta article={article} />
                   </Link>
                 </motion.article>
               ))}
             </div>
           </div>
+
+          {/* ── Row 2: Subsequent Feed + Sidebar (Tracker) ── */}
+          {(feedArticles.length > 0 || pulse.length > 0) && (
+            <div className="grid gap-8 border-t pt-10 lg:grid-cols-12 lg:gap-10" style={{ borderColor: 'var(--border)' }}>
+              {/* Left Side: Subsequent News Feed (8 cols) */}
+              <div className="lg:col-span-8 flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
+                {feedArticles.map((article) => (
+                  <motion.article
+                    key={article.id}
+                    variants={itemVariants}
+                    className="group py-6 first:pt-0 last:pb-0"
+                  >
+                    <Link href={`/articles/${article.slug}`} className="flex flex-col sm:flex-row gap-6">
+                      <div className="relative aspect-[16/10] w-full sm:w-48 shrink-0 overflow-hidden rounded-md">
+                        <Image
+                          src={article.image || fallbackImage}
+                          alt={article.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 200px"
+                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        />
+                      </div>
+                      <div className="flex-1 flex flex-col justify-center">
+                        <CategoryLabel>{article.category}</CategoryLabel>
+                        <h3
+                          className="text-lg font-black leading-snug transition-colors group-hover:text-[#FF3D16]"
+                          style={{ color: 'var(--fg)', letterSpacing: 0 }}
+                        >
+                          {article.title}
+                        </h3>
+                        <p className="mt-2 text-sm line-clamp-2 leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
+                          {article.excerpt}
+                        </p>
+                        <StoryMeta article={article} />
+                      </div>
+                    </Link>
+                  </motion.article>
+                ))}
+              </div>
+
+              {/* Right Side: Sidebar West Africa Tracker (4 cols) */}
+              <motion.aside
+                variants={itemVariants}
+                className="lg:col-span-4 lg:border-l lg:pl-8 lg:pt-0 border-t pt-8 lg:border-t-0"
+                style={{ borderColor: 'var(--border)' }}
+              >
+                <p className="mb-5 text-xs font-extrabold uppercase" style={{ color: '#FF3D16' }}>
+                  West Africa Tracker
+                </p>
+                <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
+                  {pulse.map((article) => (
+                    <Link
+                      key={article.id}
+                      href={`/articles/${article.slug}`}
+                      className="group py-5 first:pt-0 last:pb-0"
+                    >
+                      <CategoryLabel>{article.category}</CategoryLabel>
+                      <h4
+                        className="text-lg font-black leading-snug transition-colors group-hover:text-[#FF3D16]"
+                        style={{ color: 'var(--fg)', letterSpacing: 0 }}
+                      >
+                        {article.title}
+                      </h4>
+                      <StoryMeta article={article} />
+                    </Link>
+                  ))}
+                </div>
+              </motion.aside>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
