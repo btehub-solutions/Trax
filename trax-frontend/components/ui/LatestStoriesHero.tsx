@@ -218,6 +218,41 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                     </Link>
                   ))}
                 </div>
+
+                {/* ── Newsletter CTA Card ── */}
+                <Link
+                  href="/newsletter"
+                  className="group mt-6 flex flex-col gap-3 rounded-xl border p-5 transition-all duration-300 hover:border-[#FF3D16]/40"
+                  style={{
+                    borderColor: 'var(--border)',
+                    background: 'linear-gradient(135deg, rgba(255,61,22,0.06) 0%, rgba(255,61,22,0.02) 100%)',
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="inline-block h-2 w-2 rounded-full animate-pulse"
+                      style={{ backgroundColor: '#FF3D16' }}
+                    />
+                    <p className="text-[10px] font-extrabold uppercase tracking-widest" style={{ color: '#FF3D16' }}>
+                      Trax Newsletter
+                    </p>
+                  </div>
+                  <p
+                    className="text-base font-black leading-snug"
+                    style={{ color: 'var(--fg)', letterSpacing: 0 }}
+                  >
+                    Get Ogun State&apos;s tech pulse in your inbox.
+                  </p>
+                  <p className="text-xs leading-relaxed" style={{ color: 'var(--fg-muted)' }}>
+                    Weekly dispatches on startups, funding &amp; research. Free. No spam.
+                  </p>
+                  <span
+                    className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase transition-colors group-hover:text-[#FF3D16]"
+                    style={{ color: 'var(--fg-muted)' }}
+                  >
+                    Subscribe free <ArrowRight size={12} />
+                  </span>
+                </Link>
               </motion.aside>
             </div>
           )}
