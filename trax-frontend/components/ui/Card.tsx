@@ -50,7 +50,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           </div>
           <div className="flex flex-col justify-between flex-1 min-w-0">
             <div>
-              <span className={`inline-block text-[11px] font-extrabold uppercase mb-2 ${badgeClass}`}>
+              <span className={`inline-block mb-2 ${badgeClass}`}>
                 {article.category}
               </span>
               <h4
@@ -92,7 +92,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <span className={`absolute top-4 left-4 text-xs font-extrabold uppercase px-3 py-1.5 bg-[#2A0718]/90 ${badgeClass}`}>
+          <span className={`absolute top-4 left-4 ${badgeClass}`}>
             {article.category}
           </span>
           {article.breaking && (
@@ -146,7 +146,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <span className={`absolute top-3 left-3 text-[10px] font-extrabold uppercase px-2.5 py-1 bg-[#2A0718]/90 ${badgeClass}`}>
+        <span className={`absolute top-3 left-3 ${badgeClass}`}>
           {article.category}
         </span>
       </Link>

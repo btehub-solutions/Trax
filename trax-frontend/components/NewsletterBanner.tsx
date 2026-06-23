@@ -286,7 +286,7 @@ export default function NewsletterBanner({
                 fontFamily: 'var(--font-dm-sans)',
               }}
             >
-              Join 12,000+ readers. Unsubscribe any time.
+              Join Ogun State&apos;s growing tech community. Unsubscribe any time.
             </p>
           )}
         </div>

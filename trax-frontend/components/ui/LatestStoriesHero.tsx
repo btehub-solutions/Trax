@@ -83,7 +83,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 className="max-w-4xl text-4xl font-black md:text-6xl"
                 style={{ color: 'var(--fg)', lineHeight: 0.96, letterSpacing: 0 }}
               >
-                Local intelligence for West Africa&apos;s builders
+                Local intelligence for Ogun&apos;s tech builders
               </h1>
             </div>
             <Link
@@ -198,7 +198,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 style={{ borderColor: 'var(--border)' }}
               >
                 <p className="mb-5 text-xs font-extrabold uppercase" style={{ color: '#FF3D16' }}>
-                  West Africa Tracker
+                  Ogun Tech Tracker
                 </p>
                 <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
                   {pulse.map((article) => (

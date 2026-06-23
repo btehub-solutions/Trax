@@ -3,7 +3,7 @@ import NewsletterBanner from '@/components/NewsletterBanner'
 import { Sparkles, Mail, FileText, TrendingUp, ShieldCheck } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Trax Newsletter | Join 12,000+ Tech Professionals',
+  title: 'TRAX Newsletter | Ogun State Tech Weekly',
   description: 'Subscribe to Ogun State\'s premier tech newsletter. Weekly insights on startups, funding, tools, and research delivered to your inbox.',
 }
 
@@ -16,13 +16,13 @@ export default function NewsletterPage() {
     },
     {
       icon: TrendingUp,
-      title: 'Venture & Funding DB',
-      desc: 'Exclusive access to our deal logs and investor ecosystem analytics.',
+      title: 'Ecosystem Radar',
+      desc: 'Updates on digital policy, technology hub events, and regional ecosystem initiatives.',
     },
     {
       icon: Sparkles,
-      title: 'Developer Spotlights',
-      desc: 'Discover libraries, packages, and LLMs trained locally by developers across Africa.',
+      title: 'Builder Spotlights',
+      desc: 'Deep insights and interviews with local founders, developers, and teams building from the ground up.',
     },
     {
       icon: ShieldCheck,
@@ -66,7 +66,7 @@ export default function NewsletterPage() {
               className="text-base mb-10 leading-relaxed"
               style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
             >
-              Join 12,000+ venture capital investors, tech startup founders, research scientists, and developers who read Trax every week.
+              Join Ogun State&apos;s growing tech community.
             </p>
 
             <div className="space-y-6" style={{ fontFamily: 'var(--font-dm-sans)' }}>

@@ -10,9 +10,15 @@ export default function TeamPage() {
   const team = [
     {
       name: 'Ben Sam Oladoyin',
-      role: 'Founder',
-      bio: "AI/ML Engineer and the Founder of Trax, a tech media platform built under BTEHub Solutions. Ben drives Trax's mission to chronicle and catalyze the technology ecosystem in Nigeria, bringing deep technical expertise in intelligent automation alongside advocacy for digital innovation.",
+      role: 'Founder & AI/ML Engineer',
+      bio: 'Ben Sam Oladoyin is an AI/ML Engineer and the Founder of Trax, a specialized tech intelligence and media platform mapping the growth of the technology ecosystem across Ogun State and Nigeria. Leveraging expertise in machine learning and data engineering, Ben established Trax to document regional innovation, spotlight local builders, and connect emerging tech ecosystems with global visibility and venture opportunities.',
       image: '/images/founder.jpg'
+    },
+    {
+      name: 'Dami',
+      role: 'Ecosystem Contributor',
+      bio: 'Dami is a key team member at Trax, supporting operations and data tracking across the regional startup ecosystem. Passionate about technology growth in Ogun State, he helps document local innovation, track builder milestones, and coordinate community coverage.',
+      image: '/images/dami.png'
     }
   ]
 
@@ -61,7 +67,7 @@ export default function TeamPage() {
               }}
             >
               {/* Profile image with scale transition */}
-              <div className="relative w-full aspect-[3/4] overflow-hidden">
+              <div className="relative w-full aspect-square overflow-hidden">
                 <Image
                   src={member.image}
                   alt={member.name}

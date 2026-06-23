@@ -102,7 +102,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="editor@trax.co"
+                placeholder="admin@trax.ng"
                 className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all border"
                 style={{
                   backgroundColor: 'var(--bg-alt)',

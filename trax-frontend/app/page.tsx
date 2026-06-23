@@ -29,9 +29,9 @@ export default async function HomePage() {
   const allArticles = await getArticles()
   const featuredArticles = allArticles.filter((a) => a.featured)
   const trendingArticles = allArticles.filter((a) => a.trending)
-  const fundingArticles = allArticles.filter((a) => ['Funding', 'Startups'].includes(a.category))
-  const builderArticles = allArticles.filter((a) => ['People', 'Profiles', 'Interview'].includes(a.category))
-  const ecosystemArticles = allArticles.filter((a) => ['Ecosystem', 'Events', 'Policy'].includes(a.category))
+  const fundingArticles = allArticles.filter((a) => a.category.toLowerCase() === 'funding')
+  const builderArticles = allArticles.filter((a) => ['people', 'profiles', 'interview'].includes(a.category.toLowerCase()))
+  const ecosystemArticles = allArticles.filter((a) => ['ecosystem', 'events', 'policy'].includes(a.category.toLowerCase()))
   const breakingTitles = allArticles.filter((a) => a.breaking).map((a) => a.title)
 
   return (

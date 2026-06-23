@@ -73,7 +73,7 @@ export default function NewsletterSection() {
               className="mb-10 text-base"
               style={{ color: '#4A2931', fontFamily: 'var(--font-dm-sans)', lineHeight: 1.65 }}
             >
-              Join <strong style={{ color: '#1F2933' }}>12,000+ readers</strong> who get weekly
+              Join Ogun State&apos;s growing tech community and get weekly
               dispatches on Ogun State Tech, covering funding rounds, founder stories, research breakthroughs,
               and the week's essential reads.
             </p>

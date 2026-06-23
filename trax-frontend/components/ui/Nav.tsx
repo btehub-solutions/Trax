@@ -123,12 +123,11 @@ export default function Nav() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'backdrop-blur-xl border-b shadow-sm'
-            : 'border-b border-transparent'
-        }`}
-        style={{ backgroundColor: 'var(--nav-bg)' } as React.CSSProperties}
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b shadow-sm"
+        style={{
+          backgroundColor: 'var(--nav-bg)',
+          borderColor: 'rgba(200, 75, 49, 0.09)',
+        }}
         aria-label="Main navigation"
       >
         <div className="container">
@@ -195,7 +194,7 @@ export default function Nav() {
               {mounted && (
                 <motion.button
                   id="nav-theme-toggle"
-                  aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                  aria-label={`Switch to ${theme === 'dark' ? 'dark red' : 'dark'} mode`}
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                   className="p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(200,75,49,0.1)] hover:text-[#C84B31]"
                   style={{ color: 'var(--fg-muted)' }}
@@ -296,7 +295,7 @@ export default function Nav() {
             <div className="container min-h-screen py-8 flex flex-col justify-between">
               
               {/* Header row inside overlay */}
-              <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+              <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-0.5 animate-pulse" id="menu-logo">
                   <span
                     className="text-2xl font-bold tracking-tight"
@@ -319,7 +318,7 @@ export default function Nav() {
               <div className="grid grid-cols-12 gap-8 my-8 md:my-12 flex-1">
                 
                 {/* Left Panel: Settings, Search & Socials */}
-                <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 lg:border-r lg:pr-8" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 lg:border-r lg:pr-8" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
                   
                   {/* Search */}
                   <div className="flex flex-col gap-2">
@@ -376,11 +375,11 @@ export default function Nav() {
                       <button
                         onClick={() => setTheme('light')}
                         className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
-                          theme === 'light' ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-400 hover:text-white'
+                          theme === 'light' ? 'bg-[#e10600] text-white shadow-sm' : 'text-zinc-400 hover:text-white'
                         }`}
                       >
                         <Sun size={14} />
-                        Light
+                        Dark Red
                       </button>
                       <button
                         onClick={() => setTheme('dark')}
@@ -427,7 +426,7 @@ export default function Nav() {
                 <div className="col-span-12 md:col-span-8 lg:col-span-6">
 
                   {/* ── Mobile Accordion (hidden on sm+) ── */}
-                  <div className="flex flex-col sm:hidden divide-y" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+                  <div className="flex flex-col sm:hidden divide-y" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
                     {[
                       {
                         label: 'Flagships & Beats',
@@ -623,12 +622,12 @@ export default function Nav() {
               </div>
 
               {/* Bottom Row */}
-              <div className="border-t pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+              <div className="border-t pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
                 <p>© {new Date().getFullYear()} Trax Media Platform. All rights reserved.</p>
                 <div className="flex items-center gap-4">
-                  <Link href="/policy" onClick={() => setMenuOpen(false)} className="hover:text-white">Privacy Policy</Link>
+                  <Link href="/privacy" onClick={() => setMenuOpen(false)} className="hover:text-white">Privacy Policy</Link>
                   <span>•</span>
-                  <Link href="/about" onClick={() => setMenuOpen(false)} className="hover:text-white">Terms of Service</Link>
+                  <Link href="/terms" onClick={() => setMenuOpen(false)} className="hover:text-white">Terms of Service</Link>
                 </div>
               </div>
 

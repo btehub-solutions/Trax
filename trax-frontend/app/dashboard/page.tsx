@@ -1786,7 +1786,7 @@ export default function DashboardPage() {
                             required
                             value={teamFormData.email}
                             onChange={(e) => setTeamFormData(prev => ({ ...prev, email: e.target.value }))}
-                            placeholder="john@trax.co"
+                            placeholder="john@trax.ng"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-orange-500 border"
                             style={inputStyle}
                           />

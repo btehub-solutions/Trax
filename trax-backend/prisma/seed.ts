@@ -21,7 +21,7 @@ async function main() {
   console.log('Creating Admin user...')
   const admin = await prisma.user.create({
     data: {
-      email: 'admin@trax.co',
+      email: 'admin@trax.ng',
       name: 'Admin Editor',
       password: await hashPassword('trax885152!'),
       role: 'ADMIN',
@@ -199,19 +199,19 @@ async function main() {
     {
       name: 'Homepage Top Leaderboard',
       size: 'LEADERBOARD',
-      code: `<a href="mailto:admin@trax.co?subject=Advertise%20on%20Trax" style="text-decoration: none; display: block; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);"><div style="background: linear-gradient(90deg, #111827 0%, #1c1917 50%, #292524 100%); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 90px; font-family: \'DM Sans\', sans-serif; box-sizing: border-box; width: 100%;"><div style="display: flex; flex-direction: column; justify-content: center; text-align: left;"><span style="font-size: 13px; font-weight: 800; letter-spacing: 0.05em; color: #C84B31; margin-bottom: 2px; text-transform: uppercase;">Run Your Ads Here</span><span style="font-size: 11px; color: #a8a29e;">Get your message in front of the entire Ogun State tech movement.</span></div><span style="background-color: #C84B31; color: #fff; font-size: 10px; font-weight: 700; padding: 8px 14px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">Contact Admin</span></div></a>`,
+      code: `<a href="mailto:admin@trax.ng?subject=Advertise%20on%20Trax" style="text-decoration: none; display: block; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);"><div style="background: linear-gradient(90deg, #111827 0%, #1c1917 50%, #292524 100%); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 90px; font-family: \'DM Sans\', sans-serif; box-sizing: border-box; width: 100%;"><div style="display: flex; flex-direction: column; justify-content: center; text-align: left;"><span style="font-size: 13px; font-weight: 800; letter-spacing: 0.05em; color: #C84B31; margin-bottom: 2px; text-transform: uppercase;">Run Your Ads Here</span><span style="font-size: 11px; color: #a8a29e;">Get your message in front of the entire Ogun State tech movement.</span></div><span style="background-color: #C84B31; color: #fff; font-size: 10px; font-weight: 700; padding: 8px 14px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">Contact Admin</span></div></a>`,
       active: true
     },
     {
       name: 'Sidebar Square Ad',
       size: 'RECTANGLE',
-      code: `<a href="mailto:admin@trax.co?subject=Advertise%20on%20Trax" style="text-decoration: none; display: block; overflow: hidden; border-radius: 16px; border: 1px solid rgba(200,75,49,0.2);"><div style="background: linear-gradient(135deg, #1c1917 0%, #292524 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 20px; min-height: 250px; text-align: center; font-family: \'DM Sans\', sans-serif; box-sizing: border-box; width: 100%;"><span style="background-color: rgba(200,75,49,0.1); color: #C84B31; border: 1px solid rgba(200,75,49,0.25); font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">AD SPACE AVAILABLE</span><h4 style="font-size: 16px; font-weight: 800; margin: 0 0 8px 0; color: #fff; line-height: 1.25;">Run Your Ads Here</h4><p style="font-size: 11px; color: #a8a29e; margin: 0 0 16px 0; line-height: 1.5;">Promote your brand, products, or services to our growing audience.</p><span style="background-color: #C84B31; color: #fff; font-size: 11px; font-weight: 700; padding: 9px 20px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Contact Admin</span></div></a>`,
+      code: `<a href="mailto:admin@trax.ng?subject=Advertise%20on%20Trax" style="text-decoration: none; display: block; overflow: hidden; border-radius: 16px; border: 1px solid rgba(200,75,49,0.2);"><div style="background: linear-gradient(135deg, #1c1917 0%, #292524 100%); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 20px; min-height: 250px; text-align: center; font-family: \'DM Sans\', sans-serif; box-sizing: border-box; width: 100%;"><span style="background-color: rgba(200,75,49,0.1); color: #C84B31; border: 1px solid rgba(200,75,49,0.25); font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;">AD SPACE AVAILABLE</span><h4 style="font-size: 16px; font-weight: 800; margin: 0 0 8px 0; color: #fff; line-height: 1.25;">Run Your Ads Here</h4><p style="font-size: 11px; color: #a8a29e; margin: 0 0 16px 0; line-height: 1.5;">Promote your brand, products, or services to our growing audience.</p><span style="background-color: #C84B31; color: #fff; font-size: 11px; font-weight: 700; padding: 9px 20px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Contact Admin</span></div></a>`,
       active: true
     },
     {
       name: 'Inline News Banner',
       size: 'INLINE',
-      code: `<a href="mailto:admin@trax.co?subject=Advertise%20on%20Trax" style="text-decoration: none; display: block; overflow: hidden; border-radius: 12px; border: 1px solid rgba(200,75,49,0.2);"><div style="background: linear-gradient(90deg, #1c1917 0%, #292524 100%); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 120px; font-family: \'DM Sans\', sans-serif; box-sizing: border-box; width: 100%;"><div style="display: flex; flex-direction: column; justify-content: center; text-align: left;"><span style="background-color: rgba(200,75,49,0.1); color: #C84B31; border: 1px solid rgba(200,75,49,0.25); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; width: fit-content;">AD SPACE</span><h4 style="font-size: 15px; font-weight: 800; margin: 0 0 2px 0; color: #fff;">Run Your Ads Here</h4><p style="font-size: 11px; color: #a8a29e; margin: 0;">Connect with our thousands of local tech readers directly.</p></div><span style="background-color: #C84B31; color: #fff; font-size: 11px; font-weight: 700; padding: 8px 16px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">Contact Admin</span></div></a>`,
+      code: `<a href="mailto:admin@trax.ng?subject=Advertise%20on%20Trax" style="text-decoration: none; display: block; overflow: hidden; border-radius: 12px; border: 1px solid rgba(200,75,49,0.2);"><div style="background: linear-gradient(90deg, #1c1917 0%, #292524 100%); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; height: 120px; font-family: \'DM Sans\', sans-serif; box-sizing: border-box; width: 100%;"><div style="display: flex; flex-direction: column; justify-content: center; text-align: left;"><span style="background-color: rgba(200,75,49,0.1); color: #C84B31; border: 1px solid rgba(200,75,49,0.25); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; width: fit-content;">AD SPACE</span><h4 style="font-size: 15px; font-weight: 800; margin: 0 0 2px 0; color: #fff;">Run Your Ads Here</h4><p style="font-size: 11px; color: #a8a29e; margin: 0;">Connect with our thousands of local tech readers directly.</p></div><span style="background-color: #C84B31; color: #fff; font-size: 11px; font-weight: 700; padding: 8px 16px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">Contact Admin</span></div></a>`,
       active: true
     },
   ]
@@ -222,10 +222,10 @@ async function main() {
 
   console.log('Seeding newsletter subscribers...')
   await prisma.subscriber.create({
-    data: { email: 'chidi@trax.co', confirmed: true },
+    data: { email: 'chidi@trax.ng', confirmed: true },
   })
   await prisma.subscriber.create({
-    data: { email: 'amara@trax.co', confirmed: true },
+    data: { email: 'amara@trax.ng', confirmed: true },
   })
 
   console.log('Seeding completed successfully!')

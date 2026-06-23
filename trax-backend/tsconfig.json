@@ -22,5 +22,5 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
   },
-  "exclude": ["node_modules", "dist", "test", "../trax-frontend"]
+  "exclude": ["node_modules", "dist", "test", "../trax-frontend", "prisma", "prisma.config.ts", "prisma/**/*.ts"]
 }

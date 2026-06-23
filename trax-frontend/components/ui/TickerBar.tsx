@@ -11,13 +11,13 @@ export default function TickerBar({ headlines = [] }: TickerBarProps) {
 
   if (displayHeadlines.length === 0) {
     displayHeadlines = [
-      "Welcome to the TRAX platform — tracking the Ogun State tech movement",
+      "Welcome to the TRAX platform tracking the Ogun State tech movement",
       "Subscribe to our newsletter to stay updated on ecosystem stories",
       "Listen to our first podcast episode EP1 now"
     ]
   } else if (displayHeadlines.length < 3) {
     const fallbacks = [
-      "Welcome to the TRAX platform — tracking the Ogun State tech movement",
+      "Welcome to the TRAX platform tracking the Ogun State tech movement",
       "Subscribe to our newsletter to stay updated on ecosystem stories",
       "Listen to our first podcast episode EP1 now"
     ]

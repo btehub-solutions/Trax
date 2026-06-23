@@ -10,7 +10,7 @@ export class RegisterDto {
   @IsString()
   name: string;
 
-  @ApiProperty({ example: 'chidi@trax.co' })
+  @ApiProperty({ example: 'chidi@trax.ng' })
   @IsEmail()
   email: string;
 
@@ -21,7 +21,7 @@ export class RegisterDto {
 }
 
 export class LoginDto {
-  @ApiProperty({ example: 'chidi@trax.co' })
+  @ApiProperty({ example: 'chidi@trax.ng' })
   @IsEmail()
   email: string;
 

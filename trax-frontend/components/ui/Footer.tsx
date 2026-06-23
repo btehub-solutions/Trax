@@ -82,8 +82,8 @@ export default function Footer() {
     <footer
       className="border-t"
       style={{
-        backgroundColor: '#0A0A0A',
-        borderColor:     '#1A1A1A',
+        backgroundColor: 'var(--nav-bg)',
+        borderColor:     'rgba(200, 75, 49, 0.09)',
         fontFamily:      'var(--font-dm-sans)',
       }}
       role="contentinfo"
@@ -91,7 +91,7 @@ export default function Footer() {
       {/* ── Newsletter Banner ── */}
       <div
         className="border-b"
-        style={{ borderColor: '#1A1A1A' }}
+        style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}
       >
         <div className="container py-10">
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
@@ -110,7 +110,7 @@ export default function Footer() {
                 >
                   Stay ahead of the curve
                 </p>
-                <p className="text-xs leading-relaxed" style={{ color: '#6B7280' }}>
+                <p className="text-xs leading-relaxed" style={{ color: 'var(--fg-subtle)' }}>
                   Weekly dispatches on Ogun State Tech, free, no spam.
                 </p>
               </div>
@@ -220,8 +220,8 @@ export default function Footer() {
                 Trax
               </span>
             </Link>
-            <p className="text-sm leading-relaxed mb-6 max-w-xs" style={{ color: '#6B7280' }}>
-              Ogun State and Ogun State&apos;s tech news and startup media platform, covering the
+            <p className="text-sm leading-relaxed mb-6 max-w-xs" style={{ color: 'var(--fg-muted)' }}>
+              Ogun State&apos;s tech news and startup media platform, covering the
               startups, research, policy and people shaping the continent&apos;s tech future.
             </p>
             {/* Nav links (from main nav) */}
@@ -231,7 +231,7 @@ export default function Footer() {
                   key={link.href}
                   href={link.href}
                   className="text-xs font-medium transition-colors hover:text-white"
-                  style={{ color: '#4B5563', fontFamily: 'var(--font-dm-sans)' }}
+                  style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
                 >
                   {link.label}
                 </Link>
@@ -254,7 +254,7 @@ export default function Footer() {
                   whileHover={{ scale: 1.1, borderColor: '#C84B31', color: '#C84B31' }}
                   whileTap={{ scale: 0.9 }}
                   className="p-2 rounded-lg border transition-colors duration-200"
-                  style={{ color: '#6B7280', borderColor: '#222' }}
+                  style={{ color: 'var(--fg-subtle)', borderColor: 'var(--border)' }}
                 >
                   <Icon size={15} />
                 </motion.a>
@@ -277,7 +277,7 @@ export default function Footer() {
                     <Link
                       href={link.href}
                       className="text-sm transition-colors duration-200 hover:text-white"
-                      style={{ color: '#6B7280' }}
+                      style={{ color: 'var(--fg-subtle)' }}
                     >
                       {link.label}
                     </Link>
@@ -289,22 +289,26 @@ export default function Footer() {
         </div>
 
         {/* ── Divider ── */}
-        <div className="h-px mb-8" style={{ backgroundColor: '#1A1A1A' }} />
+        <div className="h-px mb-8" style={{ backgroundColor: 'rgba(200, 75, 49, 0.09)' }} />
 
         {/* ── Bottom Row ── */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: '#374151' }}>
+          <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
             © {new Date().getFullYear()} Trax Media Ltd. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((item) => (
+            {[
+              { label: 'Privacy Policy', href: '/privacy' },
+              { label: 'Terms of Service', href: '/terms' },
+              { label: 'Cookie Policy', href: '/cookies' },
+            ].map((item) => (
               <Link
-                key={item}
-                href="#"
+                key={item.label}
+                href={item.href}
                 className="text-xs transition-colors hover:text-white"
-                style={{ color: '#374151' }}
+                style={{ color: 'var(--fg-subtle)' }}
               >
-                {item}
+                {item.label}
               </Link>
             ))}
           </div>
