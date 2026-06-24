@@ -173,7 +173,7 @@ export default function AdvertisePage() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Kola"
-                      className="px-3.5 py-2 text-xs rounded-xl outline-none border bg-transparent"
+                      className="px-3.5 py-2 text-base md:text-xs rounded-xl outline-none border bg-transparent"
                       style={{ borderColor: 'var(--border)', color: 'var(--fg)' }}
                     />
                   </div>
@@ -185,7 +185,7 @@ export default function AdvertisePage() {
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       placeholder="e.g. Venti Tech"
-                      className="px-3.5 py-2 text-xs rounded-xl outline-none border bg-transparent"
+                      className="px-3.5 py-2 text-base md:text-xs rounded-xl outline-none border bg-transparent"
                       style={{ borderColor: 'var(--border)', color: 'var(--fg)' }}
                     />
                   </div>
@@ -199,7 +199,7 @@ export default function AdvertisePage() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="kola@company.com"
-                    className="px-3.5 py-2 text-xs rounded-xl outline-none border bg-transparent w-full"
+                    className="px-3.5 py-2 text-base md:text-xs rounded-xl outline-none border bg-transparent w-full"
                     style={{ borderColor: 'var(--border)', color: 'var(--fg)' }}
                   />
                 </div>
@@ -212,7 +212,7 @@ export default function AdvertisePage() {
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     placeholder="Tell us about your campaign goals, budget, or preferred packages..."
-                    className="px-3.5 py-2.5 text-xs rounded-xl outline-none border bg-transparent w-full resize-none"
+                    className="px-3.5 py-2.5 text-base md:text-xs rounded-xl outline-none border bg-transparent w-full resize-none"
                     style={{ borderColor: 'var(--border)', color: 'var(--fg)' }}
                   />
                 </div>

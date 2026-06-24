@@ -15,9 +15,9 @@ export default function TeamPage() {
       image: '/images/founder.jpg'
     },
     {
-      name: 'Dami',
+      name: 'Oyedele Damilare',
       role: 'Ecosystem Contributor',
-      bio: 'Dami is a key team member at Trax, supporting operations and data tracking across the regional startup ecosystem. Passionate about technology growth in Ogun State, he helps document local innovation, track builder milestones, and coordinate community coverage.',
+      bio: 'Oyedele Damilare is a key team member at Trax, supporting operations and data tracking across the regional startup ecosystem. Passionate about technology growth in Ogun State, he helps document local innovation, track builder milestones, and coordinate community coverage.',
       image: '/images/dami.png'
     }
   ]

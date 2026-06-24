@@ -292,7 +292,7 @@ export default function Nav() {
             className="fixed inset-0 z-50 overflow-y-auto"
             style={{ backgroundColor: 'var(--bg)', fontFamily: 'var(--font-dm-sans)' }}
           >
-            <div className="container min-h-screen py-8 flex flex-col justify-between">
+            <div className="container min-h-dvh py-8 flex flex-col justify-between">
               
               {/* Header row inside overlay */}
               <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
@@ -332,7 +332,7 @@ export default function Nav() {
                         value={menuQuery}
                         onChange={(e) => setMenuQuery(e.target.value)}
                         placeholder="Search articles, topics..."
-                        className="bg-transparent outline-none text-sm text-white w-full placeholder-zinc-500"
+                        className="bg-transparent outline-none text-base md:text-sm text-white w-full placeholder-zinc-500"
                       />
                       {menuQuery && (
                         <button onClick={() => setMenuQuery('')} className="text-zinc-500 hover:text-white text-xs">
