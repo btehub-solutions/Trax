@@ -29,6 +29,10 @@ export default function ArticleGrid({
   id,
   viewAllHref = '/news',
 }: ArticleGridProps) {
+  if (!articles || articles.length === 0) {
+    return null
+  }
+
   if (variant === 'featured-first') {
     const [featured, ...rest] = articles
     return (

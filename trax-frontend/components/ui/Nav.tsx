@@ -127,6 +127,8 @@ export default function Nav() {
         style={{
           backgroundColor: 'var(--nav-bg)',
           borderColor: 'rgba(200, 75, 49, 0.09)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
         }}
         aria-label="Main navigation"
       >

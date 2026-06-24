@@ -35,9 +35,9 @@ export default async function HomePage() {
   const breakingTitles = allArticles.filter((a) => a.breaking).map((a) => a.title)
 
   return (
-    <>
+    <div className="pt-16">
       {/* ── Breaking news ticker (sits behind sticky nav, shifts on scroll) ── */}
-      <div className="pt-16">
+      <div>
         <TickerBar headlines={breakingTitles} />
       </div>
 
@@ -88,6 +88,6 @@ export default async function HomePage() {
         variant="featured-first"
         viewAllHref="/ecosystem"
       />
-    </>
+    </div>
   )
 }
