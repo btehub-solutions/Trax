@@ -49,8 +49,8 @@ interface LatestStoriesHeroProps {
 export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroProps) {
   const lead = articles[0]
   const secondary = articles.slice(1, 3).filter(Boolean)
-  const feedArticles = articles.slice(3, 6).filter(Boolean)
-  const pulse = articles.slice(6, 11).filter(Boolean)
+  const feedArticles = articles.slice(3, 8).filter(Boolean)
+  const pulse = articles.slice(8, 12).filter(Boolean)
 
   if (!lead) {
     return (
@@ -194,7 +194,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
               {/* Right Side: Sidebar West Africa Tracker (4 cols) */}
               <motion.aside
                 variants={itemVariants}
-                className="lg:col-span-4 lg:border-l lg:pl-8 lg:pt-0 border-t pt-8 lg:border-t-0"
+                className="lg:col-span-4 lg:border-l lg:pl-8 lg:pt-0 border-t pt-8 lg:border-t-0 lg:sticky lg:top-24 h-fit"
                 style={{ borderColor: 'var(--border)' }}
               >
                 <p className="mb-5 text-xs font-extrabold uppercase" style={{ color: '#FF3D16' }}>

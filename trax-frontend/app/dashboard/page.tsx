@@ -24,7 +24,9 @@ import {
   BookOpen,
   FileText,
   User,
-  UserPlus
+  UserPlus,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL } from '@/lib/api';
 import { compressImage } from '@/lib/image-compressor';
@@ -54,6 +56,15 @@ export default function DashboardPage() {
   // Search/Filters
   const [articleSearch, setArticleSearch] = useState('');
   const [articleFilter, setArticleFilter] = useState<'ALL' | 'PUBLISHED' | 'DRAFT'>('ALL');
+
+  // Pagination States
+  const [articlesPage, setArticlesPage] = useState(1);
+  const [subscribersPage, setSubscribersPage] = useState(1);
+
+  // Reset page when filter or search changes
+  useEffect(() => {
+    setArticlesPage(1);
+  }, [articleSearch, articleFilter]);
 
   // Editor Form State
   const [editingArticleId, setEditingArticleId] = useState<string | null>(null);
@@ -605,6 +616,25 @@ export default function DashboardPage() {
     return matchesSearch && matchesFilter;
   });
 
+  const totalArticlesPages = Math.ceil(filteredArticles.length / 10) || 1;
+  const paginatedArticles = filteredArticles.slice((articlesPage - 1) * 10, articlesPage * 10);
+
+  const totalSubscribersPages = Math.ceil(subscribers.length / 10) || 1;
+  const paginatedSubscribers = subscribers.slice((subscribersPage - 1) * 10, subscribersPage * 10);
+
+  // Sync page state when total pages drop
+  useEffect(() => {
+    if (articlesPage > totalArticlesPages) {
+      setArticlesPage(totalArticlesPages);
+    }
+  }, [filteredArticles.length, totalArticlesPages, articlesPage]);
+
+  useEffect(() => {
+    if (subscribersPage > totalSubscribersPages) {
+      setSubscribersPage(totalSubscribersPages);
+    }
+  }, [subscribers.length, totalSubscribersPages, subscribersPage]);
+
   console.log('Dashboard rendering - raw articles:', articles.length, 'filtered articles:', filteredArticles.length);
 
 
@@ -894,7 +924,7 @@ export default function DashboardPage() {
                           </tr>
                         </thead>
                         <tbody className="text-sm" style={{ color: 'var(--dash-fg-secondary)' }}>
-                          {filteredArticles.map((article) => (
+                          {paginatedArticles.map((article) => (
                             <tr
                               key={article.id}
                               className="group border-b transition-colors"
@@ -978,6 +1008,57 @@ export default function DashboardPage() {
                       </table>
                     </div>
                   </div>
+
+                  {/* Pagination Controls */}
+                  {totalArticlesPages > 1 && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+                      <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>
+                        Showing <span className="font-semibold" style={{ color: 'var(--dash-fg)' }}>{Math.min(filteredArticles.length, (articlesPage - 1) * 10 + 1)}-{Math.min(filteredArticles.length, articlesPage * 10)}</span> of <span className="font-semibold" style={{ color: 'var(--dash-fg)' }}>{filteredArticles.length}</span> articles
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setArticlesPage(prev => Math.max(prev - 1, 1))}
+                          disabled={articlesPage === 1}
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+                        {Array.from({ length: totalArticlesPages }).map((_, i) => {
+                          const pageNum = i + 1;
+                          const isActive = pageNum === articlesPage;
+                          if (totalArticlesPages > 6 && Math.abs(pageNum - articlesPage) > 1 && pageNum !== 1 && pageNum !== totalArticlesPages) {
+                            if (pageNum === 2 || pageNum === totalArticlesPages - 1) {
+                              return <span key={pageNum} className="flex items-center justify-center w-9 h-9 text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>...</span>;
+                            }
+                            return null;
+                          }
+                          return (
+                            <button
+                              key={pageNum}
+                              onClick={() => setArticlesPage(pageNum)}
+                              className="w-9 h-9 rounded-xl text-xs font-bold transition-all border"
+                              style={
+                                isActive
+                                  ? { backgroundColor: 'rgba(200,75,49,0.1)', borderColor: '#C84B31', color: '#C84B31' }
+                                  : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }
+                              }
+                            >
+                              {pageNum}
+                            </button>
+                          );
+                        })}
+                        <button
+                          onClick={() => setArticlesPage(prev => Math.min(prev + 1, totalArticlesPages))}
+                          disabled={articlesPage === totalArticlesPages}
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1297,7 +1378,7 @@ export default function DashboardPage() {
                           </tr>
                         </thead>
                         <tbody className="text-sm" style={{ color: 'var(--dash-fg-secondary)' }}>
-                          {subscribers.map((sub) => (
+                          {paginatedSubscribers.map((sub) => (
                             <tr
                               key={sub.id}
                               className="border-b transition-colors"
@@ -1359,6 +1440,57 @@ export default function DashboardPage() {
                       </table>
                     </div>
                   </div>
+
+                  {/* Pagination Controls */}
+                  {totalSubscribersPages > 1 && (
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+                      <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>
+                        Showing <span className="font-semibold" style={{ color: 'var(--dash-fg)' }}>{Math.min(subscribers.length, (subscribersPage - 1) * 10 + 1)}-{Math.min(subscribers.length, subscribersPage * 10)}</span> of <span className="font-semibold" style={{ color: 'var(--dash-fg)' }}>{subscribers.length}</span> subscribers
+                      </p>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setSubscribersPage(prev => Math.max(prev - 1, 1))}
+                          disabled={subscribersPage === 1}
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
+                        >
+                          <ChevronLeft className="h-4 w-4" />
+                        </button>
+                        {Array.from({ length: totalSubscribersPages }).map((_, i) => {
+                          const pageNum = i + 1;
+                          const isActive = pageNum === subscribersPage;
+                          if (totalSubscribersPages > 6 && Math.abs(pageNum - subscribersPage) > 1 && pageNum !== 1 && pageNum !== totalSubscribersPages) {
+                            if (pageNum === 2 || pageNum === totalSubscribersPages - 1) {
+                              return <span key={pageNum} className="flex items-center justify-center w-9 h-9 text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>...</span>;
+                            }
+                            return null;
+                          }
+                          return (
+                            <button
+                              key={pageNum}
+                              onClick={() => setSubscribersPage(pageNum)}
+                              className="w-9 h-9 rounded-xl text-xs font-bold transition-all border"
+                              style={
+                                isActive
+                                  ? { backgroundColor: 'rgba(200,75,49,0.1)', borderColor: '#C84B31', color: '#C84B31' }
+                                  : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }
+                              }
+                            >
+                              {pageNum}
+                            </button>
+                          );
+                        })}
+                        <button
+                          onClick={() => setSubscribersPage(prev => Math.min(prev + 1, totalSubscribersPages))}
+                          disabled={subscribersPage === totalSubscribersPages}
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
