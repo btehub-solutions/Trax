@@ -41,7 +41,11 @@ export default function AdvertisePage() {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          _subject: 'New Partnership/Advertise Inquiry',
+          form_name: 'Partnership / Advertise Form'
+        }),
       })
       if (response.ok) {
         setSubmitted(true)
