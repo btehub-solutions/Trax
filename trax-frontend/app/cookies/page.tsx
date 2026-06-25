@@ -91,7 +91,7 @@ export default function CookiePolicyPage() {
             6. Contact Us
           </h2>
           <p>
-            If you have questions about our use of cookies or other tracking technologies, please email us at <strong>info@trax.media</strong>.
+            If you have questions about our use of cookies or other tracking technologies, please email us at <strong>traxnewsng@gmail.com</strong>.
           </p>
         </div>
       </div>

@@ -98,7 +98,7 @@ export default function TermsOfServicePage() {
             7. Contact Us
           </h2>
           <p>
-            If you have questions or concerns about these Terms of Service, please contact us at <strong>info@trax.media</strong>.
+            If you have questions or concerns about these Terms of Service, please contact us at <strong>traxnewsng@gmail.com</strong>.
           </p>
         </div>
       </div>

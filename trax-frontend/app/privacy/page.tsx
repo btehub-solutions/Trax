@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="prose prose-invert max-w-none space-y-6 text-sm leading-relaxed" style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}>
           <p>
-            Welcome to Trax. We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this policy or our practices with regard to your personal info, please contact us at info@trax.media.
+            Welcome to Trax. We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this policy or our practices with regard to your personal info, please contact us at traxnewsng@gmail.com.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>
@@ -85,7 +85,7 @@ export default function PrivacyPolicyPage() {
             6. Contact Us
           </h2>
           <p>
-            If you have questions or comments about this Privacy Policy, please email us at <strong>info@trax.media</strong>.
+            If you have questions or comments about this Privacy Policy, please email us at <strong>traxnewsng@gmail.com</strong>.
           </p>
         </div>
       </div>
