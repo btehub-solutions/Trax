@@ -150,7 +150,7 @@ export default function AdvertisePage() {
             className="text-xs md:text-sm text-center mb-8"
             style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
           >
-            Fill out the form below or email us directly at <span style={{ color: 'var(--accent)' }}>advertise@trax.ng</span> and we will follow up with our sponsorship deck.
+            Fill out the form below or email us directly at <span style={{ color: 'var(--accent)' }}>traxnewsng@gmail.com</span> and we will follow up with our sponsorship deck.
           </p>
 
           <AnimatePresence mode="wait">

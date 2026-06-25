@@ -68,11 +68,11 @@ export default function CareersPage() {
             We don&apos;t have any active openings at the moment, but we&apos;re always growing.
             Send your CV and a short note to{' '}
             <a
-              href="mailto:careers@trax.ng"
+              href="mailto:traxnewsng@gmail.com"
               className="font-semibold transition-colors hover:text-white"
               style={{ color: 'var(--accent)' }}
             >
-              careers@trax.ng
+              traxnewsng@gmail.com
             </a>{' '}
             and we&apos;ll be in touch when something fits.
           </p>
