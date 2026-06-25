@@ -34,9 +34,26 @@ export default function AdvertisePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 1000))
-    setLoading(false)
-    setSubmitted(true)
+    try {
+      const response = await fetch('https://formspree.io/f/maqgevgz', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+      if (response.ok) {
+        setSubmitted(true)
+      } else {
+        const data = await response.json()
+        alert(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      alert('Network error. Please check your internet connection.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
