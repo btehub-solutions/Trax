@@ -317,7 +317,7 @@ export default function DashboardPage() {
 
     const payload = {
       ...formData,
-      publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : undefined,
+      publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : null,
     };
 
     try {

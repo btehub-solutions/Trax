@@ -5,11 +5,13 @@ import { mapApiArticle } from '@/lib/mapArticle'
 import ArticleReader from '@/components/ArticleReader'
 import { BASE_URL } from '@/lib/api'
 
+export const dynamic = 'force-dynamic';
+
 // Fetch article dynamically from backend, fallback to mock articles
 async function getArticle(slug: string): Promise<Article | null> {
   try {
     const res = await fetch(`${BASE_URL}/articles/${slug}`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     })
     if (!res.ok) throw new Error('Article not found in backend')
     const a = await res.json()
@@ -28,7 +30,7 @@ async function getRelatedArticles(currentSlug: string, category: string): Promis
   let apiSucceeded = false
   try {
     const res = await fetch(`${BASE_URL}/articles?limit=50`, {
-      next: { revalidate: 60 },
+      cache: 'no-store',
     })
     if (res.ok) {
       const json = await res.json()
