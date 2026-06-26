@@ -46,7 +46,7 @@ function LinkedInIcon({ size = 16 }: { size?: number }) {
 function generateBody(article: Article): string[] {
   if ((article as any).body) {
     return (article as any).body
-      .split(/\n\s*\n/)
+      .split(/[\r\n]+/)
       .map((p: string) => p.trim())
       .filter((p: string) => p.length > 0)
   }
