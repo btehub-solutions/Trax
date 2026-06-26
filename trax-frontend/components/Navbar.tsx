@@ -167,6 +167,22 @@ export default function Navbar() {
                 <Search size={19} strokeWidth={1.9} />
               </motion.button>
 
+              {/* X / Twitter Link in main Menu Bar */}
+              <motion.a
+                id="navbar-twitter"
+                href="https://x.com/traxnewsng?s=11"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on X / Twitter"
+                whileTap={{ scale: 0.88 }}
+                className="hidden sm:flex items-center justify-center p-2 rounded-lg transition-colors duration-200 hover:text-[#C84B31] hover:bg-[rgba(200,75,49,0.08)]"
+                style={{ color: 'var(--fg-muted)' }}
+              >
+                <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </motion.a>
+
               {/* Separator */}
               <div className="hidden md:block w-px h-4 mx-1" style={{ backgroundColor: 'var(--border)' }} />
 

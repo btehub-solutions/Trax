@@ -101,7 +101,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
 
   const shareX = () => {
     const url = getShareUrl()
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}`, '_blank')
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}&via=traxnewsng`, '_blank')
   }
 
   const shareLinkedIn = () => {

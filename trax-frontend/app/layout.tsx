@@ -42,6 +42,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Trax | Tracking Ogun State's Tech Movement",
     description: "Ogun State's tech news and startup media platform.",
+    site: '@traxnewsng',
+    creator: '@traxnewsng',
   },
 }
 

@@ -74,6 +74,8 @@ export async function generateMetadata({
       title:       article.title,
       description: article.excerpt,
       images:      [article.image],
+      site:        '@traxnewsng',
+      creator:     '@traxnewsng',
     },
   }
 }
