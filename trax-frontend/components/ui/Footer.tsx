@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Globe, MessageCircle, Play, Rss, Mail, ArrowRight, CheckCircle } from 'lucide-react'
+import { Mail, ArrowRight, CheckCircle } from 'lucide-react'
 import { navLinks } from '@/lib/articles'
 import { BASE_URL } from '@/lib/api'
 
@@ -29,11 +29,60 @@ const footerLinks = {
 }
 
 const socials = [
-  { icon: X,             label: 'Twitter / X', href: 'https://twitter.com'   },
-  { icon: Globe,         label: 'LinkedIn',    href: 'https://linkedin.com'  },
-  { icon: MessageCircle, label: 'Instagram',   href: 'https://instagram.com' },
-  { icon: Play,          label: 'YouTube',     href: 'https://youtube.com'   },
-  { icon: Rss,           label: 'RSS Feed',    href: '/rss'                  },
+  {
+    icon: ({ size = 15 }: { size?: number }) => (
+      <svg width={size} height={size} fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    ),
+    label: 'Twitter / X',
+    href: 'https://x.com/traxnewsng?s=11',
+    isPlaceholder: false
+  },
+  {
+    icon: ({ size = 15 }: { size?: number }) => (
+      <svg width={size} height={size} fill="currentColor" viewBox="0 0 24 24">
+        <path fillRule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clipRule="evenodd" />
+      </svg>
+    ),
+    label: 'LinkedIn',
+    href: 'https://linkedin.com',
+    isPlaceholder: true
+  },
+  {
+    icon: ({ size = 15 }: { size?: number }) => (
+      <svg width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      </svg>
+    ),
+    label: 'Instagram',
+    href: 'https://instagram.com',
+    isPlaceholder: true
+  },
+  {
+    icon: ({ size = 15 }: { size?: number }) => (
+      <svg width={size} height={size} fill="currentColor" viewBox="0 0 24 24">
+        <path fillRule="evenodd" d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.108C19.524 3.545 12 3.545 12 3.545s-7.525 0-9.388.51a3.002 3.002 0 0 0-2.11 2.108C0 8.029 0 12 0 12s0 3.972.502 5.837a3.003 3.003 0 0 0 2.11 2.108c1.863.51 9.388.51 9.388.51s7.524 0 9.388-.51a3.003 3.003 0 0 0 2.11-2.108C24 15.972 24 12 24 12s0-3.971-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" clipRule="evenodd" />
+      </svg>
+    ),
+    label: 'YouTube',
+    href: 'https://youtube.com',
+    isPlaceholder: true
+  },
+  {
+    icon: ({ size = 15 }: { size?: number }) => (
+      <svg width={size} height={size} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 11a9 9 0 0 1 9 9" />
+        <path d="M4 4a16 16 0 0 1 16 16" />
+        <circle cx="5" cy="19" r="1" />
+      </svg>
+    ),
+    label: 'RSS Feed',
+    href: '/rss',
+    isPlaceholder: true
+  },
 ]
 
 export default function Footer() {
@@ -239,13 +288,15 @@ export default function Footer() {
             </div>
             {/* Social Icons */}
             <div className="flex items-center gap-2.5">
-              {socials.map(({ icon: Icon, label, href }) => (
+              {socials.map(({ icon: Icon, label, href, isPlaceholder }) => (
                 <motion.a
                   key={label}
                   href={href}
                   onClick={(e) => {
-                    e.preventDefault()
-                    showToast(`${label} page is coming soon!`)
+                    if (isPlaceholder) {
+                      e.preventDefault()
+                      showToast(`${label} page is coming soon!`)
+                    }
                   }}
                   target="_blank"
                   rel="noopener noreferrer"
