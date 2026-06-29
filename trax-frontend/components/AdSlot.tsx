@@ -22,8 +22,8 @@ import { BASE_URL } from '@/lib/api'
 
 // ── Size presets (IAB standard) ───────────────────────────────────────────────
 const SIZE_MAP = {
-  leaderboard: { width: '100%',  height: 90,  label: 'Leaderboard (728×90)'  },
-  rectangle:   { width: 300,     height: 300, label: 'Square Sidebar Ad (300×300)' },
+  leaderboard: { width: '100%',  height: 409,  label: 'Leaderboard (1024×409)'  },
+  rectangle:   { width: 300,     height: 300, label: 'Square (1080×1080)' },
   inline:      { width: '100%',  height: 120, label: 'Inline Banner (468×120)' },
 } as const
 

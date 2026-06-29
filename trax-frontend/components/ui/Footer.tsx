@@ -269,10 +269,19 @@ export default function Footer() {
                 Trax
               </span>
             </Link>
-            <p className="text-sm leading-relaxed mb-6 max-w-xs" style={{ color: 'var(--fg-muted)' }}>
+            <p className="text-sm leading-relaxed mb-4 max-w-xs" style={{ color: 'var(--fg-muted)' }}>
               Ogun State&apos;s tech news and startup media platform, covering the
               startups, research, policy and people shaping the continent&apos;s tech future.
             </p>
+            {/* Editorial contact */}
+            <a
+              href="mailto:editor@traxnews.ng"
+              className="inline-flex items-center gap-1.5 text-xs font-medium mb-5 transition-colors hover:text-white"
+              style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
+            >
+              <Mail size={11} />
+              editor@traxnews.ng
+            </a>
             {/* Nav links (from main nav) */}
             <div className="flex flex-wrap gap-3 mb-6">
               {navLinks.map((link) => (
@@ -344,14 +353,29 @@ export default function Footer() {
 
         {/* ── Bottom Row ── */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
-            © {new Date().getFullYear()} Trax Media Ltd. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
+              © {new Date().getFullYear()} Trax Media Ltd. All rights reserved.
+            </p>
+            <span
+              className="hidden sm:block text-[10px] font-bold px-2 py-0.5 rounded"
+              style={{
+                backgroundColor: 'rgba(200,75,49,0.1)',
+                color: '#C84B31',
+                border: '1px solid rgba(200,75,49,0.2)',
+                fontFamily: 'var(--font-oxanium)',
+                letterSpacing: '0.05em',
+              }}
+            >
+              EDITORIAL MEDIA
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
             {[
               { label: 'Privacy Policy', href: '/privacy' },
               { label: 'Terms of Service', href: '/terms' },
               { label: 'Cookie Policy', href: '/cookies' },
+              { label: 'Corrections', href: '/about#corrections' },
             ].map((item) => (
               <Link
                 key={item.label}

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useSpring } from 'framer-motion'
-import { Clock, User, Bookmark, Share2, Link2, Check, ArrowLeft } from 'lucide-react'
+import { Clock, User, Bookmark, Share2, Link2, Check, ChevronRight, Tag } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import AdSlot from '@/components/AdSlot'
@@ -165,17 +165,49 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
         <div className="container">
           <div className="max-w-3xl mx-auto">
 
-            {/* ── Back link ──────────────────────────────────────────────── */}
-            <motion.div variants={fadeUp} className="pt-8 mb-6">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 text-sm font-bold transition-colors hover:text-[#FF3D16]"
-                style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
+            {/* ── Breadcrumbs ─────────────────────────────────────────── */}
+            <motion.nav
+              variants={fadeUp}
+              aria-label="Breadcrumb"
+              className="pt-8 mb-6"
+            >
+              <ol
+                className="flex flex-wrap items-center gap-1 text-xs"
+                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
               >
-                <ArrowLeft size={15} strokeWidth={1.9} />
-                Back to Trax
-              </Link>
-            </motion.div>
+                <li>
+                  <Link
+                    href="/"
+                    className="font-medium transition-colors hover:text-[#FF3D16]"
+                    style={{ color: 'var(--fg-muted)' }}
+                  >
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight size={12} strokeWidth={2} style={{ color: 'var(--fg-subtle)' }} />
+                </li>
+                <li>
+                  <Link
+                    href={`/${article.category.toLowerCase()}`}
+                    className="font-medium transition-colors hover:text-[#FF3D16] capitalize"
+                    style={{ color: 'var(--fg-muted)' }}
+                  >
+                    {article.category}
+                  </Link>
+                </li>
+                <li aria-hidden="true">
+                  <ChevronRight size={12} strokeWidth={2} style={{ color: 'var(--fg-subtle)' }} />
+                </li>
+                <li
+                  aria-current="page"
+                  className="truncate max-w-[180px] sm:max-w-xs"
+                  style={{ color: 'var(--fg-subtle)' }}
+                >
+                  {article.title}
+                </li>
+              </ol>
+            </motion.nav>
 
             {/* ── Category tag & Official Link ───────────────────────────────── */}
             <motion.div variants={fadeUp} className="mb-4 flex flex-wrap gap-2 items-center">
@@ -234,16 +266,18 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               {article.title}
             </motion.h1>
 
-            {/* ── Meta row ───────────────────────────────────────────────── */}
+            {/* ── Author & Meta row ──────────────────────────────────────── */}
             <motion.div
               variants={fadeUp}
               className="flex flex-wrap items-center gap-4 pb-6 border-b"
               style={{ borderColor: 'var(--border)' }}
             >
-              {/* Author avatar placeholder + info */}
+              {/* Author avatar + info */}
               <div className="flex items-center gap-3">
                 {article.authorAvatar ? (
-                  <div className="relative w-9 h-9 rounded-full overflow-hidden shrink-0 border border-neutral-800">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0"
+                    style={{ border: '2px solid rgba(200,75,49,0.25)' }}
+                  >
                     <Image
                       src={article.authorAvatar}
                       alt={article.author}
@@ -253,24 +287,27 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   </div>
                 ) : (
                   <div
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
-                    style={{ backgroundColor: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
+                    style={{
+                      background: 'linear-gradient(135deg, #C84B31 0%, #FF3D16 100%)',
+                      fontFamily: 'var(--font-dm-sans)',
+                    }}
                   >
                     {article.author.charAt(0)}
                   </div>
                 )}
                 <div>
                   <p
-                    className="text-sm font-semibold leading-none mb-0.5"
+                    className="text-sm font-bold leading-none mb-1"
                     style={{ color: 'var(--fg)', fontFamily: 'var(--font-dm-sans)' }}
                   >
                     {article.author}
                   </p>
                   <p
-                    className="text-xs"
+                    className="text-xs leading-none"
                     style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
                   >
-                    {article.authorRole}
+                    {article.authorRole || 'Trax Editorial'}
                   </p>
                 </div>
               </div>
@@ -285,10 +322,10 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 className="flex items-center gap-3 text-xs"
                 style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
               >
-                <span className="flex items-center gap-1.5">
+                <time dateTime={article.date} className="flex items-center gap-1.5">
                   <User size={12} strokeWidth={1.75} />
                   {article.date}
-                </span>
+                </time>
                 <span className="w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--fg-subtle)' }} />
                 <span className="flex items-center gap-1.5">
                   <Clock size={12} strokeWidth={1.75} />
@@ -301,17 +338,17 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 id="article-bookmark"
                 aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark this article'}
                 onClick={() => setBookmarked((b) => !b)}
-                whileHover={{ scale: 1.15 }}
-                whileTap={{ scale: 0.85 }}
-                className="ml-auto p-2 rounded-lg border transition-all duration-200"
+                whileHover={{ scale: 1.12 }}
+                whileTap={{ scale: 0.88 }}
+                className="ml-auto p-2.5 rounded-xl border transition-all duration-200"
                 style={{
                   borderColor:     bookmarked ? '#FF3D16' : 'var(--border)',
                   color:           bookmarked ? '#FF3D16' : 'var(--fg-muted)',
-                  backgroundColor: bookmarked ? 'rgba(200,75,49,0.08)' : 'transparent',
+                  backgroundColor: bookmarked ? 'rgba(200,75,49,0.08)' : 'rgba(255,255,255,0.02)',
                 }}
               >
                 <Bookmark
-                  size={17}
+                  size={16}
                   fill={bookmarked ? '#FF3D16' : 'none'}
                   strokeWidth={bookmarked ? 0 : 1.75}
                 />
@@ -321,14 +358,14 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             {/* ── Share bar ──────────────────────────────────────────────── */}
             <motion.div
               variants={fadeUp}
-              className="flex items-center gap-2 py-4 border-b"
+              className="flex flex-wrap items-center gap-2 py-4 border-b"
               style={{ borderColor: 'var(--border)' }}
             >
               <span
-                className="text-xs font-semibold mr-2 flex items-center gap-1.5"
-                style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
+                className="text-xs font-bold uppercase tracking-wide mr-1 flex items-center gap-1.5"
+                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)', letterSpacing: '0.06em' }}
               >
-                <Share2 size={13} strokeWidth={1.75} />
+                <Share2 size={12} strokeWidth={2} />
                 Share
               </span>
 
@@ -337,14 +374,23 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 id="article-share-x"
                 aria-label="Share on X / Twitter"
                 onClick={shareX}
-                whileHover={{ scale: 1.08, color: '#000', backgroundColor: '#f0f0f0' }}
-                whileTap={{ scale: 0.9 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-200"
+                whileTap={{ scale: 0.92 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200"
                 style={{
                   borderColor:     'var(--border)',
                   color:           'var(--fg-muted)',
-                  backgroundColor: 'transparent',
+                  backgroundColor: 'rgba(255,255,255,0.02)',
                   fontFamily:      'var(--font-dm-sans)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#000'
+                  e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.08)'
+                  e.currentTarget.style.color = 'var(--fg)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border)'
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.02)'
+                  e.currentTarget.style.color = 'var(--fg-muted)'
                 }}
               >
                 <XIcon size={13} />
@@ -356,14 +402,23 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 id="article-share-linkedin"
                 aria-label="Share on LinkedIn"
                 onClick={shareLinkedIn}
-                whileHover={{ scale: 1.08, color: '#0A66C2', borderColor: '#0A66C2' }}
-                whileTap={{ scale: 0.9 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-200"
+                whileTap={{ scale: 0.92 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200"
                 style={{
                   borderColor:     'var(--border)',
                   color:           'var(--fg-muted)',
-                  backgroundColor: 'transparent',
+                  backgroundColor: 'rgba(255,255,255,0.02)',
                   fontFamily:      'var(--font-dm-sans)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#0A66C2'
+                  e.currentTarget.style.backgroundColor = 'rgba(10,102,194,0.08)'
+                  e.currentTarget.style.color = '#0A66C2'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = 'var(--border)'
+                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.02)'
+                  e.currentTarget.style.color = 'var(--fg-muted)'
                 }}
               >
                 <LinkedInIcon size={13} />
@@ -375,13 +430,12 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 id="article-share-copy"
                 aria-label="Copy article link"
                 onClick={copyLink}
-                whileHover={{ scale: 1.08, color: '#FF3D16', borderColor: '#FF3D16' }}
-                whileTap={{ scale: 0.9 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all duration-200"
+                whileTap={{ scale: 0.92 }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200"
                 style={{
                   borderColor:     copied ? '#10B981' : 'var(--border)',
                   color:           copied ? '#10B981' : 'var(--fg-muted)',
-                  backgroundColor: copied ? 'rgba(16,185,129,0.08)' : 'transparent',
+                  backgroundColor: copied ? 'rgba(16,185,129,0.08)' : 'rgba(255,255,255,0.02)',
                   fontFamily:      'var(--font-dm-sans)',
                 }}
               >
@@ -442,6 +496,58 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   Trax
                 </span>
                 <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
+              </div>
+
+              {/* ── Topic Tags ─────────────────────────────────────────────── */}
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                <span
+                  className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide"
+                  style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)', letterSpacing: '0.07em' }}
+                >
+                  <Tag size={11} strokeWidth={2} />
+                  Topics
+                </span>
+                {/* Category pill */}
+                <Link
+                  href={`/${article.category.toLowerCase()}`}
+                  className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border transition-all duration-200 hover:scale-105"
+                  style={{
+                    backgroundColor: 'rgba(200,75,49,0.08)',
+                    borderColor:     'rgba(200,75,49,0.25)',
+                    color:           '#C84B31',
+                    fontFamily:      'var(--font-dm-sans)',
+                  }}
+                >
+                  {article.category}
+                </Link>
+                {/* Trending pill if applicable */}
+                {article.trending && (
+                  <span
+                    className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border"
+                    style={{
+                      backgroundColor: 'rgba(245,158,11,0.08)',
+                      borderColor:     'rgba(245,158,11,0.25)',
+                      color:           '#D97706',
+                      fontFamily:      'var(--font-dm-sans)',
+                    }}
+                  >
+                    Trending
+                  </span>
+                )}
+                {/* Breaking pill if applicable */}
+                {article.breaking && (
+                  <span
+                    className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border"
+                    style={{
+                      backgroundColor: 'rgba(239,68,68,0.08)',
+                      borderColor:     'rgba(239,68,68,0.25)',
+                      color:           '#EF4444',
+                      fontFamily:      'var(--font-dm-sans)',
+                    }}
+                  >
+                    Breaking
+                  </span>
+                )}
               </div>
 
               {/* Post-article Rectangle Ad */}

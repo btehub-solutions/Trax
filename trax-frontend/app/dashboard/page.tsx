@@ -33,6 +33,12 @@ import { compressImage } from '@/lib/image-compressor';
 
 type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team';
 
+const AD_SIZE_MAP: Record<string, string> = {
+  LEADERBOARD: 'Leaderboard (1024x409)',
+  RECTANGLE: 'Square (1080x1080)',
+  INLINE: 'Inline Banner (468x120)',
+};
+
 export default function DashboardPage() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<Tab>('overview');
@@ -825,7 +831,10 @@ export default function DashboardPage() {
                           </div>
                         ))}
                         {subscribers.length === 0 && (
-                          <p className="text-sm py-4" style={{ color: 'var(--dash-fg-subtle)' }}>No subscribers found yet</p>
+                          <div className="flex flex-col items-center justify-center py-8 text-center gap-2">
+                            <span className="text-xl" style={{ opacity: 0.4 }}>📧</span>
+                            <p className="text-sm font-medium" style={{ color: 'var(--dash-fg-muted)' }}>No subscribers yet</p>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -999,8 +1008,17 @@ export default function DashboardPage() {
                           ))}
                           {filteredArticles.length === 0 && (
                             <tr>
-                              <td colSpan={4} className="py-8 text-center" style={{ color: 'var(--dash-fg-subtle)' }}>
-                                No articles matching criteria found.
+                              <td colSpan={4}>
+                                <div className="flex flex-col items-center justify-center py-14 gap-3">
+                                  <div
+                                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                                    style={{ backgroundColor: 'rgba(200,75,49,0.08)', border: '1px solid rgba(200,75,49,0.15)' }}
+                                  >
+                                    <span style={{ fontSize: '1.25rem' }}>📄</span>
+                                  </div>
+                                  <p className="text-sm font-semibold" style={{ color: 'var(--dash-fg)' }}>No articles found</p>
+                                  <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>Try adjusting your search or filters</p>
+                                </div>
                               </td>
                             </tr>
                           )}
@@ -1431,8 +1449,17 @@ export default function DashboardPage() {
                           ))}
                           {subscribers.length === 0 && (
                             <tr>
-                              <td colSpan={4} className="py-8 text-center" style={{ color: 'var(--dash-fg-subtle)' }}>
-                                No subscribers logged in the database.
+                              <td colSpan={4}>
+                                <div className="flex flex-col items-center justify-center py-16 gap-3">
+                                  <div
+                                    className="w-14 h-14 rounded-full flex items-center justify-center"
+                                    style={{ backgroundColor: 'rgba(200,75,49,0.08)', border: '1px solid rgba(200,75,49,0.15)' }}
+                                  >
+                                    <span style={{ fontSize: '1.5rem' }}>📭</span>
+                                  </div>
+                                  <p className="text-sm font-semibold" style={{ color: 'var(--dash-fg)' }}>No subscribers yet</p>
+                                  <p className="text-xs max-w-xs text-center" style={{ color: 'var(--dash-fg-subtle)' }}>Subscribers will appear here once readers sign up via the newsletter form</p>
+                                </div>
                               </td>
                             </tr>
                           )}
@@ -1518,7 +1545,7 @@ export default function DashboardPage() {
                                 className="text-[10px] font-bold px-2 py-0.5 rounded border"
                                 style={{ backgroundColor: 'var(--dash-badge-bg)', borderColor: 'var(--dash-badge-border)', color: 'var(--dash-badge-text)' }}
                               >
-                                {slot.size}
+                                {AD_SIZE_MAP[slot.size] || slot.size}
                               </span>
                             </div>
                             <p className="text-xs font-mono truncate max-w-sm sm:max-w-md" style={{ color: 'var(--dash-fg-subtle)' }}>
@@ -1592,9 +1619,9 @@ export default function DashboardPage() {
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-orange-500 border"
                             style={inputStyle}
                           >
-                            <option value="LEADERBOARD" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Leaderboard (728x90)</option>
-                            <option value="RECTANGLE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Rectangle (300x250)</option>
-                            <option value="INLINE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Inline Banner (Full Width)</option>
+                            <option value="LEADERBOARD" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Leaderboard (1024x409)</option>
+                            <option value="RECTANGLE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Square (1080x1080)</option>
+                            <option value="INLINE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Inline Banner (468x120)</option>
                           </select>
                         </div>
 
@@ -1868,8 +1895,17 @@ export default function DashboardPage() {
                               ))}
                               {teamMembers.length === 0 && (
                                 <tr>
-                                  <td colSpan={4} className="py-8 text-center" style={{ color: 'var(--dash-fg-subtle)' }}>
-                                    No team members loaded.
+                                  <td colSpan={4}>
+                                    <div className="flex flex-col items-center justify-center py-14 gap-3">
+                                      <div
+                                        className="w-12 h-12 rounded-full flex items-center justify-center"
+                                        style={{ backgroundColor: 'rgba(200,75,49,0.08)', border: '1px solid rgba(200,75,49,0.15)' }}
+                                      >
+                                        <span style={{ fontSize: '1.25rem' }}>👥</span>
+                                      </div>
+                                      <p className="text-sm font-semibold" style={{ color: 'var(--dash-fg)' }}>No team members found</p>
+                                      <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>Add team members to see them here</p>
+                                    </div>
                                   </td>
                                 </tr>
                               )}

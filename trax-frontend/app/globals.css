@@ -9,8 +9,8 @@
   --bg-alt:     #210412;
   /* Foreground */
   --fg:         #FFFFFF;
-  --fg-muted:   #D8CDD3;
-  --fg-subtle:  #806E77;
+  --fg-muted:   #EAE4E7;
+  --fg-subtle:  #B09EA7;
   /* Borders */
   --border:     rgba(200, 75, 49, 0.12);
   /* Cards */
@@ -36,8 +36,8 @@
   --bg:         #09090B;
   --bg-alt:     #121215;
   --fg:         #F4F4F5;
-  --fg-muted:   #A1A1AA;
-  --fg-subtle:  #756C71;
+  --fg-muted:   #D4D4D8;
+  --fg-subtle:  #A19C9F;
   --border:     rgba(200, 75, 49, 0.09);
   --card-bg:    #181316;
   --card-border:rgba(255, 255, 255, 0.09);
@@ -235,8 +235,8 @@ img, video {
 .badge-people,
 .badge-tools {
   background-color: var(--badge-bg) !important;
-  color: #e10600 !important;
-  border: 1px solid rgba(225, 6, 0, 0.25) !important;
+  color: #FF7F66 !important;
+  border: 1px solid rgba(255, 127, 102, 0.25) !important;
   padding: 3px 10px;
   border-radius: 9999px;
   display: inline-flex;

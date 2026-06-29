@@ -107,7 +107,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 66vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
                   />
                 </div>
                 <CategoryLabel>{lead.category}</CategoryLabel>
@@ -129,13 +129,13 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
               {secondary.map((article) => (
                 <motion.article key={article.id} variants={itemVariants} className="group">
                   <Link href={`/articles/${article.slug}`} className="block">
-                    <div className="relative mb-4 aspect-[16/10] overflow-hidden rounded-md">
+                    <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-md">
                       <Image
                         src={article.image || fallbackImage}
                         alt={article.title}
                         fill
                         sizes="(max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                        className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                       />
                     </div>
                     <CategoryLabel>{article.category}</CategoryLabel>
@@ -164,13 +164,13 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                     className="group py-6 first:pt-0 last:pb-0"
                   >
                     <Link href={`/articles/${article.slug}`} className="flex flex-col sm:flex-row gap-6">
-                      <div className="relative aspect-[16/10] w-full sm:w-48 shrink-0 overflow-hidden rounded-md">
+                      <div className="relative aspect-[16/9] w-full sm:w-48 shrink-0 overflow-hidden rounded-md">
                         <Image
                           src={article.image || fallbackImage}
                           alt={article.title}
                           fill
                           sizes="(max-width: 640px) 100vw, 200px"
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                          className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                         />
                       </div>
                       <div className="flex-1 flex flex-col justify-center">
