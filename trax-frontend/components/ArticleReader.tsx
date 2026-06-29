@@ -539,9 +539,9 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   <span
                     className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border"
                     style={{
-                      backgroundColor: 'rgba(239,68,68,0.08)',
-                      borderColor:     'rgba(239,68,68,0.25)',
-                      color:           '#EF4444',
+                      backgroundColor: 'rgba(232, 0, 15, 0.08)',
+                      borderColor:     'rgba(232, 0, 15, 0.25)',
+                      color:           '#E8000F',
                       fontFamily:      'var(--font-dm-sans)',
                     }}
                   >

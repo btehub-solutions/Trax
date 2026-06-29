@@ -24,7 +24,7 @@ export default function Nav() {
   const [toastMessage, setToastMessage] = useState<string | null>(null)
   const [toastTimeoutId, setToastTimeoutId] = useState<any>(null)
 
-  const [flagshipsExpanded, setFlagshipsExpanded] = useState(false)
+  const [flagshipsExpanded, setFlagshipsExpanded] = useState(true)
   const [mediaExpanded, setMediaExpanded] = useState(false)
   const [platformExpanded, setPlatformExpanded] = useState(false)
 
@@ -92,15 +92,35 @@ export default function Nav() {
     if (!menuOpen) setMenuQuery('')
   }, [menuOpen])
 
-  // Prevent background scrolling when menu is open
+  // Lock page scroll while the full-screen menu is open. Android Chrome can
+  // ignore body-only overflow locks when the browser chrome resizes the viewport.
   useEffect(() => {
-    if (menuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    if (!menuOpen) return
+
+    const scrollY = window.scrollY
+    const { body, documentElement } = document
+    const previousBodyOverflow = body.style.overflow
+    const previousBodyPosition = body.style.position
+    const previousBodyTop = body.style.top
+    const previousBodyWidth = body.style.width
+    const previousHtmlOverflow = documentElement.style.overflow
+    const previousHtmlOverscroll = documentElement.style.overscrollBehavior
+
+    body.style.overflow = 'hidden'
+    body.style.position = 'fixed'
+    body.style.top = `-${scrollY}px`
+    body.style.width = '100%'
+    documentElement.style.overflow = 'hidden'
+    documentElement.style.overscrollBehavior = 'none'
+
     return () => {
-      document.body.style.overflow = ''
+      body.style.overflow = previousBodyOverflow
+      body.style.position = previousBodyPosition
+      body.style.top = previousBodyTop
+      body.style.width = previousBodyWidth
+      documentElement.style.overflow = previousHtmlOverflow
+      documentElement.style.overscrollBehavior = previousHtmlOverscroll
+      window.scrollTo(0, scrollY)
     }
   }, [menuOpen])
 
@@ -276,7 +296,9 @@ export default function Nav() {
                 id="nav-mobile-menu"
                 aria-label="Toggle mobile menu"
                 aria-expanded={menuOpen}
-                onClick={() => setMenuOpen(!menuOpen)}
+                aria-controls="nav-menu-overlay"
+                type="button"
+                onClick={() => setMenuOpen((open) => !open)}
                 className="md:hidden p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(232, 0, 15,0.1)]"
                 style={{ color: 'var(--fg)' }}
               >
@@ -301,14 +323,24 @@ export default function Nav() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            id="nav-menu-overlay"
             initial={{ opacity: 0, y: '-100%' }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: '-100%' }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-50 overflow-y-auto"
-            style={{ backgroundColor: 'var(--bg)', fontFamily: 'var(--font-dm-sans)' }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            className="fixed inset-x-0 top-0 bottom-0 z-50 overflow-y-auto overscroll-contain"
+            style={{
+              backgroundColor: 'var(--bg)',
+              fontFamily:      'var(--font-dm-sans)',
+              height:          '100dvh',
+              minHeight:       '100svh',
+              WebkitOverflowScrolling: 'touch',
+            }}
           >
-            <div className="container min-h-dvh py-8 flex flex-col justify-between">
+            <div className="container min-h-[100dvh] py-8 flex flex-col justify-between">
               
               {/* Header row inside overlay */}
               <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'rgba(232, 0, 15, 0.09)' }}>
