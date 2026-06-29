@@ -65,7 +65,7 @@
   --dash-fg-muted:   var(--fg-subtle);
   --dash-fg-subtle:  var(--fg-subtle);
   --dash-divider:    var(--border);
-  --dash-hover:      rgba(255, 61, 22, 0.10);
+  --dash-hover:      rgba(232, 0, 15, 0.08);
   --dash-badge-bg:   rgba(255,255,255,0.06);
   --dash-badge-border:var(--border);
   --dash-badge-text: var(--fg-muted);
@@ -88,7 +88,7 @@
   --dash-fg-muted:   var(--fg-subtle);
   --dash-fg-subtle:  var(--fg-subtle);
   --dash-divider:    var(--border);
-  --dash-hover:      rgba(255, 61, 22, 0.10);
+  --dash-hover:      rgba(232, 0, 15, 0.08);
   --dash-badge-bg:   rgba(255,255,255,0.06);
   --dash-badge-border:var(--border);
   --dash-badge-text: var(--fg-muted);

@@ -54,7 +54,7 @@ export default function LoginPage() {
       style={{ backgroundColor: 'var(--bg)' }}
     >
       {/* Decorative gradient glowing backgrounds */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-orange-600/10 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-red-600/10 blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-violet-600/10 blur-[100px] pointer-events-none" />
 
       <motion.div
@@ -71,7 +71,7 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
             <span className="text-2xl font-black tracking-tight" style={{ color: 'var(--fg)' }}>
-              <span className="text-orange-500 group-hover:text-orange-400 transition-colors">Trax</span>
+              <span className="text-red-600 group-hover:text-red-400 transition-colors">Trax</span>
             </span>
           </Link>
           <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--fg)' }}>Welcome Back</h2>
@@ -103,7 +103,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@trax.ng"
-                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all border"
+                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
                 style={{
                   backgroundColor: 'var(--bg-alt)',
                   borderColor: 'var(--border)',
@@ -128,7 +128,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all border"
+                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
                 style={{
                   backgroundColor: 'var(--bg-alt)',
                   borderColor: 'var(--border)',
@@ -141,7 +141,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-600 hover:bg-orange-500 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg shadow-orange-600/20"
+            className="w-full bg-red-600 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg shadow-red-600/20"
           >
             {loading ? (
               <span className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
