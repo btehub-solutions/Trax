@@ -132,7 +132,7 @@ export default function Footer() {
       className="border-t"
       style={{
         backgroundColor: 'var(--nav-bg)',
-        borderColor:     'rgba(200, 75, 49, 0.09)',
+        borderColor:     'rgba(232, 0, 15, 0.09)',
         fontFamily:      'var(--font-dm-sans)',
       }}
       role="contentinfo"
@@ -140,7 +140,7 @@ export default function Footer() {
       {/* ── Newsletter Banner ── */}
       <div
         className="border-b"
-        style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}
+        style={{ borderColor: 'rgba(232, 0, 15, 0.09)' }}
       >
         <div className="container py-10">
           <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
@@ -148,9 +148,9 @@ export default function Footer() {
             <div className="flex items-start gap-4 md:max-w-sm">
               <div
                 className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: 'rgba(200,75,49,0.15)', border: '1px solid rgba(200,75,49,0.25)' }}
+                style={{ backgroundColor: 'rgba(232, 0, 15,0.15)', border: '1px solid rgba(232, 0, 15,0.25)' }}
               >
-                <Mail size={18} color="#C84B31" />
+                <Mail size={18} color="#E8000F" />
               </div>
               <div>
                 <p
@@ -196,8 +196,8 @@ export default function Footer() {
                         }}
                         onFocus={(e) => {
                           if (!error) {
-                            e.target.style.borderColor = '#C84B31'
-                            e.target.style.boxShadow   = '0 0 0 3px rgba(200,75,49,0.12)'
+                            e.target.style.borderColor = '#E8000F'
+                            e.target.style.boxShadow   = '0 0 0 3px rgba(232, 0, 15,0.12)'
                           }
                         }}
                         onBlur={(e) => {
@@ -264,7 +264,7 @@ export default function Footer() {
             <Link href="/" className="inline-flex items-baseline gap-1 mb-4" id="footer-logo">
               <span
                 className="text-2xl font-bold tracking-tight"
-                style={{ fontFamily: 'var(--font-oxanium)', color: '#C84B31' }}
+                style={{ fontFamily: 'var(--font-oxanium)', color: '#E8000F' }}
               >
                 Trax
               </span>
@@ -311,7 +311,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   aria-label={label}
                   id={`footer-social-${label.toLowerCase().replace(/[\s/]+/g, '-')}`}
-                  whileHover={{ scale: 1.1, borderColor: '#C84B31', color: '#C84B31' }}
+                  whileHover={{ scale: 1.1, borderColor: '#E8000F', color: '#E8000F' }}
                   whileTap={{ scale: 0.9 }}
                   className="p-2 rounded-lg border transition-colors duration-200"
                   style={{ color: 'var(--fg-subtle)', borderColor: 'var(--border)' }}
@@ -327,7 +327,7 @@ export default function Footer() {
             <div key={group}>
               <h4
                 className="text-[10px] font-bold tracking-[0.18em] uppercase mb-5"
-                style={{ color: '#C84B31', fontFamily: 'var(--font-oxanium)' }}
+                style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}
               >
                 {group}
               </h4>
@@ -349,7 +349,7 @@ export default function Footer() {
         </div>
 
         {/* ── Divider ── */}
-        <div className="h-px mb-8" style={{ backgroundColor: 'rgba(200, 75, 49, 0.09)' }} />
+        <div className="h-px mb-8" style={{ backgroundColor: 'rgba(232, 0, 15, 0.09)' }} />
 
         {/* ── Bottom Row ── */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
@@ -360,9 +360,9 @@ export default function Footer() {
             <span
               className="hidden sm:block text-[10px] font-bold px-2 py-0.5 rounded"
               style={{
-                backgroundColor: 'rgba(200,75,49,0.1)',
-                color: '#C84B31',
-                border: '1px solid rgba(200,75,49,0.2)',
+                backgroundColor: 'rgba(232, 0, 15,0.1)',
+                color: '#E8000F',
+                border: '1px solid rgba(232, 0, 15,0.2)',
                 fontFamily: 'var(--font-oxanium)',
                 letterSpacing: '0.05em',
               }}
@@ -403,7 +403,7 @@ export default function Footer() {
               color: '#F4F4F5',
             }}
           >
-            <span style={{ color: '#C84B31' }}>✦</span>
+            <span style={{ color: '#E8000F' }}>✦</span>
             {toastMessage}
           </motion.div>
         )}

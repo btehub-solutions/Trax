@@ -126,7 +126,7 @@ export default function Nav() {
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b shadow-sm"
         style={{
           backgroundColor: 'var(--nav-bg)',
-          borderColor: 'rgba(200, 75, 49, 0.09)',
+          borderColor: 'rgba(232, 0, 15, 0.09)',
         }}
         aria-label="Main navigation"
       >
@@ -137,7 +137,7 @@ export default function Nav() {
             <Link href="/" className="flex items-center gap-0.5 shrink-0" id="nav-logo">
               <span
                 className="text-[22px] font-bold tracking-tight"
-                style={{ fontFamily: 'var(--font-oxanium)', color: '#C84B31' }}
+                style={{ fontFamily: 'var(--font-oxanium)', color: '#E8000F' }}
               >
                 Trax
               </span>
@@ -152,9 +152,9 @@ export default function Nav() {
                     key={link.href}
                     href={link.href}
                     id={`nav-link-${link.label.toLowerCase()}`}
-                    className="relative px-4 py-2 rounded-lg text-[12px] font-semibold tracking-wide uppercase transition-colors duration-200 hover:text-[#C84B31]"
+                    className="relative px-4 py-2 rounded-lg text-[12px] font-semibold tracking-wide uppercase transition-colors duration-200 hover:text-[#E8000F]"
                     style={{
-                      color:      active ? '#C84B31' : 'var(--fg-muted)',
+                      color:      active ? '#E8000F' : 'var(--fg-muted)',
                       fontFamily: 'var(--font-dm-sans)',
                     }}
                   >
@@ -163,7 +163,7 @@ export default function Nav() {
                       <motion.span
                         layoutId="nav-active-pill"
                         className="absolute inset-0 rounded-lg"
-                        style={{ backgroundColor: 'rgba(200, 75, 49, 0.08)' }}
+                        style={{ backgroundColor: 'rgba(232, 0, 15, 0.08)' }}
                         transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -181,7 +181,7 @@ export default function Nav() {
                 aria-label="Search articles"
                 onClick={() => setSearchOpen(true)}
                 whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(200,75,49,0.1)] hover:text-[#C84B31]"
+                className="p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(232, 0, 15,0.1)] hover:text-[#E8000F]"
                 style={{ color: 'var(--fg-muted)' }}
               >
                 <Search size={19} />
@@ -195,7 +195,7 @@ export default function Nav() {
                 rel="noopener noreferrer"
                 aria-label="Follow us on X / Twitter"
                 whileTap={{ scale: 0.9 }}
-                className="hidden sm:flex items-center justify-center p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(200,75,49,0.1)] hover:text-[#C84B31]"
+                className="hidden sm:flex items-center justify-center p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(232, 0, 15,0.1)] hover:text-[#E8000F]"
                 style={{ color: 'var(--fg-muted)' }}
               >
                 <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
@@ -212,7 +212,7 @@ export default function Nav() {
                   id="nav-theme-toggle"
                   aria-label={`Switch to ${theme === 'dark' ? 'dark red' : 'dark'} mode`}
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className="p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(200,75,49,0.1)] hover:text-[#C84B31]"
+                  className="p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(232, 0, 15,0.1)] hover:text-[#E8000F]"
                   style={{ color: 'var(--fg-muted)' }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -250,7 +250,7 @@ export default function Nav() {
                 aria-label="Toggle menu"
                 onClick={() => setMenuOpen(true)}
                 whileTap={{ scale: 0.9 }}
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase tracking-wide transition-all duration-200 hover:bg-[rgba(200,75,49,0.1)] hover:text-[#C84B31]"
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[12px] font-bold uppercase tracking-wide transition-all duration-200 hover:bg-[rgba(232, 0, 15,0.1)] hover:text-[#E8000F]"
                 style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
               >
                 <Menu size={18} />
@@ -277,7 +277,7 @@ export default function Nav() {
                 aria-label="Toggle mobile menu"
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen(!menuOpen)}
-                className="md:hidden p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(200,75,49,0.1)]"
+                className="md:hidden p-2 rounded-lg transition-all duration-200 hover:bg-[rgba(232, 0, 15,0.1)]"
                 style={{ color: 'var(--fg)' }}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -311,11 +311,11 @@ export default function Nav() {
             <div className="container min-h-dvh py-8 flex flex-col justify-between">
               
               {/* Header row inside overlay */}
-              <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
+              <div className="flex items-center justify-between border-b pb-4" style={{ borderColor: 'rgba(232, 0, 15, 0.09)' }}>
                 <Link href="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-0.5 animate-pulse" id="menu-logo">
                   <span
                     className="text-2xl font-bold tracking-tight"
-                    style={{ fontFamily: 'var(--font-oxanium)', color: '#C84B31' }}
+                    style={{ fontFamily: 'var(--font-oxanium)', color: '#E8000F' }}
                   >
                     Trax
                   </span>
@@ -334,7 +334,7 @@ export default function Nav() {
               <div className="grid grid-cols-12 gap-8 my-8 md:my-12 flex-1">
                 
                 {/* Left Panel: Settings, Search & Socials */}
-                <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 lg:border-r lg:pr-8" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
+                <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 lg:border-r lg:pr-8" style={{ borderColor: 'rgba(232, 0, 15, 0.09)' }}>
                   
                   {/* Search */}
                   <div className="flex flex-col gap-2">
@@ -371,7 +371,7 @@ export default function Nav() {
                               }}
                               className="block p-1.5 rounded-lg hover:bg-zinc-800 transition-colors"
                             >
-                              <p className="text-[10px] font-semibold text-[#C84B31] uppercase tracking-wider">{article.category}</p>
+                              <p className="text-[10px] font-semibold text-[#E8000F] uppercase tracking-wider">{article.category}</p>
                               <h5 className="text-xs font-bold text-white line-clamp-1">{article.title}</h5>
                             </Link>
                           ))
@@ -436,7 +436,7 @@ export default function Nav() {
                           aria-label={`Follow us on ${label}`}
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          className="p-2 bg-zinc-900 hover:bg-[#C84B31]/10 border border-zinc-800 hover:border-[#C84B31]/30 rounded-xl text-zinc-400 hover:text-[#C84B31] transition-all flex items-center justify-center w-8 h-8"
+                          className="p-2 bg-zinc-900 hover:bg-[#E8000F]/10 border border-zinc-800 hover:border-[#E8000F]/30 rounded-xl text-zinc-400 hover:text-[#E8000F] transition-all flex items-center justify-center w-8 h-8"
                         >
                           {svg}
                         </motion.a>
@@ -450,7 +450,7 @@ export default function Nav() {
                 <div className="col-span-12 md:col-span-8 lg:col-span-6">
 
                   {/* ── Mobile Accordion (hidden on sm+) ── */}
-                  <div className="flex flex-col sm:hidden divide-y" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
+                  <div className="flex flex-col sm:hidden divide-y" style={{ borderColor: 'rgba(232, 0, 15, 0.09)' }}>
                     {[
                       {
                         label: 'Flagships & Beats',
@@ -525,7 +525,7 @@ export default function Nav() {
                                   <Link
                                     href={link.href}
                                     onClick={() => setMenuOpen(false)}
-                                    className="text-sm font-bold text-zinc-300 hover:text-[#C84B31] transition-colors pl-1"
+                                    className="text-sm font-bold text-zinc-300 hover:text-[#E8000F] transition-colors pl-1"
                                   >
                                     {link.label}
                                   </Link>
@@ -559,7 +559,7 @@ export default function Nav() {
                             <Link
                               href={link.href}
                               onClick={() => setMenuOpen(false)}
-                              className="text-sm font-bold text-zinc-300 hover:text-[#C84B31] transition-colors"
+                              className="text-sm font-bold text-zinc-300 hover:text-[#E8000F] transition-colors"
                             >
                               {link.label}
                             </Link>
@@ -584,7 +584,7 @@ export default function Nav() {
                             <Link
                               href={link.href}
                               onClick={() => setMenuOpen(false)}
-                              className="text-sm font-bold text-zinc-300 hover:text-[#C84B31] transition-colors"
+                              className="text-sm font-bold text-zinc-300 hover:text-[#E8000F] transition-colors"
                             >
                               {link.label}
                             </Link>
@@ -611,7 +611,7 @@ export default function Nav() {
                             <Link
                               href={link.href}
                               onClick={() => setMenuOpen(false)}
-                              className="text-sm font-bold text-zinc-300 hover:text-[#C84B31] transition-colors"
+                              className="text-sm font-bold text-zinc-300 hover:text-[#E8000F] transition-colors"
                             >
                               {link.label}
                             </Link>
@@ -631,7 +631,7 @@ export default function Nav() {
                   <Link
                     href="/newsletter"
                     onClick={() => setMenuOpen(false)}
-                    className="group block relative overflow-hidden rounded-2xl border border-zinc-800 transition-all duration-300 hover:border-[#C84B31]/40"
+                    className="group block relative overflow-hidden rounded-2xl border border-zinc-800 transition-all duration-300 hover:border-[#E8000F]/40"
                   >
                     <Image
                       src="/images/trax_newsletter_card.png"
@@ -646,7 +646,7 @@ export default function Nav() {
               </div>
 
               {/* Bottom Row */}
-              <div className="border-t pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500" style={{ borderColor: 'rgba(200, 75, 49, 0.09)' }}>
+              <div className="border-t pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500" style={{ borderColor: 'rgba(232, 0, 15, 0.09)' }}>
                 <p>© {new Date().getFullYear()} Trax Media Platform. All rights reserved.</p>
                 <div className="flex items-center gap-4">
                   <Link href="/privacy" onClick={() => setMenuOpen(false)} className="hover:text-white">Privacy Policy</Link>
@@ -699,7 +699,7 @@ export default function Nav() {
                 />
                 <button
                   onClick={() => setSearchOpen(false)}
-                  className="p-1 rounded-lg transition-colors hover:text-[#C84B31]"
+                  className="p-1 rounded-lg transition-colors hover:text-[#E8000F]"
                   style={{ color: 'var(--fg-muted)' }}
                   aria-label="Close search"
                 >
@@ -739,14 +739,14 @@ export default function Nav() {
                           setSearchOpen(false)
                           setQuery('')
                         }}
-                        className="flex flex-col gap-1 p-4 transition-colors duration-150 hover:bg-[rgba(200,75,49,0.04)]"
+                        className="flex flex-col gap-1 p-4 transition-colors duration-150 hover:bg-[rgba(232, 0, 15,0.04)]"
                       >
                         <div className="flex items-center gap-2">
                           <span 
                             className="px-2 py-0.5 rounded text-[10px] font-semibold uppercase tracking-wider"
                             style={{ 
-                              backgroundColor: 'rgba(200,75,49,0.15)',
-                              color: '#C84B31' 
+                              backgroundColor: 'rgba(232, 0, 15,0.15)',
+                              color: '#E8000F' 
                             }}
                           >
                             {article.category}
@@ -801,7 +801,7 @@ export default function Nav() {
               fontFamily:      'var(--font-dm-sans)',
             }}
           >
-            <span style={{ color: '#C84B31' }}>✦</span>
+            <span style={{ color: '#E8000F' }}>✦</span>
             {toastMessage}
           </motion.div>
         )}

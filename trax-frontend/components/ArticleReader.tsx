@@ -16,13 +16,13 @@ const categoryColors: Record<string, { bg: string; color: string; border: string
   Health:    { bg: 'rgba(59,130,246,0.12)',   color: '#2563EB', border: 'rgba(59,130,246,0.25)' },
   Policy:    { bg: 'rgba(245,158,11,0.12)',  color: '#D97706', border: 'rgba(245,158,11,0.25)' },
   Research:  { bg: 'rgba(236,72,153,0.12)',   color: '#DB2777', border: 'rgba(236,72,153,0.25)' },
-  Ecosystem: { bg: 'rgba(200,75,49,0.12)',     color: '#C84B31', border: 'rgba(200,75,49,0.25)'   },
+  Ecosystem: { bg: 'rgba(232, 0, 15,0.12)',     color: '#E8000F', border: 'rgba(232, 0, 15,0.25)'   },
   Events:    { bg: 'rgba(6,182,212,0.12)',    color: '#0891B2', border: 'rgba(6,182,212,0.25)'  },
   Interview: { bg: 'rgba(99,102,241,0.12)',   color: '#4F46E5', border: 'rgba(99,102,241,0.25)' },
   Startups:  { bg: 'rgba(16,185,129,0.12)',  color: '#10B981', border: 'rgba(16,185,129,0.25)' },
   People:    { bg: 'rgba(139,92,246,0.12)',  color: '#8B5CF6', border: 'rgba(139,92,246,0.25)' },
   Tools:     { bg: 'rgba(59,130,246,0.12)',   color: '#3B82F6', border: 'rgba(59,130,246,0.25)' },
-  default:   { bg: 'rgba(200,75,49,0.12)',     color: '#C84B31', border: 'rgba(200,75,49,0.25)'   },
+  default:   { bg: 'rgba(232, 0, 15,0.12)',     color: '#E8000F', border: 'rgba(232, 0, 15,0.25)'   },
 }
 
 // ── Inline SVG brand icons (Lucide removed social brand icons) ────────────────
@@ -121,7 +121,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
       {/* ── Reading progress bar ─────────────────────────────────────────── */}
       <motion.div
         className="fixed top-0 left-0 right-0 z-[100] origin-left"
-        style={{ scaleX, height: '3px', backgroundColor: '#FF3D16' }}
+        style={{ scaleX, height: '3px', backgroundColor: '#E8000F' }}
       />
 
       {/* ── Page ─────────────────────────────────────────────────────────── */}
@@ -153,7 +153,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
           {article.breaking && (
             <span
               className="absolute top-6 left-6 inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 text-white"
-              style={{ backgroundColor: '#FF3D16' }}
+              style={{ backgroundColor: '#E8000F' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
               Breaking
@@ -178,7 +178,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 <li>
                   <Link
                     href="/"
-                    className="font-medium transition-colors hover:text-[#FF3D16]"
+                    className="font-medium transition-colors hover:text-[#E8000F]"
                     style={{ color: 'var(--fg-muted)' }}
                   >
                     Home
@@ -190,7 +190,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 <li>
                   <Link
                     href={`/${article.category.toLowerCase()}`}
-                    className="font-medium transition-colors hover:text-[#FF3D16] capitalize"
+                    className="font-medium transition-colors hover:text-[#E8000F] capitalize"
                     style={{ color: 'var(--fg-muted)' }}
                   >
                     {article.category}
@@ -215,7 +215,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 className="inline-block text-xs font-extrabold uppercase"
                 style={{
                   backgroundColor: 'transparent',
-                  color:           '#FF3D16',
+                  color:           '#E8000F',
                   borderColor:     'transparent',
                   fontFamily:      'var(--font-dm-sans)',
                 }}
@@ -235,9 +235,9 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                     fontFamily:      'var(--font-dm-sans)',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(200, 75, 49, 0.1)';
-                    e.currentTarget.style.borderColor = '#FF3D16';
-                    e.currentTarget.style.color = '#FF3D16';
+                    e.currentTarget.style.backgroundColor = 'rgba(232, 0, 15, 0.1)';
+                    e.currentTarget.style.borderColor = '#E8000F';
+                    e.currentTarget.style.color = '#E8000F';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
@@ -276,7 +276,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
               <div className="flex items-center gap-3">
                 {article.authorAvatar ? (
                   <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0"
-                    style={{ border: '2px solid rgba(200,75,49,0.25)' }}
+                    style={{ border: '2px solid rgba(232, 0, 15,0.25)' }}
                   >
                     <Image
                       src={article.authorAvatar}
@@ -289,7 +289,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
                     style={{
-                      background: 'linear-gradient(135deg, #C84B31 0%, #FF3D16 100%)',
+                      background: 'linear-gradient(135deg, #E8000F 0%, #E8000F 100%)',
                       fontFamily: 'var(--font-dm-sans)',
                     }}
                   >
@@ -342,14 +342,14 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 whileTap={{ scale: 0.88 }}
                 className="ml-auto p-2.5 rounded-xl border transition-all duration-200"
                 style={{
-                  borderColor:     bookmarked ? '#FF3D16' : 'var(--border)',
-                  color:           bookmarked ? '#FF3D16' : 'var(--fg-muted)',
-                  backgroundColor: bookmarked ? 'rgba(200,75,49,0.08)' : 'rgba(255,255,255,0.02)',
+                  borderColor:     bookmarked ? '#E8000F' : 'var(--border)',
+                  color:           bookmarked ? '#E8000F' : 'var(--fg-muted)',
+                  backgroundColor: bookmarked ? 'rgba(232, 0, 15,0.08)' : 'rgba(255,255,255,0.02)',
                 }}
               >
                 <Bookmark
                   size={16}
-                  fill={bookmarked ? '#FF3D16' : 'none'}
+                  fill={bookmarked ? '#E8000F' : 'none'}
                   strokeWidth={bookmarked ? 0 : 1.75}
                 />
               </motion.button>
@@ -467,7 +467,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                       <span
                         className="block pl-5 border-l-4 italic"
                         style={{
-                          borderColor: '#FF3D16',
+                          borderColor: '#E8000F',
                           color:       'var(--fg)',
                           fontStyle:   'italic',
                         }}
@@ -491,7 +491,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
                 <span
                   className="text-xs font-extrabold uppercase"
-                  style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
+                  style={{ color: '#E8000F', fontFamily: 'var(--font-dm-sans)' }}
                 >
                   Trax
                 </span>
@@ -512,9 +512,9 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   href={`/${article.category.toLowerCase()}`}
                   className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border transition-all duration-200 hover:scale-105"
                   style={{
-                    backgroundColor: 'rgba(200,75,49,0.08)',
-                    borderColor:     'rgba(200,75,49,0.25)',
-                    color:           '#C84B31',
+                    backgroundColor: 'rgba(232, 0, 15,0.08)',
+                    borderColor:     'rgba(232, 0, 15,0.25)',
+                    color:           '#E8000F',
                     fontFamily:      'var(--font-dm-sans)',
                   }}
                 >

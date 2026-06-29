@@ -12,7 +12,7 @@
   --fg-muted:   #EAE4E7;
   --fg-subtle:  #B09EA7;
   /* Borders */
-  --border:     rgba(200, 75, 49, 0.12);
+  --border:     rgba(232, 0, 15, 0.12);
   /* Cards */
   --card-bg:    #42142B;
   --card-border:rgba(255, 255, 255, 0.10);
@@ -26,9 +26,9 @@
   --shadow-lg:    0 12px 40px rgba(0,0,0,0.08);
   --shadow-hover: 0 16px 48px rgba(0,0,0,0.1);
   /* Brand */
-  --accent:       #FF3D16;
-  --accent-hover: #D62F10;
-  --accent-gradient: linear-gradient(135deg, #FF3D16 0%, #C84B31 100%);
+  --accent:       #E8000F;
+  --accent-hover: #FF1A2E;
+  --accent-gradient: linear-gradient(135deg, #E8000F 0%, #9B0008 100%);
 }
 
 /* ─── Dark mode ─── */
@@ -38,7 +38,7 @@
   --fg:         #F4F4F5;
   --fg-muted:   #D4D4D8;
   --fg-subtle:  #A19C9F;
-  --border:     rgba(200, 75, 49, 0.09);
+  --border:     rgba(232, 0, 15, 0.09);
   --card-bg:    #181316;
   --card-border:rgba(255, 255, 255, 0.09);
   --badge-bg:   #1C1215;
@@ -160,7 +160,7 @@ img, video {
 
 /* ─── Selection ─── */
 ::selection {
-  background-color: #C84B31;
+  background-color: #E8000F;
   color: #FFFFFF;
 }
 
@@ -168,11 +168,11 @@ img, video {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(200, 75, 49, 0.3);
+  background: rgba(232, 0, 15, 0.3);
   border-radius: 9999px;
   transition: background 0.2s;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(200, 75, 49, 0.6); }
+::-webkit-scrollbar-thumb:hover { background: rgba(232, 0, 15, 0.6); }
 
 /* ─── Hide scrollbar utility (used in CategoryStrip) ─── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -180,7 +180,7 @@ img, video {
 
 /* ─── Focus ─── */
 *:focus-visible {
-  outline: 2px solid #C84B31;
+  outline: 2px solid #E8000F;
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -235,8 +235,8 @@ img, video {
 .badge-people,
 .badge-tools {
   background-color: var(--badge-bg) !important;
-  color: #FF7F66 !important;
-  border: 1px solid rgba(255, 127, 102, 0.25) !important;
+  color: #E8000F !important;
+  border: 1px solid rgba(232, 0, 15, 0.25) !important;
   padding: 3px 10px;
   border-radius: 9999px;
   display: inline-flex;
@@ -265,13 +265,13 @@ img, video {
 
 /* ─── Dot Grid Background ─── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(200, 75, 49, 0.18) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(232, 0, 15, 0.18) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 /* ─── Gradient Text ─── */
 .text-gradient {
-  background: linear-gradient(135deg, #C84B31 0%, #FF8C00 100%);
+  background: linear-gradient(135deg, #E8000F 0%, #9B0008 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

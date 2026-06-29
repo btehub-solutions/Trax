@@ -143,7 +143,7 @@ export default function FundingPage() {
                       }}
                       onFocus={(e) => {
                         e.target.style.borderColor = 'var(--accent)'
-                        e.target.style.boxShadow = '0 0 0 3px rgba(200,75,49,0.12)'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(232, 0, 15,0.12)'
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = 'var(--border)'
@@ -229,8 +229,8 @@ export default function FundingPage() {
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 border"
                       style={{
-                        backgroundColor: 'rgba(200, 75, 49, 0.08)',
-                        borderColor: 'rgba(200, 75, 49, 0.2)',
+                        backgroundColor: 'rgba(232, 0, 15, 0.08)',
+                        borderColor: 'rgba(232, 0, 15, 0.2)',
                       }}
                     >
                       <Icon size={16} style={{ color: 'var(--accent)' }} />

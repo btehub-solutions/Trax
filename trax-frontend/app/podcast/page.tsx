@@ -132,7 +132,7 @@ export default function PodcastPage() {
             <div className="flex items-center gap-6 shrink-0 border-b md:border-b-0 pb-6 md:pb-0 md:pr-8 md:border-r" style={{ borderColor: 'var(--border)' }}>
               <button
                 onClick={togglePlay}
-                className="w-16 h-16 rounded-full flex items-center justify-center transition-all bg-[#FF3D16] hover:bg-[#D62F10] text-white shadow-lg active:scale-95"
+                className="w-16 h-16 rounded-full flex items-center justify-center transition-all bg-[#E8000F] hover:bg-[#9B0008] text-white shadow-lg active:scale-95"
                 aria-label={isPlaying ? 'Pause Podcast' : 'Play Podcast'}
               >
                 {isPlaying ? (
@@ -205,8 +205,8 @@ export default function PodcastPage() {
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 border"
                       style={{
-                        backgroundColor: 'rgba(200, 75, 49, 0.08)',
-                        borderColor: 'rgba(200, 75, 49, 0.2)',
+                        backgroundColor: 'rgba(232, 0, 15, 0.08)',
+                        borderColor: 'rgba(232, 0, 15, 0.2)',
                       }}
                     >
                       <Icon size={16} style={{ color: 'var(--accent)' }} />

@@ -46,7 +46,7 @@ export default function CategoryPageLayout({
           >
             <span
               className="inline-block text-xs font-extrabold uppercase mb-4"
-              style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
+              style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
             >
               {categoryName}
             </span>
@@ -106,7 +106,7 @@ export default function CategoryPageLayout({
             >
               <div
                 className="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4"
-                style={{ backgroundColor: 'rgba(200, 75, 49, 0.1)' }}
+                style={{ backgroundColor: 'rgba(232, 0, 15, 0.1)' }}
               >
                 <span className="text-xl" style={{ color: 'var(--accent)' }}>💡</span>
               </div>

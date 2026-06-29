@@ -110,7 +110,7 @@ export default function Navbar() {
             >
               <span
                 className="text-[22px] font-extrabold leading-none tracking-tight"
-                style={{ fontFamily: 'var(--font-oxanium)', color: '#C84B31' }}
+                style={{ fontFamily: 'var(--font-oxanium)', color: '#E8000F' }}
               >
                 Trax
               </span>
@@ -129,9 +129,9 @@ export default function Navbar() {
                     key={link.href}
                     href={link.href}
                     id={`navbar-link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="relative flex flex-col items-center px-3.5 py-2 rounded-lg text-[13px] font-medium tracking-wide transition-colors duration-200 hover:text-[#C84B31]"
+                    className="relative flex flex-col items-center px-3.5 py-2 rounded-lg text-[13px] font-medium tracking-wide transition-colors duration-200 hover:text-[#E8000F]"
                     style={{
-                      color:      active ? '#C84B31' : 'var(--fg-muted)',
+                      color:      active ? '#E8000F' : 'var(--fg-muted)',
                       fontFamily: 'var(--font-dm-sans)',
                     }}
                   >
@@ -142,7 +142,7 @@ export default function Navbar() {
                       <motion.span
                         layoutId="navbar-active-indicator"
                         className="absolute bottom-0 left-3 right-3 h-[2.5px] rounded-full"
-                        style={{ backgroundColor: '#C84B31' }}
+                        style={{ backgroundColor: '#E8000F' }}
                         transition={{ type: 'spring', stiffness: 420, damping: 34 }}
                       />
                     )}
@@ -159,9 +159,9 @@ export default function Navbar() {
                 id="navbar-search"
                 aria-label="Open search"
                 onClick={() => setSearchOpen(true)}
-                whileHover={{ backgroundColor: 'rgba(200,75,49,0.08)' }}
+                whileHover={{ backgroundColor: 'rgba(232, 0, 15,0.08)' }}
                 whileTap={{ scale: 0.88 }}
-                className="p-2 rounded-lg transition-colors duration-200 hover:text-[#C84B31]"
+                className="p-2 rounded-lg transition-colors duration-200 hover:text-[#E8000F]"
                 style={{ color: 'var(--fg-muted)' }}
               >
                 <Search size={19} strokeWidth={1.9} />
@@ -175,7 +175,7 @@ export default function Navbar() {
                 rel="noopener noreferrer"
                 aria-label="Follow us on X / Twitter"
                 whileTap={{ scale: 0.88 }}
-                className="hidden sm:flex items-center justify-center p-2 rounded-lg transition-colors duration-200 hover:text-[#C84B31] hover:bg-[rgba(200,75,49,0.08)]"
+                className="hidden sm:flex items-center justify-center p-2 rounded-lg transition-colors duration-200 hover:text-[#E8000F] hover:bg-[rgba(232, 0, 15,0.08)]"
                 style={{ color: 'var(--fg-muted)' }}
               >
                 <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
@@ -192,9 +192,9 @@ export default function Navbar() {
                   id="navbar-theme-toggle"
                   aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  whileHover={{ backgroundColor: 'rgba(200,75,49,0.08)' }}
+                  whileHover={{ backgroundColor: 'rgba(232, 0, 15,0.08)' }}
                   whileTap={{ scale: 0.88 }}
-                  className="p-2 rounded-lg transition-colors duration-200 hover:text-[#C84B31]"
+                  className="p-2 rounded-lg transition-colors duration-200 hover:text-[#E8000F]"
                   style={{ color: 'var(--fg-muted)' }}
                 >
                   <AnimatePresence mode="wait" initial={false}>
@@ -235,7 +235,7 @@ export default function Navbar() {
                 aria-controls="navbar-mobile-drawer"
                 onClick={() => setMenuOpen((o) => !o)}
                 whileTap={{ scale: 0.88 }}
-                className="md:hidden p-2 rounded-lg transition-colors duration-200 hover:text-[#C84B31]"
+                className="md:hidden p-2 rounded-lg transition-colors duration-200 hover:text-[#E8000F]"
                 style={{ color: 'var(--fg)' }}
               >
                 <AnimatePresence mode="wait" initial={false}>
@@ -308,8 +308,8 @@ export default function Navbar() {
                       onClick={() => setMenuOpen(false)}
                       className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors duration-150"
                       style={{
-                        color:           active ? '#C84B31' : 'var(--fg-muted)',
-                        backgroundColor: active ? 'rgba(200,75,49,0.07)' : 'transparent',
+                        color:           active ? '#E8000F' : 'var(--fg-muted)',
+                        backgroundColor: active ? 'rgba(232, 0, 15,0.07)' : 'transparent',
                         fontFamily:      'var(--font-dm-sans)',
                       }}
                     >
@@ -317,7 +317,7 @@ export default function Navbar() {
                       {active && (
                         <span
                           className="w-1.5 h-1.5 rounded-full shrink-0"
-                          style={{ backgroundColor: '#C84B31' }}
+                          style={{ backgroundColor: '#E8000F' }}
                         />
                       )}
                     </Link>
@@ -370,7 +370,7 @@ export default function Navbar() {
                   <button
                     onClick={() => setQuery('')}
                     aria-label="Clear search"
-                    className="transition-colors hover:text-[#C84B31]"
+                    className="transition-colors hover:text-[#E8000F]"
                     style={{ color: 'var(--fg-subtle)' }}
                   >
                     <X size={15} />

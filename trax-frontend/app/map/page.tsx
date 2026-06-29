@@ -120,8 +120,8 @@ export default function MapPage() {
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 border"
               style={{
-                backgroundColor: 'rgba(200, 75, 49, 0.08)',
-                borderColor:     'rgba(200, 75, 49, 0.2)',
+                backgroundColor: 'rgba(232, 0, 15, 0.08)',
+                borderColor:     'rgba(232, 0, 15, 0.2)',
               }}
             >
               <MapPin size={20} style={{ color: 'var(--accent)' }} />
@@ -129,7 +129,7 @@ export default function MapPage() {
             
             <span
               className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
-              style={{ backgroundColor: 'rgba(200, 75, 49, 0.06)', color: 'var(--accent)' }}
+              style={{ backgroundColor: 'rgba(232, 0, 15, 0.06)', color: 'var(--accent)' }}
             >
               <Clock size={11} /> Directory In Progress
             </span>
@@ -189,7 +189,7 @@ export default function MapPage() {
                     }}
                     onFocus={(e) => {
                       e.target.style.borderColor = 'var(--accent)'
-                      e.target.style.boxShadow = '0 0 0 3px rgba(200,75,49,0.1)'
+                      e.target.style.boxShadow = '0 0 0 3px rgba(232, 0, 15,0.1)'
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = 'var(--border)'

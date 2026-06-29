@@ -38,8 +38,8 @@ export default function TickerBar({ headlines = [] }: TickerBarProps) {
     <div
       className="w-full overflow-hidden border-b"
       style={{
-        backgroundColor: '#C84B31',
-        borderColor: '#A93B24',
+        backgroundColor: '#E8000F',
+        borderColor: '#9B0008',
         height: '40px',
       }}
     >
@@ -49,10 +49,10 @@ export default function TickerBar({ headlines = [] }: TickerBarProps) {
           className="shrink-0 flex items-center gap-2 px-4 h-full border-r z-10"
           style={{
             backgroundColor: '#0A0A0A',
-            borderColor: '#A93B24',
+            borderColor: '#9B0008',
           }}
         >
-          <Zap size={13} fill="#C84B31" color="#C84B31" />
+          <Zap size={13} fill="#E8000F" color="#E8000F" />
           <span
             className="text-xs font-bold tracking-widest uppercase text-white whitespace-nowrap"
             style={{ fontFamily: 'var(--font-oxanium)' }}

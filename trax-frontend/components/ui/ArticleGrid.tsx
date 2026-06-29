@@ -58,8 +58,8 @@ export default function ArticleGrid({
             </div>
             <Link
               href={viewAllHref}
-              className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[#FF3D16] group"
-              style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
+              className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[#E8000F] group"
+              style={{ color: '#E8000F', fontFamily: 'var(--font-dm-sans)' }}
             >
               <span>View all</span>
               <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
@@ -119,8 +119,8 @@ export default function ArticleGrid({
           </div>
           <Link
             href={viewAllHref}
-            className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[#FF3D16] group"
-            style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
+            className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[#E8000F] group"
+            style={{ color: '#E8000F', fontFamily: 'var(--font-dm-sans)' }}
           >
             <span>View all</span>
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />

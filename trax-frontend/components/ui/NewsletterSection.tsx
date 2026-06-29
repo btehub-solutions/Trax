@@ -55,7 +55,7 @@ export default function NewsletterSection() {
             {/* Label */}
             <p
               className="text-xs font-extrabold uppercase mb-4"
-              style={{ color: '#FF3D16', fontFamily: 'var(--font-dm-sans)' }}
+              style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
             >
               Newsletter
             </p>
@@ -105,8 +105,8 @@ export default function NewsletterSection() {
                     fontSize: '16px', // prevents iOS Safari auto-zoom on focus
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#C84B31'
-                    e.target.style.boxShadow = '0 0 0 3px rgba(200,75,49,0.15)'
+                    e.target.style.borderColor = '#E8000F'
+                    e.target.style.boxShadow = '0 0 0 3px rgba(232,0,15,0.15)'
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = 'rgba(255,255,255,0.08)'

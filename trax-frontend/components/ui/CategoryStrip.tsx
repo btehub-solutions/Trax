@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 export const categories = [
-  { label: 'All',         color: '#C84B31' },
+  { label: 'All',         color: '#E8000F' },
   { label: 'Startups', color: '#10B981' },
   { label: 'Funding',     color: '#059669' },
   { label: 'Tools',       color: '#3B82F6' },
@@ -13,7 +13,7 @@ export const categories = [
   { label: 'Policy',      color: '#F59E0B' },
   { label: 'Research',    color: '#EC4899' },
   { label: 'Health',      color: '#06B6D4' },
-  { label: 'Ecosystem',   color: '#C84B31' },
+  { label: 'Ecosystem',   color: '#E8000F' },
   { label: 'Events',      color: '#14B8A6' },
 ]
 
@@ -111,13 +111,13 @@ export default function CategoryStrip({ active = 'All', onChange }: CategoryStri
                 onClick={() => handleSelect(cat.label)}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
-                className="relative flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap hover:bg-[rgba(200,75,49,0.05)] hover:text-[#C84B31]"
+                className="relative flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap hover:bg-[rgba(232, 0, 15,0.05)] hover:text-[#E8000F]"
                 style={{
                   fontFamily:      'var(--font-dm-sans)',
-                  backgroundColor: isActive ? '#C84B31' : 'transparent',
+                  backgroundColor: isActive ? '#E8000F' : 'transparent',
                   color:           isActive ? '#fff' : 'var(--fg-muted)',
-                  border:          `1.5px solid ${isActive ? '#C84B31' : 'transparent'}`,
-                  boxShadow:       isActive ? '0 4px 12px rgba(200, 75, 49, 0.15)' : 'none',
+                  border:          `1.5px solid ${isActive ? '#E8000F' : 'transparent'}`,
+                  boxShadow:       isActive ? '0 4px 12px rgba(232, 0, 15, 0.15)' : 'none',
                 }}
               >
                 {cat.label}

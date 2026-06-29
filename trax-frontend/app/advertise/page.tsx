@@ -101,7 +101,7 @@ export default function AdvertisePage() {
               style={{
                 backgroundColor: 'var(--card-bg)',
                 borderColor: pkg.featured ? 'var(--accent)' : 'var(--card-border)',
-                boxShadow: pkg.featured ? '0 8px 32px rgba(200, 75, 49, 0.1)' : 'var(--shadow-sm)',
+                boxShadow: pkg.featured ? '0 8px 32px rgba(232, 0, 15, 0.1)' : 'var(--shadow-sm)',
               }}
             >
               {pkg.featured && (

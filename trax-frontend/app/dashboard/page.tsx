@@ -678,7 +678,7 @@ export default function DashboardPage() {
         <div className="p-6">
           <div className="flex items-center gap-2 mb-8">
             <span className="text-xl font-black tracking-tight" style={{ color: 'var(--dash-fg)' }}>
-              <span style={{ color: '#C84B31' }}>Trax</span>
+              <span style={{ color: '#E8000F' }}>Trax</span>
             </span>
             <span className="bg-orange-500/10 text-orange-500 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-orange-500/20">
               Admin
@@ -722,7 +722,7 @@ export default function DashboardPage() {
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all"
                   style={
                     activeTab === item.id
-                      ? { backgroundColor: '#C84B31', color: '#FFFFFF', boxShadow: '0 4px 14px rgba(200,75,49,0.25)' }
+                      ? { backgroundColor: '#E8000F', color: '#FFFFFF', boxShadow: '0 4px 14px rgba(232, 0, 15,0.25)' }
                       : { color: 'var(--dash-fg-muted)' }
                   }
                   onMouseEnter={(e) => {
@@ -907,7 +907,7 @@ export default function DashboardPage() {
                           className="px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border"
                           style={
                             articleFilter === filter
-                              ? { backgroundColor: 'rgba(200,75,49,0.1)', borderColor: '#C84B31', color: '#C84B31' }
+                              ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F' }
                               : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-muted)' }
                           }
                         >
@@ -1012,7 +1012,7 @@ export default function DashboardPage() {
                                 <div className="flex flex-col items-center justify-center py-14 gap-3">
                                   <div
                                     className="w-12 h-12 rounded-full flex items-center justify-center"
-                                    style={{ backgroundColor: 'rgba(200,75,49,0.08)', border: '1px solid rgba(200,75,49,0.15)' }}
+                                    style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
                                   >
                                     <span style={{ fontSize: '1.25rem' }}>📄</span>
                                   </div>
@@ -1037,7 +1037,7 @@ export default function DashboardPage() {
                         <button
                           onClick={() => setArticlesPage(prev => Math.max(prev - 1, 1))}
                           disabled={articlesPage === 1}
-                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(232, 0, 15,0.05)]"
                           style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
                         >
                           <ChevronLeft className="h-4 w-4" />
@@ -1058,7 +1058,7 @@ export default function DashboardPage() {
                               className="w-9 h-9 rounded-xl text-xs font-bold transition-all border"
                               style={
                                 isActive
-                                  ? { backgroundColor: 'rgba(200,75,49,0.1)', borderColor: '#C84B31', color: '#C84B31' }
+                                  ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F' }
                                   : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }
                               }
                             >
@@ -1069,7 +1069,7 @@ export default function DashboardPage() {
                         <button
                           onClick={() => setArticlesPage(prev => Math.min(prev + 1, totalArticlesPages))}
                           disabled={articlesPage === totalArticlesPages}
-                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(232, 0, 15,0.05)]"
                           style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
                         >
                           <ChevronRight className="h-4 w-4" />
@@ -1326,7 +1326,7 @@ export default function DashboardPage() {
                                 className="py-2 rounded-xl text-xs font-semibold tracking-wider transition-all border"
                                 style={
                                   formData.status === st
-                                    ? { backgroundColor: 'rgba(200,75,49,0.1)', borderColor: '#C84B31', color: '#C84B31', fontWeight: 700 }
+                                    ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F', fontWeight: 700 }
                                     : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-muted)' }
                                 }
                               >
@@ -1453,7 +1453,7 @@ export default function DashboardPage() {
                                 <div className="flex flex-col items-center justify-center py-16 gap-3">
                                   <div
                                     className="w-14 h-14 rounded-full flex items-center justify-center"
-                                    style={{ backgroundColor: 'rgba(200,75,49,0.08)', border: '1px solid rgba(200,75,49,0.15)' }}
+                                    style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
                                   >
                                     <span style={{ fontSize: '1.5rem' }}>📭</span>
                                   </div>
@@ -1478,7 +1478,7 @@ export default function DashboardPage() {
                         <button
                           onClick={() => setSubscribersPage(prev => Math.max(prev - 1, 1))}
                           disabled={subscribersPage === 1}
-                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(232, 0, 15,0.05)]"
                           style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
                         >
                           <ChevronLeft className="h-4 w-4" />
@@ -1499,7 +1499,7 @@ export default function DashboardPage() {
                               className="w-9 h-9 rounded-xl text-xs font-bold transition-all border"
                               style={
                                 isActive
-                                  ? { backgroundColor: 'rgba(200,75,49,0.1)', borderColor: '#C84B31', color: '#C84B31' }
+                                  ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F' }
                                   : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }
                               }
                             >
@@ -1510,7 +1510,7 @@ export default function DashboardPage() {
                         <button
                           onClick={() => setSubscribersPage(prev => Math.min(prev + 1, totalSubscribersPages))}
                           disabled={subscribersPage === totalSubscribersPages}
-                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(200,75,49,0.05)]"
+                          className="p-2 rounded-xl transition-all border disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[rgba(232, 0, 15,0.05)]"
                           style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
                         >
                           <ChevronRight className="h-4 w-4" />
@@ -1899,7 +1899,7 @@ export default function DashboardPage() {
                                     <div className="flex flex-col items-center justify-center py-14 gap-3">
                                       <div
                                         className="w-12 h-12 rounded-full flex items-center justify-center"
-                                        style={{ backgroundColor: 'rgba(200,75,49,0.08)', border: '1px solid rgba(200,75,49,0.15)' }}
+                                        style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
                                       >
                                         <span style={{ fontSize: '1.25rem' }}>👥</span>
                                       </div>
