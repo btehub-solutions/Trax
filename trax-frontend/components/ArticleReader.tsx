@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useSpring } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Clock, User, Bookmark, Share2, Link2, Check, ChevronRight, Tag } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
@@ -89,9 +89,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
   const [copied,     setCopied]     = useState(false)
   const bodyRef = useRef<HTMLDivElement>(null)
 
-  // Reading progress via Framer Motion useScroll
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 180, damping: 28, restDelta: 0.001 })
+
 
   const cat     = categoryColors[article.category] ?? categoryColors.default
   const bodyText = generateBody(article)
@@ -118,11 +116,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
 
   return (
     <>
-      {/* ── Reading progress bar ─────────────────────────────────────────── */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 z-[100] origin-left"
-        style={{ scaleX, height: '3px', backgroundColor: '#E8000F' }}
-      />
+
 
       {/* ── Page ─────────────────────────────────────────────────────────── */}
       <motion.div
