@@ -165,6 +165,27 @@ img, video {
 }
 
 
+/* ─── Global Scrollbar Styling (Always Dark) ─── */
+html {
+  scrollbar-color: #27272A #09090B !important; /* For Firefox */
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #09090B !important; /* Force dark background regardless of theme */
+}
+::-webkit-scrollbar-thumb {
+  background: #27272A !important; /* Dark gray thumb */
+  border: 2.5px solid #09090B !important; /* Contrast border matching track */
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3F3F46 !important; /* Slightly lighter gray thumb on hover */
+}
+
+
 /* ─── Hide scrollbar utility (used in CategoryStrip) ─── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
