@@ -29,7 +29,7 @@ export default function PressRoomSection() {
   useEffect(() => {
     const fetchPressArticles = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/articles?isSponsored=true&limit=3`);
+        const res = await fetch(`${BASE_URL}/articles?isSponsored=true&limit=6`);
         if (!res.ok) return;
         const json = await res.json();
         setArticles(json.data || []);
@@ -78,7 +78,7 @@ export default function PressRoomSection() {
 
         {/* Cards grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {articles.slice(0, 3).map((article) => (
+          {articles.slice(0, 6).map((article) => (
             <Link
               key={article.id}
               href={`/articles/${article.slug}`}

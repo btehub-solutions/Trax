@@ -231,8 +231,8 @@ export default function EventsPage() {
             <div className="md:col-span-4 flex items-center justify-center p-6 md:p-8" style={{ backgroundColor: 'var(--card-bg)' }}>
               <div className="relative w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl border border-white/5">
                 <Image
-                  src="/images/founders_friday_june_flyer.png"
-                  alt="Founders Friday June Edition Flyer"
+                  src="/images/students_conference_flyer_new.png"
+                  alt="Students Conference 3.0: FUTURE READY"
                   width={400}
                   height={600}
                   className="w-full h-auto block"
@@ -249,13 +249,13 @@ export default function EventsPage() {
                     className="text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md text-white"
                     style={{ backgroundColor: 'rgba(232, 0, 15, 0.15)', color: '#E8000F', border: '1px solid rgba(232, 0, 15,0.25)' }}
                   >
-                    FOUNDERS FRIDAY X JEKACODE HUB
+                    GEM Educational Foundation
                   </span>
                   <span
                     className="text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md text-white"
                     style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'var(--fg-muted)', border: '1px solid var(--border)' }}
                   >
-                    June Edition
+                    Future Ready Edition
                   </span>
                 </div>
 
@@ -263,14 +263,14 @@ export default function EventsPage() {
                   className="text-2xl font-black mb-3 text-white leading-tight"
                   style={{ fontFamily: 'var(--font-oxanium)' }}
                 >
-                  Founders Friday Abeokuta: Understanding Revenue Models
+                  Students Conference 3.0: FUTURE READY
                 </h3>
 
                 <p
                   className="text-sm leading-relaxed mb-6"
                   style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
                 >
-                  You&apos;ve built it. People love it. So why isn&apos;t money coming in? Learn, share, and get real feedback on how to build and scale revenue models that actually last. Bring your business—the community will help you analyze and refine your model.
+                  Every year, thousands of young people leave secondary school excited about admission, but many are unprepared for the realities that come next. That&apos;s why we created Students Conference 3.0: FUTURE READY—featuring life-changing conversations, practical guidance, and real preparation.
                 </p>
 
                 {/* Event Meta Grid */}
@@ -279,7 +279,7 @@ export default function EventsPage() {
                     <Calendar size={18} style={{ color: 'var(--accent)' }} className="mt-0.5 shrink-0" />
                     <div>
                       <h4 className="text-xs font-bold text-white" style={{ fontFamily: 'var(--font-oxanium)' }}>Date & Time</h4>
-                      <p className="text-xs mt-0.5" style={{ color: 'var(--fg-subtle)' }}>Friday, 26th June | 4:00 PM</p>
+                      <p className="text-xs mt-0.5" style={{ color: 'var(--fg-subtle)' }}>Saturday, 1st Aug, 2026 | 10:00 AM</p>
                     </div>
                   </div>
 
@@ -288,13 +288,13 @@ export default function EventsPage() {
                     <div>
                       <h4 className="text-xs font-bold text-white" style={{ fontFamily: 'var(--font-oxanium)' }}>Venue</h4>
                       <p className="text-xs mt-0.5 leading-relaxed" style={{ color: 'var(--fg-subtle)' }}>
-                        Jekacode Hub, Casa Bella, No. 40 Abiola Way, beside MISPEM Church, Abeokuta
+                        Dayspring Chapel, opposite Conoil Obantoko, Abeokuta, Ogun State
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Pitch Perks */}
+                {/* Speakers & Details */}
                 <div
                   className="p-4 rounded-xl mb-8 border"
                   style={{
@@ -303,19 +303,26 @@ export default function EventsPage() {
                   }}
                 >
                   <h4 className="text-xs font-bold text-white mb-2 uppercase tracking-wide flex items-center gap-1.5" style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}>
-                    📢 Pitching Perks (5 Slots Available)
+                    👥 Featured Speakers
                   </h4>
-                  <ul className="text-xs space-y-1.5 list-disc list-inside" style={{ color: 'var(--fg-muted)' }}>
-                    <li>Exclusive discount vouchers for community-provided business services.</li>
-                    <li>Free 30-minute advisory sessions with top industry experts.</li>
+                  <ul className="text-xs space-y-1.5 list-disc list-inside mb-3" style={{ color: 'var(--fg-muted)' }}>
+                    <li><strong>Funmilayo Akinola</strong> (Educator, Teens Coach, Founder GEM Educational Foundation)</li>
+                    <li><strong>Seun Hamzat</strong> (Program Operations & Delivery Lead, 3MTT)</li>
+                    <li><strong>Engr. Abiola Owosibo</strong> (Lecturer, STEM Advocate & Coach)</li>
                   </ul>
+                  <h4 className="text-[10px] font-bold text-white mb-1 uppercase tracking-wide" style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}>
+                    📞 Enquiries & Sponsorship
+                  </h4>
+                  <p className="text-[11px]" style={{ color: 'var(--fg-subtle)' }}>
+                    09134431656, 07065394546 | gemeducationalfoundation@gmail.com
+                  </p>
                 </div>
               </div>
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="https://luma.com/foundersfridaynig"
+                  href="https://bit.ly/4vHhjbo"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white shadow-md transition-all hover:opacity-90 active:scale-98"
@@ -324,20 +331,7 @@ export default function EventsPage() {
                     fontFamily: 'var(--font-dm-sans)',
                   }}
                 >
-                  RSVP Attendance <ArrowRight size={15} />
-                </a>
-                <a
-                  href="https://forms.gle/vWzgFJoEHgasfUJv8"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all border hover:bg-white/5 active:scale-98"
-                  style={{
-                    color: 'var(--fg)',
-                    borderColor: 'var(--border)',
-                    fontFamily: 'var(--font-dm-sans)',
-                  }}
-                >
-                  Apply to Pitch
+                  Register for Free <ArrowRight size={15} />
                 </a>
               </div>
             </div>
