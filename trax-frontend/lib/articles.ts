@@ -26,6 +26,7 @@ export const navLinks = [
   { label: 'Startups', href: '/startups' },
   { label: 'Ecosystem', href: '/ecosystem' },
   { label: 'Events', href: '/events' },
+  { label: 'Press Room', href: '/press' },
 ]
 
 export const topicPills = [

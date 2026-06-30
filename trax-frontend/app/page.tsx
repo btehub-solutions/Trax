@@ -5,6 +5,7 @@ import LatestStoriesHero from '@/components/ui/LatestStoriesHero'
 import TabbedArticlesSection from '@/components/ui/TabbedArticlesSection'
 import ArticleGrid     from '@/components/ui/ArticleGrid'
 import NewsletterSection from '@/components/ui/NewsletterSection'
+import PressRoomSection from '@/components/ui/PressRoomSection'
 import { articles as mockArticles, Article }   from '@/lib/articles'
 import AdSlot          from '@/components/AdSlot'
 
@@ -50,6 +51,9 @@ export default async function HomePage() {
 
       {/* ── Hero: latest stories card grid ── */}
       <LatestStoriesHero articles={allArticles} />
+
+      {/* ── Press Room: sponsored partner content ── */}
+      <PressRoomSection />
 
       {/* ── Interactive Category Strip & Filtered Articles Grid ── */}
       <TabbedArticlesSection articles={allArticles} />

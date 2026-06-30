@@ -10,6 +10,7 @@ import { UsersModule }       from './users/users.module';
 import { NewsletterModule }  from './newsletter/newsletter.module';
 import { AdsModule }         from './ads/ads.module';
 import { UploadsModule }      from './uploads/uploads.module';
+import { PartnersModule }     from './partners/partners.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UploadsModule }      from './uploads/uploads.module';
     NewsletterModule,
     AdsModule,
     UploadsModule,
+    PartnersModule,
   ],
   providers: [
     // Apply ThrottlerGuard globally to all routes

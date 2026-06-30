@@ -26,12 +26,17 @@ import {
   User,
   UserPlus,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Building2,
+  ExternalLink,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL } from '@/lib/api';
 import { compressImage } from '@/lib/image-compressor';
+import { useTheme } from 'next-themes';
 
-type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team';
+type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team' | 'partners';
 
 const AD_SIZE_MAP: Record<string, string> = {
   LEADERBOARD: 'Leaderboard (1024x409)',
@@ -41,9 +46,15 @@ const AD_SIZE_MAP: Record<string, string> = {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Stats
   const [stats, setStats] = useState({
@@ -88,6 +99,8 @@ export default function DashboardPage() {
     readTime: '5 min read',
     publishedAt: '',
     officialLink: '',
+    isSponsored: false,
+    partnerId: '',
   });
   const [editorError, setEditorError] = useState<string | null>(null);
   const [editorSuccess, setEditorSuccess] = useState<string | null>(null);
@@ -134,6 +147,20 @@ export default function DashboardPage() {
     password: '',
     role: 'WRITER',
   });
+
+  // Partners Management State
+  const [partners, setPartners] = useState<any[]>([]);
+  const [partnerLoading, setPartnerLoading] = useState(false);
+  const [partnerError, setPartnerError] = useState<string | null>(null);
+  const [partnerSuccess, setPartnerSuccess] = useState<string | null>(null);
+  const [editingPartnerId, setEditingPartnerId] = useState<string | null>(null);
+  const [partnerFormData, setPartnerFormData] = useState({
+    name: '',
+    logoUrl: '',
+    website: '',
+  });
+  const [partnerLogoUploading, setPartnerLogoUploading] = useState(false);
+  const [partnerLogoUploadError, setPartnerLogoUploadError] = useState<string | null>(null);
 
   // Validate Authentication
   useEffect(() => {
@@ -292,6 +319,8 @@ export default function DashboardPage() {
       if (currentRole === 'ADMIN') {
         const members = await api.get('/users');
         setTeamMembers(members);
+        const partnersList = await api.get('/partners');
+        setPartners(partnersList);
       }
     } catch (err: any) {
       console.error('Failed to load dashboard data:', err);
@@ -324,6 +353,7 @@ export default function DashboardPage() {
     const payload = {
       ...formData,
       publishedAt: formData.publishedAt ? new Date(formData.publishedAt).toISOString() : null,
+      partnerId: formData.partnerId || null,
     };
 
     try {
@@ -362,6 +392,8 @@ export default function DashboardPage() {
       readTime: article.readTime || '5 min read',
       publishedAt: article.publishedAt ? new Date(article.publishedAt).toISOString().split('T')[0] : '',
       officialLink: article.officialLink || '',
+      isSponsored: article.isSponsored || false,
+      partnerId: article.partnerId || '',
     });
     setEditorError(null);
     setEditorSuccess(null);
@@ -509,6 +541,8 @@ export default function DashboardPage() {
       readTime: '5 min read',
       publishedAt: '',
       officialLink: '',
+      isSponsored: false,
+      partnerId: '',
     });
     setEditorError(null);
     setEditorSuccess(null);
@@ -615,6 +649,52 @@ export default function DashboardPage() {
     }
   };
 
+  const handlePartnerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPartnerLoading(true);
+    setPartnerError(null);
+    setPartnerSuccess(null);
+
+    try {
+      if (editingPartnerId) {
+        await api.patch(`/partners/${editingPartnerId}`, partnerFormData);
+        setPartnerSuccess('Partner updated successfully!');
+      } else {
+        await api.post('/partners', partnerFormData);
+        setPartnerSuccess('Partner added successfully!');
+      }
+      setPartnerFormData({ name: '', logoUrl: '', website: '' });
+      setEditingPartnerId(null);
+      const partnersList = await api.get('/partners');
+      setPartners(partnersList);
+    } catch (err: any) {
+      setPartnerError(err.message || 'Failed to save partner');
+    } finally {
+      setPartnerLoading(false);
+    }
+  };
+
+  const handleDeletePartner = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to delete partner "${name}"?`)) return;
+    try {
+      await api.delete(`/partners/${id}`);
+      const partnersList = await api.get('/partners');
+      setPartners(partnersList);
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete partner');
+    }
+  };
+
+  const handleTogglePartnerActive = async (id: string, currentStatus: boolean) => {
+    try {
+      await api.patch(`/partners/${id}`, { isActive: !currentStatus });
+      const partnersList = await api.get('/partners');
+      setPartners(partnersList);
+    } catch (err: any) {
+      alert(err.message || 'Failed to toggle partner status');
+    }
+  };
+
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(articleSearch.toLowerCase()) || 
                           article.excerpt.toLowerCase().includes(articleSearch.toLowerCase());
@@ -669,7 +749,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen pt-16 flex flex-col md:flex-row" style={{ backgroundColor: 'var(--dash-bg)', color: 'var(--dash-fg)' }}>
+    <div className="min-h-screen flex flex-col md:flex-row" style={{ backgroundColor: 'var(--dash-bg)', color: 'var(--dash-fg)' }}>
       {/* Sidebar Navigation */}
       <aside
         className="w-full md:w-64 border-b md:border-b-0 md:border-r backdrop-blur-md flex flex-col justify-between shrink-0"
@@ -709,7 +789,10 @@ export default function DashboardPage() {
               { id: 'subscribers', label: 'Subscribers', icon: Users },
               { id: 'ads', label: 'Ad Zones', icon: Settings },
               { id: 'profile', label: 'Profile Settings', icon: User },
-              ...(user?.role === 'ADMIN' ? [{ id: 'team', label: 'Team Management', icon: UserPlus }] : []),
+              ...(user?.role === 'ADMIN' ? [
+                { id: 'team', label: 'Team Management', icon: UserPlus },
+                { id: 'partners', label: 'Partners Manager', icon: Building2 }
+              ] : []),
             ].map(item => {
               const Icon = item.icon;
               return (
@@ -750,10 +833,19 @@ export default function DashboardPage() {
           </nav>
         </div>
 
-        <div className="p-6 border-t" style={{ borderColor: 'var(--dash-divider)' }}>
+        <div className="p-6 border-t flex flex-col gap-2.5" style={{ borderColor: 'var(--dash-divider)' }}>
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-[var(--dash-fg-secondary)] hover:bg-[var(--dash-hover)] transition-all border border-transparent"
+            >
+              {theme === 'dark' ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
+              <span>{theme === 'dark' ? 'Dark Red Mode' : 'Zinc Dark Mode'}</span>
+            </button>
+          )}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition-all border border-transparent hover:border-red-500/25"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#E8000F] hover:bg-[#E8000F]/10 transition-all border border-transparent hover:border-[#E8000F]/25"
           >
             <LogOut className="h-4.5 w-4.5" />
             Sign Out
@@ -762,7 +854,7 @@ export default function DashboardPage() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto max-w-6xl mx-auto w-full">
+      <main className="flex-1 p-6 md:p-10 overflow-y-auto w-full">
         {connectionError && (
           <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm flex flex-col gap-2 shadow-sm">
             <div className="flex items-center gap-2 font-bold">
@@ -1314,6 +1406,40 @@ export default function DashboardPage() {
                               <span className="text-sm font-semibold transition-colors" style={{ color: 'var(--dash-fg-secondary)' }}>Trending Section</span>
                             </div>
                           </label>
+
+                          <div className="border-t border-zinc-800/40 my-3 pt-3 space-y-4">
+                            <label className="flex items-center gap-3 cursor-pointer group">
+                              <input
+                                type="checkbox"
+                                checked={formData.isSponsored}
+                                onChange={(e) => setFormData(prev => ({ ...prev, isSponsored: e.target.checked }))}
+                                className="accent-red-600 h-4 w-4 rounded"
+                              />
+                              <div className="flex items-center gap-1.5">
+                                <Building2 className="h-4 w-4 text-purple-500 shrink-0" />
+                                <span className="text-sm font-semibold transition-colors" style={{ color: 'var(--dash-fg-secondary)' }}>Sponsored / Partner Content</span>
+                              </div>
+                            </label>
+
+                            {formData.isSponsored && (
+                              <div className="space-y-1.5 pl-7">
+                                <label className="block text-[10px] font-bold uppercase tracking-wider text-zinc-400">Select Partner</label>
+                                <select
+                                  value={formData.partnerId}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, partnerId: e.target.value }))}
+                                  className="w-full rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-red-600 border"
+                                  style={inputStyle}
+                                >
+                                  <option value="" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Select Partner Profile</option>
+                                  {partners.map((partner) => (
+                                    <option key={partner.id} value={partner.id} style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>
+                                      {partner.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            )}
+                          </div>
                         </div>
 
                         {/* Status Box */}
@@ -2001,6 +2127,289 @@ export default function DashboardPage() {
                             'Add Member'
                           )}
                         </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 8: PARTNERS MANAGEMENT */}
+              {activeTab === 'partners' && user?.role === 'ADMIN' && (
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Partners Manager</h1>
+                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Add, update, and manage official corporate and tech ecosystem partners</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Left: Partners List Table */}
+                    <div className="lg:col-span-2 space-y-4">
+                      <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left border-collapse">
+                            <thead>
+                              <tr
+                                className="border-b text-xs font-semibold uppercase tracking-wider"
+                                style={{ borderColor: 'var(--dash-divider)', backgroundColor: 'var(--dash-thead)', color: 'var(--dash-fg-muted)' }}
+                              >
+                                <th className="py-4 px-6">Logo</th>
+                                <th className="py-4 px-6">Name</th>
+                                <th className="py-4 px-6">Website</th>
+                                <th className="py-4 px-6">Status</th>
+                                <th className="py-4 px-6 text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="text-sm" style={{ color: 'var(--dash-fg-secondary)' }}>
+                              {partners.map((partner) => (
+                                <tr
+                                  key={partner.id}
+                                  className="border-b transition-colors"
+                                  style={{ borderColor: 'var(--dash-divider)' }}
+                                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--dash-hover)'}
+                                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                                >
+                                  <td className="py-4 px-6">
+                                    <img 
+                                      src={partner.logoUrl} 
+                                      alt={partner.name} 
+                                      className="h-10 w-10 rounded-xl object-cover border border-neutral-800 bg-black/40" 
+                                    />
+                                  </td>
+                                  <td className="py-4 px-6 font-semibold" style={{ color: 'var(--dash-fg)' }}>
+                                    {partner.name}
+                                  </td>
+                                  <td className="py-4 px-6 text-zinc-400">
+                                    {partner.website ? (
+                                      <a 
+                                        href={partner.website} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="hover:underline flex items-center gap-1 hover:text-white"
+                                      >
+                                        {partner.website.replace(/^https?:\/\/(www\.)?/, '')}
+                                        <ExternalLink size={12} />
+                                      </a>
+                                    ) : (
+                                      '-'
+                                    )}
+                                  </td>
+                                  <td className="py-4 px-6">
+                                    <button
+                                      type="button"
+                                      onClick={() => handleTogglePartnerActive(partner.id, partner.isActive)}
+                                      className={`inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full font-bold transition-all ${
+                                        partner.isActive
+                                          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                                          : 'bg-zinc-500/10 text-zinc-400 border border-zinc-500/20'
+                                      }`}
+                                    >
+                                      {partner.isActive ? 'Active' : 'Inactive'}
+                                    </button>
+                                  </td>
+                                  <td className="py-4 px-6 text-right font-medium">
+                                    <div className="flex justify-end gap-2">
+                                      <button
+                                        type="button"
+                                        onClick={() => {
+                                          setEditingPartnerId(partner.id);
+                                          setPartnerFormData({
+                                            name: partner.name,
+                                            logoUrl: partner.logoUrl,
+                                            website: partner.website || '',
+                                          });
+                                          setPartnerError(null);
+                                          setPartnerSuccess(null);
+                                        }}
+                                        className="text-zinc-300 hover:text-white text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg border border-zinc-700 transition-all"
+                                      >
+                                        Edit
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleDeletePartner(partner.id, partner.name)}
+                                        className="text-red-300 hover:text-red-100 text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/25 transition-all"
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+                              {partners.length === 0 && (
+                                <tr>
+                                  <td colSpan={5}>
+                                    <div className="flex flex-col items-center justify-center py-14 gap-3">
+                                      <div
+                                        className="w-12 h-12 rounded-full flex items-center justify-center"
+                                        style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
+                                      >
+                                        <Building2 className="h-5 w-5 text-red-600" />
+                                      </div>
+                                      <p className="text-sm font-semibold" style={{ color: 'var(--dash-fg)' }}>No partners found</p>
+                                      <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>Add partners to see them here</p>
+                                    </div>
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right: Add/Edit Partner Form Box */}
+                    <div className="p-6 rounded-2xl h-fit border" style={cardStyle}>
+                      <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--dash-fg)' }}>
+                        {editingPartnerId ? 'Edit Partner' : 'Add Partner'}
+                      </h3>
+
+                      {partnerError && (
+                        <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-xs">
+                          {partnerError}
+                        </div>
+                      )}
+
+                      {partnerSuccess && (
+                        <div className="mb-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-200 text-xs">
+                          {partnerSuccess}
+                        </div>
+                      )}
+
+                      <form onSubmit={handlePartnerSubmit} className="space-y-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Partner Name</label>
+                          <input
+                            type="text"
+                            required
+                            value={partnerFormData.name}
+                            onChange={(e) => setPartnerFormData(prev => ({ ...prev, name: e.target.value }))}
+                            placeholder="Ogun State Tech Hub"
+                            className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Partner Logo</label>
+                          <div className="flex flex-col gap-3">
+                            <div className="flex items-center gap-2">
+                              <label className="cursor-pointer bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                                <span>{partnerLogoUploading ? 'Uploading...' : 'Upload Logo'}</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  onChange={async (e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    setPartnerLogoUploading(true);
+                                    setPartnerLogoUploadError(null);
+                                    try {
+                                      const compressedFile = await compressImage(file);
+                                      const fData = new FormData();
+                                      fData.append('file', compressedFile);
+                                      const token = localStorage.getItem('token');
+                                      const res = await fetch(`${BASE_URL}/uploads`, {
+                                        method: 'POST',
+                                        headers: { 'Authorization': `Bearer ${token}` },
+                                        body: fData,
+                                      });
+                                      if (!res.ok) {
+                                        const json = await res.json();
+                                        throw new Error(json.message || 'Upload failed');
+                                      }
+                                      const data = await res.json();
+                                      if (data?.url) {
+                                        setPartnerFormData(prev => ({ ...prev, logoUrl: data.url }));
+                                      }
+                                    } catch (err: any) {
+                                      setPartnerLogoUploadError(err.message || 'Failed to upload logo');
+                                    } finally {
+                                      setPartnerLogoUploading(false);
+                                    }
+                                  }}
+                                  className="hidden"
+                                />
+                              </label>
+                              <span className="text-[10px]" style={{ color: 'var(--dash-fg-muted)' }}>
+                                JPEG / PNG / WEBP
+                              </span>
+                            </div>
+
+                            {partnerLogoUploadError && (
+                              <p className="text-xs text-red-500 font-medium">{partnerLogoUploadError}</p>
+                            )}
+
+                            <div className="flex flex-col gap-1">
+                              <span className="text-[10px] uppercase font-semibold tracking-wider" style={{ color: 'var(--dash-fg-subtle)' }}>Or Paste Image URL</span>
+                              <input
+                                type="text"
+                                value={partnerFormData.logoUrl}
+                                onChange={(e) => setPartnerFormData(prev => ({ ...prev, logoUrl: e.target.value }))}
+                                placeholder="https://example.com/logo.png"
+                                className="w-full rounded-xl px-4 py-2.5 text-base md:text-xs focus:outline-none focus:border-red-600 border"
+                                style={inputStyle}
+                              />
+                            </div>
+
+                            {partnerFormData.logoUrl && (
+                              <div className="relative group rounded-xl overflow-hidden border w-20 h-20" style={{ borderColor: 'var(--dash-card-border)' }}>
+                                <img
+                                  src={partnerFormData.logoUrl}
+                                  alt="Logo Preview"
+                                  className="w-full h-full object-cover"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setPartnerFormData(prev => ({ ...prev, logoUrl: '' }))}
+                                  className="absolute top-1 right-1 bg-red-600 hover:bg-red-500 text-white p-1 rounded-lg text-[9px] font-bold opacity-0 group-hover:opacity-100 transition-opacity shadow"
+                                >
+                                  ✕
+                                </button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Website URL (Optional)</label>
+                          <input
+                            type="text"
+                            value={partnerFormData.website}
+                            onChange={(e) => setPartnerFormData(prev => ({ ...prev, website: e.target.value }))}
+                            placeholder="https://ogunstate.gov.ng"
+                            className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
+                        <div className="flex gap-2">
+                          <button
+                            type="submit"
+                            disabled={partnerLoading}
+                            className="flex-1 bg-red-600 hover:bg-red-600 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-lg shadow-red-600/10 flex items-center justify-center gap-2"
+                          >
+                            {partnerLoading ? (
+                              <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            ) : (
+                              editingPartnerId ? 'Save Changes' : 'Add Partner'
+                            )}
+                          </button>
+
+                          {editingPartnerId && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingPartnerId(null);
+                                setPartnerFormData({ name: '', logoUrl: '', website: '' });
+                                setPartnerError(null);
+                                setPartnerSuccess(null);
+                              }}
+                              className="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold py-2.5 px-4 rounded-xl text-xs border border-zinc-700 transition-all"
+                            >
+                              Cancel
+                            </button>
+                          )}
+                        </div>
                       </form>
                     </div>
                   </div>

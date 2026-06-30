@@ -77,6 +77,16 @@ export class CreateArticleDto {
   @IsArray()
   @IsString({ each: true })
   tagIds?: string[];
+
+  @ApiPropertyOptional({ example: false })
+  @IsOptional()
+  @IsBoolean()
+  isSponsored?: boolean;
+
+  @ApiPropertyOptional({ example: 'clxyz123partnerid' })
+  @IsOptional()
+  @IsString()
+  partnerId?: string;
 }
 
 export class UpdateArticleDto {
@@ -151,6 +161,16 @@ export class UpdateArticleDto {
   @IsArray()
   @IsString({ each: true })
   tagIds?: string[];
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsBoolean()
+  isSponsored?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  partnerId?: string;
 }
 
 export class ArticleQueryDto {
@@ -180,4 +200,13 @@ export class ArticleQueryDto {
   @ApiPropertyOptional({ example: '12' })
   @IsOptional()
   limit?: number;
+
+  @ApiPropertyOptional({ example: 'true' })
+  @IsOptional()
+  isSponsored?: string;
+
+  @ApiPropertyOptional({ example: 'clxyz123partnerid' })
+  @IsOptional()
+  @IsString()
+  partnerId?: string;
 }

@@ -3,8 +3,7 @@ import Script from 'next/script'
 import { Oxanium, DM_Sans } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/providers/Providers'
-import Nav from '@/components/ui/Nav'
-import Footer from '@/components/ui/Footer'
+import ConditionalLayout from '@/components/ui/ConditionalLayout'
 
 const oxanium = Oxanium({
   subsets: ['latin'],
@@ -92,9 +91,9 @@ export default function RootLayout({
         )}
 
         <Providers>
-          <Nav />
-          <main>{children}</main>
-          <Footer />
+          <ConditionalLayout>
+            {children}
+          </ConditionalLayout>
         </Providers>
       </body>
     </html>

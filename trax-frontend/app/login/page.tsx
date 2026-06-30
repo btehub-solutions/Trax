@@ -50,116 +50,171 @@ export default function LoginPage() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
+      className="min-h-screen w-full flex flex-col md:flex-row relative overflow-hidden"
       style={{ backgroundColor: 'var(--bg)' }}
     >
-      {/* Decorative gradient glowing backgrounds */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-red-600/10 blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-violet-600/10 blur-[100px] pointer-events-none" />
+      {/* LEFT PANEL - TECH ECOSYSTEM VISUAL (Visible on md/lg screens, hidden on mobile) */}
+      <div className="hidden md:flex md:w-[50%] lg:w-[52%] xl:w-[55%] relative overflow-hidden h-screen select-none">
+        {/* Background Image */}
+        <img
+          src="/images/trax_login_visual.png"
+          alt="Trax Tech Ecosystem Visual"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        {/* Subtle Brand Gradient Overlays for Readability and Depth (UX Best Practice) */}
+        <div 
+          className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent z-10"
+        />
+        <div 
+          className="absolute inset-0 bg-gradient-to-r from-transparent z-10"
+          style={{
+            backgroundImage: 'linear-gradient(to right, transparent, var(--bg-alt))',
+            opacity: 0.45
+          }}
+        />
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md backdrop-blur-xl p-8 rounded-2xl relative z-10 border"
-        style={{
-          backgroundColor: 'var(--card-bg)',
-          borderColor: 'var(--card-border)',
-          boxShadow: 'var(--shadow-lg)',
-        }}
-      >
-        <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
-            <span className="text-2xl font-black tracking-tight" style={{ color: 'var(--fg)' }}>
-              <span className="text-red-600 group-hover:text-red-400 transition-colors">Trax</span>
+        {/* Home Link Overlay */}
+        <div className="absolute top-8 left-8 z-20">
+          <Link href="/" className="inline-flex items-center gap-2 group px-4 py-2 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all">
+            <span className="text-white text-sm font-semibold flex items-center gap-1.5">
+              ← Back to home
             </span>
           </Link>
-          <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--fg)' }}>Welcome Back</h2>
-          <p className="text-sm mt-1" style={{ color: 'var(--fg-muted)' }}>Sign in to manage articles, newsletter and ad units</p>
         </div>
 
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm flex items-start gap-3"
-          >
-            <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
-            <span>{error}</span>
-          </motion.div>
-        )}
+        {/* Narrative text on the left panel overlay (UI/UX Best Practice for Premium Feel) */}
+        <div className="absolute bottom-16 left-12 z-20 max-w-lg">
+          <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4" style={{ fontFamily: 'var(--font-oxanium)' }}>
+            Shaping Ogun State's <br />
+            <span className="text-[#E8000F]">Tech Future</span>
+          </h1>
+          <p className="text-sm font-medium text-white/70 max-w-sm">
+            Tracking Ogun State's startup ecosystem, research hubs, and visual media platform in real-time.
+          </p>
+        </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--fg-muted)' }} htmlFor="email">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" style={{ color: 'var(--fg-subtle)' }} />
-              <input
-                id="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@trax.ng"
-                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
-                style={{
-                  backgroundColor: 'var(--bg-alt)',
-                  borderColor: 'var(--border)',
-                  color: 'var(--fg)',
-                }}
-              />
-            </div>
+      {/* RIGHT PANEL - LOGIN FORM */}
+      <div 
+        className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 lg:p-16 min-h-screen relative"
+        style={{ backgroundColor: 'var(--bg-alt)' }}
+      >
+        {/* Mobile-only Home Button */}
+        <div className="absolute top-6 left-6 md:hidden">
+          <Link href="/" className="inline-flex items-center gap-2 group px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+            <span className="text-white text-xs font-semibold">
+              ← Back
+            </span>
+          </Link>
+        </div>
+
+        {/* Glow effects on the right panel */}
+        <div className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-[#E8000F]/5 blur-[80px] pointer-events-none" />
+
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-md backdrop-blur-xl p-8 rounded-2xl relative z-10 border shadow-lg"
+          style={{
+            backgroundColor: 'var(--card-bg)',
+            borderColor: 'var(--card-border)',
+            boxShadow: 'var(--shadow-lg)',
+          }}
+        >
+          <div className="text-center mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
+              <span className="text-2xl font-black tracking-tight" style={{ color: 'var(--fg)' }}>
+                <span className="text-[#E8000F] group-hover:text-red-400 transition-colors">Trax</span>
+              </span>
+            </Link>
+            <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--fg)' }}>Welcome Back</h2>
+            <p className="text-sm mt-1" style={{ color: 'var(--fg-muted)' }}>Sign in to manage articles, newsletter and ad units</p>
           </div>
 
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--fg-muted)' }} htmlFor="password">
-                Password
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm flex items-start gap-3"
+            >
+              <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </motion.div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: 'var(--fg-muted)' }} htmlFor="email">
+                Email Address
               </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" style={{ color: 'var(--fg-subtle)' }} />
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="admin@trax.ng"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#E8000F] focus:ring-1 focus:ring-[#E8000F] transition-all border"
+                  style={{
+                    backgroundColor: 'var(--bg-alt)',
+                    borderColor: 'var(--border)',
+                    color: 'var(--fg)',
+                  }}
+                />
+              </div>
             </div>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" style={{ color: 'var(--fg-subtle)' }} />
-              <input
-                id="password"
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
-                style={{
-                  backgroundColor: 'var(--bg-alt)',
-                  borderColor: 'var(--border)',
-                  color: 'var(--fg)',
-                }}
-              />
+
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--fg-muted)' }} htmlFor="password">
+                  Password
+                </label>
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5" style={{ color: 'var(--fg-subtle)' }} />
+                <input
+                  id="password"
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#E8000F] focus:ring-1 focus:ring-[#E8000F] transition-all border"
+                  style={{
+                    backgroundColor: 'var(--bg-alt)',
+                    borderColor: 'var(--border)',
+                    color: 'var(--fg)',
+                  }}
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-[#E8000F] hover:bg-[#FF1A2E] text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg shadow-[#E8000F]/20"
+            >
+              {loading ? (
+                <span className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  Sign In <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
+            </button>
+          </form>
+
+          <div className="mt-8 pt-6 border-t text-center" style={{ borderColor: 'var(--border)' }}>
+            <div className="inline-flex items-center gap-2 text-xs" style={{ color: 'var(--fg-subtle)' }}>
+              <ShieldCheck className="h-4 w-4 text-emerald-500" />
+              <span>Secured Session Encryption Enabled</span>
             </div>
           </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-red-600 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg shadow-red-600/20"
-          >
-            {loading ? (
-              <span className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              <>
-                Sign In <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </>
-            )}
-          </button>
-        </form>
-
-        <div className="mt-8 pt-6 border-t text-center" style={{ borderColor: 'var(--border)' }}>
-          <div className="inline-flex items-center gap-2 text-xs" style={{ color: 'var(--fg-subtle)' }}>
-            <ShieldCheck className="h-4 w-4 text-emerald-500" />
-            <span>Secured Session Encryption Enabled</span>
-          </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </div>
   );
 }

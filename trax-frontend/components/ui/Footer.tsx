@@ -21,6 +21,7 @@ const footerLinks = {
     { label: 'Events',    href: '/events'    },
   ],
   Resources: [
+    { label: 'Press Room', href: '/press' },
     { label: 'Newsletter', href: '/newsletter' },
     { label: 'Ecosystem Map',     href: '/map'        },
     { label: 'Funding DB', href: '/funding'    },

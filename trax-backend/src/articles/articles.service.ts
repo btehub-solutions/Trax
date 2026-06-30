@@ -15,6 +15,7 @@ export class ArticlesService {
     author:   { select: { id: true, name: true, avatar: true, role: true } },
     category: true,
     tags:     { include: { tag: true } },
+    partner:  true,
   } as const;
 
   async create(dto: CreateArticleDto, authorId: string) {
@@ -46,16 +47,20 @@ export class ArticlesService {
       featured,
       page  = 1,
       limit = 12,
+      isSponsored,
+      partnerId,
     } = query;
 
     const skip = (Number(page) - 1) * Number(limit);
     const take = Number(limit);
 
     const where = {
-      ...(status   ? { status }                                         : {}),
-      ...(featured ? { featured: featured === 'true' }                  : {}),
-      ...(category ? { category: { slug: category } }                   : {}),
-      ...(tag      ? { tags: { some: { tag: { slug: tag } } } }         : {}),
+      ...(status      ? { status }                                         : {}),
+      ...(featured    ? { featured: featured === 'true' }                  : {}),
+      ...(category    ? { category: { slug: category } }                   : {}),
+      ...(tag         ? { tags: { some: { tag: { slug: tag } } } }         : {}),
+      ...(isSponsored ? { isSponsored: isSponsored === 'true' }            : {}),
+      ...(partnerId   ? { partnerId }                                      : {}),
     };
 
     const [articles, total] = await Promise.all([

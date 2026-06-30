@@ -164,15 +164,6 @@ img, video {
   color: #FFFFFF;
 }
 
-/* ─── Custom Scrollbar ─── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb {
-  background: rgba(232, 0, 15, 0.3);
-  border-radius: 9999px;
-  transition: background 0.2s;
-}
-::-webkit-scrollbar-thumb:hover { background: rgba(232, 0, 15, 0.6); }
 
 /* ─── Hide scrollbar utility (used in CategoryStrip) ─── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
