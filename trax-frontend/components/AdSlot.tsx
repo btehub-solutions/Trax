@@ -179,7 +179,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[#E8000F]/50 transition-all duration-300 select-none relative"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[var(--accent)]/50 transition-all duration-300 select-none relative"
       >
         <img
           src="/images/ads/stay_connected_leaderboard.png"
@@ -194,7 +194,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[#E8000F]/50 transition-all duration-300 select-none relative"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[var(--accent)]/50 transition-all duration-300 select-none relative"
         style={{ minHeight: preset.height }}
       >
         <img
@@ -211,7 +211,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         href="https://forms.gle/PjEk6Xm9ZGKNcJXW9"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[#E8000F]/50 transition-all duration-300 select-none relative"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[var(--accent)]/50 transition-all duration-300 select-none relative"
       >
         <img
           src="/images/ads/stay_connected_inline.png"

@@ -758,7 +758,7 @@ export default function DashboardPage() {
         <div className="p-6">
           <div className="flex items-center gap-2 mb-8">
             <span className="text-xl font-black tracking-tight" style={{ color: 'var(--dash-fg)' }}>
-              <span style={{ color: '#E8000F' }}>Trax</span>
+              <span style={{ color: 'var(--accent)' }}>Trax</span>
             </span>
             <span className="bg-red-600/10 text-red-600 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-600/20">
               Admin
@@ -804,12 +804,12 @@ export default function DashboardPage() {
                   }}
                   className={`w-full flex items-center gap-3 py-3 pr-4 rounded-xl text-sm font-medium transition-all ${
                     activeTab === item.id 
-                      ? 'pl-3 border-l-[3px] border-[#E8000F]' 
+                      ? 'pl-3 border-l-[3px] border-[var(--accent)]' 
                       : 'pl-4 border-l-[3px] border-transparent'
                   }`}
                   style={
                     activeTab === item.id
-                      ? { backgroundColor: 'rgba(232, 0, 15, 0.08)', color: '#E8000F' }
+                      ? { backgroundColor: 'rgba(255, 26, 26, 0.08)', color: 'var(--accent)' }
                       : { color: 'var(--dash-fg-muted)' }
                   }
                   onMouseEnter={(e) => {
@@ -845,7 +845,7 @@ export default function DashboardPage() {
           )}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[#E8000F] hover:bg-[#E8000F]/10 transition-all border border-transparent hover:border-[#E8000F]/25"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all border border-transparent hover:border-[var(--accent)]/25"
           >
             <LogOut className="h-4.5 w-4.5" />
             Sign Out
@@ -1003,7 +1003,7 @@ export default function DashboardPage() {
                           className="px-4 py-2.5 rounded-xl text-xs font-semibold uppercase tracking-wider transition-all border"
                           style={
                             articleFilter === filter
-                              ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F' }
+                              ? { backgroundColor: 'rgba(255, 26, 26, 0.1)', borderColor: 'var(--accent)', color: 'var(--accent)' }
                               : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-muted)' }
                           }
                         >
@@ -1108,7 +1108,7 @@ export default function DashboardPage() {
                                 <div className="flex flex-col items-center justify-center py-14 gap-3">
                                   <div
                                     className="w-12 h-12 rounded-full flex items-center justify-center"
-                                    style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
+                                    style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', border: '1px solid rgba(255, 26, 26, 0.15)' }}
                                   >
                                     <span style={{ fontSize: '1.25rem' }}>📄</span>
                                   </div>
@@ -1154,7 +1154,7 @@ export default function DashboardPage() {
                               className="w-9 h-9 rounded-xl text-xs font-bold transition-all border"
                               style={
                                 isActive
-                                  ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F' }
+                                  ? { backgroundColor: 'rgba(255, 26, 26, 0.1)', borderColor: 'var(--accent)', color: 'var(--accent)' }
                                   : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }
                               }
                             >
@@ -1456,7 +1456,7 @@ export default function DashboardPage() {
                                 className="py-2 rounded-xl text-xs font-semibold tracking-wider transition-all border"
                                 style={
                                   formData.status === st
-                                    ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F', fontWeight: 700 }
+                                    ? { backgroundColor: 'rgba(255, 26, 26, 0.1)', borderColor: 'var(--accent)', color: 'var(--accent)', fontWeight: 700 }
                                     : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-muted)' }
                                 }
                               >
@@ -1583,7 +1583,7 @@ export default function DashboardPage() {
                                 <div className="flex flex-col items-center justify-center py-16 gap-3">
                                   <div
                                     className="w-14 h-14 rounded-full flex items-center justify-center"
-                                    style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
+                                    style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', border: '1px solid rgba(255, 26, 26, 0.15)' }}
                                   >
                                     <span style={{ fontSize: '1.5rem' }}>📭</span>
                                   </div>
@@ -1629,7 +1629,7 @@ export default function DashboardPage() {
                               className="w-9 h-9 rounded-xl text-xs font-bold transition-all border"
                               style={
                                 isActive
-                                  ? { backgroundColor: 'rgba(232, 0, 15,0.1)', borderColor: '#E8000F', color: '#E8000F' }
+                                  ? { backgroundColor: 'rgba(255, 26, 26, 0.1)', borderColor: 'var(--accent)', color: 'var(--accent)' }
                                   : { backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }
                               }
                             >
@@ -2029,7 +2029,7 @@ export default function DashboardPage() {
                                     <div className="flex flex-col items-center justify-center py-14 gap-3">
                                       <div
                                         className="w-12 h-12 rounded-full flex items-center justify-center"
-                                        style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
+                                        style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', border: '1px solid rgba(255, 26, 26, 0.15)' }}
                                       >
                                         <span style={{ fontSize: '1.25rem' }}>👥</span>
                                       </div>
@@ -2241,7 +2241,7 @@ export default function DashboardPage() {
                                     <div className="flex flex-col items-center justify-center py-14 gap-3">
                                       <div
                                         className="w-12 h-12 rounded-full flex items-center justify-center"
-                                        style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', border: '1px solid rgba(232, 0, 15,0.15)' }}
+                                        style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', border: '1px solid rgba(255, 26, 26, 0.15)' }}
                                       >
                                         <Building2 className="h-5 w-5 text-red-600" />
                                       </div>

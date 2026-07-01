@@ -51,7 +51,7 @@ export default function CareersPage() {
         >
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center mb-5"
-            style={{ backgroundColor: 'rgba(232, 0, 15,0.1)', border: '1px solid rgba(232, 0, 15,0.2)' }}
+            style={{ backgroundColor: 'rgba(255, 26, 26, 0.1)', border: '1px solid rgba(255, 26, 26, 0.2)' }}
           >
             <Briefcase size={24} style={{ color: 'var(--accent)' }} />
           </div>
@@ -78,7 +78,7 @@ export default function CareersPage() {
           </p>
           <span
             className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full"
-            style={{ backgroundColor: 'rgba(232, 0, 15,0.08)', color: 'var(--accent)' }}
+            style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', color: 'var(--accent)' }}
           >
             <Clock size={12} /> Check Back Soon
           </span>

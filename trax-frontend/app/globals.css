@@ -5,30 +5,32 @@
 /* ─── Theme Variables (CSS custom properties) ─── */
 :root {
   /* Background */
-  --bg:         #2A0718;
-  --bg-alt:     #210412;
+  --bg:         #1A0A0D;
+  --bg-alt:     #120608;
   /* Foreground */
   --fg:         #FFFFFF;
   --fg-muted:   #EAE4E7;
   --fg-subtle:  #B09EA7;
   /* Borders */
-  --border:     rgba(232, 0, 15, 0.12);
+  --border:     rgba(255, 26, 26, 0.12);
   /* Cards */
-  --card-bg:    #42142B;
-  --card-border:rgba(255, 255, 255, 0.10);
-  --badge-bg:   #1E0410;
+  --card-bg:    #2D1016;
+  --card-border:rgba(255, 255, 255, 0.08);
+  --badge-bg:   #120406;
   /* Nav / Footer */
-  --nav-bg:     rgba(53, 15, 33, 0.95);
-  --footer-bg:  rgba(53, 15, 33, 0.95);
+  --nav-bg:     rgba(26, 10, 13, 0.95);
+  --footer-bg:  rgba(26, 10, 13, 0.95);
   /* Shadows */
   --shadow-sm:    0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
   --shadow-md:    0 4px 20px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.03);
   --shadow-lg:    0 12px 40px rgba(0,0,0,0.08);
   --shadow-hover: 0 16px 48px rgba(0,0,0,0.1);
   /* Brand */
-  --accent:       #E8000F;
-  --accent-hover: #FF1A2E;
-  --accent-gradient: linear-gradient(135deg, #E8000F 0%, #9B0008 100%);
+  --accent:       #FF1A1A;
+  --accent-hover: #FF4D4D;
+  --accent-bright: #FF1A1A;
+  --accent-bright-hover: #FF4D4D;
+  --accent-gradient: linear-gradient(135deg, #FF1A1A 0%, #99000A 100%);
 }
 
 /* ─── Dark mode ─── */
@@ -38,7 +40,7 @@
   --fg:         #F4F4F5;
   --fg-muted:   #D4D4D8;
   --fg-subtle:  #A19C9F;
-  --border:     rgba(232, 0, 15, 0.09);
+  --border:     rgba(255, 26, 26, 0.09);
   --card-bg:    #181316;
   --card-border:rgba(255, 255, 255, 0.09);
   --badge-bg:   #1C1215;
@@ -65,7 +67,7 @@
   --dash-fg-muted:   var(--fg-subtle);
   --dash-fg-subtle:  var(--fg-subtle);
   --dash-divider:    var(--border);
-  --dash-hover:      rgba(232, 0, 15, 0.08);
+  --dash-hover:      rgba(255, 26, 26, 0.08);
   --dash-badge-bg:   rgba(255,255,255,0.06);
   --dash-badge-border:var(--border);
   --dash-badge-text: var(--fg-muted);
@@ -88,7 +90,7 @@
   --dash-fg-muted:   var(--fg-subtle);
   --dash-fg-subtle:  var(--fg-subtle);
   --dash-divider:    var(--border);
-  --dash-hover:      rgba(232, 0, 15, 0.08);
+  --dash-hover:      rgba(255, 26, 26, 0.08);
   --dash-badge-bg:   rgba(255,255,255,0.06);
   --dash-badge-border:var(--border);
   --dash-badge-text: var(--fg-muted);
@@ -160,7 +162,7 @@ img, video {
 
 /* ─── Selection ─── */
 ::selection {
-  background-color: #E8000F;
+  background-color: var(--accent);
   color: #FFFFFF;
 }
 
@@ -192,7 +194,7 @@ html {
 
 /* ─── Focus ─── */
 *:focus-visible {
-  outline: 2px solid #E8000F;
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 3px;
 }
@@ -247,8 +249,8 @@ html {
 .badge-people,
 .badge-tools {
   background-color: var(--badge-bg) !important;
-  color: #E8000F !important;
-  border: 1px solid rgba(232, 0, 15, 0.25) !important;
+  color: var(--accent-bright) !important;
+  border: 1px solid rgba(255, 26, 26, 0.25) !important;
   padding: 3px 10px;
   border-radius: 9999px;
   display: inline-flex;
@@ -283,7 +285,7 @@ html {
 
 /* ─── Gradient Text ─── */
 .text-gradient {
-  background: linear-gradient(135deg, #E8000F 0%, #9B0008 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, #9B0008 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

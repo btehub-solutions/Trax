@@ -150,7 +150,7 @@ export default function EventsPage() {
                       }}
                       onFocus={(e) => {
                         e.target.style.borderColor = 'var(--accent)'
-                        e.target.style.boxShadow = '0 0 0 3px rgba(232, 0, 15,0.12)'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(255, 26, 26, 0.12)'
                       }}
                       onBlur={(e) => {
                         e.target.style.borderColor = 'var(--border)'
@@ -220,7 +220,7 @@ export default function EventsPage() {
           </h2>
 
           <div
-            className="rounded-3xl border overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-0 md:gap-4 transition-all hover:border-[#E8000F]/30"
+            className="rounded-3xl border overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-0 md:gap-4 transition-all hover:border-[var(--accent)]/30"
             style={{
               backgroundColor: 'var(--card-bg)',
               borderColor: 'var(--card-border)',
@@ -247,7 +247,7 @@ export default function EventsPage() {
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span
                     className="text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md text-white"
-                    style={{ backgroundColor: 'rgba(232, 0, 15, 0.15)', color: '#E8000F', border: '1px solid rgba(232, 0, 15,0.25)' }}
+                    style={{ backgroundColor: 'rgba(255, 26, 26, 0.15)', color: 'var(--accent)', border: '1px solid rgba(255, 26, 26, 0.25)' }}
                   >
                     GEM Educational Foundation
                   </span>
@@ -298,11 +298,11 @@ export default function EventsPage() {
                 <div
                   className="p-4 rounded-xl mb-8 border"
                   style={{
-                    backgroundColor: 'rgba(232, 0, 15, 0.04)',
-                    borderColor: 'rgba(232, 0, 15, 0.12)',
+                    backgroundColor: 'rgba(255, 26, 26, 0.04)',
+                    borderColor: 'rgba(255, 26, 26, 0.12)',
                   }}
                 >
-                  <h4 className="text-xs font-bold text-white mb-2 uppercase tracking-wide flex items-center gap-1.5" style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}>
+                  <h4 className="text-xs font-bold text-white mb-2 uppercase tracking-wide flex items-center gap-1.5" style={{ color: 'var(--accent)', fontFamily: 'var(--font-oxanium)' }}>
                     👥 Featured Speakers
                   </h4>
                   <ul className="text-xs space-y-1.5 list-disc list-inside mb-3" style={{ color: 'var(--fg-muted)' }}>
@@ -310,7 +310,7 @@ export default function EventsPage() {
                     <li><strong>Seun Hamzat</strong> (Program Operations & Delivery Lead, 3MTT)</li>
                     <li><strong>Engr. Abiola Owosibo</strong> (Lecturer, STEM Advocate & Coach)</li>
                   </ul>
-                  <h4 className="text-[10px] font-bold text-white mb-1 uppercase tracking-wide" style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}>
+                  <h4 className="text-[10px] font-bold text-white mb-1 uppercase tracking-wide" style={{ color: 'var(--accent)', fontFamily: 'var(--font-oxanium)' }}>
                     📞 Enquiries & Sponsorship
                   </h4>
                   <p className="text-[11px]" style={{ color: 'var(--fg-subtle)' }}>
@@ -363,8 +363,8 @@ export default function EventsPage() {
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 border"
                       style={{
-                        backgroundColor: 'rgba(232, 0, 15, 0.08)',
-                        borderColor: 'rgba(232, 0, 15, 0.2)',
+                        backgroundColor: 'rgba(255, 26, 26, 0.08)',
+                        borderColor: 'rgba(255, 26, 26, 0.2)',
                       }}
                     >
                       <Icon size={16} style={{ color: 'var(--accent)' }} />

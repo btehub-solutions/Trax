@@ -147,7 +147,7 @@ export default function PressRoomPage() {
                   onClick={() => setSelectedPartnerId(partner.id === selectedPartnerId ? null : partner.id)}
                   className={`flex items-center gap-2.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${
                     selectedPartnerId === partner.id
-                      ? 'border-transparent text-white ring-1 ring-offset-2 ring-offset-[#2A0718] ring-[#E8000F]'
+                      ? 'border-transparent text-white ring-1 ring-offset-2 ring-offset-[#2A0718] ring-[var(--accent)]'
                       : 'text-zinc-400 hover:text-white border-zinc-800 bg-zinc-900/30'
                   }`}
                   style={{
@@ -220,7 +220,7 @@ export default function PressRoomPage() {
                       <Building2 size={32} />
                     </div>
                   )}
-                  <span className="absolute top-3 left-3 text-[9px] font-extrabold uppercase px-2.5 py-1.5 rounded-full tracking-wider bg-[#E8000F] text-white shadow-md">
+                  <span className="absolute top-3 left-3 text-[9px] font-extrabold uppercase px-2.5 py-1.5 rounded-full tracking-wider bg-[var(--accent)] text-white shadow-md">
                     Press Release
                   </span>
                 </Link>
@@ -229,7 +229,7 @@ export default function PressRoomPage() {
                 <div className="pt-4 flex flex-col flex-1">
                   <Link href={`/articles/${article.slug}`} className="block mb-2">
                     <h3
-                      className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-[#E8000F]"
+                      className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-[var(--accent)]"
                       style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
                     >
                       {article.title}
@@ -265,7 +265,7 @@ export default function PressRoomPage() {
 
                     <Link
                       href={`/articles/${article.slug}`}
-                      className="flex items-center gap-1 text-[#E8000F] hover:text-white transition-all font-extrabold uppercase tracking-wider text-[9px]"
+                      className="flex items-center gap-1 text-[var(--accent)] hover:text-white transition-all font-extrabold uppercase tracking-wider text-[9px]"
                     >
                       Read Release
                       <ArrowUpRight size={12} />

@@ -120,8 +120,8 @@ export default function MapPage() {
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 border"
               style={{
-                backgroundColor: 'rgba(232, 0, 15, 0.08)',
-                borderColor:     'rgba(232, 0, 15, 0.2)',
+                backgroundColor: 'rgba(255, 26, 26, 0.08)',
+                borderColor:     'rgba(255, 26, 26, 0.2)',
               }}
             >
               <MapPin size={20} style={{ color: 'var(--accent)' }} />
@@ -189,7 +189,7 @@ export default function MapPage() {
                     }}
                     onFocus={(e) => {
                       e.target.style.borderColor = 'var(--accent)'
-                      e.target.style.boxShadow = '0 0 0 3px rgba(232, 0, 15,0.1)'
+                      e.target.style.boxShadow = '0 0 0 3px rgba(255, 26, 26, 0.1)'
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = 'var(--border)'

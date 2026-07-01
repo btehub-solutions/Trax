@@ -62,13 +62,13 @@ export default function PressRoomSection() {
         <div className="flex items-center justify-between pb-6">
           <h2
             className="text-lg font-extrabold tracking-tight uppercase"
-            style={{ fontFamily: 'var(--font-dm-sans)', color: '#E8000F' }}
+            style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--accent)' }}
           >
             Press Room
           </h2>
           <Link
             href="/press"
-            className="flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wider transition-colors hover:text-[#E8000F]"
+            className="flex items-center gap-1 text-[11px] font-extrabold uppercase tracking-wider transition-colors hover:text-[var(--accent)]"
             style={{ color: '#4A2931' }}
           >
             View All
@@ -100,7 +100,7 @@ export default function PressRoomSection() {
                 {/* Partner badge */}
                 <span
                   className="inline-block text-xs font-extrabold uppercase tracking-wider mb-2 w-fit"
-                  style={{ color: '#E8000F', fontFamily: 'var(--font-dm-sans)' }}
+                  style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
                 >
                   Partner
                 </span>

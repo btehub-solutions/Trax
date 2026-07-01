@@ -35,7 +35,7 @@ function CategoryLabel({ children }: { children: ReactNode }) {
   return (
     <span
       className="mb-3 inline-block text-xs font-extrabold uppercase"
-      style={{ color: '#E8000F', fontFamily: 'var(--font-dm-sans)' }}
+      style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-dm-sans)' }}
     >
       {children}
     </span>
@@ -76,7 +76,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
         >
           <motion.div variants={itemVariants} className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="mb-2 text-xs font-extrabold uppercase" style={{ color: '#E8000F' }}>
+              <p className="mb-2 text-xs font-extrabold uppercase" style={{ color: 'var(--accent-bright)' }}>
                 Ogun Startup Pulse
               </p>
               <h1
@@ -89,7 +89,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
             <Link
               href="/news"
               className="inline-flex items-center gap-2 text-sm font-extrabold uppercase"
-              style={{ color: '#E8000F' }}
+              style={{ color: 'var(--accent)' }}
             >
               Latest intelligence <ArrowRight size={15} />
             </Link>
@@ -112,7 +112,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 </div>
                 <CategoryLabel>{lead.category}</CategoryLabel>
                 <h2
-                  className="text-3xl font-black leading-tight transition-colors group-hover:text-[#E8000F] md:text-5xl"
+                  className="text-3xl font-black leading-tight transition-colors group-hover:text-accent md:text-5xl"
                   style={{ color: 'var(--fg)', letterSpacing: 0 }}
                 >
                   {lead.title}
@@ -140,7 +140,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                     </div>
                     <CategoryLabel>{article.category}</CategoryLabel>
                     <h3
-                      className="text-xl font-black leading-snug transition-colors group-hover:text-[#E8000F]"
+                      className="text-xl font-black leading-snug transition-colors group-hover:text-accent"
                       style={{ color: 'var(--fg)', letterSpacing: 0 }}
                     >
                       {article.title}
@@ -176,7 +176,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                       <div className="flex-1 flex flex-col justify-center">
                         <CategoryLabel>{article.category}</CategoryLabel>
                         <h3
-                          className="text-lg font-black leading-snug transition-colors group-hover:text-[#E8000F]"
+                          className="text-lg font-black leading-snug transition-colors group-hover:text-accent"
                           style={{ color: 'var(--fg)', letterSpacing: 0 }}
                         >
                           {article.title}
@@ -197,7 +197,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 className="lg:col-span-4 lg:border-l lg:pl-8 lg:pt-0 border-t pt-8 lg:border-t-0 lg:sticky lg:top-24 h-fit"
                 style={{ borderColor: 'var(--border)' }}
               >
-                <p className="mb-5 text-xs font-extrabold uppercase" style={{ color: '#E8000F' }}>
+                <p className="mb-5 text-xs font-extrabold uppercase" style={{ color: 'var(--accent-bright)' }}>
                   Ogun Tech Tracker
                 </p>
                 <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
@@ -209,7 +209,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                     >
                       <CategoryLabel>{article.category}</CategoryLabel>
                       <h4
-                        className="text-lg font-black leading-snug transition-colors group-hover:text-[#E8000F]"
+                        className="text-lg font-black leading-snug transition-colors group-hover:text-accent"
                         style={{ color: 'var(--fg)', letterSpacing: 0 }}
                       >
                         {article.title}
@@ -222,7 +222,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 {/* ── Newsletter CTA Card ── */}
                 <Link
                   href="/newsletter"
-                  className="group mt-6 block relative overflow-hidden rounded-2xl border transition-all duration-300 hover:border-[#E8000F]/40"
+                  className="group mt-6 block relative overflow-hidden rounded-2xl border transition-all duration-300 hover:border-accent/40"
                   style={{ borderColor: 'var(--border)' }}
                 >
                   <Image

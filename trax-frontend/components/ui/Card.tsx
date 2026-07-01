@@ -54,7 +54,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
                 {article.category}
               </span>
               <h4
-                className="text-[15px] font-extrabold leading-snug line-clamp-2 transition-colors group-hover:text-[#E8000F]"
+                className="text-[15px] font-extrabold leading-snug line-clamp-2 transition-colors group-hover:text-accent"
                 style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
               >
                 {article.title}
@@ -96,7 +96,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
             {article.category}
           </span>
           {article.breaking && (
-            <span className="absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full bg-[#E8000F] text-white tracking-wide">
+            <span className="absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full bg-accent-bright text-white tracking-wide">
               BREAKING
             </span>
           )}
@@ -104,7 +104,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
         <div className="pt-5">
           <Link href={`/articles/${article.slug}`} className="block mb-3">
             <h2
-              className="text-xl md:text-3xl font-extrabold leading-tight transition-colors group-hover:text-[#E8000F] line-clamp-3"
+              className="text-xl md:text-3xl font-extrabold leading-tight transition-colors group-hover:text-accent line-clamp-3"
               style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
             >
               {article.title}
@@ -155,7 +155,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
       <div className="pt-4 flex flex-col flex-1">
         <Link href={`/articles/${article.slug}`} className="block mb-2">
           <h3
-            className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-[#E8000F]"
+            className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-accent"
             style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
           >
             {article.title}

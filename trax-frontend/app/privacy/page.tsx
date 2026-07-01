@@ -20,7 +20,7 @@ export default function PrivacyPolicyPage() {
       <div className="container relative z-10 max-w-3xl">
         <Link 
           href="/" 
-          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-8 transition-colors hover:text-[#E8000F]"
+          className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-8 transition-colors hover:text-[var(--accent)]"
           style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
         >
           <ArrowLeft size={14} /> Back to Home

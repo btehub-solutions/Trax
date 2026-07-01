@@ -39,9 +39,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles: Record<string, React.CSSProperties> = {
       primary: {
-        backgroundColor: '#E8000F',
+        backgroundColor: 'var(--accent)',
         color: '#FFFFFF',
-        borderColor: '#E8000F',
+        borderColor: 'var(--accent)',
       },
       outline: {
         backgroundColor: 'transparent',
@@ -61,10 +61,10 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         whileHover={
           !disabled
             ? variant === 'primary'
-              ? { backgroundColor: '#A93B24', borderColor: '#A93B24', y: -1 }
+              ? { backgroundColor: 'var(--accent-hover)', borderColor: 'var(--accent-hover)', y: -1 }
               : variant === 'outline'
-              ? { borderColor: '#E8000F', color: '#E8000F', y: -1 }
-              : { color: '#E8000F' }
+              ? { borderColor: 'var(--accent)', color: 'var(--accent)', y: -1 }
+              : { color: 'var(--accent)' }
             : {}
         }
         whileTap={!disabled ? { scale: 0.97 } : {}}

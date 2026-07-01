@@ -86,7 +86,7 @@ export default function LoginPage() {
         <div className="absolute bottom-16 left-12 z-20 max-w-lg">
           <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight mb-4" style={{ fontFamily: 'var(--font-oxanium)' }}>
             Shaping Ogun State's <br />
-            <span className="text-[#E8000F]">Tech Future</span>
+            <span className="text-[var(--accent)]">Tech Future</span>
           </h1>
           <p className="text-sm font-medium text-white/70 max-w-sm">
             Tracking Ogun State's startup ecosystem, research hubs, and visual media platform in real-time.
@@ -109,7 +109,7 @@ export default function LoginPage() {
         </div>
 
         {/* Glow effects on the right panel */}
-        <div className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-[#E8000F]/5 blur-[80px] pointer-events-none" />
+        <div className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full bg-[var(--accent)]/5 blur-[80px] pointer-events-none" />
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -125,7 +125,7 @@ export default function LoginPage() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
               <span className="text-2xl font-black tracking-tight" style={{ color: 'var(--fg)' }}>
-                <span className="text-[#E8000F] group-hover:text-red-400 transition-colors">Trax</span>
+                <span className="text-[var(--accent)] group-hover:text-red-400 transition-colors">Trax</span>
               </span>
             </Link>
             <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--fg)' }}>Welcome Back</h2>
@@ -157,7 +157,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@trax.ng"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#E8000F] focus:ring-1 focus:ring-[#E8000F] transition-all border"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all border"
                   style={{
                     backgroundColor: 'var(--bg-alt)',
                     borderColor: 'var(--border)',
@@ -182,7 +182,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[#E8000F] focus:ring-1 focus:ring-[#E8000F] transition-all border"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl text-sm focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all border"
                   style={{
                     backgroundColor: 'var(--bg-alt)',
                     borderColor: 'var(--border)',
@@ -195,7 +195,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#E8000F] hover:bg-[#FF1A2E] text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg shadow-[#E8000F]/20"
+              className="w-full bg-[var(--accent)] hover:bg-[#FF1A2E] text-white font-semibold py-3 px-4 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed text-sm shadow-lg shadow-[var(--accent)]/20"
             >
               {loading ? (
                 <span className="h-5 w-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />

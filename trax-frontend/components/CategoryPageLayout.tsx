@@ -106,7 +106,7 @@ export default function CategoryPageLayout({
             >
               <div
                 className="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4"
-                style={{ backgroundColor: 'rgba(232, 0, 15, 0.1)' }}
+                style={{ backgroundColor: 'rgba(255, 26, 26, 0.1)' }}
               >
                 <span className="text-xl" style={{ color: 'var(--accent)' }}>💡</span>
               </div>

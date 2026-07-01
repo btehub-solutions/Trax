@@ -26,7 +26,7 @@ const categoryBadgeStyle: Record<string, { bg: string; color: string; border: st
   Health:    { bg: 'rgba(59,130,246,0.18)',  color: '#60A5FA', border: 'rgba(59,130,246,0.35)' },
   Policy:    { bg: 'rgba(245,158,11,0.18)',  color: '#FBBF24', border: 'rgba(245,158,11,0.35)' },
   Research:  { bg: 'rgba(236,72,153,0.18)',  color: '#F472B6', border: 'rgba(236,72,153,0.35)' },
-  Ecosystem: { bg: 'rgba(232, 0, 15,0.18)',    color: '#D96248', border: 'rgba(232, 0, 15,0.35)'   },
+  Ecosystem: { bg: 'rgba(255, 26, 26, 0.18)',    color: 'var(--accent-bright)', border: 'rgba(255, 26, 26, 0.35)'   },
   Events:    { bg: 'rgba(6,182,212,0.18)',   color: '#22D3EE', border: 'rgba(6,182,212,0.35)'  },
   Interview: { bg: 'rgba(99,102,241,0.18)',  color: '#818CF8', border: 'rgba(99,102,241,0.35)' },
   Startups:  { bg: 'rgba(16,185,129,0.18)',  color: '#10B981', border: 'rgba(16,185,129,0.35)' },
@@ -67,7 +67,7 @@ export default function HeroSection() {
           className="absolute inset-0"
           style={{
             background:
-              'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(232, 0, 15,0.08) 0%, transparent 70%)',
+              'radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255, 26, 26, 0.08) 0%, transparent 70%)',
           }}
         />
         {/* Dot grid overlay */}
@@ -92,14 +92,14 @@ export default function HeroSection() {
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-5">
             <span
               className="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase"
-              style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}
+              style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-oxanium)' }}
             >
               <Radio size={12} className="animate-pulse" />
               Ogun State&apos;s AI Media Platform
             </span>
             <div
               className="h-px w-12"
-              style={{ backgroundColor: '#E8000F', opacity: 0.5 }}
+              style={{ backgroundColor: 'var(--accent-bright)', opacity: 0.5 }}
             />
           </motion.div>
 
@@ -178,9 +178,9 @@ export default function HeroSection() {
                 id="hero-cta-read"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
                 style={{
-                  backgroundColor: '#E8000F',
+                  backgroundColor: 'var(--accent)',
                   fontFamily:      'var(--font-dm-sans)',
-                  boxShadow:       '0 0 32px rgba(232, 0, 15,0.35)',
+                  boxShadow:       '0 0 32px rgba(255, 26, 26, 0.35)',
                 }}
               >
                 Read Story
@@ -244,7 +244,7 @@ export default function HeroSection() {
               {topicPills.slice(0, 4).map((pill) => (
                 <motion.button
                   key={pill}
-                  whileHover={{ scale: 1.05, borderColor: '#E8000F', color: '#E8000F' }}
+                  whileHover={{ scale: 1.05, borderColor: 'var(--accent)', color: 'var(--accent)' }}
                   whileTap={{ scale: 0.96 }}
                   className="px-3 py-1 rounded-full border text-xs font-medium transition-colors"
                   style={{

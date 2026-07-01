@@ -105,8 +105,8 @@ export default function NewsletterSection() {
                     fontSize: '16px', // prevents iOS Safari auto-zoom on focus
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#E8000F'
-                    e.target.style.boxShadow = '0 0 0 3px rgba(232,0,15,0.15)'
+                    e.target.style.borderColor = 'var(--accent)'
+                    e.target.style.boxShadow = '0 0 0 3px rgba(255, 26, 26, 0.15)'
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = 'rgba(255,255,255,0.08)'

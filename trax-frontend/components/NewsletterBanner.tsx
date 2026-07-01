@@ -101,11 +101,11 @@ export default function NewsletterBanner({
             transition={{ delay: 0.1, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6 mx-auto"
             style={{
-              backgroundColor: 'rgba(232,0,15,0.15)',
-              border:          '1px solid rgba(232,0,15,0.3)',
+              backgroundColor: 'rgba(255, 26, 26, 0.15)',
+              border:          '1px solid rgba(255, 26, 26, 0.3)',
             }}
           >
-            <Mail size={24} color="#E8000F" strokeWidth={1.75} />
+            <Mail size={24} color="var(--accent-bright)" strokeWidth={1.75} />
           </motion.div>
 
           {/* ── Eyebrow ── */}
@@ -115,7 +115,7 @@ export default function NewsletterBanner({
             viewport={{ once: true }}
             transition={{ delay: 0.15, duration: 0.4 }}
             className="text-xs font-bold tracking-[0.2em] uppercase mb-3 flex items-center justify-center gap-1.5"
-            style={{ color: '#E8000F', fontFamily: 'var(--font-oxanium)' }}
+            style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-oxanium)' }}
           >
             <Sparkles size={11} />
             Newsletter
@@ -191,8 +191,8 @@ export default function NewsletterBanner({
                     }}
                     onFocus={(e) => {
                       if (!error) {
-                        e.target.style.borderColor = '#E8000F'
-                        e.target.style.boxShadow   = '0 0 0 3px rgba(232,0,15,0.15)'
+                        e.target.style.borderColor = 'var(--accent)'
+                        e.target.style.boxShadow   = '0 0 0 3px rgba(255, 26, 26, 0.15)'
                       }
                     }}
                     onBlur={(e) => {
@@ -211,14 +211,14 @@ export default function NewsletterBanner({
                   id="newsletter-banner-submit"
                   type="submit"
                   disabled={loading}
-                  whileHover={!loading ? { backgroundColor: '#9B0008', scale: 1.02 } : {}}
+                  whileHover={!loading ? { backgroundColor: 'var(--accent-hover)', scale: 1.02 } : {}}
                   whileTap={!loading ? { scale: 0.97 } : {}}
                   className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white shrink-0 transition-colors duration-200"
                   style={{
-                    backgroundColor: '#E8000F',
+                    backgroundColor: 'var(--accent)',
                     fontFamily:      'var(--font-dm-sans)',
                     cursor:          loading ? 'wait' : 'pointer',
-                    boxShadow:       '0 4px 14px rgba(232,0,15,0.35)',
+                    boxShadow:       '0 4px 14px rgba(255, 26, 26, 0.35)',
                   }}
                 >
                   {loading ? (

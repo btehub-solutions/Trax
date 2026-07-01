@@ -10,9 +10,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand
-        accent: '#C84B31',
-        'accent-hover': '#A93B24',
+        accent: 'var(--accent)',
+        'accent-hover': 'var(--accent-hover)',
+        'accent-bright': 'var(--accent-bright)',
+        'accent-bright-hover': 'var(--accent-bright-hover)',
         // Semantic tokens (mapped to CSS vars)
         bg:         'var(--bg)',
         'bg-alt':   'var(--bg-alt)',
