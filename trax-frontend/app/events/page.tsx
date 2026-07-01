@@ -39,6 +39,19 @@ export default function EventsPage() {
     }
   }
 
+  const activeEvents = [
+    {
+      id: 'students-conference-3',
+      title: 'Students Conference 3.0: FUTURE READY',
+      organizer: 'GEM Educational Foundation',
+      edition: 'Future Ready Edition',
+      flyerUrl: '/images/students_conference_flyer_new.png',
+      registrationUrl: 'https://bit.ly/4vHhjbo',
+      isFree: true,
+      description: "Every year, thousands of young people leave secondary school excited about admission, but many are unprepared for the realities that come next. That's why we created Students Conference 3.0: FUTURE READY, featuring life-changing conversations, practical guidance, and real preparation.",
+    }
+  ]
+
   const upcomingTypes = [
     {
       icon: Sparkles,
@@ -98,7 +111,7 @@ export default function EventsPage() {
               className="text-base leading-relaxed"
               style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
             >
-              We are curating the definitive tech calendar for Ogun State—connecting developers, startup founders, institutional investors, and policymakers. Sign up below to get early priority notifications, ticket discounts, and alerts the moment event registrations open.
+              We are curating the definitive tech calendar for Ogun State, connecting developers, startup founders, institutional investors, and policymakers. Sign up below to get early priority notifications, ticket discounts, and alerts the moment event registrations open.
             </p>
           </div>
 
@@ -219,123 +232,152 @@ export default function EventsPage() {
             <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping inline-block" /> Upcoming Ecosystem Events
           </h2>
 
-          <div
-            className="rounded-3xl border overflow-hidden grid grid-cols-1 md:grid-cols-12 gap-0 md:gap-4 transition-all hover:border-[var(--accent)]/30"
-            style={{
-              backgroundColor: 'var(--card-bg)',
-              borderColor: 'var(--card-border)',
-              boxShadow: 'var(--shadow-md)',
-            }}
-          >
-            {/* Left Column: Flyer Image */}
-            <div className="md:col-span-4 flex items-center justify-center p-6 md:p-8" style={{ backgroundColor: 'var(--card-bg)' }}>
-              <div className="relative w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl border border-white/5">
-                <Image
-                  src="/images/students_conference_flyer_new.png"
-                  alt="Students Conference 3.0: FUTURE READY"
-                  width={400}
-                  height={600}
-                  className="w-full h-auto block"
-                  priority
-                />
-              </div>
-            </div>
-
-            {/* Right Column: Event Details */}
-            <div className="md:col-span-8 p-8 md:p-10 flex flex-col justify-between">
-              <div>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span
-                    className="text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md text-white"
-                    style={{ backgroundColor: 'rgba(255, 26, 26, 0.15)', color: 'var(--accent)', border: '1px solid rgba(255, 26, 26, 0.25)' }}
-                  >
-                    GEM Educational Foundation
-                  </span>
-                  <span
-                    className="text-[10px] font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md text-white"
-                    style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'var(--fg-muted)', border: '1px solid var(--border)' }}
-                  >
-                    Future Ready Edition
-                  </span>
-                </div>
-
-                <h3
-                  className="text-2xl font-black mb-3 text-white leading-tight"
-                  style={{ fontFamily: 'var(--font-oxanium)' }}
+          {activeEvents.length === 1 ? (
+            <div className="max-w-4xl mx-auto">
+              {activeEvents.map((event, index) => (
+                <motion.div
+                  key={event.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center p-6 md:p-8 rounded-3xl border transition-all duration-300 hover:border-[var(--accent)]/30"
+                  style={{
+                    backgroundColor: 'var(--card-bg)',
+                    borderColor: 'var(--card-border)',
+                    boxShadow: 'var(--shadow-md)',
+                  }}
                 >
-                  Students Conference 3.0: FUTURE READY
-                </h3>
-
-                <p
-                  className="text-sm leading-relaxed mb-6"
-                  style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-                >
-                  Every year, thousands of young people leave secondary school excited about admission, but many are unprepared for the realities that come next. That&apos;s why we created Students Conference 3.0: FUTURE READY—featuring life-changing conversations, practical guidance, and real preparation.
-                </p>
-
-                {/* Event Meta Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 pt-5 border-t" style={{ borderColor: 'var(--border)' }}>
-                  <div className="flex items-start gap-3">
-                    <Calendar size={18} style={{ color: 'var(--accent)' }} className="mt-0.5 shrink-0" />
-                    <div>
-                      <h4 className="text-xs font-bold text-white" style={{ fontFamily: 'var(--font-oxanium)' }}>Date & Time</h4>
-                      <p className="text-xs mt-0.5" style={{ color: 'var(--fg-subtle)' }}>Saturday, 1st Aug, 2026 | 10:00 AM</p>
+                  {/* Left Column: Flyer Image */}
+                  <div className="md:col-span-5 flex items-center justify-center">
+                    <div className="w-full max-w-[280px] md:max-w-full rounded-2xl overflow-hidden shadow-2xl border border-white/5">
+                      <Image
+                        src={event.flyerUrl}
+                        alt={event.title}
+                        width={400}
+                        height={600}
+                        className="w-full h-auto block transition-transform duration-500 hover:scale-[1.02]"
+                        priority
+                      />
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                    <MapPin size={18} style={{ color: 'var(--accent)' }} className="mt-0.5 shrink-0" />
+                  {/* Right Column: Event Details */}
+                  <div className="md:col-span-7 flex flex-col justify-between h-full py-2">
                     <div>
-                      <h4 className="text-xs font-bold text-white" style={{ fontFamily: 'var(--font-oxanium)' }}>Venue</h4>
-                      <p className="text-xs mt-0.5 leading-relaxed" style={{ color: 'var(--fg-subtle)' }}>
-                        Dayspring Chapel, opposite Conoil Obantoko, Abeokuta, Ogun State
+                      <span
+                        className="inline-block text-[10px] font-bold tracking-widest uppercase px-3.5 py-1.5 rounded-full text-white mb-4 shadow-sm"
+                        style={{ backgroundColor: 'var(--accent)' }}
+                      >
+                        {event.organizer}
+                      </span>
+
+                      <h3
+                        className="text-2xl md:text-3xl font-black mb-4 text-white leading-tight"
+                        style={{ fontFamily: 'var(--font-oxanium)' }}
+                      >
+                        {event.title}
+                      </h3>
+
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        <span
+                          className="text-xs font-bold tracking-wider uppercase px-2.5 py-1 rounded-md"
+                          style={{ backgroundColor: 'rgba(255,255,255,0.06)', color: 'var(--fg-muted)', border: '1px solid var(--border)' }}
+                        >
+                          {event.edition}
+                        </span>
+                        {event.isFree && (
+                          <span
+                            className="text-xs font-extrabold tracking-wider uppercase px-2.5 py-1 rounded-md"
+                            style={{ backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10B981', border: '1px solid rgba(16, 185, 129, 0.25)' }}
+                          >
+                            Free Registration
+                          </span>
+                        )}
+                      </div>
+
+                      <p
+                        className="text-sm md:text-base leading-relaxed mb-8"
+                        style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
+                      >
+                        {event.description}
                       </p>
                     </div>
+
+                    <div>
+                      <a
+                        href={event.registrationUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-sm text-white shadow-md transition-all hover:opacity-90 active:scale-98"
+                        style={{
+                          backgroundImage: 'var(--accent-gradient)',
+                          fontFamily: 'var(--font-dm-sans)',
+                        }}
+                      >
+                        Register for Free <ArrowRight size={15} />
+                      </a>
+                    </div>
                   </div>
-                </div>
-
-                {/* Speakers & Details */}
-                <div
-                  className="p-4 rounded-xl mb-8 border"
-                  style={{
-                    backgroundColor: 'rgba(255, 26, 26, 0.04)',
-                    borderColor: 'rgba(255, 26, 26, 0.12)',
-                  }}
-                >
-                  <h4 className="text-xs font-bold text-white mb-2 uppercase tracking-wide flex items-center gap-1.5" style={{ color: 'var(--accent)', fontFamily: 'var(--font-oxanium)' }}>
-                    👥 Featured Speakers
-                  </h4>
-                  <ul className="text-xs space-y-1.5 list-disc list-inside mb-3" style={{ color: 'var(--fg-muted)' }}>
-                    <li><strong>Funmilayo Akinola</strong> (Educator, Teens Coach, Founder GEM Educational Foundation)</li>
-                    <li><strong>Seun Hamzat</strong> (Program Operations & Delivery Lead, 3MTT)</li>
-                    <li><strong>Engr. Abiola Owosibo</strong> (Lecturer, STEM Advocate & Coach)</li>
-                  </ul>
-                  <h4 className="text-[10px] font-bold text-white mb-1 uppercase tracking-wide" style={{ color: 'var(--accent)', fontFamily: 'var(--font-oxanium)' }}>
-                    📞 Enquiries & Sponsorship
-                  </h4>
-                  <p className="text-[11px]" style={{ color: 'var(--fg-subtle)' }}>
-                    09134431656, 07065394546 | gemeducationalfoundation@gmail.com
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-3">
-                <a
-                  href="https://bit.ly/4vHhjbo"
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            /* Balanced Grid for Multiple Events */
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {activeEvents.map((event, index) => (
+                <motion.a
+                  key={event.id}
+                  href={event.registrationUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-sm text-white shadow-md transition-all hover:opacity-90 active:scale-98"
-                  style={{
-                    backgroundImage: 'var(--accent-gradient)',
-                    fontFamily: 'var(--font-dm-sans)',
-                  }}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
+                  className="group flex flex-col transition-all cursor-pointer"
                 >
-                  Register for Free <ArrowRight size={15} />
-                </a>
-              </div>
+                  {/* Flyer Image Container */}
+                  <div className="w-full max-h-[380px] overflow-hidden rounded-md mb-4 bg-zinc-900 flex items-center justify-center">
+                    <Image
+                      src={event.flyerUrl}
+                      alt={event.title}
+                      width={400}
+                      height={600}
+                      className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
+                      priority
+                    />
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="flex flex-col flex-1">
+                    {/* Organizer/Partner badge */}
+                    <span
+                      className="inline-block text-xs font-extrabold uppercase tracking-wider mb-2 w-fit"
+                      style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
+                    >
+                      {event.organizer}
+                    </span>
+
+                    {/* Title */}
+                    <h3
+                      className="text-base font-extrabold leading-snug mb-3 line-clamp-3 transition-colors group-hover:text-red-600"
+                      style={{ color: 'var(--fg)', fontFamily: 'var(--font-dm-sans)' }}
+                    >
+                      {event.title}
+                    </h3>
+
+                    {/* Register Line */}
+                    <div
+                      className="mt-auto flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider transition-colors group-hover:text-red-600"
+                      style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
+                    >
+                      <span>Register now</span>
+                      <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
+                    </div>
+                  </div>
+                </motion.a>
+              ))}
             </div>
-          </div>
+          )}
         </div>
 
         {/* Section: Upcoming Types of Events */}
