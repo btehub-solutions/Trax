@@ -1850,7 +1850,7 @@ export default function DashboardPage() {
                           style={{ borderColor: 'var(--dash-card-border)', backgroundColor: 'var(--dash-input)' }}
                         >
                           {profileData.avatar ? (
-                            <img src={profileData.avatar} alt="Avatar Preview" className="w-full h-full object-cover" />
+                            <Image src={profileData.avatar} alt="Avatar Preview" width={112} height={112} className="w-full h-full object-cover" unoptimized={false} />
                           ) : (
                             <span className="text-3xl font-bold" style={{ color: 'var(--dash-fg-subtle)' }}>
                               {profileData.name ? profileData.name.charAt(0) : 'A'}
