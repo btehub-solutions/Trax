@@ -25,6 +25,7 @@ const SIZE_MAP = {
   leaderboard: { width: '100%',  height: 409,  label: 'Leaderboard (1024×409)'  },
   rectangle:   { width: 300,     height: 300, label: 'Square (1080×1080)' },
   inline:      { width: '100%',  height: 120, label: 'Inline Banner (468×120)' },
+  dispatch:    { width: 300,     height: 300, label: 'Featured Dispatch (1080×1080)' },
 } as const
 
 export type AdSize = keyof typeof SIZE_MAP
@@ -38,10 +39,25 @@ interface AdSlotProps {
 }
 
 export default function AdSlot({ size, id, className = '', label }: AdSlotProps) {
-  const preset      = SIZE_MAP[size]
   const displayLabel = label ?? preset.label
   const [adHtml, setAdHtml] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+
+  const adStyle = {
+    width: '100%',
+    aspectRatio: size === 'leaderboard' 
+      ? '1024 / 409' 
+      : (size === 'inline' 
+        ? '468 / 120' 
+        : '1 / 1'),
+    maxWidth: size === 'leaderboard' 
+      ? '1024px' 
+      : (size === 'inline' 
+        ? '468px' 
+        : '300px'),
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }
 
   useEffect(() => {
     const fetchAd = async () => {
@@ -74,11 +90,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       <div
         className={`animate-pulse ${className}`}
         style={{
-          width: preset.width,
-          minHeight: preset.height,
-          maxWidth: '100%',
-          marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
-          marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
+          ...adStyle,
           backgroundColor: 'rgba(255,255,255,0.03)',
           borderRadius: '4px',
         }}
@@ -103,7 +115,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
 
     if (isImageOnly && imageUrl) {
       return (
-        <div className="w-full flex flex-col items-center">
+        <div className={`w-full flex flex-col items-center ${className}`}>
           <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
             Sponsored
           </span>
@@ -113,15 +125,8 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
             viewport={{ once: true, margin: '-32px' }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
             id={containerId}
-            className={`relative overflow-hidden rounded-md border border-white/5 flex items-center justify-center ${className}`}
-            style={{
-              width:       (size === 'leaderboard' || size === 'inline') ? '100%' : preset.width,
-              minHeight:   (size === 'leaderboard' || size === 'inline') ? undefined : preset.height,
-              aspectRatio: size === 'leaderboard' ? '1024 / 409' : (size === 'inline' ? '468 / 120' : undefined),
-              maxWidth:    size === 'leaderboard' ? '1024px' : (size === 'inline' ? '468px' : '100%'),
-              marginLeft:  'auto',
-              marginRight: 'auto',
-            }}
+            className="relative overflow-hidden rounded-md border border-white/5 flex items-center justify-center"
+            style={adStyle}
           >
             {/* Blurred Background Backdrop */}
             <div
@@ -149,20 +154,14 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     }
 
     return (
-      <div className="w-full flex flex-col items-center">
+      <div className={`w-full flex flex-col items-center ${className}`}>
         <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
           Sponsored
         </span>
         <div
           id={containerId}
-          className={`overflow-hidden rounded-md ${className}`}
-          style={{
-            width: preset.width,
-            height: preset.height,
-            maxWidth: '100%',
-            marginLeft: typeof preset.width === 'number' ? 'auto' : undefined,
-            marginRight: typeof preset.width === 'number' ? 'auto' : undefined,
-          }}
+          className="overflow-hidden rounded-md"
+          style={adStyle}
         >
           <div dangerouslySetInnerHTML={{ __html: adHtml }} style={{ width: '100%', height: '100%' }} />
         </div>
@@ -183,7 +182,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       >
         <img
           src="/images/ads/stay_connected_leaderboard.png"
-          alt="Stay Connected Wherever You Are - Advertise on Trax"
+          alt="Stay Connected Wherever You Are - Advertise on TRAX"
           className="w-full h-full object-cover block"
         />
       </a>
@@ -195,11 +194,23 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         target="_blank"
         rel="noopener noreferrer"
         className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[var(--accent)]/50 transition-all duration-300 select-none relative"
-        style={{ minHeight: preset.height }}
       >
         <img
           src="/images/ads/stay_connected_square.jpg"
-          alt="Stay Connected Wherever You Are - Advertise on Trax"
+          alt="Stay Connected Wherever You Are - Advertise on TRAX"
+          className="w-full h-full object-cover block"
+        />
+      </a>
+    );
+  } else if (size === 'dispatch') {
+    fallbackContent = (
+      <a
+        href="/newsletter"
+        className="w-full h-full block rounded-md overflow-hidden border border-white/10 hover:border-[var(--accent)]/50 transition-all duration-300 select-none relative"
+      >
+        <img
+          src="/images/trax_newsletter_card.png"
+          alt="TRAX Newsletter Subscription"
           className="w-full h-full object-cover block"
         />
       </a>
@@ -215,7 +226,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       >
         <img
           src="/images/ads/stay_connected_inline.png"
-          alt="Stay Connected Wherever You Are - Advertise on Trax"
+          alt="Stay Connected Wherever You Are - Advertise on TRAX"
           className="w-full h-full object-cover block"
         />
       </a>
@@ -223,7 +234,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
   }
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className={`w-full flex flex-col items-center ${className}`}>
       <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
         Sponsored
       </span>
@@ -235,15 +246,8 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         id={id}
         role="complementary"
         aria-label={`Advertisement: ${displayLabel}`}
-        className={`overflow-hidden ${className}`}
-        style={{
-          width:       (size === 'leaderboard' || size === 'inline') ? '100%' : preset.width,
-          minHeight:   (size === 'leaderboard' || size === 'inline') ? undefined : preset.height,
-          aspectRatio: size === 'leaderboard' ? '1024 / 409' : (size === 'inline' ? '468 / 120' : undefined),
-          maxWidth:    size === 'leaderboard' ? '1024px' : (size === 'inline' ? '468px' : '100%'),
-          marginLeft:  'auto',
-          marginRight: 'auto',
-        }}
+        className="overflow-hidden"
+        style={adStyle}
       >
         {fallbackContent}
       </motion.div>

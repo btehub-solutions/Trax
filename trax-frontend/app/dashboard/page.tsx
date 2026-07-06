@@ -758,7 +758,7 @@ export default function DashboardPage() {
         <div className="p-6">
           <div className="flex items-center gap-2 mb-8">
             <span className="text-xl font-black tracking-tight" style={{ color: 'var(--dash-fg)' }}>
-              <span style={{ color: 'var(--accent)' }}>Trax</span>
+              <span style={{ color: 'var(--accent)' }}>TRAX</span>
             </span>
             <span className="bg-red-600/10 text-red-600 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-600/20">
               Admin
@@ -890,7 +890,7 @@ export default function DashboardPage() {
                 <div className="space-y-8">
                   <div>
                     <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Overview</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Status overview of the Trax platform</p>
+                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Status overview of the TRAX platform</p>
                   </div>
 
                   {/* Metrics Row */}
