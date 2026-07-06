@@ -259,7 +259,7 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-10">
           
           {/* Left Column: Logo & Description */}
-          <div className="max-w-md">
+          <div className="max-w-md flex flex-col items-center lg:items-start text-center lg:text-left">
             <Link href="/" className="inline-flex items-baseline gap-1 mb-4" id="footer-logo">
               <span
                 className="text-2xl font-bold tracking-tight"
@@ -275,10 +275,10 @@ export default function Footer() {
           </div>
 
           {/* Right Column: Follow Us & Copyright/Legal Row */}
-          <div className="flex flex-col items-start lg:items-end gap-6">
+          <div className="flex flex-col items-center lg:items-end gap-6 w-full lg:w-auto">
             
             {/* Social Follow */}
-            <div className="flex flex-col items-start lg:items-end gap-2.5">
+            <div className="flex flex-col items-center lg:items-end gap-2.5">
               <span 
                 className="text-[11px] font-bold tracking-[0.18em] uppercase"
                 style={{ color: 'var(--accent)', fontFamily: 'var(--font-oxanium)' }}
@@ -312,7 +312,7 @@ export default function Footer() {
             </div>
 
             {/* Copyright & Legal Row */}
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center gap-3">
               {/* Circular Trax Logo Icon */}
               <div 
                 className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center border select-none"
@@ -328,11 +328,11 @@ export default function Footer() {
                   T
                 </span>
               </div>
-              <div className="flex flex-col items-start lg:items-end gap-1">
+              <div className="flex flex-col items-center lg:items-end gap-1 text-center lg:text-right">
                 <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
                   © {new Date().getFullYear()} TRAX Media Ltd. All rights reserved.
                 </p>
-                <div className="flex flex-wrap items-center gap-1.5 text-[11px]" style={{ color: 'var(--fg-muted)' }}>
+                <div className="flex flex-wrap items-center justify-center lg:justify-end gap-1.5 text-[11px]" style={{ color: 'var(--fg-muted)' }}>
                   <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                   <span>&bull;</span>
                   <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
