@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 
 export const metadata: Metadata = {
-  title: 'Meet the Trax Team | Editors & Writers',
+  title: 'Meet the TRAX Team | Editors & Writers',
   description: 'The writers, editors, and industry analysts bringing you Ogun State\'s most detailed tech reporting.',
 }
 
@@ -11,13 +11,13 @@ export default function TeamPage() {
     {
       name: 'Ben Sam Oladoyin',
       role: 'Founder & AI/ML Engineer',
-      bio: 'Ben Sam Oladoyin is an AI/ML Engineer and the Founder of Trax, a specialized tech intelligence and media platform mapping the growth of the technology ecosystem across Ogun State and Nigeria. Leveraging expertise in machine learning and data engineering, Ben established Trax to document regional innovation, spotlight local builders, and connect emerging tech ecosystems with global visibility and venture opportunities.',
+      bio: 'Ben Sam Oladoyin is an AI/ML Engineer and the Founder of TRAX, a specialized tech intelligence and media platform mapping the growth of the technology ecosystem across Ogun State and Nigeria. Leveraging expertise in machine learning and data engineering, Ben established TRAX to document regional innovation, spotlight local builders, and connect emerging tech ecosystems with global visibility and venture opportunities.',
       image: '/images/founder.jpg'
     },
     {
       name: 'Oyedele Damilare',
       role: 'Ecosystem Contributor',
-      bio: 'Oyedele Damilare is a key team member at Trax, supporting operations and data tracking across the regional startup ecosystem. Passionate about technology growth in Ogun State, he helps document local innovation, track builder milestones, and coordinate community coverage.',
+      bio: 'Oyedele Damilare is a key team member at TRAX, supporting operations and data tracking across the regional startup ecosystem. Passionate about technology growth in Ogun State, he helps document local innovation, track builder milestones, and coordinate community coverage.',
       image: '/images/dami.png'
     }
   ]
@@ -44,7 +44,7 @@ export default function TeamPage() {
               lineHeight: 1.1,
             }}
           >
-            The Minds Behind Trax
+            The Minds Behind TRAX
           </h1>
           <p
             className="text-base md:text-lg"

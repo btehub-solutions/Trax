@@ -132,7 +132,7 @@ export default function Footer() {
     <footer
       className="border-t"
       style={{
-        backgroundColor: 'var(--nav-bg)',
+        backgroundColor: '#000000',
         borderColor:     'var(--border)',
         fontFamily:      'var(--font-dm-sans)',
       }}
@@ -244,7 +244,7 @@ export default function Footer() {
                   >
                     <CheckCircle size={18} color="#10B981" />
                     <p className="text-sm font-medium" style={{ color: '#10B981', fontFamily: 'var(--font-dm-sans)' }}>
-                      You&apos;re subscribed! Welcome to Trax.
+                      You&apos;re subscribed! Welcome to TRAX.
                     </p>
                   </motion.div>
                 )}
@@ -255,139 +255,97 @@ export default function Footer() {
       </div>
 
       {/* ── Main footer body ── */}
-      <div className="container py-14">
-
-        {/* ── Top Row ── */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8 gap-y-12 mb-14">
-
-          {/* Brand Column */}
-          <div className="col-span-2 md:col-span-3 lg:col-span-2">
+      <div className="container py-12">
+        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-10">
+          
+          {/* Left Column: Logo & Description */}
+          <div className="max-w-md">
             <Link href="/" className="inline-flex items-baseline gap-1 mb-4" id="footer-logo">
               <span
                 className="text-2xl font-bold tracking-tight"
                 style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
               >
-                Trax
+                TRAX
               </span>
             </Link>
-            <p className="text-sm leading-relaxed mb-4 max-w-xs" style={{ color: 'var(--fg-muted)' }}>
+            <p className="text-sm leading-relaxed max-w-sm" style={{ color: 'var(--fg-muted)' }}>
               Ogun State&apos;s tech news and startup media platform, covering the
-              startups, research, policy and people shaping the continent&apos;s tech future.
+              startups, founders, and innovations shaping Ogun State&apos;s tech future.
             </p>
-            {/* Editorial contact */}
-            <a
-              href="mailto:traxnewsng@gmail.com"
-              className="inline-flex items-center gap-1.5 text-xs font-medium mb-5 transition-colors hover:text-white"
-              style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
-            >
-              <Mail size={11} />
-              traxnewsng@gmail.com
-            </a>
-            {/* Nav links (from main nav) */}
-            <div className="flex flex-wrap gap-3 mb-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-xs font-medium transition-colors hover:text-white"
-                  style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-            {/* Social Icons */}
-            <div className="flex items-center gap-2.5">
-              {socials.map(({ icon: Icon, label, href, isPlaceholder }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  onClick={(e) => {
-                    if (isPlaceholder) {
-                      e.preventDefault()
-                      showToast(`${label} page is coming soon!`)
-                    }
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  id={`footer-social-${label.toLowerCase().replace(/[\s/]+/g, '-')}`}
-                  whileHover={{ scale: 1.1, borderColor: 'var(--accent)', color: 'var(--accent)' }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 rounded-lg border transition-colors duration-200"
-                  style={{ color: 'var(--fg-subtle)', borderColor: 'var(--border)' }}
-                >
-                  <Icon size={15} />
-                </motion.a>
-              ))}
-            </div>
           </div>
 
-          {/* Link Columns */}
-          {Object.entries(footerLinks).map(([group, links]) => (
-            <div key={group}>
-              <h4
-                className="text-[10px] font-bold tracking-[0.18em] uppercase mb-5"
+          {/* Right Column: Follow Us & Copyright/Legal Row */}
+          <div className="flex flex-col items-start lg:items-end gap-6">
+            
+            {/* Social Follow */}
+            <div className="flex flex-col items-start lg:items-end gap-2.5">
+              <span 
+                className="text-[11px] font-bold tracking-[0.18em] uppercase"
                 style={{ color: 'var(--accent)', fontFamily: 'var(--font-oxanium)' }}
               >
-                {group}
-              </h4>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm transition-colors duration-200 hover:text-white"
-                      style={{ color: 'var(--fg-subtle)' }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+                Follow us
+              </span>
+              <div className="flex items-center gap-3">
+                {socials.map(({ icon: Icon, label, href, isPlaceholder }) => (
+                  <motion.a
+                    key={label}
+                    href={href}
+                    onClick={(e) => {
+                      if (isPlaceholder) {
+                        e.preventDefault()
+                        showToast(`${label} page is coming soon!`)
+                      }
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    id={`footer-social-${label.toLowerCase().replace(/[\s/]+/g, '-')}`}
+                    whileHover={{ scale: 1.1, color: 'var(--accent)' }}
+                    whileTap={{ scale: 0.9 }}
+                    className="transition-colors duration-200"
+                    style={{ color: 'var(--fg-subtle)' }}
+                  >
+                    <Icon size={16} />
+                  </motion.a>
                 ))}
-              </ul>
+              </div>
             </div>
-          ))}
-        </div>
 
-        {/* ── Divider ── */}
-        <div className="h-px mb-8" style={{ backgroundColor: 'var(--border)' }} />
-
-        {/* ── Bottom Row ── */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex flex-col sm:flex-row items-center gap-3">
-            <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
-              © {new Date().getFullYear()} Trax Media Ltd. All rights reserved.
-            </p>
-            <span
-              className="hidden sm:block text-[10px] font-bold px-2 py-0.5 rounded"
-              style={{
-                backgroundColor: 'rgba(255, 26, 26, 0.08)',
-                color: 'var(--accent-bright)',
-                border: '1px solid rgba(255, 26, 26, 0.2)',
-                fontFamily: 'var(--font-oxanium)',
-                letterSpacing: '0.05em',
-              }}
-            >
-              EDITORIAL MEDIA
-            </span>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-            {[
-              { label: 'Privacy Policy', href: '/privacy' },
-              { label: 'Terms of Service', href: '/terms' },
-              { label: 'Cookie Policy', href: '/cookies' },
-              { label: 'Corrections', href: '/about#corrections' },
-            ].map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="text-xs transition-colors hover:text-white"
-                style={{ color: 'var(--fg-subtle)' }}
+            {/* Copyright & Legal Row */}
+            <div className="flex items-center gap-3">
+              {/* Circular Trax Logo Icon */}
+              <div 
+                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center border select-none"
+                style={{
+                  borderColor: 'rgba(255, 255, 255, 0.08)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                }}
               >
-                {item.label}
-              </Link>
-            ))}
+                <span 
+                  className="text-sm font-black" 
+                  style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
+                >
+                  T
+                </span>
+              </div>
+              <div className="flex flex-col items-start lg:items-end gap-1">
+                <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
+                  © {new Date().getFullYear()} TRAX Media Ltd. All rights reserved.
+                </p>
+                <div className="flex flex-wrap items-center gap-1.5 text-[11px]" style={{ color: 'var(--fg-muted)' }}>
+                  <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
+                  <span>&bull;</span>
+                  <Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link>
+                  <span>&bull;</span>
+                  <Link href="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link>
+                  <span>&bull;</span>
+                  <Link href="/about#corrections" className="hover:text-white transition-colors">Corrections</Link>
+                </div>
+              </div>
+            </div>
+
           </div>
+
         </div>
       </div>
 

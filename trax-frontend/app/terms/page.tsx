@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Terms of Service | Trax',
-  description: 'Trax Terms of Service. Understand the rules and regulations for using the Trax platform.',
+  title: 'Terms of Service | TRAX',
+  description: 'TRAX Terms of Service. Understand the rules and regulations for using the TRAX platform.',
 }
 
 export default function TermsOfServicePage() {
@@ -43,21 +43,21 @@ export default function TermsOfServicePage() {
 
         <div className="prose prose-invert max-w-none space-y-6 text-sm leading-relaxed" style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}>
           <p>
-            By accessing or using the Trax website and services, you agree to comply with and be bound by these Terms of Service. Please read them carefully. If you do not agree to these terms, you should not access or use our services.
+            By accessing or using the TRAX website and services, you agree to comply with and be bound by these Terms of Service. Please read them carefully. If you do not agree to these terms, you should not access or use our services.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>
             1. Acceptance of Terms
           </h2>
           <p>
-            Trax provides its services subject to the following Terms of Service ("TOS"), which may be updated by us from time to time without notice to you. Your continued use of the platform constitutes acceptance of any updates.
+            TRAX provides its services subject to the following Terms of Service ("TOS"), which may be updated by us from time to time without notice to you. Your continued use of the platform constitutes acceptance of any updates.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>
             2. Intellectual Property Rights
           </h2>
           <p>
-            All content, logos, designs, graphics, and articles on Trax are the property of Trax Media Ltd. or its content creators and are protected by applicable copyright, trademark, and intellectual property laws. You may not copy, reproduce, distribute, or create derivative works without express written consent.
+            All content, logos, designs, graphics, and articles on TRAX are the property of TRAX Media Ltd. or its content creators and are protected by applicable copyright, trademark, and intellectual property laws. You may not copy, reproduce, distribute, or create derivative works without express written consent.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>
@@ -77,14 +77,14 @@ export default function TermsOfServicePage() {
             4. Disclaimer of Warranties
           </h2>
           <p>
-            The services are provided on an "as is" and "as available" basis. Trax makes no representations or warranties of any kind, express or implied, regarding the accuracy, completeness, availability, or security of the platform or its contents.
+            The services are provided on an "as is" and "as available" basis. TRAX makes no representations or warranties of any kind, express or implied, regarding the accuracy, completeness, availability, or security of the platform or its contents.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>
             5. Limitation of Liability
           </h2>
           <p>
-            To the maximum extent permitted by law, Trax Media Ltd. and its officers, employees, or agents shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of your access to or use of the services.
+            To the maximum extent permitted by law, TRAX Media Ltd. and its officers, employees, or agents shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of your access to or use of the services.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>

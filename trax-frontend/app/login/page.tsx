@@ -58,7 +58,7 @@ export default function LoginPage() {
         {/* Background Image */}
         <img
           src="/images/trax_login_visual.png"
-          alt="Trax Tech Ecosystem Visual"
+          alt="TRAX Tech Ecosystem Visual"
           className="absolute inset-0 w-full h-full object-cover"
         />
         {/* Subtle Brand Gradient Overlays for Readability and Depth (UX Best Practice) */}
@@ -125,7 +125,7 @@ export default function LoginPage() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-2 mb-4 group">
               <span className="text-2xl font-black tracking-tight" style={{ color: 'var(--fg)' }}>
-                <span className="text-[var(--accent)] group-hover:text-red-400 transition-colors">Trax</span>
+                <span className="text-[var(--accent)] group-hover:text-red-400 transition-colors">TRAX</span>
               </span>
             </Link>
             <h2 className="text-2xl font-bold tracking-tight" style={{ color: 'var(--fg)' }}>Welcome Back</h2>

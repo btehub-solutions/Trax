@@ -159,7 +159,7 @@ export default function Nav() {
                 className="text-[22px] font-bold tracking-tight"
                 style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
               >
-                Trax
+                TRAX
               </span>
             </Link>
 
@@ -349,7 +349,7 @@ export default function Nav() {
                     className="text-2xl font-bold tracking-tight"
                     style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
                   >
-                    Trax
+                    TRAX
                   </span>
                 </Link>
                 
@@ -513,7 +513,7 @@ export default function Nav() {
                         expanded: platformExpanded,
                         toggle: () => setPlatformExpanded((v) => !v),
                         links: [
-                          { label: 'About Trax',          href: '/about'      },
+                          { label: 'About TRAX',          href: '/about'      },
                           { label: 'Advertise with Us',   href: '/advertise'  },
                           { label: 'Meet the Team',       href: '/team'       },
                           { label: 'Join the Team',       href: '/careers'    },
@@ -632,7 +632,7 @@ export default function Nav() {
                       </h4>
                       <ul className="flex flex-col gap-3">
                         {[
-                          { label: 'About Trax',          href: '/about'      },
+                          { label: 'About TRAX',          href: '/about'      },
                           { label: 'Advertise with Us',   href: '/advertise'  },
                           { label: 'Meet the Team',       href: '/team'       },
                           { label: 'Join the Team',       href: '/careers'    },
@@ -667,7 +667,7 @@ export default function Nav() {
                   >
                     <Image
                       src="/images/trax_newsletter_card.png"
-                      alt="Trax Newsletter Subscription"
+                      alt="TRAX Newsletter Subscription"
                       width={400}
                       height={300}
                       className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
@@ -679,7 +679,7 @@ export default function Nav() {
 
               {/* Bottom Row */}
               <div className="border-t pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500" style={{ borderColor: 'var(--border)' }}>
-                <p>© {new Date().getFullYear()} Trax Media Platform. All rights reserved.</p>
+                <p>© {new Date().getFullYear()} TRAX Media Platform. All rights reserved.</p>
                 <div className="flex items-center gap-4">
                   <Link href="/privacy" onClick={() => setMenuOpen(false)} className="hover:text-white">Privacy Policy</Link>
                   <span>•</span>

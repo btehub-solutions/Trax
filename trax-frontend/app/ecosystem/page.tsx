@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
-  title: 'Tech Ecosystem in Ogun State | Trax',
+  title: 'Tech Ecosystem in Ogun State | TRAX',
   description: 'Exploring the tech clusters, talent networks, hubs, and institutions building Ogun State\'s AI infrastructure.',
 }
 

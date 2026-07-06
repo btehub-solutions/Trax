@@ -62,7 +62,7 @@ export default async function HomePage() {
       <ArticleGrid
         id="featured"
         title="Editor’s Briefing"
-        subtitle="The most important local intelligence from Ogun State and West Africa"
+        subtitle="The most important local intelligence from Ogun State"
         articles={featuredArticles}
         variant="featured-first"
       />

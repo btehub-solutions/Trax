@@ -21,9 +21,9 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: "Trax | Tracking Ogun State's Tech Movement",
+  title: "TRAX | Tracking Ogun State's Tech Movement",
   description:
-    "Ogun State's tech news and startup media platform, covering startups, funding rounds, research breakthroughs, and the people building the Ogun State's tech future.",
+    "Ogun State's tech news and startup media platform, covering startups, funding rounds, research breakthroughs, and the people building Ogun State's tech future.",
   keywords: [
     'Ogun State Tech',
     'Nigeria tech',
@@ -33,14 +33,14 @@ export const metadata: Metadata = {
     'tech media Ogun State',
   ],
   openGraph: {
-    title: 'Trax',
+    title: "TRAX | Tracking Ogun State's Tech Movement",
     description: "Tracking Ogun State's Tech Movement",
     type: 'website',
     locale: 'en_NG',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Trax | Tracking Ogun State's Tech Movement",
+    title: "TRAX | Tracking Ogun State's Tech Movement",
     description: "Ogun State's tech news and startup media platform.",
     site: '@traxnewsng',
     creator: '@traxnewsng',

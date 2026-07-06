@@ -65,7 +65,7 @@ export default function NewsletterSection() {
               className="font-extrabold mb-4 max-w-xl"
               style={{ color: '#1F2933', fontFamily: 'var(--font-dm-sans)', letterSpacing: 0 }}
             >
-              Get the best African tech stories in your inbox
+              Get the best Ogun State tech stories in your inbox
             </h2>
 
             {/* Subtext */}
@@ -147,7 +147,7 @@ export default function NewsletterSection() {
               >
                 <CheckCircle size={22} color="#10B981" />
                 <p className="text-base font-medium" style={{ color: '#10B981', fontFamily: 'var(--font-dm-sans)' }}>
-                  You&apos;re in! Welcome to Trax.
+                  You&apos;re in! Welcome to TRAX.
                 </p>
               </motion.div>
             )}

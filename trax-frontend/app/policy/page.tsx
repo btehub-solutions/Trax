@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
-  title: 'Tech Policy & Regulation in Ogun State | Trax',
+  title: 'Tech Policy & Regulation in Ogun State | TRAX',
   description: 'Analysis and reports on tech policy frameworks, ethics, data privacy, and government regulations in Ogun State.',
 }
 

@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { Briefcase, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Careers at Trax | Join the Team',
-  description: 'Join Trax and help build the leading tech media platform for Ogun State. View open roles in journalism, engineering, and growth.',
+  title: 'Careers at TRAX | Join the Team',
+  description: 'Join TRAX and help build the leading tech media platform for Ogun State. View open roles in journalism, engineering, and growth.',
 }
 
 export default function CareersPage() {
@@ -29,7 +29,7 @@ export default function CareersPage() {
               lineHeight: 1.1,
             }}
           >
-            Join Trax
+            Join TRAX
           </h1>
           <p
             className="text-base md:text-lg"

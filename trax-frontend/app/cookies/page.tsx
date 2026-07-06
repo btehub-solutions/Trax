@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Cookie Policy | Trax',
-  description: 'Trax Cookie Policy. Understand how and why we use cookies on our platform.',
+  title: 'Cookie Policy | TRAX',
+  description: 'TRAX Cookie Policy. Understand how and why we use cookies on our platform.',
 }
 
 export default function CookiePolicyPage() {
@@ -43,7 +43,7 @@ export default function CookiePolicyPage() {
 
         <div className="prose prose-invert max-w-none space-y-6 text-sm leading-relaxed" style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}>
           <p>
-            This Cookie Policy explains how Trax Media Ltd. ("we", "us", or "our") uses cookies and similar tracking technologies when you visit our website. By using our platform, you consent to the use of cookies as described in this policy.
+            This Cookie Policy explains how TRAX Media Ltd. ("we", "us", or "our") uses cookies and similar tracking technologies when you visit our website. By using our platform, you consent to the use of cookies as described in this policy.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>

@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
-  title: "Ogun State's Startups | Trax",
+  title: "Ogun State's Startups | TRAX",
   description: 'Track the founders, builders, and platforms creating the next generation of AI products in Ogun State.',
 }
 

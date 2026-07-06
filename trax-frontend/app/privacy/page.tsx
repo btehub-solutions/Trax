@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Trax',
-  description: 'Trax Privacy Policy. Learn how we handle and protect your personal data.',
+  title: 'Privacy Policy | TRAX',
+  description: 'TRAX Privacy Policy. Learn how we handle and protect your personal data.',
 }
 
 export default function PrivacyPolicyPage() {
@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="prose prose-invert max-w-none space-y-6 text-sm leading-relaxed" style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}>
           <p>
-            Welcome to Trax. We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this policy or our practices with regard to your personal info, please contact us at traxnewsng@gmail.com.
+            Welcome to TRAX. We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this policy or our practices with regard to your personal info, please contact us at traxnewsng@gmail.com.
           </p>
 
           <h2 className="text-lg font-bold text-white mt-8" style={{ color: 'var(--fg)', fontFamily: 'var(--font-oxanium)' }}>

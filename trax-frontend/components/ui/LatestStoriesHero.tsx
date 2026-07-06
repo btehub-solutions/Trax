@@ -83,7 +83,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 className="max-w-4xl text-4xl font-black md:text-6xl"
                 style={{ color: 'var(--fg)', lineHeight: 0.96, letterSpacing: 0 }}
               >
-                Local intelligence for Ogun&apos;s tech builders
+                Local intelligence for Ogun State&apos;s tech builders
               </h1>
             </div>
             <Link

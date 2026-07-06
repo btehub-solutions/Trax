@@ -301,7 +301,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                     className="text-xs leading-none"
                     style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
                   >
-                    {article.authorRole || 'Trax Editorial'}
+                    {article.authorRole || 'TRAX Editorial'}
                   </p>
                 </div>
               </div>
@@ -487,7 +487,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   className="text-xs font-extrabold uppercase"
                   style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
                 >
-                  Trax
+                  TRAX
                 </span>
                 <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
               </div>

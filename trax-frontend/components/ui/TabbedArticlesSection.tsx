@@ -56,7 +56,7 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
         title={selectedCategory === 'All' ? 'Latest Intelligence' : `${selectedCategory} Intelligence`}
         subtitle={
           selectedCategory === 'All'
-            ? 'Fresh reporting from Ogun State and West Africa’s startup corridors'
+            ? 'Fresh reporting from Ogun State’s startup corridors'
             : `Fresh reporting and signals under ${selectedCategory}`
         }
         articles={latestFiltered}

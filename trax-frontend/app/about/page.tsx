@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "About Trax | The Voice of Ogun State's AI",
-  description: 'Learn about the mission, scope, and team behind Trax, Ogun State\'s premier AI startup media platform.',
+  title: "About TRAX | The Voice of Ogun State's AI",
+  description: 'Learn about the mission, scope, and team behind TRAX, Ogun State\'s premier AI startup media platform.',
 }
 
 export default function AboutPage() {
@@ -46,7 +46,7 @@ export default function AboutPage() {
             className="text-lg md:text-xl leading-relaxed"
             style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
           >
-            Trax is Nigeria and Ogun State&apos;s leading tech media platform dedicated solely to documenting the builders, researchers, investors, and policies pushing technology forward.
+            TRAX is Nigeria and Ogun State&apos;s leading tech media platform dedicated solely to documenting the builders, researchers, investors, and policies pushing technology forward.
           </p>
         </div>
 
@@ -98,7 +98,7 @@ export default function AboutPage() {
               className="text-sm md:text-base leading-relaxed"
               style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
             >
-              Trax is here to fill that void. We provide granular reporting, data-driven analysis, and thoughtful commentary on the emerging Ogun State's AI landscape.
+              TRAX is here to fill that void. We provide granular reporting, data-driven analysis, and thoughtful commentary on the emerging Ogun State's AI landscape.
             </p>
           </div>
           <div>

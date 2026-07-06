@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
 
 export const metadata: Metadata = {
-  title: 'Tech Tools & Tech Stack | Trax',
+  title: 'Tech Tools & Tech Stack | TRAX',
   description: "The best tech tools, open-source models, and developer resources tailored for Ogun State's networks and environments.",
 }
 
