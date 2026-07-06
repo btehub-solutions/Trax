@@ -9,6 +9,11 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 async function main() {
+  if (process.env.DATABASE_URL?.includes('supabase.com') || process.env.DATABASE_URL?.includes('pooler.supabase.com')) {
+    console.error('❌ CRITICAL ERROR: Seeding is blocked on the production Supabase database to prevent data loss.');
+    process.exit(1);
+  }
+
   console.log('Clearing database...')
   await prisma.articleTag.deleteMany({})
   await prisma.tag.deleteMany({})

@@ -39,6 +39,7 @@ interface AdSlotProps {
 }
 
 export default function AdSlot({ size, id, className = '', label }: AdSlotProps) {
+  const preset = SIZE_MAP[size]
   const displayLabel = label ?? preset.label
   const [adHtml, setAdHtml] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
