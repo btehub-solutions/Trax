@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { PrismaService } from '../src/prisma/prisma.service'
 import * as bcrypt from 'bcryptjs'
+import { assertSafeDestructiveSeed, getSafeDatabaseTargetLabel } from '../src/config/database-safety'
 
 const prisma = new PrismaService()
 
@@ -9,12 +10,9 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 async function main() {
-  if (process.env.DATABASE_URL?.includes('supabase.com') || process.env.DATABASE_URL?.includes('pooler.supabase.com')) {
-    console.error('❌ CRITICAL ERROR: Seeding is blocked on the production Supabase database to prevent data loss.');
-    process.exit(1);
-  }
+  assertSafeDestructiveSeed()
 
-  console.log('Clearing database...')
+  console.log(`Clearing local development database: ${getSafeDatabaseTargetLabel()}`)
   await prisma.articleTag.deleteMany({})
   await prisma.tag.deleteMany({})
   await prisma.article.deleteMany({})

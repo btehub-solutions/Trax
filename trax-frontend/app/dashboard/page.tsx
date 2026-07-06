@@ -32,7 +32,7 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
-import { api, fetchApi, BASE_URL } from '@/lib/api';
+import { api, fetchApi, BASE_URL, getApiHealth } from '@/lib/api';
 import { compressImage } from '@/lib/image-compressor';
 import { useTheme } from 'next-themes';
 
@@ -284,6 +284,8 @@ export default function DashboardPage() {
     setLoading(true);
     setConnectionError(null);
     try {
+      await getApiHealth();
+
       // 1. Fetch categories
       const cats = await api.get('/categories');
       setCategories(cats);

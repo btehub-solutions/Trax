@@ -3,11 +3,29 @@ import { mapApiArticle } from './mapArticle';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
 
+function assertSafeDevelopmentApiTarget() {
+  if (process.env.NODE_ENV !== 'development') return;
+  if (process.env.NEXT_PUBLIC_ALLOW_REMOTE_API_IN_DEVELOPMENT === 'true') return;
+
+  try {
+    const { hostname } = new URL(BASE_URL);
+    if (!['localhost', '127.0.0.1', '::1'].includes(hostname)) {
+      throw new Error(
+        'Local development is blocked from using a remote API. Point NEXT_PUBLIC_API_URL to localhost, or explicitly allow a non-production staging API.',
+      );
+    }
+  } catch (err) {
+    if (err instanceof Error) throw err;
+  }
+}
+
 interface RequestOptions extends RequestInit {
   body?: any;
 }
 
 export async function fetchApi(endpoint: string, options: RequestOptions = {}) {
+  assertSafeDevelopmentApiTarget();
+
   const isClient = typeof window !== 'undefined';
   const headers = new Headers(options.headers || {});
 
@@ -61,6 +79,10 @@ export const api = {
   delete: (endpoint: string, options?: RequestOptions) => fetchApi(endpoint, { ...options, method: 'DELETE' }),
 };
 
+export function getApiHealth() {
+  return api.get('/health');
+}
+
 export async function getDbArticles(categorySlug?: string): Promise<Article[]> {
   try {
     const url = categorySlug 
@@ -83,4 +105,3 @@ export async function getDbArticles(categorySlug?: string): Promise<Article[]> {
   }
   return mockArticles;
 }
-
