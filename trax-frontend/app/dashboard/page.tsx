@@ -147,7 +147,10 @@ export default function DashboardPage() {
     email: '',
     password: '',
     role: 'WRITER',
+    avatar: '',
   });
+  const [teamAvatarUploading, setTeamAvatarUploading] = useState(false);
+  const [teamAvatarUploadError, setTeamAvatarUploadError] = useState<string | null>(null);
 
   // Partners Management State
   const [partners, setPartners] = useState<any[]>([]);
@@ -486,6 +489,38 @@ export default function DashboardPage() {
     }
   };
 
+  const handleTeamMemberAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setTeamAvatarUploading(true);
+    setTeamAvatarUploadError(null);
+    try {
+      const compressedFile = await compressImage(file);
+      const fData = new FormData();
+      fData.append('file', compressedFile);
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${BASE_URL}/uploads`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: fData
+      });
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message || 'Upload failed');
+      }
+      const data = await res.json();
+      if (data && data.url) {
+        setTeamFormData(prev => ({ ...prev, avatar: data.url }));
+      }
+    } catch (err: any) {
+      setTeamAvatarUploadError(err.message || 'Failed to upload avatar');
+    } finally {
+      setTeamAvatarUploading(false);
+    }
+  };
+
   const handleAdImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -625,7 +660,7 @@ export default function DashboardPage() {
     try {
       await api.post('/users', teamFormData);
       setTeamSuccess('Team member added successfully!');
-      setTeamFormData({ name: '', email: '', password: '', role: 'WRITER' });
+      setTeamFormData({ name: '', email: '', password: '', role: 'WRITER', avatar: '' });
       
       const members = await api.get('/users');
       setTeamMembers(members);
@@ -2069,6 +2104,51 @@ export default function DashboardPage() {
                       )}
 
                       <form onSubmit={handleAddTeamMember} className="space-y-4">
+                        <div className="flex flex-col items-center gap-3 pb-2 border-b border-dashed" style={{ borderColor: 'var(--dash-divider)' }}>
+                          <div
+                            className="relative group w-20 h-20 rounded-full overflow-hidden border flex items-center justify-center"
+                            style={{ borderColor: 'var(--dash-card-border)', backgroundColor: 'var(--dash-input)' }}
+                          >
+                            {teamFormData.avatar ? (
+                              <Image src={teamFormData.avatar} alt="Avatar Preview" width={80} height={80} className="w-full h-full object-cover" unoptimized={false} />
+                            ) : (
+                              <span className="text-2xl font-bold" style={{ color: 'var(--dash-fg-subtle)' }}>
+                                {teamFormData.name ? teamFormData.name.charAt(0) : '?'}
+                              </span>
+                            )}
+                          </div>
+                          
+                          <div className="flex flex-col items-center gap-1.5">
+                            <label className="cursor-pointer bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
+                              <span>Choose Image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleTeamMemberAvatarUpload}
+                                className="hidden"
+                              />
+                            </label>
+                            <span className="text-[9px]" style={{ color: 'var(--dash-fg-muted)' }}>
+                              {teamAvatarUploading ? 'Uploading...' : 'Upload avatar'}
+                            </span>
+                            {teamAvatarUploadError && (
+                              <p className="text-[9px] text-red-500 font-medium">{teamAvatarUploadError}</p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Or Avatar Image URL</label>
+                          <input
+                            type="text"
+                            value={teamFormData.avatar}
+                            onChange={(e) => setTeamFormData(prev => ({ ...prev, avatar: e.target.value }))}
+                            placeholder="https://images.unsplash.com/..."
+                            className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
                         <div className="space-y-1.5">
                           <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Full Name</label>
                           <input

@@ -38,6 +38,7 @@ export class UsersService {
         email:    dto.email,
         password: hashedPassword,
         role:     dto.role || 'WRITER',
+        avatar:   dto.avatar || null,
       },
       select: this.safeSelect,
     });
