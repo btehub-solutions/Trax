@@ -313,21 +313,6 @@ export default function Footer() {
 
             {/* Copyright & Legal Row */}
             <div className="flex flex-col sm:flex-row items-center gap-3">
-              {/* Circular Trax Logo Icon */}
-              <div 
-                className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center border select-none"
-                style={{
-                  borderColor: 'rgba(255, 255, 255, 0.08)',
-                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                }}
-              >
-                <span 
-                  className="text-sm font-black" 
-                  style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
-                >
-                  T
-                </span>
-              </div>
               <div className="flex flex-col items-center lg:items-end gap-1 text-center lg:text-right">
                 <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
                   © {new Date().getFullYear()} TRAX Media Ltd. All rights reserved.

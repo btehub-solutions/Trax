@@ -47,7 +47,7 @@ export default function FundingPage() {
     {
       icon: BarChart,
       title: 'Investor Directory',
-      desc: 'Profiles of active angel syndicates, venture funds, and private offices operating in West Africa.',
+      desc: 'Profiles of active angel syndicates, venture funds, and private offices operating in Ogun State and Nigeria.',
     },
     {
       icon: Shield,

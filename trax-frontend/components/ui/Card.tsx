@@ -61,7 +61,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
               </h4>
             </div>
             <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
-              {article.author} <span className="mx-1.5">|</span> {article.date}
+              {article.author} <span className="mx-1.5">|</span> {article.date} <span className="mx-1.5">|</span> {article.readTime}
             </p>
           </div>
         </motion.article>
@@ -115,7 +115,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           </p>
           <div className="flex items-center justify-between">
             <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
-              {article.author} <span className="mx-2">|</span> {article.date}
+              {article.author} <span className="mx-2">|</span> {article.date} <span className="mx-2">|</span> {article.readTime}
             </div>
           </div>
         </div>
@@ -155,16 +155,20 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
       <div className="pt-4 flex flex-col flex-1">
         <Link href={`/articles/${article.slug}`} className="block mb-2">
           <h3
-            className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-accent"
+            className="text-lg font-extrabold leading-snug line-clamp-2 transition-colors group-hover:text-accent"
             style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
           >
             {article.title}
           </h3>
         </Link>
+        {/* Excerpt */}
+        <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}>
+          {article.excerpt}
+        </p>
         {/* Meta */}
         <div className="flex items-center justify-between pt-2 mt-auto">
           <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
-            {article.author} <span className="mx-2">|</span> {article.date}
+            {article.author} <span className="mx-2">|</span> {article.date} <span className="mx-2">|</span> {article.readTime}
           </div>
         </div>
       </div>

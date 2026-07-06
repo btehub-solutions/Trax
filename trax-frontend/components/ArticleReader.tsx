@@ -290,41 +290,18 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                     {article.author.charAt(0)}
                   </div>
                 )}
-                <div>
-                  <p
-                    className="text-sm font-bold leading-none mb-1"
-                    style={{ color: 'var(--fg)', fontFamily: 'var(--font-dm-sans)' }}
-                  >
+                <div
+                  className="flex flex-wrap items-center gap-2 text-xs"
+                  style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
+                >
+                  <span className="font-bold text-sm" style={{ color: 'var(--fg)' }}>
                     {article.author}
-                  </p>
-                  <p
-                    className="text-xs leading-none"
-                    style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-                  >
-                    {article.authorRole || 'TRAX Editorial'}
-                  </p>
+                  </span>
+                  <span className="text-zinc-700">|</span>
+                  <time dateTime={article.date}>{article.date}</time>
+                  <span className="text-zinc-700">|</span>
+                  <span>{article.readTime}</span>
                 </div>
-              </div>
-
-              <div
-                className="hidden sm:block w-px h-5 self-center"
-                style={{ backgroundColor: 'var(--border)' }}
-              />
-
-              {/* Date + read time */}
-              <div
-                className="flex items-center gap-3 text-xs"
-                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
-              >
-                <time dateTime={article.date} className="flex items-center gap-1.5">
-                  <User size={12} strokeWidth={1.75} />
-                  {article.date}
-                </time>
-                <span className="w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--fg-subtle)' }} />
-                <span className="flex items-center gap-1.5">
-                  <Clock size={12} strokeWidth={1.75} />
-                  {article.readTime}
-                </span>
               </div>
 
               {/* Bookmark: pushed right */}
@@ -451,7 +428,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                     style={{
                       fontFamily:  'var(--font-dm-sans)',
                       fontSize:    i === 0 ? '1.25rem' : '1.125rem',
-                      lineHeight:  i === 0 ? 1.65 : 1.85,
+                      lineHeight:  1.7,
                       color:       i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
                       fontWeight:  i === 0 ? 650 : 400,
                     }}

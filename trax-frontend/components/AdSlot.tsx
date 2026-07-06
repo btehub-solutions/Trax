@@ -117,7 +117,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     if (isImageOnly && imageUrl) {
       return (
         <div className={`w-full flex flex-col items-center ${className}`}>
-          <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
+          <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black mb-1.5 select-none">
             Sponsored
           </span>
           <motion.div
@@ -156,7 +156,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
 
     return (
       <div className={`w-full flex flex-col items-center ${className}`}>
-        <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
+        <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black mb-1.5 select-none">
           Sponsored
         </span>
         <div
@@ -236,7 +236,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
 
   return (
     <div className={`w-full flex flex-col items-center ${className}`}>
-      <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
+      <span className="text-[10px] uppercase tracking-[0.2em] text-zinc-400 font-black mb-1.5 select-none">
         Sponsored
       </span>
       <motion.div
@@ -247,7 +247,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
         id={id}
         role="complementary"
         aria-label={`Advertisement: ${displayLabel}`}
-        className="overflow-hidden"
+        className="overflow-hidden rounded-md"
         style={adStyle}
       >
         {fallbackContent}

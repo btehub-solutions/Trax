@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "About TRAX | The Voice of Ogun State's AI",
-  description: 'Learn about the mission, scope, and team behind TRAX, Ogun State\'s premier AI startup media platform.',
+  title: "About TRAX | The Voice of Ogun State's Tech Scene",
+  description: 'Learn about the mission, scope, and team behind TRAX, Ogun State\'s premier tech startup media platform.',
 }
 
 export default function AboutPage() {
@@ -98,7 +98,7 @@ export default function AboutPage() {
               className="text-sm md:text-base leading-relaxed"
               style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
             >
-              TRAX is here to fill that void. We provide granular reporting, data-driven analysis, and thoughtful commentary on the emerging Ogun State's AI landscape.
+              TRAX is here to fill that void. We provide granular reporting, data-driven analysis, and thoughtful commentary on the emerging Ogun State's tech scene.
             </p>
           </div>
           <div>
@@ -111,9 +111,9 @@ export default function AboutPage() {
             <ul className="space-y-4" style={{ fontFamily: 'var(--font-dm-sans)' }}>
               {[
                 { title: 'Funding & Ventures', desc: 'Pre-seed to growth investment rounds, angel networks, and venture capital logs.' },
-                { title: 'Profiles & Interviews', desc: 'Deep conversations with the engineers training models and founders shipping products.' },
-                { title: 'Policy & Governance', desc: 'Analysis of digital rights, model registries, and governmental AI frameworks.' },
-                { title: 'Technical Breakthroughs', desc: 'Highlighting research institutes, datasets, and open-source products optimized for Ogun State languages.' },
+                { title: 'Profiles & Interviews', desc: 'Deep conversations with the engineers and founders shipping products.' },
+                { title: 'Policy & Governance', desc: 'Analysis of digital rights and governmental tech frameworks.' },
+                { title: 'Technical Breakthroughs', desc: 'Highlighting research institutes, datasets, and open-source products optimized for Ogun State.' },
               ].map((item, idx) => (
                 <li key={idx} className="flex gap-4 items-start">
                   <span className="text-sm mt-0.5" style={{ color: 'var(--accent)' }}>✦</span>
