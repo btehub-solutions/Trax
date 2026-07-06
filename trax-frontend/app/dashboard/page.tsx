@@ -33,6 +33,7 @@ import {
   Moon
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL, getApiHealth } from '@/lib/api';
+import Image from 'next/image';
 import { compressImage } from '@/lib/image-compressor';
 import { useTheme } from 'next-themes';
 
@@ -771,9 +772,11 @@ export default function DashboardPage() {
             className="flex items-center gap-3 p-3 rounded-xl mb-6 border"
             style={{ backgroundColor: 'var(--dash-user-card)', borderColor: 'var(--dash-user-card-border)' }}
           >
-            <img
+            <Image
               src={user?.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&fit=crop'}
-              alt={user?.name}
+              alt={user?.name ?? 'User avatar'}
+              width={36}
+              height={36}
               className="h-9 w-9 rounded-full object-cover border"
               style={{ borderColor: 'var(--dash-avatar-border)' }}
             />
@@ -1994,7 +1997,7 @@ export default function DashboardPage() {
                                   <td className="py-4 px-6 font-semibold" style={{ color: 'var(--dash-fg)' }}>
                                     <div className="flex items-center gap-3">
                                       {member.avatar ? (
-                                        <img src={member.avatar} alt={member.name} className="h-8 w-8 rounded-full object-cover border border-neutral-800" />
+                                        <Image src={member.avatar} alt={member.name} width={32} height={32} className="h-8 w-8 rounded-full object-cover border border-neutral-800" />
                                       ) : (
                                         <div className="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-red-600">
                                           {member.name.charAt(0)}

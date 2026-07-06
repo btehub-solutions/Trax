@@ -276,6 +276,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                       src={article.authorAvatar}
                       alt={article.author}
                       fill
+                      sizes="40px"
                       className="object-cover"
                     />
                   </div>
