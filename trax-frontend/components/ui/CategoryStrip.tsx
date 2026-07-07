@@ -20,23 +20,26 @@ export const categories = [
 interface CategoryStripProps {
   active?: string
   onChange?: (cat: string) => void
+  categories?: { label: string; color: string }[]
 }
 
-export default function CategoryStrip({ active = 'All', onChange }: CategoryStripProps) {
+export default function CategoryStrip({ active = 'All', onChange, categories: categoriesProp }: CategoryStripProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
 
+  const displayCategories = categoriesProp || categories
+
   const handleArrowClick = (dir: 'left' | 'right') => {
-    const currentIndex = categories.findIndex((c) => c.label === active)
+    const currentIndex = displayCategories.findIndex((c) => c.label === active)
     if (currentIndex === -1) return
 
     let nextIndex = currentIndex
     if (dir === 'left') {
-      nextIndex = currentIndex > 0 ? currentIndex - 1 : categories.length - 1
+      nextIndex = currentIndex > 0 ? currentIndex - 1 : displayCategories.length - 1
     } else {
-      nextIndex = currentIndex < categories.length - 1 ? currentIndex + 1 : 0
+      nextIndex = currentIndex < displayCategories.length - 1 ? currentIndex + 1 : 0
     }
 
-    const nextCategory = categories[nextIndex]
+    const nextCategory = displayCategories[nextIndex]
     handleSelect(nextCategory.label)
 
     // Scroll active element into center view
@@ -100,7 +103,7 @@ export default function CategoryStrip({ active = 'All', onChange }: CategoryStri
           role="tablist"
           aria-label="Filter by category"
         >
-          {categories.map((cat) => {
+          {displayCategories.map((cat) => {
             const isActive = active === cat.label
             return (
               <motion.button

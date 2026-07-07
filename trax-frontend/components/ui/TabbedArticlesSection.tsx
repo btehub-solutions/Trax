@@ -7,9 +7,10 @@ import type { Article } from '@/lib/articles'
 
 interface TabbedArticlesSectionProps {
   articles: Article[]
+  categories?: { name: string; slug: string; color: string }[]
 }
 
-export default function TabbedArticlesSection({ articles }: TabbedArticlesSectionProps) {
+export default function TabbedArticlesSection({ articles, categories }: TabbedArticlesSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState('All')
 
   // Filter articles based on active category
@@ -21,10 +22,16 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
     
     // Support custom category mapping
     if (selectedCat === 'startups') {
-      return ['ecosystem', 'profiles', 'funding', 'startups', 'startups'].includes(articleCat)
+      return ['ecosystem', 'profiles', 'funding', 'startups'].includes(articleCat)
     }
     if (selectedCat === 'people') {
       return ['profiles', 'interview', 'people'].includes(articleCat)
+    }
+    
+    // Support matching by name/slug returned from db
+    const matchingCat = categories?.find(c => c.name.toLowerCase() === selectedCat || c.slug.toLowerCase() === selectedCat)
+    if (matchingCat) {
+      return articleCat === matchingCat.slug.toLowerCase() || articleCat === matchingCat.name.toLowerCase()
     }
     
     return articleCat === selectedCat
@@ -48,9 +55,16 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
   }
   const viewAllHref = categoryPaths[selectedCategory.toLowerCase()] || '/news'
 
+  const displayCategories = categories
+    ? [
+        { label: 'All', color: 'var(--accent-bright)' },
+        ...categories.map((c) => ({ label: c.name, color: c.color || 'var(--accent-bright)' })),
+      ]
+    : undefined
+
   return (
     <>
-      <CategoryStrip active={selectedCategory} onChange={setSelectedCategory} />
+      <CategoryStrip active={selectedCategory} onChange={setSelectedCategory} categories={displayCategories} />
       <ArticleGrid
         id="latest"
         title={selectedCategory === 'All' ? 'Latest Intelligence' : `${selectedCategory} Intelligence`}

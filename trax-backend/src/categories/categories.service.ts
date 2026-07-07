@@ -2,16 +2,18 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 
-// Default categories seeded on first run
 export const DEFAULT_CATEGORIES = [
-  { name: 'Startups', slug: 'startups', color: '#10B981', description: 'Tech startup launches, growth stories and fundraises' },
-  { name: 'Funding',     slug: 'funding',     color: '#059669', description: 'Investment rounds, VCs and capital flows in Ogun State Tech' },
-  { name: 'Tools',       slug: 'tools',       color: '#3B82F6', description: 'Product launches, developer tools and SaaS solutions' },
-  { name: 'People',      slug: 'people',      color: '#8B5CF6', description: 'Founders, developers and builders driving innovation forward' },
-  { name: 'Policy',      slug: 'policy',      color: '#F59E0B', description: 'Regulation, government strategy and tech governance' },
-  { name: 'Research',    slug: 'research',    color: '#EC4899', description: 'Papers, breakthroughs and academic developments' },
-  { name: 'Ecosystem',   slug: 'ecosystem',   color: '#C84B31', description: 'Hubs, events and the wider Ogun State tech ecosystem' },
-  { name: 'Events',      slug: 'events',      color: '#06B6D4', description: 'Conferences, summits and community gatherings' },
+  { name: 'Startups', slug: 'startups', color: '#10B981', description: 'Spotlight on startups and ventures' },
+  { name: 'Funding', slug: 'funding', color: '#059669', description: 'Investments and VC updates' },
+  { name: 'Tools', slug: 'tools', color: '#3B82F6', description: 'Libraries, code assets, and platforms' },
+  { name: 'People', slug: 'people', color: '#8B5CF6', description: 'Profiles and interviews of prominent figures' },
+  { name: 'Policy', slug: 'policy', color: '#D97706', description: 'Government roadmaps and regulations' },
+  { name: 'Research', slug: 'research', color: '#DB2777', description: 'Academic papers and ML breakthroughs' },
+  { name: 'Ecosystem', slug: 'ecosystem', color: '#C84B31', description: 'Tech hubs, clusters and networking' },
+  { name: 'Events', slug: 'events', color: '#0891B2', description: 'tech summits, meetups and hackathons' },
+  { name: 'Profiles', slug: 'profiles', color: '#7C3AED', description: 'Founder and builder spotlights' },
+  { name: 'Health', slug: 'health', color: '#2563EB', description: 'HealthTech and digital health innovations' },
+  { name: 'Interview', slug: 'interview', color: '#4F46E5', description: 'Exclusive executive interviews' },
 ];
 
 @Injectable()

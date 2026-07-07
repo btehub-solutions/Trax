@@ -28,8 +28,34 @@ async function getArticles(): Promise<Article[]> {
   return mockArticles
 }
 
+async function getCategories(): Promise<any[]> {
+  try {
+    const res = await fetch(`${BASE_URL}/categories`, {
+      cache: 'no-store',
+    })
+    if (!res.ok) throw new Error('API server returned error')
+    return await res.json()
+  } catch (err: any) {
+    console.warn('Backend API offline, using static mock categories fallback:', err.message || err)
+    return [
+      { name: 'Startups', slug: 'startups', color: '#10B981' },
+      { name: 'Funding', slug: 'funding', color: '#059669' },
+      { name: 'Tools', slug: 'tools', color: '#3B82F6' },
+      { name: 'People', slug: 'people', color: '#8B5CF6' },
+      { name: 'Policy', slug: 'policy', color: '#F59E0B' },
+      { name: 'Research', slug: 'research', color: '#EC4899' },
+      { name: 'Health', slug: 'health', color: '#06B6D4' },
+      { name: 'Ecosystem', slug: 'ecosystem', color: 'var(--accent-bright)' },
+      { name: 'Events', slug: 'events', color: '#14B8A6' },
+    ]
+  }
+}
+
 export default async function HomePage() {
-  const allArticles = await getArticles()
+  const [allArticles, categories] = await Promise.all([
+    getArticles(),
+    getCategories(),
+  ])
   const featuredArticles = allArticles.filter((a) => a.featured)
   const trendingArticles = allArticles.filter((a) => a.trending)
   const fundingArticles = allArticles.filter((a) => a.category.toLowerCase() === 'funding')
@@ -56,7 +82,7 @@ export default async function HomePage() {
       <PressRoomSection />
 
       {/* ── Interactive Category Strip & Filtered Articles Grid ── */}
-      <TabbedArticlesSection articles={allArticles} />
+      <TabbedArticlesSection articles={allArticles} categories={categories} />
 
       {/* ── Local Intelligence ── */}
       <ArticleGrid
