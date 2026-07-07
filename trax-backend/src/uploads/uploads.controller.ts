@@ -22,18 +22,39 @@ const imageFileFilter = (req: any, file: any, callback: any) => {
 export class UploadsController {
   private supabase: any = null;
 
+  /** Public-facing base URL of this server (e.g. https://api.trax.ng).
+   *  Used to build absolute image URLs for the local-disk fallback so they
+   *  remain reachable in production instead of pointing at localhost. */
+  private serverUrl: string;
+
   constructor(private readonly configService: ConfigService) {
     const supabaseUrl = this.configService.get<string>('SUPABASE_URL');
     const supabaseKey = this.configService.get<string>('SUPABASE_ANON_KEY');
-    
+
+    // SERVER_URL must be the public-facing backend origin in production.
+    // e.g.  SERVER_URL=https://api.trax.ng
+    // Falls back to localhost only for local dev.
+    this.serverUrl = (
+      this.configService.get<string>('SERVER_URL') || 'http://localhost:4000'
+    ).replace(/\/$/, ''); // strip any trailing slash
+
     if (supabaseUrl && supabaseKey) {
       try {
         this.supabase = createClient(supabaseUrl, supabaseKey);
       } catch (err) {
-        console.warn('Failed to initialize Supabase client, will use local fallback:', err);
+        console.warn(
+          '⚠️  Trax Uploads: Failed to initialise Supabase client — will use local disk fallback:',
+          err,
+        );
       }
     } else {
-      console.warn('Supabase credentials missing. Image uploads will use local fallback.');
+      // Critical misconfiguration in production — log loudly so it is caught early.
+      console.error(
+        '🚨 Trax Uploads: SUPABASE_URL or SUPABASE_ANON_KEY is not set. ' +
+        'Image uploads will fall back to LOCAL disk storage. ' +
+        'Stored URLs will be based on SERVER_URL (' + this.serverUrl + '). ' +
+        'Set SUPABASE_URL + SUPABASE_ANON_KEY in production to prevent broken images.',
+      );
     }
   }
 
@@ -45,7 +66,7 @@ export class UploadsController {
   @ApiOperation({ summary: 'Upload a cover image (JPEG, PNG, WEBP, GIF)' })
   @UseInterceptors(FileInterceptor('file', {
     fileFilter: imageFileFilter,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
   }))
   async uploadFile(@UploadedFile() file: any, @Req() req: any) {
     if (!file) {
@@ -55,7 +76,7 @@ export class UploadsController {
     const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`;
     const filePath = `articles/${uniqueName}`;
 
-    // 1. Try uploading to Supabase if configured
+    // ── 1. Preferred: Supabase Storage ───────────────────────────────────────
     if (this.supabase) {
       try {
         const { error } = await this.supabase.storage
@@ -75,26 +96,37 @@ export class UploadsController {
             filename: uniqueName,
           };
         }
-        
-        console.warn(`Supabase upload error (falling back to local): ${error.message}`);
+
+        console.warn(
+          `⚠️  Trax Uploads: Supabase upload error (falling back to local disk): ${error.message}`,
+        );
       } catch (err: any) {
-        console.warn(`Supabase client throw (falling back to local): ${err.message || err}`);
+        console.warn(
+          `⚠️  Trax Uploads: Supabase client threw (falling back to local disk): ${err.message || err}`,
+        );
       }
     }
 
-    // 2. Local Fallback: Write file to local uploads/ directory
+    // ── 2. Fallback: local disk ───────────────────────────────────────────────
+    // The URL is built from SERVER_URL (not req.get('host')) so it resolves
+    // correctly when the backend is deployed — not to localhost.
     try {
       const uploadsDir = join(process.cwd(), 'uploads');
       if (!existsSync(uploadsDir)) {
         mkdirSync(uploadsDir, { recursive: true });
       }
-      
+
       const localFilePath = join(uploadsDir, uniqueName);
       writeFileSync(localFilePath, file.buffer);
 
-      const host = req.get('host') || 'localhost:4000';
-      const protocol = req.protocol || 'http';
-      const localUrl = `${protocol}://${host}/uploads/${uniqueName}`;
+      const localUrl = `${this.serverUrl}/uploads/${uniqueName}`;
+
+      console.warn(
+        `⚠️  Trax Uploads: Image saved to LOCAL disk (not Supabase). ` +
+        `URL stored in DB: ${localUrl}. ` +
+        `This image will break if the server is restarted or redeployed. ` +
+        `Fix: set SUPABASE_URL + SUPABASE_ANON_KEY and re-upload the image.`,
+      );
 
       return {
         url: localUrl,
@@ -105,4 +137,3 @@ export class UploadsController {
     }
   }
 }
-

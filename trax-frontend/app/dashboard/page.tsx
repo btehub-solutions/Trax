@@ -1085,6 +1085,10 @@ export default function DashboardPage() {
                                       alt={article.title}
                                       className="h-10 w-16 object-cover rounded-lg shrink-0 border"
                                       style={{ borderColor: 'var(--dash-card-border)' }}
+                                      onError={(e) => {
+                                        e.currentTarget.src =
+                                          'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&h=500&fit=crop&q=80'
+                                      }}
                                     />
                                   )}
                                   <div className="overflow-hidden">

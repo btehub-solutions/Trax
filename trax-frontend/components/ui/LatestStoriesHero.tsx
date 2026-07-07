@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Article } from '@/lib/articles'
 import type { ReactNode } from 'react'
+import SafeImage from '@/components/ui/SafeImage'
 
 const fallbackImage =
   'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&h=800&fit=crop&q=85'
@@ -101,7 +102,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
             <motion.article variants={itemVariants} className="group lg:col-span-8">
               <Link href={`/articles/${lead.slug}`} className="block">
                 <div className="relative mb-5 aspect-[16/9] overflow-hidden rounded-md">
-                  <Image
+                  <SafeImage
                     src={lead.image || fallbackImage}
                     alt={lead.title}
                     fill
@@ -130,7 +131,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                 <motion.article key={article.id} variants={itemVariants} className="group">
                   <Link href={`/articles/${article.slug}`} className="block">
                     <div className="relative mb-4 aspect-[16/9] overflow-hidden rounded-md">
-                      <Image
+                      <SafeImage
                         src={article.image || fallbackImage}
                         alt={article.title}
                         fill
@@ -165,7 +166,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                   >
                     <Link href={`/articles/${article.slug}`} className="flex flex-col sm:flex-row gap-6">
                       <div className="relative aspect-[16/9] w-full sm:w-48 shrink-0 overflow-hidden rounded-md">
-                        <Image
+                        <SafeImage
                           src={article.image || fallbackImage}
                           alt={article.title}
                           fill
@@ -231,6 +232,7 @@ export default function LatestStoriesHero({ articles = [] }: LatestStoriesHeroPr
                     width={400}
                     height={300}
                     className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                    unoptimized
                   />
                 </Link>
               </motion.aside>

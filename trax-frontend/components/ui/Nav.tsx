@@ -671,6 +671,7 @@ export default function Nav() {
                       width={400}
                       height={300}
                       className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                      unoptimized
                     />
                   </Link>
                 </div>

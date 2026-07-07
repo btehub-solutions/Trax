@@ -257,6 +257,7 @@ export default function EventsPage() {
                         height={600}
                         className="w-full h-auto block transition-transform duration-500 hover:scale-[1.02]"
                         priority
+                        unoptimized
                       />
                     </div>
                   </div>
@@ -344,6 +345,7 @@ export default function EventsPage() {
                       height={600}
                       className="w-full h-auto block transition-transform duration-500 group-hover:scale-105"
                       priority
+                      unoptimized
                     />
                   </div>
 

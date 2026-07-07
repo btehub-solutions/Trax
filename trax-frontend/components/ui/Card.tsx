@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import Link from 'next/link'
 import type { Article } from '@/lib/articles'
+import SafeImage from '@/components/ui/SafeImage'
 
 interface CardProps {
   article: Article
@@ -40,7 +40,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
           style={{ borderColor: 'var(--border)' }}
         >
           <div className="relative w-24 h-20 shrink-0 overflow-hidden rounded-md">
-            <Image
+            <SafeImage
               src={article.image}
               alt={article.title}
               fill
@@ -83,7 +83,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
       }}
       >
         <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden rounded-md">
-          <Image
+          <SafeImage
             src={article.image}
             alt={article.title}
             fill
@@ -138,7 +138,7 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
     >
       {/* Image */}
       <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden shrink-0 rounded-md">
-        <Image
+        <SafeImage
           src={article.image}
           alt={article.title}
           fill

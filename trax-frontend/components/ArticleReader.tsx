@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import SafeImage from '@/components/ui/SafeImage'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Clock, User, Bookmark, Share2, Link2, Check, ChevronRight, Tag } from 'lucide-react'
@@ -128,7 +129,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
       >
         {/* ── Hero image ───────────────────────────────────────────────── */}
         <motion.div variants={fadeUp} className="relative w-full" style={{ height: 'clamp(300px, 48vw, 620px)' }}>
-          <Image
+          <SafeImage
             src={article.image}
             alt={article.title}
             fill
