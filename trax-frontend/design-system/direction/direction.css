@@ -1441,6 +1441,13 @@ html.dark .ds-masthead__stroke-text {
   padding: var(--space-8) var(--space-container-x) 0;
 }
 
+@media (max-width: 640px) {
+  .ds-article-reader__layout {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 .ds-article-reader__header {
   margin-bottom: var(--space-8);
 }
@@ -1609,6 +1616,15 @@ html.dark .ds-masthead__stroke-text {
   border: 1px solid var(--neutral-border);
   border-radius: var(--radius-md);
   transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+
+@media (max-width: 640px) {
+  .ds-article-reader__share {
+    gap: var(--space-1);
+  }
+  .ds-article-reader__share-btn {
+    padding: 0.35rem var(--space-2);
+  }
 }
 
 .ds-article-reader__share-btn:hover {

@@ -180,7 +180,6 @@ export default function ArticleReader({ article, related, prev, next }: ArticleR
                 <AuthorAvatar name={article.author} src={article.authorAvatar} size="md" />
                 <div>
                   <p className="ds-article-reader__author-name">{article.author}</p>
-                  <p className="type-meta">{article.authorRole || 'Trax Editorial'}</p>
                 </div>
               </div>
 
@@ -256,7 +255,14 @@ export default function ArticleReader({ article, related, prev, next }: ArticleR
               className={`ds-article-reader__share-btn${copied ? ' is-copied' : ''}`}
             >
               {copied ? <Check size={13} /> : <Link2 size={13} />}
-              {copied ? 'Copied' : 'Copy link'}
+              {copied ? (
+                'Copied'
+              ) : (
+                <>
+                  <span className="sm:hidden">Copy</span>
+                  <span className="hidden sm:inline">Copy link</span>
+                </>
+              )}
             </button>
           </motion.div>
 
