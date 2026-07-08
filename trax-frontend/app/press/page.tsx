@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import PressPageLayout from '@/components/ui/PressPageLayout'
-import { fetchPressPageData, REVALIDATE_SECONDS } from '@/lib/server-api'
+import { fetchPressPageData } from '@/lib/server-api'
 import { pageMetadata } from '@/lib/seo'
 
-export const revalidate = REVALIDATE_SECONDS
+export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
   title: 'Press Room',

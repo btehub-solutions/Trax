@@ -2,9 +2,7 @@ import type { Metadata } from 'next'
 import CategoryPageLayout, { type CategoryFilter } from '@/components/CategoryPageLayout'
 import { getDbArticles } from '@/lib/api'
 import { pageMetadata } from '@/lib/seo'
-import { REVALIDATE_SECONDS } from '@/lib/server-api'
-
-export const revalidate = REVALIDATE_SECONDS
+export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
   title: 'Ogun State Tech Pioneers & Interviews',

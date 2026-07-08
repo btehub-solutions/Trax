@@ -4,9 +4,7 @@ import PlatformPageShell from '@/components/ui/PlatformPageShell'
 import PlatformPageIntro from '@/components/ui/PlatformPageIntro'
 import { SectionBand, SectionMarker } from '@/design-system/components'
 import { pageMetadata } from '@/lib/seo'
-import { REVALIDATE_SECONDS } from '@/lib/server-api'
-
-export const revalidate = REVALIDATE_SECONDS
+export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
   title: 'About Trax',

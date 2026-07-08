@@ -6,9 +6,9 @@ import PressRoomSection from '@/components/ui/PressRoomSection'
 import { SectionBand } from '@/design-system/components'
 import { resolveHomeArticles } from '@/lib/demoArticles'
 import { resolveHeroStack } from '@/lib/heroArticles'
-import { fetchArticles, fetchPressArticles, REVALIDATE_SECONDS } from '@/lib/server-api'
+import { fetchArticles, fetchPressArticles } from '@/lib/server-api'
 
-export const revalidate = REVALIDATE_SECONDS
+export const revalidate = 60
 
 export default async function HomePage() {
   const [rawArticles, press] = await Promise.all([
