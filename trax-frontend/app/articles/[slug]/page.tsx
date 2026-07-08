@@ -6,11 +6,10 @@ import {
   fetchArticleBySlug,
   fetchArticles,
   getRelatedArticles,
-  REVALIDATE_SECONDS,
 } from '@/lib/server-api'
 import { articleJsonLd, pageMetadata } from '@/lib/seo'
 
-export const revalidate = REVALIDATE_SECONDS
+export const revalidate = 60
 
 export async function generateMetadata({
   params,

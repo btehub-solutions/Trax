@@ -6,9 +6,7 @@ import { Providers } from '@/components/providers/Providers'
 import ConditionalLayout from '@/components/ui/ConditionalLayout'
 import JsonLd from '@/components/seo/JsonLd'
 import { defaultMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo'
-import { REVALIDATE_SECONDS } from '@/lib/server-api'
-
-export const revalidate = REVALIDATE_SECONDS
+export const revalidate = 60
 
 const fraunces = Fraunces({
   subsets: ['latin'],

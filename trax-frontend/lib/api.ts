@@ -87,6 +87,12 @@ export async function getDbArticlesBySlugs(slugs: string[]): Promise<Article[]> 
   return merged;
 }
 
+/** Quick health-check – resolves if the API responds, rejects otherwise. */
+export async function getApiHealth(): Promise<void> {
+  const res = await fetch(`${BASE_URL}/health`, { method: 'GET' });
+  if (!res.ok) throw new Error('API health-check failed');
+}
+
 // Re-export for client-side fallbacks
 export { mapApiArticle };
 export type { Article };
