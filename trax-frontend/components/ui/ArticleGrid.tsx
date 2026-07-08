@@ -1,11 +1,21 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
-import Card from '@/components/ui/Card'
+import SectionMarker from '@/design-system/components/SectionMarker'
+import { Icon } from '@/design-system/icons'
 import type { Article } from '@/lib/articles'
-import { ArrowRight } from 'lucide-react'
 import AdSlot from '@/components/AdSlot'
+import { ADS_ENABLED } from '@/lib/ads'
+import Card from '@/components/ui/Card'
+import {
+  fadeUpSoft,
+  staggerGrid,
+  viewportEditorial,
+  viewportGrid,
+} from '@/design-system/motion'
+import { useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
 
 interface ArticleGridProps {
   title: string
@@ -14,11 +24,40 @@ interface ArticleGridProps {
   variant?: 'default' | 'featured-first'
   id?: string
   viewAllHref?: string
+  embedded?: boolean
 }
 
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+function SectionHeader({
+  title,
+  subtitle,
+  viewAllHref,
+}: {
+  title: string
+  subtitle?: string
+  viewAllHref: string
+}) {
+  const header = useMotionVariants(fadeUpSoft, 'fadeUpSoft')
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportEditorial}
+      variants={header}
+      className="ds-home-section__header"
+    >
+      <SectionMarker
+        title={title}
+        subtitle={subtitle}
+        action={
+          <Link href={viewAllHref} className="ds-accent-link ds-home-section__action">
+            View all
+            <Icon name="arrow-right" size="xs" />
+          </Link>
+        }
+      />
+    </motion.div>
+  )
 }
 
 export default function ArticleGrid({
@@ -28,118 +67,54 @@ export default function ArticleGrid({
   variant = 'default',
   id,
   viewAllHref = '/news',
+  embedded = false,
 }: ArticleGridProps) {
-  if (variant === 'featured-first') {
-    const [featured, ...rest] = articles
-    return (
-      <section className="section" id={id} style={{ backgroundColor: 'var(--bg)' }}>
-        <div className="container">
-          {/* Section Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="flex items-end justify-between mb-8 border-t pt-8"
-            style={{ borderColor: 'var(--border)' }}
-          >
-            <div>
-              <h2
-                className="text-2xl md:text-3xl font-extrabold"
-                style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
-              >
-                {title}
-              </h2>
-              {subtitle && (
-                <p className="mt-2 text-sm" style={{ color: 'var(--fg-muted)' }}>
-                  {subtitle}
-                </p>
-              )}
-            </div>
-            <Link
-              href={viewAllHref}
-              className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[var(--accent)] group"
-              style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
-            >
-              <span>View all</span>
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-            </Link>
-          </motion.div>
+  const Wrapper = embedded ? 'div' : 'section'
+  const wrapperClass = embedded ? '' : 'section ds-band'
+  const container = useMotionVariants(staggerGrid, 'staggerGrid')
 
-          {/* Layout: big featured left + sidebar right */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2">
-              {featured && <Card article={featured} variant="featured" />}
+  const content =
+    variant === 'featured-first' ? (
+      <>
+        <SectionHeader title={title} subtitle={subtitle} viewAllHref={viewAllHref} />
+        <div className="ds-home-briefing">
+          <div className="ds-home-briefing__lead">
+            {articles[0] && <Card article={articles[0]} variant="featured" />}
+          </div>
+          <div className="ds-home-briefing__side">
+            <div className="ds-home-briefing__compact-list">
+              {articles.slice(1, ADS_ENABLED ? 4 : 5).map((article, i) => (
+                <Card key={article.id} article={article} variant="compact" index={i} />
+              ))}
             </div>
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col divide-y" style={{ borderColor: 'var(--border)' }}>
-                {rest.slice(0, 3).map((article, i) => (
-                  <Card key={article.id} article={article} variant="compact" index={i} />
-                ))}
-              </div>
-              {/* Sidebar Square Ad */}
-              <div className="pt-6 border-t flex justify-center" style={{ borderColor: 'var(--border)' }}>
+            {ADS_ENABLED && (
+              <div className="ds-home-briefing__ad">
                 <AdSlot size="rectangle" label="Sponsor Advertisement" />
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  return (
-    <section
-      className="section"
-      id={id}
-      style={{ backgroundColor: 'var(--bg)' }}
-    >
-      <div className="container">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="flex items-end justify-between mb-8 border-t pt-8"
-          style={{ borderColor: 'var(--border)' }}
-        >
-          <div>
-            <h2
-              className="text-2xl md:text-3xl font-extrabold"
-              style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
-            >
-              {title}
-            </h2>
-            {subtitle && (
-              <p className="mt-2 text-sm" style={{ color: 'var(--fg-muted)' }}>
-                {subtitle}
-              </p>
             )}
           </div>
-          <Link
-            href={viewAllHref}
-            className="hidden md:flex items-center gap-1.5 text-sm font-extrabold uppercase transition-colors hover:text-[var(--accent)] group"
-            style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
-          >
-            <span>View all</span>
-            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-          </Link>
-        </motion.div>
-
-        {/* Grid */}
+        </div>
+      </>
+    ) : (
+      <>
+        <SectionHeader title={title} subtitle={subtitle} viewAllHref={viewAllHref} />
         <motion.div
-          variants={containerVariants}
+          variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
+          viewport={viewportGrid}
+          className="ds-grid md:grid-cols-2 lg:grid-cols-3"
         >
-          {articles.map((article, i) => (
-            <Card key={article.id} article={article} index={i} />
+          {articles.map((article) => (
+            <Card key={article.id} article={article} staggered />
           ))}
         </motion.div>
-      </div>
-    </section>
+      </>
+    )
+
+  return (
+    <Wrapper id={id} className={wrapperClass}>
+      <div className="container">{content}</div>
+    </Wrapper>
   )
 }

@@ -1,51 +1,36 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
-import { Oxanium, DM_Sans } from 'next/font/google'
+import { Fraunces, Instrument_Sans, Space_Mono } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/providers/Providers'
 import ConditionalLayout from '@/components/ui/ConditionalLayout'
+import JsonLd from '@/components/seo/JsonLd'
+import { defaultMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo'
+import { REVALIDATE_SECONDS } from '@/lib/server-api'
 
-const oxanium = Oxanium({
+export const revalidate = REVALIDATE_SECONDS
+
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-oxanium',
-  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-fraunces',
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
+const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
-  variable: '--font-dm-sans',
-  weight: ['300', '400', '500', '600', '700'],
-  style: ['normal', 'italic'],
+  variable: '--font-instrument-sans',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
-export const metadata: Metadata = {
-  title: "Trax | Tracking Ogun State's Tech Movement",
-  description:
-    "Ogun State's tech news and startup media platform, covering startups, funding rounds, research breakthroughs, and the people building the Ogun State's tech future.",
-  keywords: [
-    'Ogun State Tech',
-    'Nigeria tech',
-    'Ogun State startups',
-    'technology Ogun State',
-    'Abeokuta tech',
-    'tech media Ogun State',
-  ],
-  openGraph: {
-    title: 'Trax',
-    description: "Tracking Ogun State's Tech Movement",
-    type: 'website',
-    locale: 'en_NG',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Trax | Tracking Ogun State's Tech Movement",
-    description: "Ogun State's tech news and startup media platform.",
-    site: '@traxnewsng',
-    creator: '@traxnewsng',
-  },
-}
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  variable: '--font-space-mono',
+  weight: ['400', '700'],
+  display: 'swap',
+})
+
+export const metadata: Metadata = defaultMetadata
 
 export default function RootLayout({
   children,
@@ -57,29 +42,35 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`${oxanium.variable} ${dmSans.variable}`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('trax-theme');var d=t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className={`${fraunces.variable} ${instrumentSans.variable} ${spaceMono.variable} font-ui antialiased`}>
+        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
+
         {gaId && (
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
-            <Script id="google-analytics" strategy="afterInteractive">
+            <Script id="google-analytics" strategy="lazyOnload">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-
-                gtag('config', '${gaId}', {
-                  page_path: window.location.pathname,
-                });
+                gtag('config', '${gaId}', { page_path: window.location.pathname });
               `}
             </Script>
           </>
         )}
 
         {clarityId && (
-          <Script id="microsoft-clarity" strategy="afterInteractive">
+          <Script id="microsoft-clarity" strategy="lazyOnload">
             {`
               (function(c,l,a,r,i,t,y){
                   c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

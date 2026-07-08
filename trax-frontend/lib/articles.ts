@@ -9,6 +9,7 @@ export interface Article {
   authorAvatar?: string | null
   officialLink?: string | null
   date: string
+  publishedAt?: string
   readTime: string
   image: string
   featured?: boolean
@@ -18,16 +19,8 @@ export interface Article {
 
 export const articles: Article[] = []
 
-export const breakingHeadlines: string[] = []
-
-export const navLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'News', href: '/news' },
-  { label: 'Startups', href: '/startups' },
-  { label: 'Ecosystem', href: '/ecosystem' },
-  { label: 'Events', href: '/events' },
-  { label: 'Press Room', href: '/press' },
-]
+export { navLinks } from '@/lib/navigation'
+export type { NavLink } from '@/lib/navigation'
 
 export const topicPills = [
   'Startups', 'AgriTech', 'FinTech', 'HealthTech',

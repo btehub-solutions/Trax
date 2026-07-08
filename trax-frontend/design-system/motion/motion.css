@@ -1,0 +1,103 @@
+/**
+ * Trax Motion Tokens (CSS)
+ * Durations + easing for non-JS micro-interactions
+ */
+
+:root {
+  --motion-instant: 100ms;
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-moderate: 400ms;
+  --motion-editorial: 550ms;
+  --motion-slow: 700ms;
+  --motion-dramatic: 850ms;
+
+  --motion-stagger-tight: 50ms;
+  --motion-stagger-base: 80ms;
+  --motion-stagger-loose: 120ms;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-snap: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+/* ─── CSS-only micro interactions ─── */
+.ds-motion-hover {
+  transition:
+    transform var(--motion-base) var(--ease-snap),
+    opacity var(--motion-fast) var(--ease-snap),
+    color var(--motion-fast) var(--ease-snap),
+    border-color var(--motion-fast) var(--ease-snap),
+    box-shadow var(--motion-base) var(--ease-editorial);
+}
+
+.ds-motion-hover:hover {
+  transform: translateY(-2px);
+}
+
+.ds-motion-image {
+  transition: transform var(--motion-slow) var(--ease-editorial);
+}
+
+.group:hover .ds-motion-image {
+  transform: scale(1.04);
+}
+
+.ds-motion-link {
+  transition: color var(--motion-fast) var(--ease-snap);
+}
+
+.ds-motion-fade-in {
+  animation: dsFadeIn var(--motion-moderate) var(--ease-editorial) forwards;
+}
+
+.ds-motion-slide-up {
+  animation: dsSlideUp var(--motion-editorial) var(--ease-editorial) forwards;
+}
+
+@keyframes dsFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dsSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Masthead rule draw */
+.ds-masthead__rule {
+  transform-origin: left center;
+}
+
+/* Reduced motion — respect user preference */
+@media (prefers-reduced-motion: reduce) {
+  .ds-motion-hover:hover {
+    transform: none;
+  }
+
+  .group:hover .ds-motion-image {
+    transform: none;
+  }
+
+  .ds-motion-fade-in,
+  .ds-motion-slide-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,109 +1,59 @@
 import type { Metadata } from 'next'
-import NewsletterBanner from '@/components/NewsletterBanner'
-import { Sparkles, Mail, FileText, TrendingUp, ShieldCheck } from 'lucide-react'
+import PlatformPageShell from '@/components/ui/PlatformPageShell'
+import PlatformPageIntro from '@/components/ui/PlatformPageIntro'
+import NewsletterSection from '@/components/ui/NewsletterSection'
+import { SectionBand } from '@/design-system/components'
 
 export const metadata: Metadata = {
   title: 'TRAX Newsletter | Ogun State Tech Weekly',
-  description: 'Subscribe to Ogun State\'s premier tech newsletter. Weekly insights on startups, funding, tools, and research delivered to your inbox.',
+  description:
+    "Subscribe to Ogun State's premier tech newsletter. Weekly insights on startups, funding, tools, and research delivered to your inbox.",
 }
 
-export default function NewsletterPage() {
-  const benefits = [
-    {
-      icon: FileText,
-      title: 'Weekly Startup Reports',
-      desc: "Granular breakdown of Ogun State's AI startup launches, funding transactions, and corporate deals.",
-    },
-    {
-      icon: TrendingUp,
-      title: 'Ecosystem Radar',
-      desc: 'Updates on digital policy, technology hub events, and regional ecosystem initiatives.',
-    },
-    {
-      icon: Sparkles,
-      title: 'Builder Spotlights',
-      desc: 'Deep insights and interviews with local founders, developers, and teams building from the ground up.',
-    },
-    {
-      icon: ShieldCheck,
-      title: 'No Spam Guarantee',
-      desc: 'We publish strictly once a week. Your email is encrypted and never shared.',
-    },
-  ]
+const benefits = [
+  {
+    title: 'Weekly startup reports',
+    desc: "Granular breakdown of startup launches, funding transactions, and corporate deals across Ogun State.",
+  },
+  {
+    title: 'Ecosystem radar',
+    desc: 'Updates on digital policy, hub events, and regional ecosystem initiatives.',
+  },
+  {
+    title: 'Builder spotlights',
+    desc: 'Deep insights and interviews with local founders, developers, and teams building from the ground up.',
+  },
+  {
+    title: 'No spam guarantee',
+    desc: 'We publish strictly once a week. Your email is encrypted and never shared.',
+  },
+] as const
 
+export default function NewsletterPage() {
   return (
-    <div className="relative pt-28 pb-20 min-h-screen overflow-hidden" style={{ backgroundColor: 'var(--bg)' }}>
-      {/* Background patterns */}
-      <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
-      <div 
-        className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full blur-[140px] pointer-events-none opacity-[0.14]"
-        style={{ background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)' }}
+    <PlatformPageShell showNewsletter={false}>
+      <PlatformPageIntro
+        label="Subscribe"
+        title="Get Ogun State's tech pulse in your inbox"
+        description="Join the growing tech community — one weekly briefing with the stories, deals, and people shaping the corridor."
       />
 
-      <div className="container relative z-10 max-w-5xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
-          {/* Left Column: Copy & Benefits */}
-          <div className="lg:col-span-6">
-            <span
-              className="inline-block text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full text-white mb-4"
-              style={{ backgroundColor: 'var(--accent)' }}
-            >
-              SUBSCRIBE
-            </span>
-            <h1
-              className="font-extrabold tracking-tight mb-6"
-              style={{
-                fontFamily: 'var(--font-oxanium)',
-                fontSize: 'clamp(2rem, 5vw, 3rem)',
-                color: 'var(--fg)',
-                lineHeight: 1.1,
-              }}
-            >
-              Get Ogun State&apos;s Tech Pulse in Your Inbox
-            </h1>
-            <p
-              className="text-base mb-10 leading-relaxed"
-              style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-            >
-              Join Ogun State&apos;s growing tech community.
-            </p>
-
-            <div className="space-y-6" style={{ fontFamily: 'var(--font-dm-sans)' }}>
-              {benefits.map((benefit, i) => {
-                const Icon = benefit.icon
-                return (
-                  <div key={i} className="flex gap-4 items-start">
-                    <div
-                      className="w-8 h-8 rounded-lg shrink-0 flex items-center justify-center border"
-                      style={{
-                        backgroundColor: 'var(--card-bg)',
-                        borderColor: 'var(--card-border)',
-                      }}
-                    >
-                      <Icon size={14} style={{ color: 'var(--accent)' }} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm font-bold text-white" style={{ color: 'var(--fg)' }}>{benefit.title}</h3>
-                      <p className="text-xs mt-1" style={{ color: 'var(--fg-muted)' }}>{benefit.desc}</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Right Column: Sign up form Card */}
-          <div className="lg:col-span-6">
-            <NewsletterBanner
-              headline="Stay ahead of the curve"
-              subtext="Weekly dispatches on Ogun State's AI, free, no spam, unsubscribe anytime."
-              variant="card"
-            />
-          </div>
-
+      <SectionBand variant="tint">
+        <div className="container ds-platform-newsletter">
+          <ul className="ds-platform-newsletter__benefits">
+            {benefits.map((benefit) => (
+              <li key={benefit.title} className="ds-premium-panel">
+                <p className="ds-category-label">{benefit.title}</p>
+                <p className="type-excerpt">{benefit.desc}</p>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </div>
+      </SectionBand>
+
+      <SectionBand variant="muted">
+        <NewsletterSection />
+      </SectionBand>
+    </PlatformPageShell>
   )
 }

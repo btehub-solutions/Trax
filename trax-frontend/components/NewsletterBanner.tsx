@@ -115,7 +115,7 @@ export default function NewsletterBanner({
             viewport={{ once: true }}
             transition={{ delay: 0.15, duration: 0.4 }}
             className="text-xs font-bold tracking-[0.2em] uppercase mb-3 flex items-center justify-center gap-1.5"
-            style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-oxanium)' }}
+            style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-family-editorial)' }}
           >
             <Sparkles size={11} />
             Newsletter
@@ -129,7 +129,7 @@ export default function NewsletterBanner({
             transition={{ delay: 0.2, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="font-bold mb-3"
             style={{
-              fontFamily:    'var(--font-oxanium)',
+              fontFamily:    'var(--font-family-editorial)',
               color:         isBanner ? '#FFFFFF' : 'var(--fg)',
               fontSize:      'clamp(1.4rem, 3vw, 2rem)',
               lineHeight:    1.15,
@@ -148,7 +148,7 @@ export default function NewsletterBanner({
             className="text-sm mb-8"
             style={{
               color:       isBanner ? 'rgba(255,255,255,0.55)' : 'var(--fg-muted)',
-              fontFamily:  'var(--font-dm-sans)',
+              fontFamily:  'var(--font-family-ui)',
               lineHeight:  1.65,
             }}
           >
@@ -186,7 +186,7 @@ export default function NewsletterBanner({
                         : 'var(--bg)',
                       border:     `1px solid ${error ? '#EF4444' : isBanner ? 'rgba(255,255,255,0.15)' : 'var(--border)'}`,
                       color:      isBanner ? '#F0F0F0' : 'var(--fg)',
-                      fontFamily: 'var(--font-dm-sans)',
+                      fontFamily: 'var(--font-family-ui)',
                       fontSize:   '16px', // prevents iOS Safari auto-zoom on focus
                     }}
                     onFocus={(e) => {
@@ -216,7 +216,7 @@ export default function NewsletterBanner({
                   className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white shrink-0 transition-colors duration-200"
                   style={{
                     backgroundColor: 'var(--accent)',
-                    fontFamily:      'var(--font-dm-sans)',
+                    fontFamily:      'var(--font-family-ui)',
                     cursor:          loading ? 'wait' : 'pointer',
                     boxShadow:       '0 4px 14px rgba(255, 26, 26, 0.35)',
                   }}
@@ -255,7 +255,7 @@ export default function NewsletterBanner({
                 <CheckCircle size={22} color="#10B981" />
                 <p
                   className="font-medium text-base"
-                  style={{ color: '#10B981', fontFamily: 'var(--font-dm-sans)' }}
+                  style={{ color: '#10B981', fontFamily: 'var(--font-family-ui)' }}
                 >
                   You&apos;re subscribed! First issue hits your inbox soon.
                 </p>
@@ -271,7 +271,7 @@ export default function NewsletterBanner({
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-3 text-xs text-center"
-              style={{ color: '#EF4444', fontFamily: 'var(--font-dm-sans)' }}
+              style={{ color: '#EF4444', fontFamily: 'var(--font-family-ui)' }}
             >
               {error}
             </motion.p>
@@ -283,7 +283,7 @@ export default function NewsletterBanner({
               className="mt-4 text-[11px]"
               style={{
                 color:      isBanner ? 'rgba(255,255,255,0.28)' : 'var(--fg-subtle)',
-                fontFamily: 'var(--font-dm-sans)',
+                fontFamily: 'var(--font-family-ui)',
               }}
             >
               Join Ogun State&apos;s growing tech community. Unsubscribe any time.

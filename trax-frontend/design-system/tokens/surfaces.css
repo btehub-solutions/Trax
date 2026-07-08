@@ -1,0 +1,120 @@
+/**
+ * Trax Surface + Radius Tokens (CSS)
+ * Keep in sync with surfaces.ts
+ */
+
+:root {
+  /* ─── Radius ─── */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+  --radius-card: var(--radius-md);
+
+  /* ─── Surfaces (light) ─── */
+  --surface-page:    var(--neutral-bg);
+  --surface-section: var(--neutral-bg-subtle);
+  --surface-card:    var(--neutral-bg-elevated);
+  --surface-card-hover: var(--neutral-bg-muted);
+  --surface-nav:     var(--brand-primary);
+  --surface-nav-text: #FFFFFF;
+  --surface-nav-text-muted: rgba(255, 255, 255, 0.78);
+  --surface-nav-border: rgba(0, 0, 0, 0.14);
+  --surface-nav-active-bg: rgba(255, 255, 255, 0.16);
+  --surface-footer:  var(--neutral-bg-subtle);
+  --surface-panel:   var(--neutral-bg-muted);
+  --surface-input:   var(--neutral-bg-muted);
+  --surface-overlay: rgba(9, 9, 11, 0.45);
+  --surface-inverse: var(--neutral-bg-inverse);
+  --surface-inverse-text: #FFFFFF;
+
+  --surface-card-border:       var(--neutral-border);
+  --surface-card-border-hover: var(--neutral-border-strong);
+  --surface-divider:           var(--neutral-border);
+}
+
+.dark {
+  --surface-page:    var(--neutral-bg);
+  --surface-section: var(--neutral-bg-subtle);
+  --surface-card:    var(--neutral-bg-elevated);
+  --surface-card-hover: #2A2A2A;
+  /* Keep red nav in dark — newsflash brand bar, same as light */
+  --surface-nav:     var(--brand-primary);
+  --surface-nav-text: #FFFFFF;
+  --surface-nav-text-muted: rgba(255, 255, 255, 0.78);
+  --surface-nav-border: rgba(0, 0, 0, 0.2);
+  --surface-nav-active-bg: rgba(255, 255, 255, 0.16);
+  --surface-footer:  var(--neutral-bg-subtle);
+  --surface-panel:   var(--neutral-bg-muted);
+  --surface-input:   var(--neutral-bg-muted);
+  --surface-overlay: rgba(0, 0, 0, 0.65);
+  --surface-inverse: #FFFFFF;
+  --surface-inverse-text: #111111;
+
+  /* Barely visible on charcoal — never white */
+  --surface-card-border:       #161616;
+  --surface-card-border-hover: #222222;
+  --surface-divider:           #161616;
+}
+
+/* Footer inverse — always dark (newsflash), independent of page theme */
+:root,
+.dark {
+  --surface-footer-inverse: #0C1222;
+  --surface-footer-inverse-text: #F4F4F5;
+  --surface-footer-inverse-muted: rgba(244, 244, 245, 0.72);
+  --surface-footer-inverse-subtle: rgba(244, 244, 245, 0.5);
+  --surface-footer-inverse-border: rgba(255, 255, 255, 0.1);
+}
+
+/* ─── Card utility classes ─── */
+.ds-card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--surface-card-border);
+  border-radius: var(--radius-card);
+  transition: box-shadow var(--motion-base) var(--ease-editorial),
+    border-color var(--motion-fast) var(--ease-snap),
+    transform var(--motion-base) var(--ease-snap);
+}
+
+.ds-card--elevated {
+  box-shadow: var(--shadow-card);
+}
+
+.ds-card--elevated:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--surface-card-border-hover);
+}
+
+.ds-card--outline {
+  box-shadow: var(--shadow-none);
+}
+
+.ds-card--outline:hover {
+  border-color: var(--surface-card-border-hover);
+}
+
+.ds-card--flat {
+  border: none;
+  border-radius: 0;
+  box-shadow: var(--shadow-none);
+  border-bottom: 1px solid var(--surface-divider);
+}
+
+.ds-card--featured {
+  box-shadow: var(--shadow-md);
+}
+
+.ds-card--featured:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.ds-card--interactive {
+  cursor: pointer;
+}
+
+.ds-card--interactive:hover {
+  background-color: var(--surface-card-hover);
+}

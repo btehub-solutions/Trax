@@ -1,102 +1,120 @@
+@import '../design-system/colors/brand.css';
+@import '../design-system/tokens/shadows.css';
+@import '../design-system/colors/neutral.css';
+@import '../design-system/colors/semantic.css';
+@import '../design-system/tokens/surfaces.css';
+@import '../design-system/tokens/spacing.css';
+@import '../design-system/typography/typography.css';
+@import '../design-system/direction/direction.css';
+@import '../design-system/icons/icons.css';
+@import '../design-system/motion/motion.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Theme Variables (CSS custom properties) ─── */
+/* ─── Theme Variables (legacy aliases → design-system tokens) ─── */
 :root {
   /* Background */
-  --bg:         #1A0A0D;
-  --bg-alt:     #120608;
-  /* Foreground */
-  --fg:         #FFFFFF;
-  --fg-muted:   #EAE4E7;
-  --fg-subtle:  #B09EA7;
+  --bg:         var(--neutral-bg);
+  --bg-alt:     var(--neutral-bg-subtle);
+  /* Foreground / typography */
+  --fg:         var(--neutral-text-primary);
+  --fg-muted:   var(--neutral-text-secondary);
+  --fg-subtle:  var(--neutral-text-muted);
   /* Borders */
-  --border:     rgba(255, 26, 26, 0.12);
-  /* Cards */
-  --card-bg:    #2D1016;
-  --card-border:rgba(255, 255, 255, 0.08);
-  --badge-bg:   #120406;
+  --border:     var(--neutral-border);
+  /* Cards & surfaces */
+  --card-bg:    var(--surface-card);
+  --card-border:var(--surface-card-border);
+  --badge-bg:   var(--surface-panel);
   /* Nav / Footer */
-  --nav-bg:     rgba(26, 10, 13, 0.95);
-  --footer-bg:  rgba(26, 10, 13, 0.95);
-  /* Shadows */
-  --shadow-sm:    0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
-  --shadow-md:    0 4px 20px rgba(0,0,0,0.05), 0 2px 8px rgba(0,0,0,0.03);
-  --shadow-lg:    0 12px 40px rgba(0,0,0,0.08);
-  --shadow-hover: 0 16px 48px rgba(0,0,0,0.1);
-  /* Brand */
-  --accent:       #FF1A1A;
-  --accent-hover: #FF4D4D;
-  --accent-bright: #FF1A1A;
-  --accent-bright-hover: #FF4D4D;
-  --accent-gradient: linear-gradient(135deg, #FF1A1A 0%, #99000A 100%);
+  --nav-bg:     var(--surface-nav);
+  --nav-text:   var(--surface-nav-text);
+  --nav-text-muted: var(--surface-nav-text-muted);
+  --nav-border: var(--surface-nav-border);
+  --nav-active-bg: var(--surface-nav-active-bg);
+  --footer-bg:  var(--surface-footer);
+  /* Brand (legacy aliases) */
+  --accent:              var(--brand-primary);
+  --accent-hover:        var(--brand-primary-hover);
+  --accent-bright:       var(--brand-primary);
+  --accent-bright-hover: var(--brand-primary-hover);
+  --accent-text:         var(--brand-text-accent);
+  --accent-text-hover:   var(--brand-text-accent-hover);
+  --accent-gradient:     var(--brand-gradient);
 }
 
 /* ─── Dark mode ─── */
 .dark {
-  --bg:         #09090B;
-  --bg-alt:     #121215;
-  --fg:         #F4F4F5;
-  --fg-muted:   #D4D4D8;
-  --fg-subtle:  #A19C9F;
-  --border:     rgba(255, 26, 26, 0.09);
-  --card-bg:    #181316;
-  --card-border:rgba(255, 255, 255, 0.09);
-  --badge-bg:   #1C1215;
-  --nav-bg:     rgba(20, 20, 23, 0.90);
-  --footer-bg:  rgba(20, 20, 23, 0.90);
-  --shadow-sm:    0 1px 2px rgba(0,0,0,0.5);
-  --shadow-md:    0 8px 30px rgba(0,0,0,0.6);
-  --shadow-lg:    0 16px 48px rgba(0,0,0,0.7);
-  --shadow-hover: 0 20px 60px rgba(0,0,0,0.8);
+  --bg:         var(--neutral-bg);
+  --bg-alt:     var(--neutral-bg-subtle);
+  --fg:         var(--neutral-text-primary);
+  --fg-muted:   var(--neutral-text-secondary);
+  --fg-subtle:  var(--neutral-text-muted);
+  --border:     var(--neutral-border);
+  --card-bg:    var(--surface-card);
+  --card-border:var(--surface-card-border);
+  --badge-bg:   var(--surface-panel);
+  --nav-bg:     var(--surface-nav);
+  --nav-text:   var(--surface-nav-text);
+  --nav-text-muted: var(--surface-nav-text-muted);
+  --nav-border: var(--surface-nav-border);
+  --nav-active-bg: var(--surface-nav-active-bg);
+  --footer-bg:  var(--surface-footer);
+  --accent-bright:       var(--brand-on-dark);
+  --accent-bright-hover: var(--brand-on-dark-hover);
+  --accent:              var(--brand-text-accent);
+  --accent-hover:        var(--brand-text-accent-hover);
+  --accent-text:         var(--brand-text-accent);
+  --accent-text-hover:   var(--brand-text-accent-hover);
 }
 
 /* ─── Dashboard Variables ─── */
 :root {
-  --dash-bg:         var(--bg);
-  --dash-sidebar:    rgba(255, 255, 255, 0.035);
-  --dash-sidebar-border: var(--border);
-  --dash-card:       rgba(255, 255, 255, 0.045);
-  --dash-card-border:var(--border);
-  --dash-input:      rgba(255, 255, 255, 0.06);
-  --dash-input-border:var(--border);
-  --dash-thead:      rgba(255, 255, 255, 0.05);
-  --dash-fg:         var(--fg);
-  --dash-fg-secondary: var(--fg-muted);
-  --dash-fg-muted:   var(--fg-subtle);
-  --dash-fg-subtle:  var(--fg-subtle);
-  --dash-divider:    var(--border);
-  --dash-hover:      rgba(255, 26, 26, 0.08);
-  --dash-badge-bg:   rgba(255,255,255,0.06);
-  --dash-badge-border:var(--border);
-  --dash-badge-text: var(--fg-muted);
-  --dash-avatar-border:var(--border);
-  --dash-user-card:  rgba(255,255,255,0.055);
-  --dash-user-card-border:var(--border);
+  --dash-bg:         var(--neutral-bg);
+  --dash-sidebar:    var(--neutral-bg-subtle);
+  --dash-sidebar-border: var(--neutral-border);
+  --dash-card:       var(--surface-card);
+  --dash-card-border:var(--surface-card-border);
+  --dash-input:      var(--surface-input);
+  --dash-input-border:var(--neutral-border);
+  --dash-thead:      var(--neutral-bg-muted);
+  --dash-fg:         var(--neutral-text-primary);
+  --dash-fg-secondary: var(--neutral-text-secondary);
+  --dash-fg-muted:   var(--neutral-text-muted);
+  --dash-fg-subtle:  var(--neutral-text-subtle);
+  --dash-divider:    var(--neutral-border);
+  --dash-hover:      var(--brand-primary-muted);
+  --dash-badge-bg:   var(--neutral-bg-muted);
+  --dash-badge-border:var(--neutral-border);
+  --dash-badge-text: var(--neutral-text-secondary);
+  --dash-avatar-border:var(--neutral-border);
+  --dash-user-card:  var(--neutral-bg-elevated);
+  --dash-user-card-border:var(--neutral-border);
 }
 
 .dark {
-  --dash-bg:         var(--bg);
-  --dash-sidebar:    rgba(255,255,255,0.035);
-  --dash-sidebar-border: var(--border);
-  --dash-card:       rgba(255,255,255,0.045);
-  --dash-card-border:var(--card-border);
-  --dash-input:      rgba(255,255,255,0.06);
-  --dash-input-border:var(--border);
-  --dash-thead:      rgba(255,255,255,0.05);
-  --dash-fg:         var(--fg);
-  --dash-fg-secondary: var(--fg-muted);
-  --dash-fg-muted:   var(--fg-subtle);
-  --dash-fg-subtle:  var(--fg-subtle);
-  --dash-divider:    var(--border);
-  --dash-hover:      rgba(255, 26, 26, 0.08);
-  --dash-badge-bg:   rgba(255,255,255,0.06);
-  --dash-badge-border:var(--border);
-  --dash-badge-text: var(--fg-muted);
-  --dash-avatar-border:var(--border);
-  --dash-user-card:  rgba(255,255,255,0.055);
-  --dash-user-card-border:var(--border);
+  --dash-bg:         var(--neutral-bg);
+  --dash-sidebar:    var(--neutral-bg-subtle);
+  --dash-sidebar-border: var(--neutral-border);
+  --dash-card:       var(--surface-card);
+  --dash-card-border:var(--surface-card-border);
+  --dash-input:      var(--surface-input);
+  --dash-input-border:var(--neutral-border);
+  --dash-thead:      var(--neutral-bg-muted);
+  --dash-fg:         var(--neutral-text-primary);
+  --dash-fg-secondary: var(--neutral-text-secondary);
+  --dash-fg-muted:   var(--neutral-text-muted);
+  --dash-fg-subtle:  var(--neutral-text-subtle);
+  --dash-divider:    var(--neutral-border);
+  --dash-hover:      var(--brand-primary-muted);
+  --dash-badge-bg:   var(--neutral-bg-muted);
+  --dash-badge-border:var(--neutral-border);
+  --dash-badge-text: var(--neutral-text-secondary);
+  --dash-avatar-border:var(--neutral-border);
+  --dash-user-card:  var(--neutral-bg-elevated);
+  --dash-user-card-border:var(--neutral-border);
 }
 
 /* ─── Base Reset ─── */
@@ -115,37 +133,43 @@ html {
 body {
   background-color: var(--bg);
   color: var(--fg);
-  font-family: var(--font-dm-sans), 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  line-height: 1.65;
+  font-family: var(--font-family-ui);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.35s ease, color 0.35s ease;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .tracking-tight {
-  letter-spacing: 0 !important;
+  letter-spacing: var(--tracking-tight) !important;
 }
 
-/* ─── Typography ─── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: 0;
-  color: var(--fg);
+/* ─── Typography (UI defaults — Instrument Sans) ─── */
+h1:not(.ds-hero-lead__title):not(.type-masthead),
+h2:not(.ds-hero-lead__title):not(.ds-section-marker__title),
+h3:not(.ds-hero-section__featured-title):not(.ds-site-menu__column-title):not(.ds-site-menu__promo-title):not(.ds-footer-col__title),
+h4, h5, h6 {
+  font-family: var(--font-family-ui);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-normal);
+  color: var(--neutral-text-primary);
 }
 
-h1 { font-size: clamp(2.25rem, 5vw, 4rem);    }
-h2 { font-size: clamp(1.75rem, 3vw, 2.5rem);  }
-h3 { font-size: clamp(1.25rem, 2vw, 1.5rem);  }
-h4 { font-size: 1.125rem;                      }
+h1:not(.ds-hero-lead__title):not(.type-masthead) { font-size: var(--text-display); }
+h2:not(.ds-hero-lead__title):not(.ds-section-marker__title) { font-size: clamp(1.75rem, 3vw, 2.5rem); }
+h3:not(.ds-hero-section__featured-title):not(.ds-site-menu__column-title):not(.ds-site-menu__promo-title):not(.ds-footer-col__title) {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+}
+h4 { font-size: var(--text-xl); }
 
 p {
-  font-family: var(--font-dm-sans), 'DM Sans', sans-serif;
-  line-height: 1.75;
-  color: var(--fg-muted);
+  font-family: var(--font-family-ui);
+  line-height: var(--leading-prose);
+  color: var(--neutral-text-secondary);
 }
 
 a {
@@ -167,28 +191,28 @@ img, video {
 }
 
 
-/* ─── Global Scrollbar Styling (Always Dark) ─── */
+/* ─── Global Scrollbar (theme-aware) ─── */
 html {
-  scrollbar-color: #27272A #09090B !important; /* For Firefox */
+  scrollbar-color: var(--neutral-scrollbar-thumb) var(--neutral-scrollbar-track);
 }
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090B !important; /* Force dark background regardless of theme */
+  background: var(--neutral-scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272A !important; /* Dark gray thumb */
-  border: 2.5px solid #09090B !important; /* Contrast border matching track */
+  background: var(--neutral-scrollbar-thumb);
+  border: 2.5px solid var(--neutral-scrollbar-track);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3F3F46 !important; /* Slightly lighter gray thumb on hover */
+  background: var(--neutral-scrollbar-thumb-hover);
 }
 
 
-/* ─── Hide scrollbar utility (used in CategoryStrip) ─── */
+/* ─── Hide scrollbar utility ─── */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -205,35 +229,28 @@ html {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding-left: var(--space-container-x);
+  padding-right: var(--space-container-x);
 }
 
 @media (min-width: 768px) {
   .container {
-    padding-left: 32px;
-    padding-right: 32px;
+    padding-left: var(--space-container-x-md);
+    padding-right: var(--space-container-x-md);
   }
 }
 
 @media (min-width: 1280px) {
   .container {
-    padding-left: 48px;
-    padding-right: 48px;
+    padding-left: var(--space-container-x-lg);
+    padding-right: var(--space-container-x-lg);
   }
 }
 
-/* ─── Section Spacing ─── */
+/* ─── Section Spacing (legacy alias → ds-section) ─── */
 .section {
-  padding-top: 56px;
-  padding-bottom: 56px;
-}
-
-@media (min-width: 768px) {
-  .section {
-    padding-top: 72px;
-    padding-bottom: 72px;
-  }
+  padding-top: var(--space-section-y);
+  padding-bottom: var(--space-section-y);
 }
 
 /* ─── Category Badge Colors ─── */
@@ -250,7 +267,7 @@ html {
 .badge-tools {
   background-color: var(--badge-bg) !important;
   color: var(--accent-bright) !important;
-  border: 1px solid rgba(255, 26, 26, 0.25) !important;
+  border: 1px solid var(--brand-primary-border) !important;
   padding: 3px 10px;
   border-radius: 9999px;
   display: inline-flex;
@@ -261,31 +278,15 @@ html {
   letter-spacing: 0.05em;
 }
 
-/* ─── Ticker Animation ─── */
-@keyframes ticker {
-  0%   { transform: translateX(0);    }
-  100% { transform: translateX(-50%); }
-}
-
-.ticker-track {
-  animation: ticker 28s linear infinite;
-  display: flex;
-  width: max-content;
-}
-
-.ticker-track:hover {
-  animation-play-state: paused;
-}
-
 /* ─── Dot Grid Background ─── */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(232, 0, 15, 0.18) 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--brand-dot-grid) 1px, transparent 1px);
   background-size: 32px 32px;
 }
 
 /* ─── Gradient Text ─── */
 .text-gradient {
-  background: linear-gradient(135deg, var(--accent) 0%, #9B0008 100%);
+  background: var(--brand-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -302,11 +303,23 @@ html {
 .glass {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--neutral-border);
 }
 
 .dark .glass {
   background-color: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.07);
+  border-color: var(--neutral-border);
+}
+
+/* ─── Dark mode borders (html.dark — wins over Tailwind currentColor) ─── */
+html.dark {
+  --neutral-border:         #161616;
+  --neutral-border-subtle:  #121212;
+  --neutral-border-strong:  #222222;
+  --surface-card-border:       #161616;
+  --surface-card-border-hover: #222222;
+  --surface-divider:           #161616;
+  --border:                    #161616;
+  --card-border:               #161616;
 }

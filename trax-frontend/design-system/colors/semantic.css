@@ -1,0 +1,85 @@
+/**
+ * Trax Semantic Color Tokens (CSS)
+ * Status + editorial semantics — light (:root) and dark (.dark)
+ *
+ * Keep in sync with semantic.ts
+ */
+
+:root {
+  /* ─── System feedback ─── */
+  --semantic-success:        #15803D;
+  --semantic-success-bg:     #F0FDF4;
+  --semantic-success-border: #BBF7D0;
+  --semantic-success-text:   #166534;
+
+  --semantic-warning:        #B45309;
+  --semantic-warning-bg:     #FFFBEB;
+  --semantic-warning-border: #FDE68A;
+  --semantic-warning-text:   #92400E;
+
+  --semantic-error:        #B91C1C;
+  --semantic-error-bg:     #FEF2F2;
+  --semantic-error-border: #FECACA;
+  --semantic-error-text:   #991B1B;
+
+  --semantic-info:        #1D4ED8;
+  --semantic-info-bg:     #EFF6FF;
+  --semantic-info-border: #BFDBFE;
+  --semantic-info-text:   #1E40AF;
+
+  /* ─── Editorial (CNN / BBC style) ─── */
+  --semantic-live:        var(--brand-primary);
+  --semantic-live-bg:     rgba(231, 4, 13, 0.08);
+  --semantic-live-border: rgba(231, 4, 13, 0.20);
+
+  --semantic-breaking:        var(--brand-primary);
+  --semantic-breaking-bg:     rgba(231, 4, 13, 0.06);
+  --semantic-breaking-border: rgba(231, 4, 13, 0.18);
+
+  --semantic-sponsored:        #7C3AED;
+  --semantic-sponsored-bg:     #F5F3FF;
+  --semantic-sponsored-border: #DDD6FE;
+  --semantic-sponsored-text:   #5B21B6;
+
+  /* ─── Links ─── */
+  --semantic-link:       #1D4ED8;
+  --semantic-link-hover: #1E40AF;
+}
+
+.dark {
+  --semantic-success:        #4ADE80;
+  --semantic-success-bg:     rgba(22, 163, 74, 0.12);
+  --semantic-success-border: rgba(74, 222, 128, 0.20);
+  --semantic-success-text:   #86EFAC;
+
+  --semantic-warning:        #FBBF24;
+  --semantic-warning-bg:     rgba(217, 119, 6, 0.12);
+  --semantic-warning-border: rgba(251, 191, 36, 0.20);
+  --semantic-warning-text:   #FDE68A;
+
+  --semantic-error:        #F87171;
+  --semantic-error-bg:     rgba(220, 38, 38, 0.12);
+  --semantic-error-border: rgba(248, 113, 113, 0.20);
+  --semantic-error-text:   #FECACA;
+
+  --semantic-info:        #60A5FA;
+  --semantic-info-bg:     rgba(37, 99, 235, 0.12);
+  --semantic-info-border: rgba(96, 165, 250, 0.20);
+  --semantic-info-text:   #BFDBFE;
+
+  --semantic-live:        var(--brand-on-dark);
+  --semantic-live-bg:     rgba(255, 51, 51, 0.12);
+  --semantic-live-border: rgba(255, 51, 51, 0.25);
+
+  --semantic-breaking:        var(--brand-on-dark);
+  --semantic-breaking-bg:     rgba(255, 51, 51, 0.10);
+  --semantic-breaking-border: rgba(255, 51, 51, 0.22);
+
+  --semantic-sponsored:        #A78BFA;
+  --semantic-sponsored-bg:     rgba(124, 58, 237, 0.12);
+  --semantic-sponsored-border: rgba(167, 139, 250, 0.22);
+  --semantic-sponsored-text:   #DDD6FE;
+
+  --semantic-link:       #60A5FA;
+  --semantic-link-hover: #93C5FD;
+}

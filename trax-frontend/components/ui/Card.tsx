@@ -3,65 +3,74 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import {
+  fadeUp,
+  fadeUpSoft,
+  fadeInLeft,
+  cardHover,
+  cardHoverReduced,
+  viewportGrid,
+  viewportFeed,
+  transitionEditorial,
+} from '@/design-system/motion'
+import { useMotionEnabled, useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
 import type { Article } from '@/lib/articles'
+import { storyExcerpt, storyTitle } from '@/lib/truncateWords'
 
 interface CardProps {
   article: Article
   variant?: 'default' | 'featured' | 'compact'
   index?: number
+  staggered?: boolean
 }
 
-const categoryBadgeClass: Record<string, string> = {
-  Funding: 'badge-funding',
-  Profiles: 'badge-profiles',
-  Health: 'badge-health',
-  Policy: 'badge-policy',
-  Research: 'badge-research',
-  Ecosystem: 'badge-ecosystem',
-  Events: 'badge-events',
-  Interview: 'badge-interview',
-  Startups: 'badge-startups',
-  People: 'badge-people',
-  Tools: 'badge-tools',
-}
-
-export default function Card({ article, variant = 'default', index = 0 }: CardProps) {
-  const badgeClass = categoryBadgeClass[article.category] ?? 'badge-ecosystem'
+export default function Card({
+  article,
+  variant = 'default',
+  index = 0,
+  staggered = false,
+}: CardProps) {
+  const motionOn = useMotionEnabled()
+  const hoverLift = motionOn ? cardHover : cardHoverReduced
+  const soft = useMotionVariants(fadeUpSoft, 'fadeUpSoft')
+  const left = useMotionVariants(fadeInLeft, 'fadeInLeft')
+  const up = useMotionVariants(fadeUp, 'fadeUp')
 
   if (variant === 'compact') {
     return (
       <Link href={`/articles/${article.slug}`} className="block">
         <motion.article
-          initial={{ opacity: 0, x: -16 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-30px' }}
-          transition={{ duration: 0.45, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-          className="flex gap-4 py-5 border-b group cursor-pointer"
-          style={{ borderColor: 'var(--border)' }}
+          variants={staggered ? left : undefined}
+          initial={staggered ? undefined : { opacity: 0, x: -16 }}
+          whileInView={staggered ? undefined : { opacity: 1, x: 0 }}
+          viewport={staggered ? undefined : viewportFeed}
+          transition={staggered ? undefined : { ...transitionEditorial, delay: index * 0.05 }}
+          className="ds-article-card ds-article-card--compact group"
         >
-          <div className="relative w-24 h-20 shrink-0 overflow-hidden rounded-md">
+          <div className="ds-article-card__thumb ds-article-card__thumb--sm">
             <Image
               src={article.image}
               alt={article.title}
               fill
-              className="object-cover object-center transition-transform duration-500 group-hover:scale-110"
+              className="object-cover object-center ds-motion-image"
               sizes="96px"
             />
           </div>
-          <div className="flex flex-col justify-between flex-1 min-w-0">
-            <div>
-              <span className={`inline-block mb-2 ${badgeClass}`}>
-                {article.category}
-              </span>
-              <h4
-                className="text-[15px] font-extrabold leading-snug line-clamp-2 transition-colors group-hover:text-accent"
-                style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
-              >
-                {article.title}
-              </h4>
-            </div>
-            <p className="text-xs" style={{ color: 'var(--fg-subtle)' }}>
-              {article.author} <span className="mx-1.5">|</span> {article.date}
+          <div className="ds-article-card__body">
+            <span className="ds-category-label">{article.category}</span>
+            <h4 className="ds-article-card__title ds-article-card__title--sm" title={article.title}>
+              {storyTitle(article.title)}
+            </h4>
+            <p className="type-meta ds-article-card__meta">
+              {article.author}
+              <span aria-hidden>·</span>
+              {article.date}
+              {article.readTime && (
+                <>
+                  <span aria-hidden>·</span>
+                  {article.readTime}
+                </>
+              )}
             </p>
           </div>
         </motion.article>
@@ -72,52 +81,50 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
   if (variant === 'featured') {
     return (
       <motion.article
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        whileHover={{ y: -4 }}
-      className="group cursor-pointer overflow-hidden"
-      style={{
-          backgroundColor: 'transparent',
-      }}
+        variants={staggered ? up : undefined}
+        initial={staggered ? undefined : { opacity: 0, y: 32 }}
+        whileInView={staggered ? undefined : { opacity: 1, y: 0 }}
+        viewport={staggered ? undefined : viewportGrid}
+        transition={staggered ? undefined : transitionEditorial}
+        whileHover={hoverLift}
+        className="ds-article-card ds-article-card--featured group"
       >
-        <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden rounded-md">
-          <Image
-            src={article.image}
-            alt={article.title}
-            fill
-            className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, 60vw"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <span className={`absolute top-4 left-4 ${badgeClass}`}>
-            {article.category}
-          </span>
+        <Link href={`/articles/${article.slug}`} className="ds-article-card__media-link">
+          <div className="ds-article-card__thumb ds-article-card__thumb--featured">
+            <Image
+              src={article.image}
+              alt={article.title}
+              fill
+              className="object-cover object-center ds-motion-image"
+              sizes="(max-width: 768px) 100vw, 60vw"
+              priority
+            />
+          </div>
+          <span className="ds-category-pill ds-article-card__badge">{article.category}</span>
           {article.breaking && (
-            <span className="absolute top-4 right-4 text-xs font-bold px-3 py-1.5 rounded-full bg-accent-bright text-white tracking-wide">
-              BREAKING
-            </span>
+            <span className="ds-article-card__breaking">Breaking</span>
           )}
         </Link>
-        <div className="pt-5">
-          <Link href={`/articles/${article.slug}`} className="block mb-3">
-            <h2
-              className="text-xl md:text-3xl font-extrabold leading-tight transition-colors group-hover:text-accent line-clamp-3"
-              style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
-            >
-              {article.title}
+        <div className="ds-article-card__body ds-article-card__body--featured">
+          <Link href={`/articles/${article.slug}`}>
+            <h2 className="ds-article-card__title ds-article-card__title--featured" title={article.title}>
+              {storyTitle(article.title)}
             </h2>
           </Link>
-          <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}>
-            {article.excerpt}
+          <p className="type-excerpt ds-article-card__excerpt" title={article.excerpt}>
+            {storyExcerpt(article.excerpt)}
           </p>
-          <div className="flex items-center justify-between">
-            <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
-              {article.author} <span className="mx-2">|</span> {article.date}
-            </div>
-          </div>
+          <p className="type-meta ds-article-card__meta">
+            {article.author}
+            <span aria-hidden>·</span>
+            {article.date}
+            {article.readTime && (
+              <>
+                <span aria-hidden>·</span>
+                {article.readTime}
+              </>
+            )}
+          </p>
         </div>
       </motion.article>
     )
@@ -125,48 +132,37 @@ export default function Card({ article, variant = 'default', index = 0 }: CardPr
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4 }}
-      className="group cursor-pointer overflow-hidden flex flex-col"
-      style={{
-        backgroundColor: 'transparent',
-        transition: 'transform 0.3s ease',
-      }}
+      variants={staggered ? soft : undefined}
+      initial={staggered ? undefined : { opacity: 0, y: 24 }}
+      whileInView={staggered ? undefined : { opacity: 1, y: 0 }}
+      viewport={staggered ? undefined : viewportGrid}
+      transition={staggered ? undefined : { ...transitionEditorial, delay: index * 0.07 }}
+      whileHover={hoverLift}
+      className="ds-article-card group"
     >
-      {/* Image */}
-      <Link href={`/articles/${article.slug}`} className="block relative w-full aspect-[16/9] overflow-hidden shrink-0 rounded-md">
-        <Image
-          src={article.image}
-          alt={article.title}
-          fill
-          className="object-cover object-center transition-transform duration-[600ms] group-hover:scale-[1.07]"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <span className={`absolute top-3 left-3 ${badgeClass}`}>
-          {article.category}
-        </span>
+      <Link href={`/articles/${article.slug}`} className="ds-article-card__media-link">
+        <div className="ds-article-card__thumb">
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            className="object-cover object-center ds-motion-image"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </div>
+        <span className="ds-category-pill ds-article-card__badge">{article.category}</span>
       </Link>
-
-      {/* Content */}
-      <div className="pt-4 flex flex-col flex-1">
-        <Link href={`/articles/${article.slug}`} className="block mb-2">
-          <h3
-            className="text-lg font-extrabold leading-snug line-clamp-3 transition-colors group-hover:text-accent"
-            style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
-          >
-            {article.title}
+      <div className="ds-article-card__body">
+        <Link href={`/articles/${article.slug}`}>
+          <h3 className="ds-article-card__title" title={article.title}>
+            {storyTitle(article.title)}
           </h3>
         </Link>
-        {/* Meta */}
-        <div className="flex items-center justify-between pt-2 mt-auto">
-          <div className="text-xs" style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}>
-            {article.author} <span className="mx-2">|</span> {article.date}
-          </div>
-        </div>
+        <p className="type-meta ds-article-card__meta">
+          {article.author}
+          <span aria-hidden>·</span>
+          {article.date}
+        </p>
       </div>
     </motion.article>
   )

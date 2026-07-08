@@ -749,7 +749,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row" style={{ backgroundColor: 'var(--dash-bg)', color: 'var(--dash-fg)' }}>
+    <div className="ds-dashboard font-ui min-h-screen flex flex-col md:flex-row" style={{ backgroundColor: 'var(--dash-bg)', color: 'var(--dash-fg)' }}>
       {/* Sidebar Navigation */}
       <aside
         className="w-full md:w-64 border-b md:border-b-0 md:border-r backdrop-blur-md flex flex-col justify-between shrink-0"

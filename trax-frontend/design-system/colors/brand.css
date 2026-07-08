@@ -1,0 +1,51 @@
+/**
+ * Trax Brand Color Tokens (CSS)
+ * Primary: #E7040D
+ *
+ * Import this file once in globals.css.
+ * Do not edit values here manually — keep in sync with brand.ts.
+ */
+
+:root {
+  /* ─── Brand scale ─── */
+  --brand-50:  #FFF0F0;
+  --brand-100: #FFDEDE;
+  --brand-200: #FFC2C2;
+  --brand-300: #FF9494;
+  --brand-400: #FF4A4A;
+  --brand-500: #E7040D;
+  --brand-600: #C9030B;
+  --brand-700: #A30209;
+  --brand-800: #7D0207;
+  --brand-900: #560104;
+  --brand-950: #2F0102;
+
+  /* ─── Brand semantic ─── */
+  --brand-primary:              var(--brand-500);
+  --brand-primary-hover:        var(--brand-600);
+  --brand-primary-active:       var(--brand-700);
+  --brand-primary-subtle:       var(--brand-50);
+  --brand-primary-muted:        rgba(231, 4, 13, 0.12);
+  --brand-primary-muted-strong: rgba(231, 4, 13, 0.20);
+  --brand-primary-border:       rgba(231, 4, 13, 0.25);
+  --brand-primary-border-subtle:rgba(231, 4, 13, 0.12);
+  --brand-on-dark:              #FF2B2B;
+  --brand-on-dark-hover:        #FF5050;
+  /** Text/links on page backgrounds — meets WCAG on light + dark */
+  --brand-text-accent:          var(--brand-primary);
+  --brand-text-accent-hover:    var(--brand-primary-hover);
+  --brand-focus-ring:           rgba(231, 4, 13, 0.45);
+  --brand-shadow:               rgba(231, 4, 13, 0.35);
+  --brand-shadow-sm:            rgba(231, 4, 13, 0.15);
+  --brand-gradient:             linear-gradient(135deg, var(--brand-500) 0%, var(--brand-800) 100%);
+  --brand-gradient-subtle:      linear-gradient(135deg, rgba(231, 4, 13, 0.18) 0%, transparent 70%);
+  --brand-dot-grid:             rgba(231, 4, 13, 0.18);
+}
+
+/* Brighter accent on dark surfaces */
+.dark {
+  --brand-on-dark:       #FF3333;
+  --brand-on-dark-hover: #FF5555;
+  --brand-text-accent:   var(--brand-on-dark);
+  --brand-text-accent-hover: var(--brand-on-dark-hover);
+}

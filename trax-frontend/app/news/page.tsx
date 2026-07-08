@@ -1,21 +1,22 @@
 import type { Metadata } from 'next'
-import { getDbArticles } from '@/lib/api'
-
-export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
+import { getDbArticles } from '@/lib/api'
+import { pageMetadata } from '@/lib/seo'
+import { REVALIDATE_SECONDS } from '@/lib/server-api'
 
-export const metadata: Metadata = {
-  title: 'Tech News & Updates | Trax',
-  description: "The latest news, reports, and breakthroughs in the Ogun State's AI ecosystem.",
-}
+export const revalidate = REVALIDATE_SECONDS
 
+export const metadata: Metadata = pageMetadata({
+  title: 'Tech News & Updates',
+  description: "The latest news, reports, and breakthroughs in Ogun State's tech ecosystem.",
+  path: '/news',
+})
 export default async function NewsPage() {
-  const articles = await getDbArticles()
+  const articles = await getDbArticles('news')
 
   return (
     <CategoryPageLayout
-      title="Latest Tech News"
-      description="Stay updated with the latest breakthroughs, startup developments, and ecosystem updates across Nigeria and the wider Ogun State's region."
+      description="Reports, analysis, and breaking updates from Ogun State's tech corridor and West Africa."
       categoryName="News"
       articles={articles}
     />

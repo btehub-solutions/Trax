@@ -1,0 +1,61 @@
+/**
+ * Trax Iconography (CSS)
+ * Stroke-rounded icons inherit text color; size via --icon-size
+ */
+
+:root {
+  --icon-size-xs: 14px;
+  --icon-size-sm: 16px;
+  --icon-size-md: 20px;
+  --icon-size-lg: 24px;
+  --icon-size-xl: 32px;
+  --icon-stroke: 1.75;
+}
+
+.ds-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+.ds-icon svg {
+  width: var(--icon-size, var(--icon-size-md));
+  height: var(--icon-size, var(--icon-size-md));
+}
+
+/* Nav search — circular button (newsflash reference) */
+.ds-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.125rem;
+  height: 2.125rem;
+  border-radius: 9999px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  transition: background-color 0.15s ease;
+}
+
+.ds-icon-btn:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+.ds-theme-toggle {
+  color: inherit;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.ds-theme-toggle:disabled {
+  opacity: 1;
+  cursor: pointer;
+}
+
+html.dark .ds-icon-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+}

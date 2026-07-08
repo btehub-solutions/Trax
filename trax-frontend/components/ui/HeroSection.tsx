@@ -92,7 +92,7 @@ export default function HeroSection() {
           <motion.div variants={itemVariants} className="flex items-center gap-3 mb-5">
             <span
               className="flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] uppercase"
-              style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-oxanium)' }}
+              style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-family-editorial)' }}
             >
               <Radio size={12} className="animate-pulse" />
               Ogun State&apos;s AI Media Platform
@@ -111,7 +111,7 @@ export default function HeroSection() {
                 backgroundColor: badge.bg,
                 color:           badge.color,
                 borderColor:     badge.border,
-                fontFamily:      'var(--font-dm-sans)',
+                fontFamily:      'var(--font-family-ui)',
               }}
             >
               {featured.breaking && (
@@ -126,7 +126,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="font-bold text-white mb-5"
             style={{
-              fontFamily:    'var(--font-oxanium)',
+              fontFamily:    'var(--font-family-editorial)',
               fontSize:      'clamp(2.2rem, 5.5vw, 4.25rem)',
               lineHeight:    1.07,
               letterSpacing: '-0.03em',
@@ -141,7 +141,7 @@ export default function HeroSection() {
             className="text-base md:text-lg mb-8 max-w-2xl"
             style={{
               color:       'rgba(240,240,240,0.78)',
-              fontFamily:  'var(--font-dm-sans)',
+              fontFamily:  'var(--font-family-ui)',
               lineHeight:  1.75,
             }}
           >
@@ -156,7 +156,7 @@ export default function HeroSection() {
             {/* Author / time meta */}
             <div
               className="flex items-center gap-4 text-sm"
-              style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-dm-sans)' }}
+              style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-family-ui)' }}
             >
               <span className="flex items-center gap-1.5">
                 <User size={13} />
@@ -179,7 +179,7 @@ export default function HeroSection() {
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
                 style={{
                   backgroundColor: 'var(--accent)',
-                  fontFamily:      'var(--font-dm-sans)',
+                  fontFamily:      'var(--font-family-ui)',
                   boxShadow:       '0 0 32px rgba(255, 26, 26, 0.35)',
                 }}
               >
@@ -193,7 +193,7 @@ export default function HeroSection() {
                 style={{
                   border:      '1px solid rgba(255,255,255,0.22)',
                   color:       'rgba(255,255,255,0.75)',
-                  fontFamily:  'var(--font-dm-sans)',
+                  fontFamily:  'var(--font-family-ui)',
                   backdropFilter: 'blur(8px)',
                   backgroundColor: 'rgba(255,255,255,0.06)',
                 }}
@@ -218,13 +218,13 @@ export default function HeroSection() {
               <div key={label} className="flex flex-col">
                 <span
                   className="text-2xl font-bold text-white"
-                  style={{ fontFamily: 'var(--font-oxanium)' }}
+                  style={{ fontFamily: 'var(--font-family-editorial)' }}
                 >
                   {value}
                 </span>
                 <span
                   className="text-xs mt-0.5"
-                  style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-dm-sans)' }}
+                  style={{ color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-family-ui)' }}
                 >
                   {label}
                 </span>
@@ -237,7 +237,7 @@ export default function HeroSection() {
             >
               <span
                 className="text-xs mr-1"
-                style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-dm-sans)' }}
+                style={{ color: 'rgba(255,255,255,0.35)', fontFamily: 'var(--font-family-ui)' }}
               >
                 Explore:
               </span>
@@ -251,7 +251,7 @@ export default function HeroSection() {
                     borderColor:     'rgba(255,255,255,0.18)',
                     color:           'rgba(255,255,255,0.55)',
                     backgroundColor: 'rgba(255,255,255,0.04)',
-                    fontFamily:      'var(--font-dm-sans)',
+                    fontFamily:      'var(--font-family-ui)',
                   }}
                 >
                   {pill}
@@ -272,7 +272,7 @@ export default function HeroSection() {
       >
         <span
           className="text-[10px] tracking-[0.2em] uppercase"
-          style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-dm-sans)' }}
+          style={{ color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-family-ui)' }}
         >
           Scroll
         </span>

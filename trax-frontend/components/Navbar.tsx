@@ -110,7 +110,7 @@ export default function Navbar() {
             >
               <span
                 className="text-[22px] font-extrabold leading-none tracking-tight"
-                style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--accent)' }}
+                style={{ fontFamily: 'var(--font-family-editorial)', color: 'var(--accent)' }}
               >
                 Trax
               </span>
@@ -132,7 +132,7 @@ export default function Navbar() {
                     className="relative flex flex-col items-center px-3.5 py-2 rounded-lg text-[13px] font-medium tracking-wide transition-colors duration-200 hover:text-accent"
                     style={{
                       color:      active ? 'var(--accent)' : 'var(--fg-muted)',
-                      fontFamily: 'var(--font-dm-sans)',
+                      fontFamily: 'var(--font-family-ui)',
                     }}
                   >
                     {link.label}
@@ -310,7 +310,7 @@ export default function Navbar() {
                       style={{
                         color:           active ? 'var(--accent)' : 'var(--fg-muted)',
                         backgroundColor: active ? 'rgba(255, 26, 26, 0.07)' : 'transparent',
-                        fontFamily:      'var(--font-dm-sans)',
+                        fontFamily:      'var(--font-family-ui)',
                       }}
                     >
                       {link.label}
@@ -364,7 +364,7 @@ export default function Navbar() {
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search stories, founders, startups…"
                   className="flex-1 bg-transparent outline-none text-sm"
-                  style={{ color: 'var(--fg)', fontFamily: 'var(--font-dm-sans)' }}
+                  style={{ color: 'var(--fg)', fontFamily: 'var(--font-family-ui)' }}
                 />
                 {query && (
                   <button
@@ -381,7 +381,7 @@ export default function Navbar() {
               {/* Footer hint */}
               <div
                 className="flex items-center justify-between px-4 py-2.5 border-t text-xs"
-                style={{ borderColor: 'var(--border)', color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
+                style={{ borderColor: 'var(--border)', color: 'var(--fg-subtle)', fontFamily: 'var(--font-family-ui)' }}
               >
                 <span>Type to search Trax</span>
                 <kbd

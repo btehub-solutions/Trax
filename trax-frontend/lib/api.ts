@@ -1,4 +1,4 @@
-import { articles as mockArticles, Article } from './articles';
+import type { Article } from './articles';
 import { mapApiArticle } from './mapArticle';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
@@ -61,26 +61,32 @@ export const api = {
   delete: (endpoint: string, options?: RequestOptions) => fetchApi(endpoint, { ...options, method: 'DELETE' }),
 };
 
+/** Server-side article fetch with ISR — use in RSC pages */
 export async function getDbArticles(categorySlug?: string): Promise<Article[]> {
-  try {
-    const url = categorySlug 
-      ? `/articles?category=${categorySlug}&limit=100` 
-      : '/articles?limit=100';
-    const json = await api.get(url);
-    if (json && json.data) {
-      const dbData = json.data.map(mapApiArticle);
-
-      return dbData;
-    }
-  } catch (err: any) {
-    console.warn(`Backend API offline or failed, using static mock articles fallback:`, err.message || err);
-  }
-
-  // Fallback to static mock articles
-  if (categorySlug) {
-    // Maps categorySlug like 'funding' to matching mock category (case-insensitive)
-    return mockArticles.filter((a: any) => a.category.toLowerCase() === categorySlug.toLowerCase());
-  }
-  return mockArticles;
+  const { fetchArticles } = await import('./server-api');
+  return fetchArticles(
+    categorySlug ? { category: categorySlug, limit: 100 } : { limit: 100 },
+  );
 }
 
+/** Fetch and merge articles across multiple category slugs (deduped). */
+export async function getDbArticlesBySlugs(slugs: string[]): Promise<Article[]> {
+  const { fetchArticles } = await import('./server-api');
+  const lists = await Promise.all(slugs.map((slug) => fetchArticles({ category: slug, limit: 100 })));
+  const seen = new Set<string>();
+  const merged: Article[] = [];
+
+  for (const list of lists) {
+    for (const article of list) {
+      if (seen.has(article.id)) continue;
+      seen.add(article.id);
+      merged.push(article);
+    }
+  }
+
+  return merged;
+}
+
+// Re-export for client-side fallbacks
+export { mapApiArticle };
+export type { Article };

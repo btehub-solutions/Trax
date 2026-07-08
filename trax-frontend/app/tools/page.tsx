@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
-import { getDbArticles } from '@/lib/api'
-
-export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
+import { getDbArticles } from '@/lib/api'
+import { pageMetadata } from '@/lib/seo'
+import { REVALIDATE_SECONDS } from '@/lib/server-api'
 
-export const metadata: Metadata = {
-  title: 'Tech Tools & Tech Stack | Trax',
-  description: "The best tech tools, open-source models, and developer resources tailored for Ogun State's networks and environments.",
-}
+export const revalidate = REVALIDATE_SECONDS
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Tech Tools & Developer Resources',
+  description:
+    "The best tech tools, open-source libraries, and developer resources for Ogun State builders.",
+  path: '/tools',
+})
 
 export default async function ToolsPage() {
   const articles = await getDbArticles('tools')

@@ -24,6 +24,7 @@ export function mapApiArticle(a: any): Article {
           year: 'numeric',
         })
       : 'June 5, 2026',
+    publishedAt: a.publishedAt || undefined,
     readTime: a.readTime || '5 min read',
     image: a.image || FALLBACK_IMAGE,
     featured: a.featured,

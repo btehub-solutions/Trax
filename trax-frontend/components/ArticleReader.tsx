@@ -4,26 +4,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Clock, User, Bookmark, Share2, Link2, Check, ChevronRight, Tag } from 'lucide-react'
+import { Clock, User, Bookmark, Share2, Link2, Check, ChevronRight } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import AdSlot from '@/components/AdSlot'
-
-// ── Category colour map ───────────────────────────────────────────────────────
-const categoryColors: Record<string, { bg: string; color: string; border: string }> = {
-  Funding:   { bg: 'rgba(16,185,129,0.12)',  color: '#059669', border: 'rgba(16,185,129,0.25)' },
-  Profiles:  { bg: 'rgba(139,92,246,0.12)',  color: '#7C3AED', border: 'rgba(139,92,246,0.25)' },
-  Health:    { bg: 'rgba(59,130,246,0.12)',   color: '#2563EB', border: 'rgba(59,130,246,0.25)' },
-  Policy:    { bg: 'rgba(245,158,11,0.12)',  color: '#D97706', border: 'rgba(245,158,11,0.25)' },
-  Research:  { bg: 'rgba(236,72,153,0.12)',   color: '#DB2777', border: 'rgba(236,72,153,0.25)' },
-  Ecosystem: { bg: 'rgba(255, 26, 26, 0.12)',     color: 'var(--accent-bright)', border: 'rgba(255, 26, 26, 0.25)'   },
-  Events:    { bg: 'rgba(6,182,212,0.12)',    color: '#0891B2', border: 'rgba(6,182,212,0.25)'  },
-  Interview: { bg: 'rgba(99,102,241,0.12)',   color: '#4F46E5', border: 'rgba(99,102,241,0.25)' },
-  Startups:  { bg: 'rgba(16,185,129,0.12)',  color: '#10B981', border: 'rgba(16,185,129,0.25)' },
-  People:    { bg: 'rgba(139,92,246,0.12)',  color: '#8B5CF6', border: 'rgba(139,92,246,0.25)' },
-  Tools:     { bg: 'rgba(59,130,246,0.12)',   color: '#3B82F6', border: 'rgba(59,130,246,0.25)' },
-  default:   { bg: 'rgba(255, 26, 26, 0.12)',     color: 'var(--accent-bright)', border: 'rgba(255, 26, 26, 0.25)'   },
-}
+import { ADS_ENABLED } from '@/lib/ads'
+import { SectionBand } from '@/design-system/components'
+import SectionMarker from '@/design-system/components/SectionMarker'
+import AuthorAvatar from '@/design-system/components/AuthorAvatar'
 
 // ── Inline SVG brand icons (Lucide removed social brand icons) ────────────────
 function XIcon({ size = 16 }: { size?: number }) {
@@ -91,7 +79,6 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
 
 
 
-  const cat     = categoryColors[article.category] ?? categoryColors.default
   const bodyText = generateBody(article)
 
   // Share helpers
@@ -123,52 +110,35 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
         variants={pageVariants}
         initial="hidden"
         animate="visible"
-        className="min-h-screen pt-16"
-        style={{ backgroundColor: 'var(--bg)' }}
+        className="ds-article-reader min-h-screen"
       >
-        {/* ── Hero image ───────────────────────────────────────────────── */}
-        <motion.div variants={fadeUp} className="relative w-full" style={{ height: 'clamp(300px, 48vw, 620px)' }}>
+        <motion.div variants={fadeUp} className="ds-article-reader__hero">
           <Image
             src={article.image}
             alt={article.title}
             fill
             priority
-            className="object-cover"
+            className="ds-article-reader__hero-image"
             sizes="100vw"
           />
-          {/* gradient scrim */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%)',
-            }}
-          />
-          {/* Breaking badge */}
+          <div className="ds-article-reader__hero-scrim" aria-hidden />
           {article.breaking && (
-            <span
-              className="absolute top-6 left-6 inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase px-3 py-1.5 text-white"
-              style={{ backgroundColor: 'var(--accent)' }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            <span className="ds-hero-lead__breaking absolute top-6 left-6">
               Breaking
             </span>
           )}
         </motion.div>
 
-        {/* ── Article container ─────────────────────────────────────────── */}
         <div className="container">
-          <div className="max-w-3xl mx-auto">
+          <div className="ds-article-reader__body">
 
             {/* ── Breadcrumbs ─────────────────────────────────────────── */}
             <motion.nav
               variants={fadeUp}
               aria-label="Breadcrumb"
-              className="pt-8 mb-6"
+              className="ds-article-reader__breadcrumb"
             >
-              <ol
-                className="flex flex-wrap items-center gap-1 text-xs"
-                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
-              >
+              <ol className="ds-article-reader__breadcrumb-list">
                 <li>
                   <Link
                     href="/"
@@ -205,17 +175,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
 
             {/* ── Category tag & Official Link ───────────────────────────────── */}
             <motion.div variants={fadeUp} className="mb-4 flex flex-wrap gap-2 items-center">
-              <span
-                className="inline-block text-xs font-extrabold uppercase"
-                style={{
-                  backgroundColor: 'transparent',
-                  color:           'var(--accent)',
-                  borderColor:     'transparent',
-                  fontFamily:      'var(--font-dm-sans)',
-                }}
-              >
-                {article.category}
-              </span>
+              <span className="ds-category-pill">{article.category}</span>
               {article.officialLink && (
                 <a
                   href={article.officialLink}
@@ -226,7 +186,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                     backgroundColor: 'rgba(255, 255, 255, 0.03)',
                     borderColor:     'var(--border)',
                     color:           'var(--fg-muted)',
-                    fontFamily:      'var(--font-dm-sans)',
+                    fontFamily:      'var(--font-family-ui)',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.backgroundColor = 'rgba(255, 26, 26, 0.08)';
@@ -247,15 +207,8 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             {/* ── Title ──────────────────────────────────────────────────── */}
             <motion.h1
               variants={fadeUp}
-              style={{
-                fontFamily:    'var(--font-dm-sans)',
-                color:         'var(--fg)',
-                fontSize:      'clamp(2.2rem, 5vw, 4.25rem)',
-                lineHeight:    0.98,
-                letterSpacing: 0,
-                fontWeight:    900,
-                marginBottom:  '1.25rem',
-              }}
+              className="type-article-title"
+              style={{ marginBottom: '1.25rem' }}
             >
               {article.title}
             </motion.h1>
@@ -263,59 +216,21 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             {/* ── Author & Meta row ──────────────────────────────────────── */}
             <motion.div
               variants={fadeUp}
-              className="flex flex-wrap items-center gap-4 pb-6 border-b"
-              style={{ borderColor: 'var(--border)' }}
+              className="ds-article-reader__meta-row"
             >
-              {/* Author avatar + info */}
               <div className="flex items-center gap-3">
-                {article.authorAvatar ? (
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0"
-                    style={{ border: '2px solid rgba(255, 26, 26, 0.25)' }}
-                  >
-                    <Image
-                      src={article.authorAvatar}
-                      alt={article.author}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white shrink-0"
-                    style={{
-                      background: 'var(--accent-gradient)',
-                      fontFamily: 'var(--font-dm-sans)',
-                    }}
-                  >
-                    {article.author.charAt(0)}
-                  </div>
-                )}
+                <AuthorAvatar name={article.author} src={article.authorAvatar} size="md" />
                 <div>
-                  <p
-                    className="text-sm font-bold leading-none mb-1"
-                    style={{ color: 'var(--fg)', fontFamily: 'var(--font-dm-sans)' }}
-                  >
+                  <p className="type-meta" style={{ fontWeight: 600, color: 'var(--neutral-text-secondary)' }}>
                     {article.author}
                   </p>
-                  <p
-                    className="text-xs leading-none"
-                    style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-                  >
-                    {article.authorRole || 'Trax Editorial'}
-                  </p>
+                  <p className="type-meta">{article.authorRole || 'Trax Editorial'}</p>
                 </div>
               </div>
 
-              <div
-                className="hidden sm:block w-px h-5 self-center"
-                style={{ backgroundColor: 'var(--border)' }}
-              />
+              <div className="hidden sm:block w-px h-5 self-center" style={{ backgroundColor: 'var(--border)' }} />
 
-              {/* Date + read time */}
-              <div
-                className="flex items-center gap-3 text-xs"
-                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)' }}
-              >
+              <div className="type-meta flex items-center gap-3">
                 <time dateTime={article.date} className="flex items-center gap-1.5">
                   <User size={12} strokeWidth={1.75} />
                   {article.date}
@@ -357,7 +272,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             >
               <span
                 className="text-xs font-bold uppercase tracking-wide mr-1 flex items-center gap-1.5"
-                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)', letterSpacing: '0.06em' }}
+                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-family-ui)', letterSpacing: '0.06em' }}
               >
                 <Share2 size={12} strokeWidth={2} />
                 Share
@@ -374,7 +289,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   borderColor:     'var(--border)',
                   color:           'var(--fg-muted)',
                   backgroundColor: 'rgba(255,255,255,0.02)',
-                  fontFamily:      'var(--font-dm-sans)',
+                  fontFamily:      'var(--font-family-ui)',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = '#000'
@@ -402,7 +317,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   borderColor:     'var(--border)',
                   color:           'var(--fg-muted)',
                   backgroundColor: 'rgba(255,255,255,0.02)',
-                  fontFamily:      'var(--font-dm-sans)',
+                  fontFamily:      'var(--font-family-ui)',
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = '#0A66C2'
@@ -430,7 +345,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                   borderColor:     copied ? '#10B981' : 'var(--border)',
                   color:           copied ? '#10B981' : 'var(--fg-muted)',
                   backgroundColor: copied ? 'rgba(16,185,129,0.08)' : 'rgba(255,255,255,0.02)',
-                  fontFamily:      'var(--font-dm-sans)',
+                  fontFamily:      'var(--font-family-ui)',
                 }}
               >
                 {copied ? <Check size={13} /> : <Link2 size={13} />}
@@ -442,18 +357,17 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
             <motion.div
               ref={bodyRef}
               variants={fadeUp}
-              className="pt-10 pb-12"
+              className="ds-article-reader__prose type-prose"
             >
               {bodyText.map((para, i) => (
                 <React.Fragment key={i}>
                   <p
                     className="mb-7"
                     style={{
-                      fontFamily:  'var(--font-dm-sans)',
-                      fontSize:    i === 0 ? '1.25rem' : '1.125rem',
-                      lineHeight:  i === 0 ? 1.65 : 1.85,
-                      color:       i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
-                      fontWeight:  i === 0 ? 650 : 400,
+                      fontSize:   i === 0 ? '1.25rem' : '1.125rem',
+                      lineHeight: i === 0 ? 'var(--leading-relaxed)' : 'var(--leading-prose)',
+                      color:      i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
+                      fontWeight: i === 0 ? 600 : 400,
                     }}
                   >
                     {/* Pull-quote style for direct quotes */}
@@ -471,8 +385,7 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                     ) : para}
                   </p>
 
-                  {/* Inline ad slot in the middle of the article (after paragraph 2) */}
-                  {i === 1 && (
+                  {ADS_ENABLED && i === 1 && (
                     <div className="my-10 flex justify-center">
                       <AdSlot size="inline" label="Advertisement" />
                     </div>
@@ -480,110 +393,42 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
                 </React.Fragment>
               ))}
 
-              {/* Article end mark */}
-              <div className="flex items-center gap-3 pt-2">
-                <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
-                <span
-                  className="text-xs font-extrabold uppercase"
-                  style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
-                >
-                  Trax
-                </span>
-                <div className="flex-1 h-px" style={{ backgroundColor: 'var(--border)' }} />
+              <div className="ds-article-reader__endmark">
+                <div className="ds-article-reader__endmark-rule" />
+                <span className="ds-category-label">Trax</span>
+                <div className="ds-article-reader__endmark-rule" />
               </div>
 
-              {/* ── Topic Tags ─────────────────────────────────────────────── */}
               <div className="mt-6 flex flex-wrap items-center gap-2">
-                <span
-                  className="flex items-center gap-1 text-xs font-semibold uppercase tracking-wide"
-                  style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-dm-sans)', letterSpacing: '0.07em' }}
-                >
-                  <Tag size={11} strokeWidth={2} />
-                  Topics
-                </span>
-                {/* Category pill */}
-                <Link
-                  href={`/${article.category.toLowerCase()}`}
-                  className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border transition-all duration-200 hover:scale-105"
-                  style={{
-                    backgroundColor: 'rgba(255, 26, 26, 0.08)',
-                    borderColor:     'rgba(255, 26, 26, 0.25)',
-                    color:           'var(--accent-bright)',
-                    fontFamily:      'var(--font-dm-sans)',
-                  }}
-                >
+                <span className="type-meta">Topics</span>
+                <Link href={`/${article.category.toLowerCase()}`} className="ds-category-pill">
                   {article.category}
                 </Link>
-                {/* Trending pill if applicable */}
-                {article.trending && (
-                  <span
-                    className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border"
-                    style={{
-                      backgroundColor: 'rgba(245,158,11,0.08)',
-                      borderColor:     'rgba(245,158,11,0.25)',
-                      color:           '#D97706',
-                      fontFamily:      'var(--font-dm-sans)',
-                    }}
-                  >
-                    Trending
-                  </span>
-                )}
-                {/* Breaking pill if applicable */}
-                {article.breaking && (
-                  <span
-                    className="inline-flex items-center text-xs font-bold px-3 py-1 rounded-full border"
-                    style={{
-                      backgroundColor: 'rgba(255, 26, 26, 0.08)',
-                      borderColor:     'rgba(255, 26, 26, 0.25)',
-                      color:           'var(--accent-bright)',
-                      fontFamily:      'var(--font-dm-sans)',
-                    }}
-                  >
-                    Breaking
-                  </span>
-                )}
+                {article.trending && <span className="ds-category-pill">Trending</span>}
+                {article.breaking && <span className="ds-hero-lead__breaking">Breaking</span>}
               </div>
 
-              {/* Post-article Rectangle Ad */}
-              <div className="mt-10 flex justify-center">
-                <AdSlot size="rectangle" label="Sponsor Square" />
-              </div>
+              {ADS_ENABLED && (
+                <div className="mt-10 flex justify-center">
+                  <AdSlot size="rectangle" label="Sponsor Square" />
+                </div>
+              )}
             </motion.div>
 
           </div>
         </div>
 
-        {/* ── Related articles ─────────────────────────────────────────────── */}
         {related.length > 0 && (
-          <section
-            className="section border-t"
-            style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)' }}
-          >
-            <div className="container">
-              {/* Section header */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="mb-10"
-              >
-                <h2
-                  className="text-3xl md:text-4xl font-extrabold"
-                  style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--fg)' }}
-                >
-                  Related Stories
-                </h2>
-              </motion.div>
-
-              {/* 3-column grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+          <SectionBand variant="tint" className="ds-article-reader__related">
+            <div className="container ds-category-page">
+              <SectionMarker title="Related stories" subtitle="More from across the corridor" />
+              <div className="ds-category-feed__grid">
                 {related.map((rel, i) => (
-                  <Card key={rel.id} article={rel} index={i} />
+                  <Card key={rel.id} article={rel} index={i} staggered />
                 ))}
               </div>
             </div>
-          </section>
+          </SectionBand>
         )}
       </motion.div>
     </>

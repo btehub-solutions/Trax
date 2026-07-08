@@ -15,10 +15,10 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useId } from 'react'
 import { motion } from 'framer-motion'
-import DOMPurify from 'dompurify'
 import { BASE_URL } from '@/lib/api'
+import { ADS_ENABLED } from '@/lib/ads'
 
 // ── Size presets (IAB standard) ───────────────────────────────────────────────
 const SIZE_MAP = {
@@ -38,35 +38,50 @@ interface AdSlotProps {
 }
 
 export default function AdSlot({ size, id, className = '', label }: AdSlotProps) {
+  if (!ADS_ENABLED) return null
+
   const preset      = SIZE_MAP[size]
   const displayLabel = label ?? preset.label
+  const fallbackId = useId()
   const [adHtml, setAdHtml] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
+
     const fetchAd = async () => {
       try {
         const uppercaseSize = size.toUpperCase() // 'LEADERBOARD', 'RECTANGLE', 'INLINE'
         const response = await fetch(`${BASE_URL}/ads?size=${uppercaseSize}`)
+        if (cancelled) return
+
         if (response.ok) {
           const data = await response.json()
+          const { default: DOMPurify } = await import('dompurify')
+          const sanitize = (code: string) =>
+            DOMPurify.sanitize(code, { ADD_TAGS: ['iframe', 'style'], ADD_ATTR: ['target', 'rel'] })
+
           if (Array.isArray(data)) {
             const activeAds = data.filter((ad: any) => ad.active && ad.code)
             if (activeAds.length > 0) {
               const randomIndex = Math.floor(Math.random() * activeAds.length)
-              setAdHtml(DOMPurify.sanitize(activeAds[randomIndex].code, { ADD_TAGS: ['iframe', 'style'], ADD_ATTR: ['target', 'rel'] }))
+              setAdHtml(sanitize(activeAds[randomIndex].code))
             }
           } else if (data && data.code && data.active) {
-            setAdHtml(DOMPurify.sanitize(data.code, { ADD_TAGS: ['iframe', 'style'], ADD_ATTR: ['target', 'rel'] }))
+            setAdHtml(sanitize(data.code))
           }
         }
-      } catch (err) {
-        console.error('Failed to load ad slot:', err)
+      } catch {
+        // Backend offline in dev — fall through to static placeholder
       } finally {
-        setLoading(false)
+        if (!cancelled) setLoading(false)
       }
     }
+
     fetchAd()
+    return () => {
+      cancelled = true
+    }
   }, [size])
 
   if (loading) {
@@ -89,7 +104,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
   if (adHtml) {
     const normalizedHtml = adHtml.trim().toLowerCase();
     const isImageOnly = normalizedHtml.startsWith('<a') && !normalizedHtml.includes('<div') && normalizedHtml.includes('<img');
-    const containerId = id || `ad-slot-${size}-${Math.random().toString(36).substring(2, 7)}`;
+    const containerId = id || fallbackId;
     
     // Parse the img src if it's image only
     let imageUrl = '';

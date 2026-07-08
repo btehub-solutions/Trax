@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
-import { getDbArticles } from '@/lib/api'
-
-export const dynamic = 'force-dynamic';
 import CategoryPageLayout from '@/components/CategoryPageLayout'
+import { getDbArticles } from '@/lib/api'
+import { pageMetadata } from '@/lib/seo'
+import { REVALIDATE_SECONDS } from '@/lib/server-api'
 
-export const metadata: Metadata = {
-  title: "Ogun State's Startups | Trax",
-  description: 'Track the founders, builders, and platforms creating the next generation of AI products in Ogun State.',
-}
+export const revalidate = REVALIDATE_SECONDS
+
+export const metadata: Metadata = pageMetadata({
+  title: "Ogun State's Startups",
+  description:
+    'Track the founders, builders, and platforms creating the next generation of tech products in Ogun State.',
+  path: '/startups',
+})
 
 export default async function StartupsPage() {
   const articles = await getDbArticles()

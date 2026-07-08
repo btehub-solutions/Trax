@@ -1,134 +1,133 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
+import CategoryEmptyState from '@/components/ui/CategoryEmptyState'
 import NewsletterSection from '@/components/ui/NewsletterSection'
+import SectionHero from '@/components/ui/SectionHero'
+import { SectionBand } from '@/design-system/components'
+import { staggerGrid, viewportGrid } from '@/design-system/motion'
+import { useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
 import type { Article } from '@/lib/articles'
+import { resolveHeroStack } from '@/lib/heroArticles'
+
+export interface CategoryFilter {
+  id: string
+  label: string
+  categories: string[]
+}
 
 interface CategoryPageLayoutProps {
-  title: string
+  title?: string
   description: string
   categoryName: string
   articles: Article[]
+  filters?: CategoryFilter[]
+  viewAllHref?: string
 }
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
+function matchesFilter(article: Article, filter: CategoryFilter) {
+  return filter.categories.includes(article.category)
 }
 
 export default function CategoryPageLayout({
-  title,
   description,
   categoryName,
   articles,
+  filters,
+  viewAllHref,
 }: CategoryPageLayoutProps) {
-  return (
-    <>
-      {/* ── Category Header ── */}
-      <section
-        className="relative pt-32 pb-14 overflow-hidden border-b"
-        style={{
-          backgroundColor: 'var(--bg)',
-          borderColor: 'var(--border)',
-        }}
-      >
-        <div className="container relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl"
-          >
-            <span
-              className="inline-block text-xs font-extrabold uppercase mb-4"
-              style={{ color: 'var(--accent)', fontFamily: 'var(--font-dm-sans)' }}
-            >
-              {categoryName}
-            </span>
-            
-            <h1
-              className="font-extrabold mb-4"
-              style={{
-                fontFamily: 'var(--font-dm-sans)',
-                fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-                color: 'var(--fg)',
-                lineHeight: 0.98,
-                letterSpacing: 0,
-              }}
-            >
-              {title}
-            </h1>
-            
-            <p
-              className="text-base md:text-lg max-w-2xl"
-              style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-            >
-              {description}
-            </p>
-          </motion.div>
-        </div>
-      </section>
+  const [activeFilterId, setActiveFilterId] = useState(filters?.[0]?.id ?? 'all')
+  const grid = useMotionVariants(staggerGrid, 'staggerGrid')
 
-      {/* ── Article Feed ── */}
-      <section
-        className="py-16 min-h-[400px]"
-        style={{ backgroundColor: 'var(--bg)' }}
-      >
-        <div className="container">
-          {articles.length > 0 ? (
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-40px' }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12"
-            >
-              {articles.map((article, index) => (
-                <Card key={article.id} article={article} index={index} />
-              ))}
-            </motion.div>
+  const visibleArticles = useMemo(() => {
+    if (!filters?.length) return articles
+    const active = filters.find((filter) => filter.id === activeFilterId) ?? filters[0]
+    return articles.filter((article) => matchesFilter(article, active))
+  }, [articles, filters, activeFilterId])
+
+  const { lead, featured, remaining } = resolveHeroStack(visibleArticles)
+
+  return (
+    <div className="ds-category-page ds-premium-home">
+      {lead && (
+        <SectionBand variant="default" section={false}>
+          <SectionHero
+            key={activeFilterId}
+            lead={lead}
+            featured={featured}
+            viewAllHref={viewAllHref}
+            headingLevel="h2"
+            className="ds-hero-section ds-category-hero"
+            ariaLabel={`${categoryName} lead story`}
+          />
+        </SectionBand>
+      )}
+
+      <SectionBand variant={lead ? 'tint' : 'default'}>
+        <div className="container ds-category-feed">
+          {articles.length === 0 ? (
+            <CategoryEmptyState categoryName={categoryName} />
           ) : (
-            /* Empty state if no articles exist in category yet */
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border"
-              style={{
-                backgroundColor: 'var(--card-bg)',
-                borderColor: 'var(--card-border)',
-                boxShadow: 'var(--shadow-sm)',
-              }}
-            >
-              <div
-                className="w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4"
-                style={{ backgroundColor: 'rgba(255, 26, 26, 0.1)' }}
-              >
-                <span className="text-xl" style={{ color: 'var(--accent)' }}>💡</span>
-              </div>
-              <h3
-                className="text-lg font-bold mb-2"
-                style={{ fontFamily: 'var(--font-oxanium)', color: 'var(--fg)' }}
-              >
-                Stories Coming Soon
-              </h3>
-              <p
-                className="text-sm mb-6"
-                style={{ color: 'var(--fg-muted)', fontFamily: 'var(--font-dm-sans)' }}
-              >
-                We are currently researching and writing stories for this beat. Join our newsletter to receive them the moment they drop!
-              </p>
-            </motion.div>
+            <>
+              {description && (
+                <p className="type-excerpt ds-category-feed__intro">{description}</p>
+              )}
+
+              {filters && filters.length > 1 && (
+                <div
+                  className="ds-category-filters"
+                  role="tablist"
+                  aria-label={`Filter ${categoryName.toLowerCase()} stories`}
+                >
+                  {filters.map((filter) => {
+                    const isActive = filter.id === activeFilterId
+                    return (
+                      <button
+                        key={filter.id}
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        className={`ds-category-filters__pill${isActive ? ' is-active' : ''}`}
+                        onClick={() => setActiveFilterId(filter.id)}
+                      >
+                        {filter.label}
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+
+              {visibleArticles.length === 0 ? (
+                <p className="type-meta ds-category-feed__empty">
+                  No stories in this filter yet. Try another filter or check back soon.
+                </p>
+              ) : remaining.length > 0 ? (
+                <motion.div
+                  variants={grid}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={viewportGrid}
+                  className="ds-category-feed__grid"
+                >
+                  {remaining.map((article, index) => (
+                    <Card key={article.id} article={article} index={index} staggered />
+                  ))}
+                </motion.div>
+              ) : (
+                <p className="type-meta ds-category-feed__empty">
+                  More {categoryName.toLowerCase()} stories are on the way.
+                </p>
+              )}
+            </>
           )}
         </div>
-      </section>
+      </SectionBand>
 
-      {/* ── Newsletter section at the bottom ── */}
-      <NewsletterSection />
-    </>
+      <SectionBand variant="muted">
+        <NewsletterSection />
+      </SectionBand>
+    </div>
   )
 }
