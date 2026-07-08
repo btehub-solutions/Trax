@@ -11,6 +11,8 @@ import { NewsletterModule }  from './newsletter/newsletter.module';
 import { AdsModule }         from './ads/ads.module';
 import { UploadsModule }      from './uploads/uploads.module';
 import { PartnersModule }     from './partners/partners.module';
+import { AppController }      from './app.controller';
+import { AppService }         from './app.service';
 
 @Module({
   imports: [
@@ -36,7 +38,9 @@ import { PartnersModule }     from './partners/partners.module';
     UploadsModule,
     PartnersModule,
   ],
+  controllers: [AppController],
   providers: [
+    AppService,
     // Apply ThrottlerGuard globally to all routes
     { provide: APP_GUARD, useClass: ThrottlerGuard },
   ],

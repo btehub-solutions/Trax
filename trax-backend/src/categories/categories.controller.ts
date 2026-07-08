@@ -1,5 +1,5 @@
 import {
-  Body, Controller, Delete, Get, Param, Patch, Post, UseGuards,
+  Body, Controller, Delete, Get, Param, Patch, Post, ServiceUnavailableException, UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
@@ -17,27 +17,8 @@ export class CategoriesController {
   async findAll() {
     try {
       return await this.categoriesService.findAll();
-    } catch (e: any) {
-      const dbUrl = process.env.DATABASE_URL || '';
-      const match = dbUrl.match(/:([^:@]+)@/);
-      const password = match ? match[1] : '';
-      return {
-        error: true,
-        message: e.message || 'Unknown error',
-        stack: e.stack,
-        env: {
-          DATABASE_URL_exists: !!process.env.DATABASE_URL,
-          POSTGRES_URL_exists: !!process.env.POSTGRES_URL,
-          POSTGRES_PRISMA_URL_exists: !!process.env.POSTGRES_PRISMA_URL,
-          connectionStringSanitized: dbUrl.replace(/:[^:@]+@/g, ':***@'),
-          passwordDetails: {
-            length: password.length,
-            trimmedLength: password.trim().length,
-            startsWithP: password.startsWith('P'),
-            endsWithR: password.endsWith('R'),
-          }
-        }
-      };
+    } catch {
+      throw new ServiceUnavailableException('Database is currently unavailable.');
     }
   }
 

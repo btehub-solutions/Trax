@@ -32,7 +32,8 @@ import {
   Sun,
   Moon
 } from 'lucide-react';
-import { api, fetchApi, BASE_URL } from '@/lib/api';
+import { api, fetchApi, BASE_URL, getApiHealth } from '@/lib/api';
+import Image from 'next/image';
 import { compressImage } from '@/lib/image-compressor';
 import { useTheme } from 'next-themes';
 
@@ -146,7 +147,10 @@ export default function DashboardPage() {
     email: '',
     password: '',
     role: 'WRITER',
+    avatar: '',
   });
+  const [teamAvatarUploading, setTeamAvatarUploading] = useState(false);
+  const [teamAvatarUploadError, setTeamAvatarUploadError] = useState<string | null>(null);
 
   // Partners Management State
   const [partners, setPartners] = useState<any[]>([]);
@@ -284,6 +288,8 @@ export default function DashboardPage() {
     setLoading(true);
     setConnectionError(null);
     try {
+      await getApiHealth();
+
       // 1. Fetch categories
       const cats = await api.get('/categories');
       setCategories(cats);
@@ -483,6 +489,38 @@ export default function DashboardPage() {
     }
   };
 
+  const handleTeamMemberAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setTeamAvatarUploading(true);
+    setTeamAvatarUploadError(null);
+    try {
+      const compressedFile = await compressImage(file);
+      const fData = new FormData();
+      fData.append('file', compressedFile);
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${BASE_URL}/uploads`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: fData
+      });
+      if (!res.ok) {
+        const json = await res.json();
+        throw new Error(json.message || 'Upload failed');
+      }
+      const data = await res.json();
+      if (data && data.url) {
+        setTeamFormData(prev => ({ ...prev, avatar: data.url }));
+      }
+    } catch (err: any) {
+      setTeamAvatarUploadError(err.message || 'Failed to upload avatar');
+    } finally {
+      setTeamAvatarUploading(false);
+    }
+  };
+
   const handleAdImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -622,7 +660,7 @@ export default function DashboardPage() {
     try {
       await api.post('/users', teamFormData);
       setTeamSuccess('Team member added successfully!');
-      setTeamFormData({ name: '', email: '', password: '', role: 'WRITER' });
+      setTeamFormData({ name: '', email: '', password: '', role: 'WRITER', avatar: '' });
       
       const members = await api.get('/users');
       setTeamMembers(members);
@@ -758,7 +796,7 @@ export default function DashboardPage() {
         <div className="p-6">
           <div className="flex items-center gap-2 mb-8">
             <span className="text-xl font-black tracking-tight" style={{ color: 'var(--dash-fg)' }}>
-              <span style={{ color: 'var(--accent)' }}>Trax</span>
+              <span style={{ color: 'var(--accent)' }}>TRAX</span>
             </span>
             <span className="bg-red-600/10 text-red-600 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-600/20">
               Admin
@@ -769,9 +807,11 @@ export default function DashboardPage() {
             className="flex items-center gap-3 p-3 rounded-xl mb-6 border"
             style={{ backgroundColor: 'var(--dash-user-card)', borderColor: 'var(--dash-user-card-border)' }}
           >
-            <img
+            <Image
               src={user?.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&fit=crop'}
-              alt={user?.name}
+              alt={user?.name ?? 'User avatar'}
+              width={36}
+              height={36}
               className="h-9 w-9 rounded-full object-cover border"
               style={{ borderColor: 'var(--dash-avatar-border)' }}
             />
@@ -890,7 +930,7 @@ export default function DashboardPage() {
                 <div className="space-y-8">
                   <div>
                     <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Overview</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Status overview of the Trax platform</p>
+                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Status overview of the TRAX platform</p>
                   </div>
 
                   {/* Metrics Row */}
@@ -1045,6 +1085,10 @@ export default function DashboardPage() {
                                       alt={article.title}
                                       className="h-10 w-16 object-cover rounded-lg shrink-0 border"
                                       style={{ borderColor: 'var(--dash-card-border)' }}
+                                      onError={(e) => {
+                                        e.currentTarget.src =
+                                          'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&h=500&fit=crop&q=80'
+                                      }}
                                     />
                                   )}
                                   <div className="overflow-hidden">
@@ -1845,7 +1889,7 @@ export default function DashboardPage() {
                           style={{ borderColor: 'var(--dash-card-border)', backgroundColor: 'var(--dash-input)' }}
                         >
                           {profileData.avatar ? (
-                            <img src={profileData.avatar} alt="Avatar Preview" className="w-full h-full object-cover" />
+                            <Image src={profileData.avatar} alt="Avatar Preview" width={112} height={112} className="w-full h-full object-cover" unoptimized={false} />
                           ) : (
                             <span className="text-3xl font-bold" style={{ color: 'var(--dash-fg-subtle)' }}>
                               {profileData.name ? profileData.name.charAt(0) : 'A'}
@@ -1992,7 +2036,7 @@ export default function DashboardPage() {
                                   <td className="py-4 px-6 font-semibold" style={{ color: 'var(--dash-fg)' }}>
                                     <div className="flex items-center gap-3">
                                       {member.avatar ? (
-                                        <img src={member.avatar} alt={member.name} className="h-8 w-8 rounded-full object-cover border border-neutral-800" />
+                                        <Image src={member.avatar} alt={member.name} width={32} height={32} className="h-8 w-8 rounded-full object-cover border border-neutral-800" />
                                       ) : (
                                         <div className="h-8 w-8 rounded-full flex items-center justify-center text-xs font-bold text-white bg-red-600">
                                           {member.name.charAt(0)}
@@ -2064,6 +2108,51 @@ export default function DashboardPage() {
                       )}
 
                       <form onSubmit={handleAddTeamMember} className="space-y-4">
+                        <div className="flex flex-col items-center gap-3 pb-2 border-b border-dashed" style={{ borderColor: 'var(--dash-divider)' }}>
+                          <div
+                            className="relative group w-20 h-20 rounded-full overflow-hidden border flex items-center justify-center"
+                            style={{ borderColor: 'var(--dash-card-border)', backgroundColor: 'var(--dash-input)' }}
+                          >
+                            {teamFormData.avatar ? (
+                              <Image src={teamFormData.avatar} alt="Avatar Preview" width={80} height={80} className="w-full h-full object-cover" unoptimized={false} />
+                            ) : (
+                              <span className="text-2xl font-bold" style={{ color: 'var(--dash-fg-subtle)' }}>
+                                {teamFormData.name ? teamFormData.name.charAt(0) : '?'}
+                              </span>
+                            )}
+                          </div>
+                          
+                          <div className="flex flex-col items-center gap-1.5">
+                            <label className="cursor-pointer bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm flex items-center gap-1.5">
+                              <span>Choose Image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleTeamMemberAvatarUpload}
+                                className="hidden"
+                              />
+                            </label>
+                            <span className="text-[9px]" style={{ color: 'var(--dash-fg-muted)' }}>
+                              {teamAvatarUploading ? 'Uploading...' : 'Upload avatar'}
+                            </span>
+                            {teamAvatarUploadError && (
+                              <p className="text-[9px] text-red-500 font-medium">{teamAvatarUploadError}</p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Or Avatar Image URL</label>
+                          <input
+                            type="text"
+                            value={teamFormData.avatar}
+                            onChange={(e) => setTeamFormData(prev => ({ ...prev, avatar: e.target.value }))}
+                            placeholder="https://images.unsplash.com/..."
+                            className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
+                            style={inputStyle}
+                          />
+                        </div>
+
                         <div className="space-y-1.5">
                           <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Full Name</label>
                           <input

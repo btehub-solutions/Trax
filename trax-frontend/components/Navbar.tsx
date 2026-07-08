@@ -105,14 +105,14 @@ export default function Navbar() {
             <Link
               href="/"
               id="navbar-logo"
-              aria-label="Trax home"
+              aria-label="TRAX home"
               className="flex items-center shrink-0 select-none"
             >
               <span
                 className="text-[22px] font-extrabold leading-none tracking-tight"
                 style={{ fontFamily: 'var(--font-family-editorial)', color: 'var(--accent)' }}
               >
-                Trax
+                TRAX
               </span>
             </Link>
 
@@ -383,7 +383,7 @@ export default function Navbar() {
                 className="flex items-center justify-between px-4 py-2.5 border-t text-xs"
                 style={{ borderColor: 'var(--border)', color: 'var(--fg-subtle)', fontFamily: 'var(--font-family-ui)' }}
               >
-                <span>Type to search Trax</span>
+                <span>Type to search TRAX</span>
                 <kbd
                   className="px-1.5 py-0.5 rounded border text-[10px]"
                   style={{ borderColor: 'var(--border)', color: 'var(--fg-muted)' }}

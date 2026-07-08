@@ -2,11 +2,11 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
-    // Prefer AVIF (smallest), fall back to WebP
-    formats: ['image/avif', 'image/webp'],
-    // Only generate the sizes we actually use — cuts Vercel transformations by ~70%
-    deviceSizes: [640, 1200, 1920],
-    imageSizes: [64, 256, 384],
+    // Use our custom Supabase-aware loader.
+    // - Supabase Storage URLs → resized by Supabase's own CDN (zero Vercel transformations)
+    // - All other URLs       → passed through as-is
+    loader: 'custom',
+    loaderFile: './lib/supabase-image-loader.ts',
     remotePatterns: [
       {
         protocol: 'https',

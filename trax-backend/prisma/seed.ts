@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import { PrismaService } from '../src/prisma/prisma.service'
 import * as bcrypt from 'bcryptjs'
+import { assertSafeDestructiveSeed, getSafeDatabaseTargetLabel } from '../src/config/database-safety'
 
 const prisma = new PrismaService()
 
@@ -9,7 +10,9 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 async function main() {
-  console.log('Clearing database...')
+  assertSafeDestructiveSeed()
+
+  console.log(`Clearing local development database: ${getSafeDatabaseTargetLabel()}`)
   await prisma.articleTag.deleteMany({})
   await prisma.tag.deleteMany({})
   await prisma.article.deleteMany({})
