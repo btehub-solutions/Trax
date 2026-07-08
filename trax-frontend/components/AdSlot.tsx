@@ -125,7 +125,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: '-32px' }}
+            viewport={{ once: true, margin: '0px 0px -32px 0px' }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
             id={containerId}
             className={`relative overflow-hidden rounded-md border border-white/5 flex items-center justify-center ${className}`}
@@ -245,7 +245,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        viewport={{ once: true, margin: '-32px' }}
+        viewport={{ once: true, margin: '0px 0px -32px 0px' }}
         transition={{ duration: 0.4, ease: 'easeOut' }}
         id={id}
         role="complementary"

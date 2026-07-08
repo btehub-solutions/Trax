@@ -34,7 +34,7 @@ export default function NewsletterSection() {
         className="ds-newsletter-card"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
+        viewport={{ once: true, margin: '0px 0px -40px 0px' }}
         transition={transitionEditorial}
       >
         <div className="ds-newsletter-card__inner">

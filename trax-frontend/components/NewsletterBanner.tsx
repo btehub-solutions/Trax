@@ -42,7 +42,7 @@ export default function NewsletterBanner({
       id="newsletter-banner"
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-64px' }}
+      viewport={{ once: true, margin: '0px 0px -64px 0px' }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
       className="relative overflow-hidden"
       style={
