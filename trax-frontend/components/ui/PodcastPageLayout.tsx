@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react'
 import PlatformPageShell from '@/components/ui/PlatformPageShell'
 import PlatformPageIntro from '@/components/ui/PlatformPageIntro'
-import { MotionButton, SectionBand, SectionMarker } from '@/design-system/components'
+import NewsletterSubscribeFields from '@/components/newsletter/NewsletterSubscribeFields'
+import { SectionBand, SectionMarker } from '@/design-system/components'
 import { Icon } from '@/design-system/icons'
-import { BASE_URL } from '@/lib/api'
 
 const showSegments = [
   {
@@ -26,11 +26,6 @@ export default function PodcastPageLayout() {
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
-
   useEffect(() => {
     audioRef.current = new Audio('/audio/ep1.mp3')
     audioRef.current.onended = () => setIsPlaying(false)
@@ -47,32 +42,6 @@ export default function PodcastPageLayout() {
     } else {
       void audioRef.current.play()
       setIsPlaying(true)
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      const response = await fetch(`${BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.message || 'Subscription failed')
-      setSubmitted(true)
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
-      setError(message)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -152,31 +121,11 @@ export default function PodcastPageLayout() {
           </div>
 
           <div className="ds-premium-panel">
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="ds-platform-page__form">
-                <label htmlFor="podcast-alerts-email" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="podcast-alerts-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    setError('')
-                  }}
-                  placeholder="you@company.com"
-                  className="ds-platform-page__input"
-                />
-                <MotionButton type="submit" variant="primary" disabled={loading} className="w-full">
-                  {loading ? 'Subscribing…' : 'Get episode alerts'}
-                </MotionButton>
-                {error && <p className="ds-platform-page__error">{error}</p>}
-              </form>
-            ) : (
-              <p className="ds-platform-page__success">You&apos;re on the episode alert list.</p>
-            )}
+            <NewsletterSubscribeFields
+              id="podcast-alerts-email"
+              submitLabel="Get episode alerts"
+              loadingLabel="Sending link…"
+            />
           </div>
         </div>
       </SectionBand>

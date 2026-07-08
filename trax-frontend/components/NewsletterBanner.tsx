@@ -1,9 +1,14 @@
 'use client'
 
-import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail, ArrowRight, CheckCircle, Sparkles } from 'lucide-react'
-import { BASE_URL } from '@/lib/api'
+import {
+  NEWSLETTER_ALREADY_TEXT,
+  NEWSLETTER_ALREADY_TITLE,
+  NEWSLETTER_PENDING_TEXT,
+  NEWSLETTER_PENDING_TITLE,
+} from '@/lib/newsletter'
+import { useNewsletterSubscribe } from '@/components/newsletter/NewsletterSubscribeFields'
 
 interface NewsletterBannerProps {
   /** Optional override headline */
@@ -16,42 +21,21 @@ interface NewsletterBannerProps {
 
 export default function NewsletterBanner({
   headline = "Get Ogun State's tech news in your inbox",
-  subtext  = 'Weekly digest. No spam. Free.',
-  variant  = 'banner',
+  subtext = 'Weekly digest. No spam. Free.',
+  variant = 'banner',
 }: NewsletterBannerProps) {
-  const [email,     setEmail]     = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading,   setLoading]   = useState(false)
-  const [error,     setError]     = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      const response = await fetch(`${BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.message || 'Subscription failed')
-      }
-      setSubmitted(true)
-    } catch (err: any) {
-      setError(err.message || 'Something went wrong. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }
+  const {
+    email,
+    setEmail,
+    loading,
+    error,
+    status,
+    message,
+    handleSubmit,
+  } = useNewsletterSubscribe()
 
   const isBanner = variant === 'banner'
+  const isSuccess = status === 'pending' || status === 'already'
 
   return (
     <motion.section
@@ -69,14 +53,13 @@ export default function NewsletterBanner({
             }
           : {
               backgroundColor: 'var(--card-bg)',
-              border:          '1px solid var(--card-border)',
-              borderRadius:    '1.25rem',
-              padding:         '2.5rem',
-              boxShadow:       'var(--shadow-md)',
+              border: '1px solid var(--card-border)',
+              borderRadius: '1.25rem',
+              padding: '2.5rem',
+              boxShadow: 'var(--shadow-md)',
             }
       }
     >
-      {/* ── Dot-grid background (banner only) ── */}
       {isBanner && (
         <>
           <div className="absolute inset-0 dot-grid" style={{ opacity: 0.22 }} />
@@ -92,8 +75,6 @@ export default function NewsletterBanner({
 
       <div className={`relative z-10 ${isBanner ? 'container' : ''}`}>
         <div className="max-w-xl mx-auto text-center">
-
-          {/* ── Icon ── */}
           <motion.div
             initial={{ scale: 0.7, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
@@ -102,13 +83,12 @@ export default function NewsletterBanner({
             className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-6 mx-auto"
             style={{
               backgroundColor: 'rgba(255, 26, 26, 0.15)',
-              border:          '1px solid rgba(255, 26, 26, 0.3)',
+              border: '1px solid rgba(255, 26, 26, 0.3)',
             }}
           >
             <Mail size={24} color="var(--accent-bright)" strokeWidth={1.75} />
           </motion.div>
 
-          {/* ── Eyebrow ── */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -121,7 +101,6 @@ export default function NewsletterBanner({
             Newsletter
           </motion.p>
 
-          {/* ── Headline ── */}
           <motion.h2
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -129,17 +108,16 @@ export default function NewsletterBanner({
             transition={{ delay: 0.2, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="font-bold mb-3"
             style={{
-              fontFamily:    'var(--font-family-editorial)',
-              color:         isBanner ? '#FFFFFF' : 'var(--fg)',
-              fontSize:      'clamp(1.4rem, 3vw, 2rem)',
-              lineHeight:    1.15,
+              fontFamily: 'var(--font-family-editorial)',
+              color: isBanner ? '#FFFFFF' : 'var(--fg)',
+              fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+              lineHeight: 1.15,
               letterSpacing: '-0.025em',
             }}
           >
             {headline}
           </motion.h2>
 
-          {/* ── Subtext ── */}
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -147,17 +125,16 @@ export default function NewsletterBanner({
             transition={{ delay: 0.25, duration: 0.45 }}
             className="text-sm mb-8"
             style={{
-              color:       isBanner ? 'rgba(255,255,255,0.55)' : 'var(--fg-muted)',
-              fontFamily:  'var(--font-family-ui)',
-              lineHeight:  1.65,
+              color: isBanner ? 'rgba(255,255,255,0.55)' : 'var(--fg-muted)',
+              fontFamily: 'var(--font-family-ui)',
+              lineHeight: 1.65,
             }}
           >
             {subtext}
           </motion.p>
 
-          {/* ── Form / Success ── */}
           <AnimatePresence mode="wait">
-            {!submitted ? (
+            {!isSuccess ? (
               <motion.form
                 key="form"
                 onSubmit={handleSubmit}
@@ -168,14 +145,13 @@ export default function NewsletterBanner({
                 className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
                 noValidate
               >
-                {/* Email input */}
                 <div className="flex-1 relative">
                   <input
                     id="newsletter-banner-email"
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => { setEmail(e.target.value); setError('') }}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     aria-label="Email address"
                     aria-describedby={error ? 'newsletter-error' : undefined}
@@ -184,15 +160,15 @@ export default function NewsletterBanner({
                       backgroundColor: isBanner
                         ? 'rgba(255,255,255,0.08)'
                         : 'var(--bg)',
-                      border:     `1px solid ${error ? '#EF4444' : isBanner ? 'rgba(255,255,255,0.15)' : 'var(--border)'}`,
-                      color:      isBanner ? '#F0F0F0' : 'var(--fg)',
+                      border: `1px solid ${error ? '#EF4444' : isBanner ? 'rgba(255,255,255,0.15)' : 'var(--border)'}`,
+                      color: isBanner ? '#F0F0F0' : 'var(--fg)',
                       fontFamily: 'var(--font-family-ui)',
-                      fontSize:   '16px', // prevents iOS Safari auto-zoom on focus
+                      fontSize: '16px',
                     }}
                     onFocus={(e) => {
                       if (!error) {
                         e.target.style.borderColor = 'var(--accent)'
-                        e.target.style.boxShadow   = '0 0 0 3px rgba(255, 26, 26, 0.15)'
+                        e.target.style.boxShadow = '0 0 0 3px rgba(255, 26, 26, 0.15)'
                       }
                     }}
                     onBlur={(e) => {
@@ -206,7 +182,6 @@ export default function NewsletterBanner({
                   />
                 </div>
 
-                {/* CTA button */}
                 <motion.button
                   id="newsletter-banner-submit"
                   type="submit"
@@ -216,16 +191,16 @@ export default function NewsletterBanner({
                   className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white shrink-0 transition-colors duration-200"
                   style={{
                     backgroundColor: 'var(--accent)',
-                    fontFamily:      'var(--font-family-ui)',
-                    cursor:          loading ? 'wait' : 'pointer',
-                    boxShadow:       '0 4px 14px rgba(255, 26, 26, 0.35)',
+                    fontFamily: 'var(--font-family-ui)',
+                    cursor: loading ? 'wait' : 'pointer',
+                    boxShadow: '0 4px 14px rgba(255, 26, 26, 0.35)',
                   }}
                 >
                   {loading ? (
-                    /* Spinner */
                     <svg
                       className="animate-spin"
-                      width="16" height="16"
+                      width="16"
+                      height="16"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -244,27 +219,36 @@ export default function NewsletterBanner({
                 </motion.button>
               </motion.form>
             ) : (
-              /* Success state */
               <motion.div
                 key="success"
                 initial={{ opacity: 0, scale: 0.88 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className="flex items-center justify-center gap-3 py-4"
+                className="flex flex-col items-center justify-center gap-2 py-4"
               >
                 <CheckCircle size={22} color="#10B981" />
                 <p
-                  className="font-medium text-base"
+                  className="font-semibold text-base"
                   style={{ color: '#10B981', fontFamily: 'var(--font-family-ui)' }}
                 >
-                  You&apos;re subscribed! First issue hits your inbox soon.
+                  {status === 'already' ? NEWSLETTER_ALREADY_TITLE : NEWSLETTER_PENDING_TITLE}
+                </p>
+                <p
+                  className="text-sm max-w-sm"
+                  style={{
+                    color: isBanner ? 'rgba(255,255,255,0.65)' : 'var(--fg-muted)',
+                    fontFamily: 'var(--font-family-ui)',
+                  }}
+                >
+                  {status === 'already'
+                    ? NEWSLETTER_ALREADY_TEXT
+                    : message || NEWSLETTER_PENDING_TEXT}
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Inline error */}
-          {error && !submitted && (
+          {error && !isSuccess && (
             <motion.p
               id="newsletter-error"
               role="alert"
@@ -277,16 +261,19 @@ export default function NewsletterBanner({
             </motion.p>
           )}
 
-          {/* Trust note */}
-          {!submitted && (
+          {!isSuccess && (
             <p
               className="mt-4 text-[11px]"
               style={{
-                color:      isBanner ? 'rgba(255,255,255,0.28)' : 'var(--fg-subtle)',
+                color: isBanner ? 'rgba(255,255,255,0.28)' : 'var(--fg-subtle)',
                 fontFamily: 'var(--font-family-ui)',
               }}
             >
-              Join Ogun State&apos;s growing tech community. Unsubscribe any time.
+              Join Ogun State&apos;s growing tech community.{' '}
+              <a href="/newsletter/unsubscribe" className="underline underline-offset-2">
+                Unsubscribe anytime
+              </a>
+              .
             </p>
           )}
         </div>

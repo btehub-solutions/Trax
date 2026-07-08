@@ -11,6 +11,7 @@ import { NewsletterModule }  from './newsletter/newsletter.module';
 import { AdsModule }         from './ads/ads.module';
 import { UploadsModule }      from './uploads/uploads.module';
 import { PartnersModule }     from './partners/partners.module';
+import { MailModule }           from './mail/mail.module';
 import { AppController }      from './app.controller';
 import { AppService }         from './app.service';
 
@@ -37,6 +38,7 @@ import { AppService }         from './app.service';
     AdsModule,
     UploadsModule,
     PartnersModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [

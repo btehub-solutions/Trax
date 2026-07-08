@@ -1,10 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MotionButton } from '@/design-system/components'
 import { transitionEditorial } from '@/design-system/motion'
-import { BASE_URL } from '@/lib/api'
+import {
+  NEWSLETTER_ALREADY_TEXT,
+  NEWSLETTER_ALREADY_TITLE,
+  NEWSLETTER_PENDING_TEXT,
+  NEWSLETTER_PENDING_TITLE,
+} from '@/lib/newsletter'
+import { useNewsletterSubscribe } from '@/components/newsletter/NewsletterSubscribeFields'
 
 const BRIEFING_POINTS = [
   'Funding rounds and deal flow across Ogun and West Africa',
@@ -13,38 +18,15 @@ const BRIEFING_POINTS = [
 ] as const
 
 export default function NewsletterSection() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      const response = await fetch(`${BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.message || 'Subscription failed')
-      }
-      setSubmitted(true)
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
-      setError(message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  const {
+    email,
+    setEmail,
+    loading,
+    error,
+    status,
+    message,
+    handleSubmit,
+  } = useNewsletterSubscribe()
 
   return (
     <div className="container" id="newsletter">
@@ -71,7 +53,7 @@ export default function NewsletterSection() {
           </div>
 
           <div className="ds-newsletter-card__action">
-            {!submitted ? (
+            {status === 'idle' ? (
               <>
                 <form onSubmit={handleSubmit} className="ds-newsletter-card__form">
                   <label htmlFor="newsletter-email" className="ds-newsletter-card__form-label">
@@ -84,7 +66,9 @@ export default function NewsletterSection() {
                       required
                       autoComplete="email"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value)
+                      }}
                       placeholder="you@company.com"
                       className="ds-newsletter-card__input"
                     />
@@ -95,7 +79,7 @@ export default function NewsletterSection() {
                       arrow
                       className="ds-newsletter-card__btn"
                     >
-                      {loading ? 'Joining…' : 'Get the briefing'}
+                      {loading ? 'Sending link…' : 'Get the briefing'}
                     </MotionButton>
                   </div>
                 </form>
@@ -103,14 +87,22 @@ export default function NewsletterSection() {
                 {error && <p className="ds-newsletter-card__error">{error}</p>}
 
                 <p className="ds-newsletter-card__hint type-meta">
-                  Free forever. One email per week. Unsubscribe anytime.
+                  Free forever. One email per week.{' '}
+                  <a href="/newsletter/unsubscribe" className="ds-accent-link">
+                    Unsubscribe anytime
+                  </a>
+                  .
                 </p>
               </>
             ) : (
               <div className="ds-newsletter-card__success">
-                <p className="ds-newsletter-card__success-title">You&apos;re on the list.</p>
+                <p className="ds-newsletter-card__success-title">
+                  {status === 'already' ? NEWSLETTER_ALREADY_TITLE : NEWSLETTER_PENDING_TITLE}
+                </p>
                 <p className="ds-newsletter-card__success-text type-meta">
-                  Watch your inbox. The next Trax briefing is on its way.
+                  {status === 'already'
+                    ? NEWSLETTER_ALREADY_TEXT
+                    : message || NEWSLETTER_PENDING_TEXT}
                 </p>
               </div>
             )}

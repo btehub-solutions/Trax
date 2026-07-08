@@ -8,7 +8,6 @@ import {
   Users,
   Layout,
   PlusCircle,
-  LogOut,
   Edit,
   Trash2,
   CheckCircle,
@@ -29,13 +28,12 @@ import {
   ChevronRight,
   Building2,
   ExternalLink,
-  Sun,
-  Moon
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL, getApiHealth } from '@/lib/api';
 import Image from 'next/image';
 import { compressImage } from '@/lib/image-compressor';
 import { useTheme } from 'next-themes';
+import DashboardShell from '@/components/dashboard/DashboardShell';
 
 type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team' | 'partners';
 
@@ -764,159 +762,26 @@ export default function DashboardPage() {
 
   if (loading && !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--dash-bg)' }}>
-        <div className="h-10 w-10 border-4 border-red-600/30 border-t-red-600 rounded-full animate-spin" />
+      <div className="ds-admin min-h-screen ds-admin__loading">
+        <div className="ds-admin__spinner" />
       </div>
     );
   }
 
-  /* ── Reusable inline-style shortcuts ── */
-  const inputStyle: React.CSSProperties = {
-    backgroundColor: 'var(--dash-input)',
-    borderColor: 'var(--dash-input-border)',
-    color: 'var(--dash-fg)',
-  };
-
-  const cardStyle: React.CSSProperties = {
-    backgroundColor: 'var(--dash-card)',
-    borderColor: 'var(--dash-card-border)',
-  };
-
-  const labelStyle: React.CSSProperties = {
-    color: 'var(--dash-fg-secondary)',
-  };
-
   return (
-    <div className="ds-dashboard font-ui min-h-screen flex flex-col md:flex-row" style={{ backgroundColor: 'var(--dash-bg)', color: 'var(--dash-fg)' }}>
-      {/* Sidebar Navigation */}
-      <aside
-        className="w-full md:w-64 border-b md:border-b-0 md:border-r backdrop-blur-md flex flex-col justify-between shrink-0"
-        style={{ backgroundColor: 'var(--dash-sidebar)', borderColor: 'var(--dash-sidebar-border)' }}
-      >
-        <div className="p-6">
-          <div className="flex items-center gap-2 mb-8">
-            <span className="text-xl font-black tracking-tight" style={{ color: 'var(--dash-fg)' }}>
-              <span style={{ color: 'var(--accent)' }}>TRAX</span>
-            </span>
-            <span className="bg-red-600/10 text-red-600 text-[10px] uppercase font-bold px-2 py-0.5 rounded border border-red-600/20">
-              Admin
-            </span>
-          </div>
-
-          <div
-            className="flex items-center gap-3 p-3 rounded-xl mb-6 border"
-            style={{ backgroundColor: 'var(--dash-user-card)', borderColor: 'var(--dash-user-card-border)' }}
-          >
-            <Image
-              src={user?.avatar || 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&fit=crop'}
-              alt={user?.name ?? 'User avatar'}
-              width={36}
-              height={36}
-              className="h-9 w-9 rounded-full object-cover border"
-              style={{ borderColor: 'var(--dash-avatar-border)' }}
-            />
-            <div className="overflow-hidden">
-              <h4 className="text-sm font-semibold truncate" style={{ color: 'var(--dash-fg)' }}>{user?.name}</h4>
-              <p className="text-[10px] truncate" style={{ color: 'var(--dash-fg-muted)' }}>{user?.email}</p>
-            </div>
-          </div>
-
-          <nav className="space-y-1">
-            {[
-              { id: 'overview', label: 'Overview', icon: Layout },
-              { id: 'articles', label: 'All Articles', icon: Newspaper },
-              { id: 'editor', label: 'Article Editor', icon: PlusCircle, onClick: resetEditorForm },
-              { id: 'subscribers', label: 'Subscribers', icon: Users },
-              { id: 'ads', label: 'Ad Zones', icon: Settings },
-              { id: 'profile', label: 'Profile Settings', icon: User },
-              ...(user?.role === 'ADMIN' ? [
-                { id: 'team', label: 'Team Management', icon: UserPlus },
-                { id: 'partners', label: 'Partners Manager', icon: Building2 }
-              ] : []),
-            ].map(item => {
-              const Icon = item.icon;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setActiveTab(item.id as Tab);
-                    if (item.onClick) item.onClick();
-                  }}
-                  className={`w-full flex items-center gap-3 py-3 pr-4 rounded-xl text-sm font-medium transition-all ${
-                    activeTab === item.id 
-                      ? 'pl-3 border-l-[3px] border-[var(--accent)]' 
-                      : 'pl-4 border-l-[3px] border-transparent'
-                  }`}
-                  style={
-                    activeTab === item.id
-                      ? { backgroundColor: 'rgba(255, 26, 26, 0.08)', color: 'var(--accent)' }
-                      : { color: 'var(--dash-fg-muted)' }
-                  }
-                  onMouseEnter={(e) => {
-                    if (activeTab !== item.id) {
-                      e.currentTarget.style.backgroundColor = 'var(--dash-hover)';
-                      e.currentTarget.style.color = 'var(--dash-fg)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeTab !== item.id) {
-                      e.currentTarget.style.backgroundColor = 'transparent';
-                      e.currentTarget.style.color = 'var(--dash-fg-muted)';
-                    }
-                  }}
-                >
-                  <Icon className="h-4.5 w-4.5" />
-                  {item.label}
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-
-        <div className="p-6 border-t flex flex-col gap-2.5" style={{ borderColor: 'var(--dash-divider)' }}>
-          {mounted && (
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium text-[var(--dash-fg-secondary)] hover:bg-[var(--dash-hover)] transition-all border border-transparent"
-            >
-              {theme === 'dark' ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
-              <span>{theme === 'dark' ? 'Dark Red Mode' : 'Zinc Dark Mode'}</span>
-            </button>
-          )}
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-[var(--accent)] hover:bg-[var(--accent)]/10 transition-all border border-transparent hover:border-[var(--accent)]/25"
-          >
-            <LogOut className="h-4.5 w-4.5" />
-            Sign Out
-          </button>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <main className="flex-1 p-6 md:p-10 overflow-y-auto w-full">
-        {connectionError && (
-          <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-sm flex flex-col gap-2 shadow-sm">
-            <div className="flex items-center gap-2 font-bold">
-              <PlusCircle className="h-5 w-5 text-red-500 rotate-45" />
-              <span>Backend API Server Offline</span>
-            </div>
-            <p className="text-xs">{connectionError}</p>
-            <button
-              type="button"
-              onClick={() => fetchDashboardData()}
-              className="mt-2 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-100 px-3.5 py-1.5 rounded-lg border border-red-500/30 font-semibold self-start transition-all"
-            >
-              Retry Connection
-            </button>
-          </div>
-        )}
-
-        {loading ? (
-          <div className="h-96 flex items-center justify-center">
-            <div className="h-8 w-8 border-2 border-red-600/20 border-t-red-600 rounded-full animate-spin" />
-          </div>
-        ) : (
+    <DashboardShell
+      user={user}
+      activeTab={activeTab}
+      mounted={mounted}
+      theme={theme}
+      connectionError={connectionError}
+      loading={loading}
+      onTabChange={setActiveTab}
+      onResetEditor={resetEditorForm}
+      onToggleTheme={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onSignOut={handleLogout}
+      onRetryConnection={() => fetchDashboardData()}
+    >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -928,9 +793,9 @@ export default function DashboardPage() {
               {/* TAB 1: OVERVIEW */}
               {activeTab === 'overview' && (
                 <div className="space-y-8">
-                  <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Overview</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Status overview of the TRAX platform</p>
+                  <div className="ds-admin__page-head">
+                    <h1 className="ds-admin__page-title">Overview</h1>
+                    <p className="ds-admin__page-desc">Status overview of the TRAX platform</p>
                   </div>
 
                   {/* Metrics Row */}
@@ -941,7 +806,7 @@ export default function DashboardPage() {
                       { label: 'Subscribers', value: stats.subscribersCount, icon: Mail, color: 'text-blue-500' },
                       { label: 'Active Ads', value: stats.activeAdsCount, icon: Layout, color: 'text-red-600' },
                     ].map((card, i) => (
-                      <div key={i} className="p-5 rounded-2xl relative overflow-hidden border" style={cardStyle}>
+                      <div key={i} className="p-5 rounded-2xl relative overflow-hidden ds-admin-card ds-admin-card--metric">
                         <card.icon className={`h-8 w-8 ${card.color} opacity-20 absolute right-4 bottom-4`} />
                         <span className="text-xs font-semibold uppercase tracking-wider block" style={{ color: 'var(--dash-fg-muted)' }}>{card.label}</span>
                         <span className="text-3xl font-black mt-2 block" style={{ color: 'var(--dash-fg)' }}>{card.value}</span>
@@ -952,7 +817,7 @@ export default function DashboardPage() {
                   {/* Quick stats and recent events */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Subscriber summary list */}
-                    <div className="rounded-2xl p-6 border" style={cardStyle}>
+                    <div className="rounded-2xl p-6 ds-admin-card">
                       <h3 className="font-bold text-lg mb-4 flex items-center gap-2" style={{ color: 'var(--dash-fg)' }}>
                         <Users className="h-5 w-5 text-red-600" />
                         Recent Subscribers
@@ -976,14 +841,14 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Active Ad Slots info */}
-                    <div className="rounded-2xl p-6 border" style={cardStyle}>
+                    <div className="rounded-2xl p-6 ds-admin-card">
                       <h3 className="font-bold text-lg mb-4 flex items-center gap-2" style={{ color: 'var(--dash-fg)' }}>
                         <Settings className="h-5 w-5 text-red-600" />
                         Ad Zones Status
                       </h3>
                       <div className="space-y-3">
                         {adSlots.map((slot) => (
-                          <div key={slot.id} className="p-3 border rounded-xl flex justify-between items-center" style={cardStyle}>
+                          <div key={slot.id} className="p-3 rounded-xl flex justify-between items-center ds-admin-card">
                             <div>
                               <span className="text-sm font-semibold block" style={{ color: 'var(--dash-fg)' }}>{slot.name}</span>
                               <span className="text-[10px] font-bold text-red-600">{slot.size}</span>
@@ -1010,8 +875,8 @@ export default function DashboardPage() {
                 <div className="space-y-6">
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <div>
-                      <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Articles</h1>
-                      <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Manage, edit and publish your articles</p>
+                      <h1 className="ds-admin__page-title">Articles</h1>
+                      <p className="ds-admin__page-desc">Manage, edit and publish your articles</p>
                     </div>
                     <button
                       onClick={() => { resetEditorForm(); setActiveTab('editor'); }}
@@ -1032,7 +897,6 @@ export default function DashboardPage() {
                         value={articleSearch}
                         onChange={(e) => setArticleSearch(e.target.value)}
                         className="w-full rounded-xl pl-10 pr-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
-                        style={inputStyle}
                       />
                     </div>
                     <div className="flex gap-2">
@@ -1054,7 +918,7 @@ export default function DashboardPage() {
                   </div>
 
                   {/* Table Card */}
-                  <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
+                  <div className="rounded-2xl overflow-hidden ds-admin-card">
                     <div className="overflow-x-auto">
                       <table className="w-full text-left border-collapse">
                         <thead>
@@ -1224,10 +1088,10 @@ export default function DashboardPage() {
               {activeTab === 'editor' && (
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>
+                    <h1 className="ds-admin__page-title">
                       {editingArticleId ? 'Edit Article' : 'New Article'}
                     </h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Compose or edit your stories for the tech movement</p>
+                    <p className="ds-admin__page-desc">Compose or edit your stories for the tech movement</p>
                   </div>
 
                   {editorError && (
@@ -1247,7 +1111,7 @@ export default function DashboardPage() {
                       {/* Left: Compose columns */}
                       <div className="lg:col-span-2 space-y-5">
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Title</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Title</label>
                           <input
                             type="text"
                             required
@@ -1255,12 +1119,11 @@ export default function DashboardPage() {
                             onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
                             placeholder="How Ogun State Founders are Utilizing AI to Scale..."
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Slug</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Slug</label>
                           <input
                             type="text"
                             required
@@ -1268,12 +1131,11 @@ export default function DashboardPage() {
                             onChange={(e) => setFormData(prev => ({ ...prev, slug: e.target.value }))}
                             placeholder="how-ogun state-founders-utilize-ai"
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border font-mono"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Excerpt</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Excerpt</label>
                           <textarea
                             required
                             rows={3}
@@ -1281,12 +1143,11 @@ export default function DashboardPage() {
                             onChange={(e) => setFormData(prev => ({ ...prev, excerpt: e.target.value }))}
                             placeholder="A concise summary of the article displayed on homepage feeds..."
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border resize-none"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Body (Full Story)</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Body (Full Story)</label>
                           <textarea
                             required
                             rows={15}
@@ -1294,7 +1155,6 @@ export default function DashboardPage() {
                             onChange={(e) => setFormData(prev => ({ ...prev, body: e.target.value }))}
                             placeholder="Write your article body here in Markdown or raw text..."
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border font-mono"
-                            style={inputStyle}
                           />
                         </div>
                       </div>
@@ -1302,12 +1162,11 @@ export default function DashboardPage() {
                       {/* Right: Meta columns */}
                       <div className="space-y-5">
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Category</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Category</label>
                           <select
                             value={formData.categoryId}
                             onChange={(e) => setFormData(prev => ({ ...prev, categoryId: e.target.value }))}
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
-                            style={inputStyle}
                           >
                             <option value="" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Select a Category</option>
                             {categories.map((cat) => (
@@ -1319,7 +1178,7 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Cover Image</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Cover Image</label>
                           <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2">
                               <label className="cursor-pointer bg-red-600 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
@@ -1348,7 +1207,6 @@ export default function DashboardPage() {
                                 onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
                                 placeholder="https://images.unsplash.com/..."
                                 className="w-full rounded-xl px-4 py-2.5 text-base md:text-xs focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
-                                style={inputStyle}
                               />
                             </div>
 
@@ -1372,42 +1230,39 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Read Time</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Read Time</label>
                           <input
                             type="text"
                             value={formData.readTime}
                             onChange={(e) => setFormData(prev => ({ ...prev, readTime: e.target.value }))}
                             placeholder="5 min read"
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 transition-all border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Publication Date</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Publication Date</label>
                           <input
                             type="date"
                             value={formData.publishedAt}
                             onChange={(e) => setFormData(prev => ({ ...prev, publishedAt: e.target.value }))}
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 transition-all border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-2">
-                          <label className="block text-xs font-semibold uppercase tracking-wider" style={labelStyle}>Official Link (Website)</label>
+                          <label className="block text-xs font-semibold uppercase tracking-wider">Official Link (Website)</label>
                           <input
                             type="url"
                             value={formData.officialLink}
                             onChange={(e) => setFormData(prev => ({ ...prev, officialLink: e.target.value }))}
                             placeholder="https://example.com"
                             className="w-full rounded-xl px-4 py-3 text-base md:text-sm focus:outline-none focus:border-red-600 transition-all border"
-                            style={inputStyle}
                           />
                         </div>
 
                         {/* Flags Box */}
-                        <div className="p-5 rounded-2xl space-y-4 border" style={cardStyle}>
+                        <div className="p-5 rounded-2xl space-y-4 ds-admin-card">
                           <span className="block text-xs font-bold uppercase tracking-wider pb-2 border-b" style={{ color: 'var(--dash-fg-secondary)', borderColor: 'var(--dash-divider)' }}>
                             Publish Flags
                           </span>
@@ -1472,7 +1327,6 @@ export default function DashboardPage() {
                                   value={formData.partnerId}
                                   onChange={(e) => setFormData(prev => ({ ...prev, partnerId: e.target.value }))}
                                   className="w-full rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-red-600 border"
-                                  style={inputStyle}
                                 >
                                   <option value="" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Select Partner Profile</option>
                                   {partners.map((partner) => (
@@ -1487,7 +1341,7 @@ export default function DashboardPage() {
                         </div>
 
                         {/* Status Box */}
-                        <div className="p-5 rounded-2xl space-y-3 border" style={cardStyle}>
+                        <div className="p-5 rounded-2xl space-y-3 ds-admin-card">
                           <label className="block text-xs font-bold uppercase tracking-wider pb-2 border-b" style={{ color: 'var(--dash-fg-secondary)', borderColor: 'var(--dash-divider)' }}>
                             Status
                           </label>
@@ -1542,8 +1396,8 @@ export default function DashboardPage() {
                 <div className="space-y-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
-                      <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Newsletter Subscribers</h1>
-                      <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Check email capture lists and metrics</p>
+                      <h1 className="ds-admin__page-title">Newsletter Subscribers</h1>
+                      <p className="ds-admin__page-desc">Check email capture lists and metrics</p>
                     </div>
                     {subscribers.length > 0 && (
                       <button
@@ -1555,7 +1409,7 @@ export default function DashboardPage() {
                     )}
                   </div>
 
-                  <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
+                  <div className="rounded-2xl overflow-hidden ds-admin-card">
                     <div className="overflow-x-auto">
                       <table className="w-full text-left border-collapse">
                         <thead>
@@ -1699,8 +1553,8 @@ export default function DashboardPage() {
               {activeTab === 'ads' && (
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Sponsor Ad Slots</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Paste HTML banner code or images directly into dedicated zones</p>
+                    <h1 className="ds-admin__page-title">Sponsor Ad Slots</h1>
+                    <p className="ds-admin__page-desc">Paste HTML banner code or images directly into dedicated zones</p>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1709,8 +1563,7 @@ export default function DashboardPage() {
                       {adSlots.map((slot) => (
                         <div
                           key={slot.id}
-                          className="p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden group border"
-                          style={cardStyle}
+                          className="p-5 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative overflow-hidden group ds-admin-card"
                         >
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
@@ -1754,7 +1607,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Right: Ad Form Box */}
-                    <div className="p-6 rounded-2xl h-fit border" style={cardStyle}>
+                    <div className="p-6 rounded-2xl h-fit ds-admin-card">
                       <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--dash-fg)' }}>
                         {editingAdId ? 'Edit Ad Slot' : 'Create Ad Slot'}
                       </h3>
@@ -1773,7 +1626,7 @@ export default function DashboardPage() {
 
                       <form onSubmit={handleSaveAd} className="space-y-4">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Zone Name</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Zone Name</label>
                           <input
                             type="text"
                             required
@@ -1781,17 +1634,15 @@ export default function DashboardPage() {
                             onChange={(e) => setAdFormData(prev => ({ ...prev, name: e.target.value }))}
                             placeholder="Homepage Header Banner"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Size Category</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Size Category</label>
                           <select
                             value={adFormData.size}
                             onChange={(e) => setAdFormData(prev => ({ ...prev, size: e.target.value }))}
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           >
                             <option value="LEADERBOARD" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Leaderboard (1024x409)</option>
                             <option value="RECTANGLE" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Square (1080x1080)</option>
@@ -1800,7 +1651,7 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Banner Image File (Optional)</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Banner Image File (Optional)</label>
                           <div className="flex items-center gap-2">
                             <label className="cursor-pointer bg-red-600 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
                               <span>Choose Image</span>
@@ -1821,14 +1672,13 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>HTML Embed Code / Image</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">HTML Embed Code / Image</label>
                           <textarea
                             rows={6}
                             value={adFormData.code}
                             onChange={(e) => setAdFormData(prev => ({ ...prev, code: e.target.value }))}
                             placeholder='<a href="https://sponsor.com"><img src="..." /></a>'
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border font-mono"
-                            style={inputStyle}
                           />
                         </div>
 
@@ -1863,8 +1713,8 @@ export default function DashboardPage() {
               {activeTab === 'profile' && (
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Profile Settings</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Manage your administrative details and avatar</p>
+                    <h1 className="ds-admin__page-title">Profile Settings</h1>
+                    <p className="ds-admin__page-desc">Manage your administrative details and avatar</p>
                   </div>
 
                   {profileError && (
@@ -1883,7 +1733,7 @@ export default function DashboardPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
                       {/* Left column: Avatar preview */}
                       <div className="space-y-3 md:col-span-1 flex flex-col items-center">
-                        <label className="block text-xs font-semibold uppercase tracking-wider w-full text-left" style={labelStyle}>Avatar</label>
+                        <label className="block text-xs font-semibold uppercase tracking-wider w-full text-left">Avatar</label>
                         <div
                           className="relative group w-28 h-28 rounded-full overflow-hidden border flex items-center justify-center"
                           style={{ borderColor: 'var(--dash-card-border)', backgroundColor: 'var(--dash-input)' }}
@@ -1919,65 +1769,60 @@ export default function DashboardPage() {
                       {/* Right column: Form fields */}
                       <div className="space-y-4 md:col-span-2">
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Full Name</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Full Name</label>
                           <input
                             type="text"
                             required
                             value={profileData.name}
                             onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Or Avatar Image URL</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Or Avatar Image URL</label>
                           <input
                             type="text"
                             value={profileData.avatar}
                             onChange={(e) => setProfileData(prev => ({ ...prev, avatar: e.target.value }))}
                             placeholder="https://images.unsplash.com/..."
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Biography</label>
+                      <label className="text-xs font-semibold uppercase tracking-wider block">Biography</label>
                       <textarea
                         rows={4}
                         value={profileData.bio}
                         onChange={(e) => setProfileData(prev => ({ ...prev, bio: e.target.value }))}
                         placeholder="Tell readers about yourself, role, and writing background..."
                         className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border resize-none"
-                        style={inputStyle}
                       />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Twitter Handle / Link</label>
+                        <label className="text-xs font-semibold uppercase tracking-wider block">Twitter Handle / Link</label>
                         <input
                           type="text"
                           value={profileData.twitter}
                           onChange={(e) => setProfileData(prev => ({ ...prev, twitter: e.target.value }))}
                           placeholder="@editor_handle"
                           className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                          style={inputStyle}
                         />
                       </div>
 
                       <div className="space-y-1">
-                        <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>LinkedIn Profile Link</label>
+                        <label className="text-xs font-semibold uppercase tracking-wider block">LinkedIn Profile Link</label>
                         <input
                           type="text"
                           value={profileData.linkedin}
                           onChange={(e) => setProfileData(prev => ({ ...prev, linkedin: e.target.value }))}
                           placeholder="https://linkedin.com/in/profile"
                           className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                          style={inputStyle}
                         />
                       </div>
                     </div>
@@ -2003,14 +1848,14 @@ export default function DashboardPage() {
               {activeTab === 'team' && user?.role === 'ADMIN' && (
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Team Management</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Add, update, and manage team members and their roles</p>
+                    <h1 className="ds-admin__page-title">Team Management</h1>
+                    <p className="ds-admin__page-desc">Add, update, and manage team members and their roles</p>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left: Team Directory Table */}
                     <div className="lg:col-span-2 space-y-4">
-                      <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
+                      <div className="rounded-2xl overflow-hidden ds-admin-card">
                         <div className="overflow-x-auto">
                           <table className="w-full text-left border-collapse">
                             <thead>
@@ -2090,7 +1935,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Right: Add Member Form Box */}
-                    <div className="p-6 rounded-2xl h-fit border" style={cardStyle}>
+                    <div className="p-6 rounded-2xl h-fit ds-admin-card">
                       <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--dash-fg)' }}>
                         Add Team Member
                       </h3>
@@ -2142,19 +1987,18 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Or Avatar Image URL</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Or Avatar Image URL</label>
                           <input
                             type="text"
                             value={teamFormData.avatar}
                             onChange={(e) => setTeamFormData(prev => ({ ...prev, avatar: e.target.value }))}
                             placeholder="https://images.unsplash.com/..."
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Full Name</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Full Name</label>
                           <input
                             type="text"
                             required
@@ -2162,12 +2006,11 @@ export default function DashboardPage() {
                             onChange={(e) => setTeamFormData(prev => ({ ...prev, name: e.target.value }))}
                             placeholder="John Doe"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Email Address</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Email Address</label>
                           <input
                             type="email"
                             required
@@ -2175,12 +2018,11 @@ export default function DashboardPage() {
                             onChange={(e) => setTeamFormData(prev => ({ ...prev, email: e.target.value }))}
                             placeholder="john@trax.ng"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Password</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Password</label>
                           <input
                             type="password"
                             required
@@ -2188,17 +2030,15 @@ export default function DashboardPage() {
                             onChange={(e) => setTeamFormData(prev => ({ ...prev, password: e.target.value }))}
                             placeholder="••••••••"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>System Role</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">System Role</label>
                           <select
                             value={teamFormData.role}
                             onChange={(e) => setTeamFormData(prev => ({ ...prev, role: e.target.value }))}
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           >
                             <option value="WRITER" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Writer (Create & edit articles)</option>
                             <option value="ADMIN" style={{ backgroundColor: 'var(--bg)', color: 'var(--fg)' }}>Admin (Full system access)</option>
@@ -2226,14 +2066,14 @@ export default function DashboardPage() {
               {activeTab === 'partners' && user?.role === 'ADMIN' && (
                 <div className="space-y-6">
                   <div>
-                    <h1 className="text-3xl font-extrabold tracking-tight" style={{ color: 'var(--dash-fg)' }}>Partners Manager</h1>
-                    <p style={{ color: 'var(--dash-fg-muted)' }} className="mt-1">Add, update, and manage official corporate and tech ecosystem partners</p>
+                    <h1 className="ds-admin__page-title">Partners Manager</h1>
+                    <p className="ds-admin__page-desc">Add, update, and manage official corporate and tech ecosystem partners</p>
                   </div>
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Left: Partners List Table */}
                     <div className="lg:col-span-2 space-y-4">
-                      <div className="rounded-2xl overflow-hidden border" style={cardStyle}>
+                      <div className="rounded-2xl overflow-hidden ds-admin-card">
                         <div className="overflow-x-auto">
                           <table className="w-full text-left border-collapse">
                             <thead>
@@ -2347,7 +2187,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Right: Add/Edit Partner Form Box */}
-                    <div className="p-6 rounded-2xl h-fit border" style={cardStyle}>
+                    <div className="p-6 rounded-2xl h-fit ds-admin-card">
                       <h3 className="font-bold text-lg mb-4" style={{ color: 'var(--dash-fg)' }}>
                         {editingPartnerId ? 'Edit Partner' : 'Add Partner'}
                       </h3>
@@ -2366,7 +2206,7 @@ export default function DashboardPage() {
 
                       <form onSubmit={handlePartnerSubmit} className="space-y-4">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Partner Name</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Partner Name</label>
                           <input
                             type="text"
                             required
@@ -2374,12 +2214,11 @@ export default function DashboardPage() {
                             onChange={(e) => setPartnerFormData(prev => ({ ...prev, name: e.target.value }))}
                             placeholder="Ogun State Tech Hub"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Partner Logo</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Partner Logo</label>
                           <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2">
                               <label className="cursor-pointer bg-red-600 hover:bg-red-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
@@ -2436,7 +2275,6 @@ export default function DashboardPage() {
                                 onChange={(e) => setPartnerFormData(prev => ({ ...prev, logoUrl: e.target.value }))}
                                 placeholder="https://example.com/logo.png"
                                 className="w-full rounded-xl px-4 py-2.5 text-base md:text-xs focus:outline-none focus:border-red-600 border"
-                                style={inputStyle}
                               />
                             </div>
 
@@ -2460,14 +2298,13 @@ export default function DashboardPage() {
                         </div>
 
                         <div className="space-y-1.5">
-                          <label className="text-xs font-semibold uppercase tracking-wider block" style={labelStyle}>Website URL (Optional)</label>
+                          <label className="text-xs font-semibold uppercase tracking-wider block">Website URL (Optional)</label>
                           <input
                             type="text"
                             value={partnerFormData.website}
                             onChange={(e) => setPartnerFormData(prev => ({ ...prev, website: e.target.value }))}
                             placeholder="https://ogunstate.gov.ng"
                             className="w-full rounded-xl px-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 border"
-                            style={inputStyle}
                           />
                         </div>
 
@@ -2506,8 +2343,6 @@ export default function DashboardPage() {
               )}
             </motion.div>
           </AnimatePresence>
-        )}
-      </main>
-    </div>
+    </DashboardShell>
   );
 }

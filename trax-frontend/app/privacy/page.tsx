@@ -46,8 +46,9 @@ export default function PrivacyPolicyPage() {
 
       <h2>5. Your choices and rights</h2>
       <p>
-        You can opt out of receiving our newsletter at any time by clicking the unsubscribe link
-        at the bottom of our emails, or by contacting us directly. Depending on your location, you
+        You can opt out of receiving our newsletter at any time by visiting our{' '}
+        <a href="/newsletter/unsubscribe">unsubscribe page</a>, clicking the unsubscribe link at
+        the bottom of our emails, or by contacting us directly. Depending on your location, you
         may have legal rights regarding access to, correction, or deletion of your personal data.
       </p>
 

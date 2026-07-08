@@ -1,100 +1,160 @@
-import { ConflictException, Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
+import { MailService } from '../mail/mail.service';
 import { SubscribeDto, UnsubscribeDto } from './dto/newsletter.dto';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class NewsletterService {
+  private readonly logger = new Logger(NewsletterService.name);
   private readonly hmacSecret: string;
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
+    private readonly mail: MailService,
   ) {
     this.hmacSecret = this.config.get<string>('JWT_SECRET', 'newsletter-hmac-fallback');
   }
 
-  // Generate an HMAC token for email confirmation
-  generateToken(email: string): string {
-    return crypto.createHmac('sha256', this.hmacSecret).update(email.toLowerCase()).digest('hex');
+  private normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
   }
 
-  // Verify the HMAC token matches the email
+  private siteUrl(): string {
+    const origin = this.config.get<string>('FRONTEND_ORIGIN', 'https://trax.ng');
+    return origin.replace(/\/$/, '');
+  }
+
+  generateToken(email: string): string {
+    return crypto.createHmac('sha256', this.hmacSecret).update(this.normalizeEmail(email)).digest('hex');
+  }
+
   verifyToken(email: string, token: string): boolean {
     const expected = this.generateToken(email);
+    if (token.length !== expected.length) return false;
     return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(token));
   }
 
-  async subscribe(dto: SubscribeDto) {
-    const existing = await this.prisma.subscriber.findUnique({
-      where: { email: dto.email },
+  private buildConfirmUrl(email: string, token: string): string {
+    const params = new URLSearchParams({
+      email: this.normalizeEmail(email),
+      token,
     });
+    return `${this.siteUrl()}/newsletter/confirm?${params.toString()}`;
+  }
+
+  async subscribe(dto: SubscribeDto) {
+    const email = this.normalizeEmail(dto.email);
+    const existing = await this.prisma.subscriber.findUnique({ where: { email } });
 
     if (existing?.confirmed) {
-      throw new ConflictException('This email is already subscribed');
+      throw new ConflictException('This email is already subscribed to the Trax briefing.');
     }
 
     const subscriber = await this.prisma.subscriber.upsert({
-      where:  { email: dto.email },
+      where: { email },
       update: {},
-      create: { email: dto.email },
+      create: { email },
     });
 
-    const confirmToken = this.generateToken(dto.email);
+    const confirmToken = this.generateToken(email);
+    const confirmUrl = this.buildConfirmUrl(email, confirmToken);
 
-    // TODO: send confirmation email with link containing ?email=...&token=...
+    try {
+      const mailResult = await this.mail.sendNewsletterConfirmation(email, confirmUrl);
+      if (mailResult.skipped) {
+        if (this.config.get<string>('NODE_ENV') === 'production') {
+          this.logger.error(
+            `RESEND_API_KEY missing — confirmation email not sent to ${email}. Confirm manually in dashboard.`,
+          );
+        } else {
+          this.logger.log(`Dev confirmation link for ${email}: ${confirmUrl}`);
+        }
+      }
+    } catch (error) {
+      this.logger.error(`Failed to send confirmation email to ${email}`, error);
+      throw new InternalServerErrorException(
+        'We could not send the confirmation email. Please try again in a few minutes.',
+      );
+    }
+
     return {
-      message: 'Subscription received. Check your inbox to confirm.',
-      id:      subscriber.id,
-      // In development, expose the token so you can test the flow
-      ...(process.env.NODE_ENV !== 'production' && { confirmToken }),
+      message: existing
+        ? 'We resent your confirmation link. Check your inbox to finish subscribing.'
+        : 'Thanks for subscribing. Check your inbox for a confirmation link.',
+      id: subscriber.id,
+      pendingConfirmation: true,
+      ...(this.config.get<string>('NODE_ENV') !== 'production' && { confirmUrl }),
     };
   }
 
   async confirm(email: string, token: string) {
-    // Validate token length before timing-safe compare
-    const expected = this.generateToken(email);
+    const normalized = this.normalizeEmail(email);
+    const expected = this.generateToken(normalized);
+
     if (token.length !== expected.length) {
-      throw new BadRequestException('Invalid confirmation token');
+      throw new BadRequestException('Invalid or expired confirmation link.');
     }
 
-    if (!this.verifyToken(email, token)) {
-      throw new BadRequestException('Invalid confirmation token');
+    if (!this.verifyToken(normalized, token)) {
+      throw new BadRequestException('Invalid or expired confirmation link.');
     }
 
-    const subscriber = await this.prisma.subscriber.findUnique({ where: { email } });
-    if (!subscriber) throw new NotFoundException('Subscriber not found');
+    const subscriber = await this.prisma.subscriber.findUnique({ where: { email: normalized } });
+    if (!subscriber) throw new NotFoundException('Subscriber not found.');
 
-    return this.prisma.subscriber.update({
-      where: { email },
-      data:  { confirmed: true },
+    if (subscriber.confirmed) {
+      return {
+        message: 'You are already confirmed on the Trax briefing list.',
+        alreadyConfirmed: true,
+      };
+    }
+
+    await this.prisma.subscriber.update({
+      where: { email: normalized },
+      data: { confirmed: true },
     });
+
+    return {
+      message: 'Your subscription is confirmed. The next Trax briefing is on its way.',
+      confirmed: true,
+    };
   }
 
   async unsubscribe(dto: UnsubscribeDto) {
-    const subscriber = await this.prisma.subscriber.findUnique({
-      where: { email: dto.email },
-    });
-    if (!subscriber) throw new NotFoundException('Email not found in subscriber list');
+    const email = this.normalizeEmail(dto.email);
+    const subscriber = await this.prisma.subscriber.findUnique({ where: { email } });
+    if (!subscriber) {
+      throw new NotFoundException('That email is not on our subscriber list.');
+    }
 
-    await this.prisma.subscriber.delete({ where: { email: dto.email } });
-    return { message: 'Successfully unsubscribed' };
+    await this.prisma.subscriber.delete({ where: { email } });
+    return { message: 'You have been unsubscribed from the Trax briefing.' };
   }
 
   async manuallyConfirm(email: string) {
-    const subscriber = await this.prisma.subscriber.findUnique({ where: { email } });
+    const normalized = this.normalizeEmail(email);
+    const subscriber = await this.prisma.subscriber.findUnique({ where: { email: normalized } });
     if (!subscriber) throw new NotFoundException('Email not found in subscriber list');
 
     return this.prisma.subscriber.update({
-      where: { email },
-      data:  { confirmed: true },
+      where: { email: normalized },
+      data: { confirmed: true },
     });
   }
 
   async findAll(confirmed?: boolean) {
     return this.prisma.subscriber.findMany({
-      where:   confirmed !== undefined ? { confirmed } : undefined,
+      where: confirmed !== undefined ? { confirmed } : undefined,
       orderBy: { createdAt: 'desc' },
     });
   }

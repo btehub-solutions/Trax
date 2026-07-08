@@ -5,7 +5,13 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MotionButton } from '@/design-system/components'
 import { primaryNav } from '@/lib/navigation'
-import { BASE_URL } from '@/lib/api'
+import {
+  NEWSLETTER_ALREADY_TEXT,
+  NEWSLETTER_ALREADY_TITLE,
+  NEWSLETTER_PENDING_TEXT,
+  NEWSLETTER_PENDING_TITLE,
+} from '@/lib/newsletter'
+import { useNewsletterSubscribe } from '@/components/newsletter/NewsletterSubscribeFields'
 import TraxWordmark from '@/design-system/components/TraxWordmark'
 
 const companyLinks = [
@@ -61,43 +67,21 @@ function FooterColumn({
 }
 
 export default function Footer() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
+  const {
+    email,
+    setEmail,
+    loading,
+    error,
+    status,
+    message,
+    handleSubmit,
+  } = useNewsletterSubscribe()
+
   const [toastMessage, setToastMessage] = useState<string | null>(null)
 
-  const showToast = (message: string) => {
-    setToastMessage(message)
+  const showToast = (msg: string) => {
+    setToastMessage(msg)
     window.setTimeout(() => setToastMessage(null), 2500)
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      const response = await fetch(`${BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.message || 'Subscription failed')
-      }
-      setSubmitted(true)
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong.'
-      setError(message)
-    } finally {
-      setLoading(false)
-    }
   }
 
   const categoryLinks = primaryNav.filter((item) => item.href !== '/')
@@ -124,7 +108,7 @@ export default function Footer() {
               Free. One email, no noise.
             </p>
             <AnimatePresence mode="wait">
-              {!submitted ? (
+              {status === 'idle' ? (
                 <motion.form
                   key="form"
                   onSubmit={handleSubmit}
@@ -143,10 +127,7 @@ export default function Footer() {
                       required
                       autoComplete="email"
                       value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value)
-                        setError('')
-                      }}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@company.com"
                       className="ds-footer-subscribe__input"
                     />
@@ -157,20 +138,27 @@ export default function Footer() {
                       size="sm"
                       className="ds-footer-subscribe__btn"
                     >
-                      {loading ? 'Joining…' : 'Subscribe'}
+                      {loading ? 'Sending link…' : 'Subscribe'}
                     </MotionButton>
                   </div>
                   {error && <p className="ds-footer-subscribe__error">{error}</p>}
                 </motion.form>
               ) : (
-                <motion.p
+                <motion.div
                   key="success"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="ds-footer-subscribe__success"
                 >
-                  You&apos;re on the list. The next briefing is on its way.
-                </motion.p>
+                  <p className="ds-newsletter-card__success-title">
+                    {status === 'already' ? NEWSLETTER_ALREADY_TITLE : NEWSLETTER_PENDING_TITLE}
+                  </p>
+                  <p className="type-meta">
+                    {status === 'already'
+                      ? NEWSLETTER_ALREADY_TEXT
+                      : message || NEWSLETTER_PENDING_TEXT}
+                  </p>
+                </motion.div>
               )}
             </AnimatePresence>
           </FooterColumn>

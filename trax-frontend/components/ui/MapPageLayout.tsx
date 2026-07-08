@@ -3,9 +3,15 @@
 import { useState } from 'react'
 import PlatformPageShell from '@/components/ui/PlatformPageShell'
 import PlatformPageIntro from '@/components/ui/PlatformPageIntro'
+import { useNewsletterSubscribe } from '@/components/newsletter/NewsletterSubscribeFields'
 import { MotionButton, SectionBand, SectionMarker } from '@/design-system/components'
 import { Icon } from '@/design-system/icons'
-import { BASE_URL } from '@/lib/api'
+import {
+  NEWSLETTER_ALREADY_TEXT,
+  NEWSLETTER_ALREADY_TITLE,
+  NEWSLETTER_PENDING_TEXT,
+  NEWSLETTER_PENDING_TITLE,
+} from '@/lib/newsletter'
 
 type Tab = 'startups' | 'hubs' | 'labs'
 
@@ -17,44 +23,22 @@ const tabs: { id: Tab; label: string }[] = [
 
 export default function MapPageLayout() {
   const [activeTab, setActiveTab] = useState<Tab>('startups')
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
+  const {
+    email,
+    setEmail,
+    loading,
+    error,
+    status,
+    message,
+    handleSubmit,
+    reset,
+  } = useNewsletterSubscribe()
 
   const activeLabel = tabs.find((t) => t.id === activeTab)?.label ?? 'Startups'
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      const response = await fetch(`${BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.message || 'Subscription failed')
-      setSubmitted(true)
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
-      setError(message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const resetForm = (tab: Tab) => {
+  const switchTab = (tab: Tab) => {
     setActiveTab(tab)
-    setEmail('')
-    setError('')
-    setSubmitted(false)
+    reset()
   }
 
   return (
@@ -79,7 +63,7 @@ export default function MapPageLayout() {
                 role="tab"
                 aria-selected={activeTab === tab.id}
                 className={`ds-category-filters__pill${activeTab === tab.id ? ' is-active' : ''}`}
-                onClick={() => resetForm(tab.id)}
+                onClick={() => switchTab(tab.id)}
               >
                 {tab.label}
               </button>
@@ -107,7 +91,7 @@ export default function MapPageLayout() {
                 Receive an update when we publish data for {activeLabel.toLowerCase()}.
               </p>
 
-              {!submitted ? (
+              {status === 'idle' ? (
                 <form onSubmit={handleSubmit} className="ds-platform-page__form">
                   <label htmlFor="map-alerts-email" className="sr-only">
                     Email address
@@ -117,20 +101,26 @@ export default function MapPageLayout() {
                     type="email"
                     required
                     value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      setError('')
-                    }}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@company.com"
                     className="ds-platform-page__input"
                   />
                   <MotionButton type="submit" variant="primary" disabled={loading} className="w-full">
-                    {loading ? 'Subscribing…' : 'Notify me'}
+                    {loading ? 'Sending link…' : 'Notify me'}
                   </MotionButton>
                   {error && <p className="ds-platform-page__error">{error}</p>}
                 </form>
               ) : (
-                <p className="ds-platform-page__success">You&apos;re on the alert list.</p>
+                <div className="ds-platform-page__success">
+                  <p className="ds-newsletter-card__success-title">
+                    {status === 'already' ? NEWSLETTER_ALREADY_TITLE : NEWSLETTER_PENDING_TITLE}
+                  </p>
+                  <p className="type-meta">
+                    {status === 'already'
+                      ? NEWSLETTER_ALREADY_TEXT
+                      : message || NEWSLETTER_PENDING_TEXT}
+                  </p>
+                </div>
               )}
             </div>
           </div>

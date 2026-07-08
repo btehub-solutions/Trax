@@ -111,7 +111,7 @@ export const menuGroups: MenuGroup[] = [
       { label: 'Tech Tools', href: '/tools' },
       { label: 'Builder Spotlight', href: '/people' },
       { label: 'Ecosystem Radar', href: '/ecosystem' },
-      { label: 'Policy & Regulation', href: '/ecosystem' },
+      { label: 'Policy & Regulation', href: '/policy' },
     ],
   },
   {
@@ -131,7 +131,7 @@ export const menuGroups: MenuGroup[] = [
       { label: 'Meet the Team', href: '/team' },
       { label: 'Join the Team', href: '/careers' },
       { label: 'Publisher Dashboard', href: '/dashboard' },
-      { label: 'Subscription Centre', href: '/#newsletter' },
+      { label: 'Subscription Centre', href: '/newsletter' },
     ],
   },
 ]

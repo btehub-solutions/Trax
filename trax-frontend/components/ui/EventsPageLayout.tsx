@@ -1,15 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import NewsletterSection from '@/components/ui/NewsletterSection'
-import { MotionButton } from '@/design-system/components'
+import NewsletterSubscribeFields from '@/components/newsletter/NewsletterSubscribeFields'
 import { SectionBand } from '@/design-system/components'
 import SectionMarker from '@/design-system/components/SectionMarker'
 import { Icon } from '@/design-system/icons'
-import { BASE_URL } from '@/lib/api'
 
 interface ActiveEvent {
   id: string
@@ -38,37 +36,6 @@ export default function EventsPageLayout({
   activeEvents,
   upcomingTypes,
 }: EventsPageLayoutProps) {
-  const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) return
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Please enter a valid email address.')
-      return
-    }
-    setError('')
-    setLoading(true)
-    try {
-      const response = await fetch(`${BASE_URL}/newsletter/subscribe`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await response.json()
-      if (!response.ok) throw new Error(data.message || 'Subscription failed')
-      setSubmitted(true)
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong. Please try again.'
-      setError(message)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <div className="ds-platform-page ds-premium-home">
       <SectionBand variant="default">
@@ -91,31 +58,11 @@ export default function EventsPageLayout({
               Priority alerts when registrations open and new events are announced.
             </p>
 
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="ds-platform-page__form">
-                <label htmlFor="event-signup-email" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="event-signup-email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    setError('')
-                  }}
-                  placeholder="you@company.com"
-                  className="ds-platform-page__input"
-                />
-                <MotionButton type="submit" variant="primary" disabled={loading} className="w-full">
-                  {loading ? 'Subscribing…' : 'Notify me'}
-                </MotionButton>
-                {error && <p className="ds-platform-page__error">{error}</p>}
-              </form>
-            ) : (
-              <p className="ds-platform-page__success">You&apos;re on the priority list.</p>
-            )}
+            <NewsletterSubscribeFields
+              id="event-signup-email"
+              submitLabel="Notify me"
+              loadingLabel="Sending link…"
+            />
           </div>
         </div>
       </SectionBand>
