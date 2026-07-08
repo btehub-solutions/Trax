@@ -1,10 +1,10 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Clock, User, Bookmark, Share2, Link2, Check, ChevronRight } from 'lucide-react'
+import { Clock, Bookmark, Share2, Link2, Check } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import AdSlot from '@/components/AdSlot'
@@ -12,11 +12,13 @@ import { ADS_ENABLED } from '@/lib/ads'
 import { SectionBand } from '@/design-system/components'
 import SectionMarker from '@/design-system/components/SectionMarker'
 import AuthorAvatar from '@/design-system/components/AuthorAvatar'
+import { Icon } from '@/design-system/icons'
+import { resolveCategoryHref } from '@/lib/navigation'
+import { storyTitle } from '@/lib/truncateWords'
 
-// ── Inline SVG brand icons (Lucide removed social brand icons) ────────────────
 function XIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   )
@@ -24,19 +26,19 @@ function XIcon({ size = 16 }: { size?: number }) {
 
 function LinkedInIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
     </svg>
   )
 }
 
-// ── Generated article body paragraphs ────────────────────────────────────────
 function generateBody(article: Article): string[] {
-  if ((article as any).body) {
-    return (article as any).body
+  const body = (article as Article & { body?: string }).body
+  if (body) {
+    return body
       .split(/[\r\n]+/)
-      .map((p: string) => p.trim())
-      .filter((p: string) => p.length > 0)
+      .map((p) => p.trim())
+      .filter((p) => p.length > 0)
   }
   return [
     article.excerpt,
@@ -49,49 +51,77 @@ function generateBody(article: Article): string[] {
   ]
 }
 
-// ── Page entrance variants ────────────────────────────────────────────────────
 const pageVariants = {
-  hidden:  { opacity: 0 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.04 },
   },
 }
 
 const fadeUp = {
-  hidden:  { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const },
   },
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
 interface ArticleReaderProps {
-  article:  Article
-  related:  Article[]
+  article: Article
+  related: Article[]
+  prev: Article | null
+  next: Article | null
 }
 
-export default function ArticleReader({ article, related }: ArticleReaderProps) {
+function ArticlePagerLink({
+  article,
+  direction,
+}: {
+  article: Article
+  direction: 'prev' | 'next'
+}) {
+  const isPrev = direction === 'prev'
+
+  return (
+    <Link
+      href={`/articles/${article.slug}`}
+      className={`ds-article-reader__pager-link${isPrev ? ' ds-article-reader__pager-link--prev' : ' ds-article-reader__pager-link--next'}`}
+    >
+      <span className="ds-article-reader__pager-label">
+        <Icon name={isPrev ? 'arrow-left' : 'arrow-right'} size="xs" aria-hidden />
+        {isPrev ? 'Previous story' : 'Next story'}
+      </span>
+      <span className="ds-article-reader__pager-title">{storyTitle(article.title)}</span>
+      <span className="ds-article-reader__pager-meta type-meta">{article.category}</span>
+    </Link>
+  )
+}
+
+export default function ArticleReader({ article, related, prev, next }: ArticleReaderProps) {
   const [bookmarked, setBookmarked] = useState(false)
-  const [copied,     setCopied]     = useState(false)
-  const bodyRef = useRef<HTMLDivElement>(null)
-
-
+  const [copied, setCopied] = useState(false)
 
   const bodyText = generateBody(article)
+  const categoryHref = resolveCategoryHref(article.category)
 
-  // Share helpers
-  const getShareUrl = () => typeof window !== 'undefined' ? window.location.href : ''
+  const getShareUrl = () => (typeof window !== 'undefined' ? window.location.href : '')
 
   const shareX = () => {
     const url = getShareUrl()
-    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}&via=traxnewsng`, '_blank')
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}&via=traxnewsng`,
+      '_blank',
+    )
   }
 
   const shareLinkedIn = () => {
     const url = getShareUrl()
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank')
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+      '_blank',
+    )
   }
 
   const copyLink = async () => {
@@ -102,335 +132,215 @@ export default function ArticleReader({ article, related }: ArticleReaderProps) 
   }
 
   return (
-    <>
+    <motion.article
+      variants={pageVariants}
+      initial="hidden"
+      animate="visible"
+      className="ds-article-reader"
+    >
+      <div className="ds-article-reader__toolbar">
+        <div className="container ds-article-reader__toolbar-inner">
+          <Link href={categoryHref} className="ds-article-reader__back">
+            <Icon name="arrow-left" size="sm" aria-hidden />
+            Back to {article.category}
+          </Link>
+          <Link href="/" className="ds-article-reader__home-link type-meta">
+            All stories
+          </Link>
+        </div>
+      </div>
 
-
-      {/* ── Page ─────────────────────────────────────────────────────────── */}
-      <motion.div
-        variants={pageVariants}
-        initial="hidden"
-        animate="visible"
-        className="ds-article-reader min-h-screen"
-      >
-        <motion.div variants={fadeUp} className="ds-article-reader__hero">
-          <Image
-            src={article.image}
-            alt={article.title}
-            fill
-            priority
-            className="ds-article-reader__hero-image"
-            sizes="100vw"
-          />
-          <div className="ds-article-reader__hero-scrim" aria-hidden />
-          {article.breaking && (
-            <span className="ds-hero-lead__breaking absolute top-6 left-6">
-              Breaking
-            </span>
-          )}
-        </motion.div>
-
-        <div className="container">
-          <div className="ds-article-reader__body">
-
-            {/* ── Breadcrumbs ─────────────────────────────────────────── */}
-            <motion.nav
-              variants={fadeUp}
-              aria-label="Breadcrumb"
-              className="ds-article-reader__breadcrumb"
-            >
-              <ol className="ds-article-reader__breadcrumb-list">
-                <li>
-                  <Link
-                    href="/"
-                    className="font-medium transition-colors hover:text-accent"
-                    style={{ color: 'var(--fg-muted)' }}
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li aria-hidden="true">
-                  <ChevronRight size={12} strokeWidth={2} style={{ color: 'var(--fg-subtle)' }} />
-                </li>
-                <li>
-                  <Link
-                    href={`/${article.category.toLowerCase()}`}
-                    className="font-medium transition-colors hover:text-accent capitalize"
-                    style={{ color: 'var(--fg-muted)' }}
-                  >
-                    {article.category}
-                  </Link>
-                </li>
-                <li aria-hidden="true">
-                  <ChevronRight size={12} strokeWidth={2} style={{ color: 'var(--fg-subtle)' }} />
-                </li>
-                <li
-                  aria-current="page"
-                  className="truncate max-w-[180px] sm:max-w-xs"
-                  style={{ color: 'var(--fg-subtle)' }}
-                >
-                  {article.title}
-                </li>
-              </ol>
-            </motion.nav>
-
-            {/* ── Category tag & Official Link ───────────────────────────────── */}
-            <motion.div variants={fadeUp} className="mb-4 flex flex-wrap gap-2 items-center">
-              <span className="ds-category-pill">{article.category}</span>
+      <div className="container">
+        <div className="ds-article-reader__layout">
+          <motion.header variants={fadeUp} className="ds-article-reader__header">
+            <div className="ds-article-reader__header-top">
+              <Link href={categoryHref} className="ds-category-pill">
+                {article.category}
+              </Link>
+              {article.breaking && (
+                <span className="ds-hero-lead__breaking">Breaking</span>
+              )}
               {article.officialLink && (
                 <a
                   href={article.officialLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-md border transition-all duration-200"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                    borderColor:     'var(--border)',
-                    color:           'var(--fg-muted)',
-                    fontFamily:      'var(--font-family-ui)',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 26, 26, 0.08)';
-                    e.currentTarget.style.borderColor = 'var(--accent)';
-                    e.currentTarget.style.color = 'var(--accent)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
-                    e.currentTarget.style.borderColor = 'var(--border)';
-                    e.currentTarget.style.color = 'var(--fg-muted)';
-                  }}
+                  className="ds-article-reader__official-link"
                 >
-                  Visit Website ↗
+                  Visit website
+                  <Icon name="arrow-right" size="xs" aria-hidden />
                 </a>
               )}
-            </motion.div>
+            </div>
 
-            {/* ── Title ──────────────────────────────────────────────────── */}
-            <motion.h1
-              variants={fadeUp}
-              className="type-article-title"
-              style={{ marginBottom: '1.25rem' }}
-            >
-              {article.title}
-            </motion.h1>
+            <h1 className="ds-article-reader__title type-article-title">{article.title}</h1>
 
-            {/* ── Author & Meta row ──────────────────────────────────────── */}
-            <motion.div
-              variants={fadeUp}
-              className="ds-article-reader__meta-row"
-            >
-              <div className="flex items-center gap-3">
+            <div className="ds-article-reader__meta-row">
+              <div className="ds-article-reader__author">
                 <AuthorAvatar name={article.author} src={article.authorAvatar} size="md" />
                 <div>
-                  <p className="type-meta" style={{ fontWeight: 600, color: 'var(--neutral-text-secondary)' }}>
-                    {article.author}
-                  </p>
+                  <p className="ds-article-reader__author-name">{article.author}</p>
                   <p className="type-meta">{article.authorRole || 'Trax Editorial'}</p>
                 </div>
               </div>
 
-              <div className="hidden sm:block w-px h-5 self-center" style={{ backgroundColor: 'var(--border)' }} />
-
-              <div className="type-meta flex items-center gap-3">
-                <time dateTime={article.date} className="flex items-center gap-1.5">
-                  <User size={12} strokeWidth={1.75} />
-                  {article.date}
-                </time>
-                <span className="w-1 h-1 rounded-full" style={{ backgroundColor: 'var(--fg-subtle)' }} />
-                <span className="flex items-center gap-1.5">
-                  <Clock size={12} strokeWidth={1.75} />
+              <div className="ds-article-reader__meta-stats type-meta">
+                <time dateTime={article.date}>{article.date}</time>
+                <span className="ds-article-reader__meta-dot" aria-hidden />
+                <span className="ds-article-reader__read-time">
+                  <Clock size={12} strokeWidth={1.75} aria-hidden />
                   {article.readTime}
                 </span>
               </div>
 
-              {/* Bookmark: pushed right */}
-              <motion.button
+              <button
+                type="button"
                 id="article-bookmark"
                 aria-label={bookmarked ? 'Remove bookmark' : 'Bookmark this article'}
                 onClick={() => setBookmarked((b) => !b)}
-                whileHover={{ scale: 1.12 }}
-                whileTap={{ scale: 0.88 }}
-                className="ml-auto p-2.5 rounded-xl border transition-all duration-200"
-                style={{
-                  borderColor:     bookmarked ? 'var(--accent)' : 'var(--border)',
-                  color:           bookmarked ? 'var(--accent)' : 'var(--fg-muted)',
-                  backgroundColor: bookmarked ? 'rgba(255, 26, 26, 0.08)' : 'rgba(255,255,255,0.02)',
-                }}
+                className={`ds-article-reader__bookmark${bookmarked ? ' is-active' : ''}`}
               >
                 <Bookmark
                   size={16}
-                  fill={bookmarked ? 'var(--accent)' : 'none'}
+                  fill={bookmarked ? 'currentColor' : 'none'}
                   strokeWidth={bookmarked ? 0 : 1.75}
                 />
-              </motion.button>
-            </motion.div>
-
-            {/* ── Share bar ──────────────────────────────────────────────── */}
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-wrap items-center gap-2 py-4 border-b"
-              style={{ borderColor: 'var(--border)' }}
-            >
-              <span
-                className="text-xs font-bold uppercase tracking-wide mr-1 flex items-center gap-1.5"
-                style={{ color: 'var(--fg-subtle)', fontFamily: 'var(--font-family-ui)', letterSpacing: '0.06em' }}
-              >
-                <Share2 size={12} strokeWidth={2} />
-                Share
-              </span>
-
-              {/* X / Twitter */}
-              <motion.button
-                id="article-share-x"
-                aria-label="Share on X / Twitter"
-                onClick={shareX}
-                whileTap={{ scale: 0.92 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200"
-                style={{
-                  borderColor:     'var(--border)',
-                  color:           'var(--fg-muted)',
-                  backgroundColor: 'rgba(255,255,255,0.02)',
-                  fontFamily:      'var(--font-family-ui)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#000'
-                  e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.08)'
-                  e.currentTarget.style.color = 'var(--fg)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border)'
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.02)'
-                  e.currentTarget.style.color = 'var(--fg-muted)'
-                }}
-              >
-                <XIcon size={13} />
-                Post
-              </motion.button>
-
-              {/* LinkedIn */}
-              <motion.button
-                id="article-share-linkedin"
-                aria-label="Share on LinkedIn"
-                onClick={shareLinkedIn}
-                whileTap={{ scale: 0.92 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200"
-                style={{
-                  borderColor:     'var(--border)',
-                  color:           'var(--fg-muted)',
-                  backgroundColor: 'rgba(255,255,255,0.02)',
-                  fontFamily:      'var(--font-family-ui)',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = '#0A66C2'
-                  e.currentTarget.style.backgroundColor = 'rgba(10,102,194,0.08)'
-                  e.currentTarget.style.color = '#0A66C2'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--border)'
-                  e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.02)'
-                  e.currentTarget.style.color = 'var(--fg-muted)'
-                }}
-              >
-                <LinkedInIcon size={13} />
-                Share
-              </motion.button>
-
-              {/* Copy link */}
-              <motion.button
-                id="article-share-copy"
-                aria-label="Copy article link"
-                onClick={copyLink}
-                whileTap={{ scale: 0.92 }}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-200"
-                style={{
-                  borderColor:     copied ? '#10B981' : 'var(--border)',
-                  color:           copied ? '#10B981' : 'var(--fg-muted)',
-                  backgroundColor: copied ? 'rgba(16,185,129,0.08)' : 'rgba(255,255,255,0.02)',
-                  fontFamily:      'var(--font-family-ui)',
-                }}
-              >
-                {copied ? <Check size={13} /> : <Link2 size={13} />}
-                {copied ? 'Copied!' : 'Copy link'}
-              </motion.button>
-            </motion.div>
-
-            {/* ── Article body ────────────────────────────────────────────── */}
-            <motion.div
-              ref={bodyRef}
-              variants={fadeUp}
-              className="ds-article-reader__prose type-prose"
-            >
-              {bodyText.map((para, i) => (
-                <React.Fragment key={i}>
-                  <p
-                    className="mb-7"
-                    style={{
-                      fontSize:   i === 0 ? '1.25rem' : '1.125rem',
-                      lineHeight: i === 0 ? 'var(--leading-relaxed)' : 'var(--leading-prose)',
-                      color:      i === 0 ? 'var(--fg)' : 'var(--fg-muted)',
-                      fontWeight: i === 0 ? 600 : 400,
-                    }}
-                  >
-                    {/* Pull-quote style for direct quotes */}
-                    {para.startsWith('"') ? (
-                      <span
-                        className="block pl-5 border-l-4 italic"
-                        style={{
-                          borderColor: 'var(--accent)',
-                          color:       'var(--fg)',
-                          fontStyle:   'italic',
-                        }}
-                      >
-                        {para}
-                      </span>
-                    ) : para}
-                  </p>
-
-                  {ADS_ENABLED && i === 1 && (
-                    <div className="my-10 flex justify-center">
-                      <AdSlot size="inline" label="Advertisement" />
-                    </div>
-                  )}
-                </React.Fragment>
-              ))}
-
-              <div className="ds-article-reader__endmark">
-                <div className="ds-article-reader__endmark-rule" />
-                <span className="ds-category-label">Trax</span>
-                <div className="ds-article-reader__endmark-rule" />
-              </div>
-
-              <div className="mt-6 flex flex-wrap items-center gap-2">
-                <span className="type-meta">Topics</span>
-                <Link href={`/${article.category.toLowerCase()}`} className="ds-category-pill">
-                  {article.category}
-                </Link>
-                {article.trending && <span className="ds-category-pill">Trending</span>}
-                {article.breaking && <span className="ds-hero-lead__breaking">Breaking</span>}
-              </div>
-
-              {ADS_ENABLED && (
-                <div className="mt-10 flex justify-center">
-                  <AdSlot size="rectangle" label="Sponsor Square" />
-                </div>
-              )}
-            </motion.div>
-
-          </div>
-        </div>
-
-        {related.length > 0 && (
-          <SectionBand variant="tint" className="ds-article-reader__related">
-            <div className="container ds-category-page">
-              <SectionMarker title="Related stories" subtitle="More from across the corridor" />
-              <div className="ds-category-feed__grid">
-                {related.map((rel, i) => (
-                  <Card key={rel.id} article={rel} index={i} staggered />
-                ))}
-              </div>
+              </button>
             </div>
-          </SectionBand>
-        )}
-      </motion.div>
-    </>
+          </motion.header>
+
+          <motion.figure variants={fadeUp} className="ds-article-reader__figure">
+            <div className="ds-article-reader__figure-frame">
+              <Image
+                src={article.image}
+                alt={article.title}
+                width={1200}
+                height={800}
+                priority
+                className="ds-article-reader__figure-image"
+                sizes="(max-width: 768px) 100vw, 42rem"
+              />
+            </div>
+          </motion.figure>
+
+          <motion.div variants={fadeUp} className="ds-article-reader__share">
+            <span className="ds-article-reader__share-label">
+              <Share2 size={12} strokeWidth={2} aria-hidden />
+              Share
+            </span>
+            <button
+              type="button"
+              id="article-share-x"
+              aria-label="Share on X"
+              onClick={shareX}
+              className="ds-article-reader__share-btn"
+            >
+              <XIcon size={13} />
+              Post
+            </button>
+            <button
+              type="button"
+              id="article-share-linkedin"
+              aria-label="Share on LinkedIn"
+              onClick={shareLinkedIn}
+              className="ds-article-reader__share-btn ds-article-reader__share-btn--linkedin"
+            >
+              <LinkedInIcon size={13} />
+              Share
+            </button>
+            <button
+              type="button"
+              id="article-share-copy"
+              aria-label="Copy article link"
+              onClick={copyLink}
+              className={`ds-article-reader__share-btn${copied ? ' is-copied' : ''}`}
+            >
+              {copied ? <Check size={13} /> : <Link2 size={13} />}
+              {copied ? 'Copied' : 'Copy link'}
+            </button>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="ds-article-reader__prose type-prose">
+            {bodyText.map((para, i) => (
+              <React.Fragment key={i}>
+                <p
+                  className={
+                    i === 0
+                      ? 'ds-article-reader__lede'
+                      : para.startsWith('"')
+                        ? 'ds-article-reader__quote'
+                        : undefined
+                  }
+                >
+                  {para}
+                </p>
+
+                {ADS_ENABLED && i === 1 && (
+                  <div className="ds-article-reader__ad">
+                    <AdSlot size="inline" label="Advertisement" />
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
+
+            <div className="ds-article-reader__endmark">
+              <div className="ds-article-reader__endmark-rule" />
+              <span className="ds-category-label">Trax</span>
+              <div className="ds-article-reader__endmark-rule" />
+            </div>
+
+            <div className="ds-article-reader__topics">
+              <span className="type-meta">Topics</span>
+              <Link href={categoryHref} className="ds-category-pill">
+                {article.category}
+              </Link>
+              {article.trending && <span className="ds-category-pill">Trending</span>}
+              {article.breaking && <span className="ds-hero-lead__breaking">Breaking</span>}
+            </div>
+
+            {ADS_ENABLED && (
+              <div className="ds-article-reader__ad">
+                <AdSlot size="rectangle" label="Sponsor Square" />
+              </div>
+            )}
+          </motion.div>
+
+          {(prev || next) && (
+            <motion.nav
+              variants={fadeUp}
+              className="ds-article-reader__pager"
+              aria-label="Continue reading"
+            >
+              {prev ? <ArticlePagerLink article={prev} direction="prev" /> : <div />}
+              {next ? <ArticlePagerLink article={next} direction="next" /> : <div />}
+            </motion.nav>
+          )}
+
+          <motion.div variants={fadeUp} className="ds-article-reader__footer-nav">
+            <Link href={categoryHref} className="ds-article-reader__footer-link">
+              <Icon name="arrow-left" size="xs" aria-hidden />
+              More in {article.category}
+            </Link>
+            <Link href="/" className="ds-article-reader__footer-link">
+              Latest stories
+              <Icon name="arrow-right" size="xs" aria-hidden />
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+
+      {related.length > 0 && (
+        <SectionBand variant="tint" className="ds-article-reader__related">
+          <div className="container ds-category-page">
+            <SectionMarker title="Related stories" subtitle="More from across the corridor" />
+            <div className="ds-category-feed__grid">
+              {related.map((rel, i) => (
+                <Card key={rel.id} article={rel} index={i} staggered />
+              ))}
+            </div>
+          </div>
+        </SectionBand>
+      )}
+    </motion.article>
   )
 }

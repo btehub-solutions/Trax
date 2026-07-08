@@ -194,3 +194,26 @@ export async function getRelatedArticles(
     ...all.filter((a) => a.slug !== currentSlug && a.category !== category),
   ].slice(0, 3)
 }
+
+function articleTimestamp(article: Article): number {
+  const raw = article.publishedAt ?? article.date
+  const ts = Date.parse(raw)
+  return Number.isNaN(ts) ? 0 : ts
+}
+
+/** Newer = next, older = previous (by publish date). */
+export function getAdjacentArticles(
+  currentSlug: string,
+  allArticles: Article[],
+): { prev: Article | null; next: Article | null } {
+  const sorted = [...allArticles].sort(
+    (a, b) => articleTimestamp(b) - articleTimestamp(a),
+  )
+  const index = sorted.findIndex((a) => a.slug === currentSlug)
+  if (index === -1) return { prev: null, next: null }
+
+  return {
+    prev: sorted[index + 1] ?? null,
+    next: sorted[index - 1] ?? null,
+  }
+}

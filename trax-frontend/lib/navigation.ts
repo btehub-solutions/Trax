@@ -143,6 +143,15 @@ export const menuSocials = [
   { label: 'YouTube', href: 'https://youtube.com', placeholder: true },
 ] as const
 
+export function resolveCategoryHref(category: string): string {
+  const slug = category.toLowerCase().trim()
+  for (const item of primaryNav) {
+    if (item.categorySlug === slug) return item.href
+    if (item.categorySlugs?.some((s) => s === slug)) return item.href
+  }
+  return `/${slug}`
+}
+
 export function isNavActive(pathname: string, href: string): boolean {
   if (href === '/') return pathname === '/'
   return pathname === href || pathname.startsWith(`${href}/`)

@@ -5,6 +5,7 @@ import JsonLd from '@/components/seo/JsonLd'
 import {
   fetchArticleBySlug,
   fetchArticles,
+  getAdjacentArticles,
   getRelatedArticles,
 } from '@/lib/server-api'
 import { articleJsonLd, pageMetadata } from '@/lib/seo'
@@ -41,6 +42,7 @@ export default async function ArticlePage({
 
   const allArticles = await fetchArticles({ limit: 50 })
   const related = await getRelatedArticles(slug, article.category, allArticles)
+  const { prev, next } = getAdjacentArticles(slug, allArticles)
 
   return (
     <>
@@ -56,7 +58,7 @@ export default async function ArticlePage({
           category: article.category,
         })}
       />
-      <ArticleReader article={article} related={related} />
+      <ArticleReader article={article} related={related} prev={prev} next={next} />
     </>
   )
 }
