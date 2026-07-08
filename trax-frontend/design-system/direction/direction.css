@@ -1947,18 +1947,11 @@ html.dark .ds-masthead__stroke-text {
 
 .ds-hero-lead__media {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   background-color: var(--surface-panel);
   border-radius: var(--radius-lg);
   width: 100%;
-}
-
-@media (min-width: 768px) {
-  .ds-hero-lead__media {
-    max-height: 14.5rem;
-    aspect-ratio: 16 / 9;
-  }
 }
 
 /* Author avatar */
@@ -3897,13 +3890,23 @@ html.dark .ds-menu-segment__btn.is-active {
 
 .ds-site-footer__grid {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-10);
+}
+
+.ds-site-footer__grid > *:nth-child(1),
+.ds-site-footer__grid > *:nth-child(2) {
+  grid-column: span 2;
 }
 
 @media (min-width: 640px) {
   .ds-site-footer__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-8) var(--space-10);
+  }
+  .ds-site-footer__grid > *:nth-child(1),
+  .ds-site-footer__grid > *:nth-child(2) {
+    grid-column: auto;
   }
 }
 
