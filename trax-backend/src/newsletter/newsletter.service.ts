@@ -31,7 +31,8 @@ export class NewsletterService {
 
   private siteUrl(): string {
     const origin = this.config.get<string>('FRONTEND_ORIGIN', 'https://trax.ng');
-    return origin.replace(/\/$/, '');
+    const firstOrigin = origin.split(',')[0] || 'https://trax.ng';
+    return firstOrigin.trim().replace(/\/$/, '');
   }
 
   generateToken(email: string): string {
