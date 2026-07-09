@@ -46,6 +46,7 @@ async function main() {
     { name: 'Tools', slug: 'tools', color: '#3B82F6', description: 'Libraries, code assets, and platforms' },
     { name: 'Startups', slug: 'startups', color: '#10B981', description: 'Spotlight on startups and ventures' },
     { name: 'People', slug: 'people', color: '#8B5CF6', description: 'Profiles and interviews of prominent figures' },
+    { name: 'News', slug: 'news', color: '#EF4444', description: 'Breaking news and general updates' },
   ]
 
   const categoriesMap: Record<string, string> = {}
