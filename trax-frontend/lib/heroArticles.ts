@@ -20,8 +20,8 @@ export function resolveHeroStack(articles: Article[]): HeroStack {
   }
 
   const rest = articles.filter((a) => a.id !== lead.id)
-  const featured = rest.slice(0, 2)
-  const remaining = rest.slice(2)
+  const featured = rest.slice(0, 4)
+  const remaining = rest.slice(4)
 
   return { lead, featured, remaining }
 }

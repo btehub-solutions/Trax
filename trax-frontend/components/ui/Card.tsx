@@ -100,12 +100,12 @@ export default function Card({
               priority
             />
           </div>
-          <span className="ds-category-pill ds-article-card__badge">{article.category}</span>
           {article.breaking && (
             <span className="ds-article-card__breaking">Breaking</span>
           )}
         </Link>
         <div className="ds-article-card__body ds-article-card__body--featured">
+          <span className="ds-category-label">{article.category}</span>
           <Link href={`/articles/${article.slug}`}>
             <h2 className="ds-article-card__title ds-article-card__title--featured" title={article.title}>
               {storyTitle(article.title)}
@@ -150,9 +150,9 @@ export default function Card({
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         </div>
-        <span className="ds-category-pill ds-article-card__badge">{article.category}</span>
       </Link>
       <div className="ds-article-card__body">
+        <span className="ds-category-label">{article.category}</span>
         <Link href={`/articles/${article.slug}`}>
           <h3 className="ds-article-card__title" title={article.title}>
             {storyTitle(article.title)}

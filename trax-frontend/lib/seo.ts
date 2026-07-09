@@ -153,7 +153,7 @@ export function organizationJsonLd() {
     '@type': 'NewsMediaOrganization',
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/window.svg`,
+    logo: `${siteConfig.url}/logo.svg`,
     sameAs: ['https://x.com/traxnewsng'],
     description: siteConfig.description,
   }

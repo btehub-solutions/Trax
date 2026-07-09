@@ -143,6 +143,16 @@ body {
   overflow-x: clip;
 }
 
+/* Prevent iOS Safari from zooming on input focus by ensuring font-size is at least 16px */
+@media (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+
 .tracking-tight {
   letter-spacing: var(--tracking-tight) !important;
 }
