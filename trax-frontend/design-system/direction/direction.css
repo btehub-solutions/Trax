@@ -1775,6 +1775,91 @@ html.dark .ds-masthead__stroke-text {
   margin-top: var(--space-8);
 }
 
+/* ─── Not found & error pages ─── */
+.ds-not-found {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--site-header-height) - 12rem);
+  padding: var(--space-12) 0 var(--space-16);
+  background-color: var(--surface-page);
+}
+
+.ds-not-found--error .ds-not-found__code {
+  color: var(--neutral-text-muted);
+}
+
+.ds-not-found__inner {
+  max-width: 36rem;
+  text-align: center;
+}
+
+.ds-not-found__code {
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-family-editorial);
+  font-size: clamp(4rem, 14vw, 7rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--brand-primary);
+  opacity: 0.22;
+}
+
+.ds-not-found__title {
+  margin: var(--space-3) 0 var(--space-5);
+  font-family: var(--font-family-editorial);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--neutral-text-primary);
+}
+
+.ds-not-found__lead {
+  max-width: 32rem;
+  margin: 0 auto var(--space-8);
+  color: var(--neutral-text-secondary);
+}
+
+.ds-not-found__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+}
+
+.ds-not-found__links-label {
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ds-not-found__links-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ds-not-found__link {
+  font-family: var(--font-family-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--neutral-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.ds-not-found__link:hover {
+  color: var(--brand-primary);
+}
+
 .ds-hero-section__preview-note {
   position: absolute;
   top: var(--space-4);
