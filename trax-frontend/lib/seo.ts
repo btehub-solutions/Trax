@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import { SITE_URL } from './server-api'
 
-const DEFAULT_OG_IMAGE =
-  'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop&q=80'
+/** Branded default share image — generated at /opengraph-image */
+const DEFAULT_OG_IMAGE = '/opengraph-image'
+const DEFAULT_OG_IMAGE_ABSOLUTE = `${SITE_URL}/opengraph-image`
+const SITE_LOGO = `${SITE_URL}/icon.svg`
 
 export const siteConfig = {
   name: 'Trax',
@@ -12,7 +14,7 @@ export const siteConfig = {
   url: SITE_URL,
   locale: 'en_NG',
   twitter: '@traxnewsng',
-  ogImage: DEFAULT_OG_IMAGE,
+  ogImage: DEFAULT_OG_IMAGE_ABSOLUTE,
 } as const
 
 export const defaultMetadata: Metadata = {
@@ -22,6 +24,10 @@ export const defaultMetadata: Metadata = {
     template: '%s | Trax',
   },
   description: siteConfig.description,
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
+  },
   keywords: [
     'Ogun State tech',
     'Nigeria startups',
@@ -57,7 +63,7 @@ export const defaultMetadata: Metadata = {
     description: siteConfig.description,
     images: [
       {
-        url: siteConfig.ogImage,
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: 'Trax — Ogun State tech news',
@@ -70,7 +76,7 @@ export const defaultMetadata: Metadata = {
     creator: siteConfig.twitter,
     title: siteConfig.title,
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    images: [DEFAULT_OG_IMAGE],
   },
 }
 
@@ -87,7 +93,7 @@ export function pageMetadata({
   image?: string
   type?: 'website' | 'article'
 }): Metadata {
-  const ogImage = image || siteConfig.ogImage
+  const ogImage = image || DEFAULT_OG_IMAGE
 
   return {
     title,

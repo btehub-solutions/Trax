@@ -49,6 +49,7 @@ export function mapApiArticle(a: any): Article {
           month: 'long',
           day: 'numeric',
           year: 'numeric',
+          timeZone: 'UTC',
         })
       : 'June 5, 2026',
     publishedAt: a.publishedAt || undefined,
