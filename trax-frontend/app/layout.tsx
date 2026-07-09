@@ -40,14 +40,11 @@ export default function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('trax-theme');var d=t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className={`${fraunces.variable} ${instrumentSans.variable} ${spaceMono.variable} font-ui antialiased`}>
+        <Script
+          id="trax-theme-init"
+          strategy="beforeInteractive"
+        >{`(function(){try{var t=localStorage.getItem('trax-theme');var d=t==='dark';document.documentElement.classList.toggle('dark',d);document.documentElement.classList.toggle('light',!d);}catch(e){}})();`}</Script>
         <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
 
         {gaId && (

@@ -109,14 +109,13 @@ export default function Footer() {
             </p>
             <AnimatePresence mode="wait">
               {status === 'idle' ? (
-                <motion.form
+                <motion.div
                   key="form"
-                  onSubmit={handleSubmit}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="ds-footer-subscribe"
                 >
+                <form onSubmit={handleSubmit} className="ds-footer-subscribe">
                   <div className="ds-footer-subscribe__fields">
                     <label htmlFor="footer-newsletter-email" className="ds-visually-hidden">
                       Email address
@@ -142,7 +141,8 @@ export default function Footer() {
                     </MotionButton>
                   </div>
                   {error && <p className="ds-footer-subscribe__error">{error}</p>}
-                </motion.form>
+                </form>
+                </motion.div>
               ) : (
                 <motion.div
                   key="success"

@@ -32,7 +32,7 @@ export default function NewsletterSection() {
     <div className="container" id="newsletter">
       <motion.div
         className="ds-newsletter-card"
-        initial={{ opacity: 0, y: 20 }}
+        initial={false}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '0px 0px -40px 0px' }}
         transition={transitionEditorial}

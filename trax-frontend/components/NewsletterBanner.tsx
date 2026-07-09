@@ -135,13 +135,15 @@ export default function NewsletterBanner({
 
           <AnimatePresence mode="wait">
             {!isSuccess ? (
-              <motion.form
+              <motion.div
                 key="form"
-                onSubmit={handleSubmit}
-                initial={{ opacity: 0, y: 12 }}
+                initial={false}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8, transition: { duration: 0.2 } }}
-                transition={{ delay: 0.3, duration: 0.45 }}
+                transition={{ duration: 0.45 }}
+              >
+              <form
+                onSubmit={handleSubmit}
                 className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
                 noValidate
               >
@@ -217,7 +219,8 @@ export default function NewsletterBanner({
                     </>
                   )}
                 </motion.button>
-              </motion.form>
+              </form>
+              </motion.div>
             ) : (
               <motion.div
                 key="success"
