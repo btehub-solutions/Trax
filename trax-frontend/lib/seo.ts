@@ -10,7 +10,7 @@ export const siteConfig = {
   name: 'Trax',
   title: "Trax | Tracking Ogun State's Tech Movement",
   description:
-    "Ogun State's tech news and startup media platform — startups, funding, people, policy, and events across the corridor.",
+    "Ogun State's tech news and startup media platform covering startups, funding, people, policy, and events across the corridor.",
   url: SITE_URL,
   locale: 'en_NG',
   twitter: '@traxnewsng',
@@ -24,10 +24,6 @@ export const defaultMetadata: Metadata = {
     template: '%s | Trax',
   },
   description: siteConfig.description,
-  icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
-    apple: [{ url: '/apple-icon', sizes: '180x180', type: 'image/png' }],
-  },
   keywords: [
     'Ogun State tech',
     'Nigeria startups',
@@ -159,7 +155,7 @@ export function organizationJsonLd() {
     '@type': 'NewsMediaOrganization',
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: SITE_LOGO,
+    logo: `${siteConfig.url}/logo.svg`,
     sameAs: ['https://x.com/traxnewsng'],
     description: siteConfig.description,
   }

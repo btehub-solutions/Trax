@@ -5,6 +5,7 @@ import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 export const DEFAULT_CATEGORIES = [
   { name: 'Startups', slug: 'startups', color: '#10B981', description: 'Spotlight on startups and ventures' },
   { name: 'Funding', slug: 'funding', color: '#059669', description: 'Investments and VC updates' },
+  { name: 'News', slug: 'news', color: '#EF4444', description: 'Breaking news and general updates' },
   { name: 'Tools', slug: 'tools', color: '#3B82F6', description: 'Libraries, code assets, and platforms' },
   { name: 'People', slug: 'people', color: '#8B5CF6', description: 'Profiles and interviews of prominent figures' },
   { name: 'Policy', slug: 'policy', color: '#D97706', description: 'Government roadmaps and regulations' },
