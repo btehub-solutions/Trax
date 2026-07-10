@@ -75,6 +75,7 @@ export default function Nav() {
     const previousBodyTop = body.style.top
     const previousBodyWidth = body.style.width
     const previousHtmlOverflow = documentElement.style.overflow
+    const previousHtmlScrollBehavior = documentElement.style.scrollBehavior
 
     body.style.overflow = 'hidden'
     body.style.position = 'fixed'
@@ -83,12 +84,16 @@ export default function Nav() {
     documentElement.style.overflow = 'hidden'
 
     return () => {
+      // Disable smooth scroll during unlock — otherwise the page animates
+      // from 0 down to the saved offset and looks like a jump.
+      documentElement.style.scrollBehavior = 'auto'
       body.style.overflow = previousBodyOverflow
       body.style.position = previousBodyPosition
       body.style.top = previousBodyTop
       body.style.width = previousBodyWidth
       documentElement.style.overflow = previousHtmlOverflow
-      window.scrollTo(0, scrollY)
+      window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' })
+      documentElement.style.scrollBehavior = previousHtmlScrollBehavior
     }
   }, [menuOpen])
 

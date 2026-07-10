@@ -243,9 +243,9 @@ html.dark .ds-masthead__stroke-text {
   letter-spacing: -0.02em;
 }
 
-.ds-masthead__marker.ds-section-marker::before {
-  top: 0.15em;
-  bottom: 0.15em;
+.ds-masthead__marker .ds-section-marker__bar {
+  align-self: center;
+  height: 1.1em;
 }
 
 /* ─── Homepage hero ─── */
@@ -2124,7 +2124,7 @@ html.dark .ds-masthead__stroke-text {
 }
 
 .ds-hero-section__sidebar-marker.ds-section-marker {
-  padding-left: var(--space-4);
+  gap: var(--space-4);
 }
 
 .ds-hero-section__featured-list {
@@ -3272,20 +3272,23 @@ html.dark .ds-wordmark__accent-dark {
 
 /* ─── Section marker — vertical red bar (newsflash / The NEWS*) ─── */
 .ds-section-marker {
-  position: relative;
-  padding-left: var(--space-4);
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
   margin-bottom: var(--space-8);
 }
 
-.ds-section-marker::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+.ds-section-marker__bar {
+  flex: 0 0 4px;
   width: 4px;
+  align-self: stretch;
   background-color: var(--brand-primary);
   border-radius: 1px;
+}
+
+.ds-section-marker__content {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .ds-section-marker__title-row {
@@ -3296,17 +3299,20 @@ html.dark .ds-wordmark__accent-dark {
 }
 
 .ds-section-marker__title {
+  margin: 0;
   font-family: var(--font-family-ui);
   font-size: var(--text-xl);
   font-weight: 700;
+  line-height: 1.25;
   color: var(--neutral-text-primary);
   letter-spacing: var(--tracking-tight);
 }
 
 .ds-section-marker__subtitle {
-  margin-top: var(--space-2);
+  margin: var(--space-2) 0 0;
   font-family: var(--font-family-ui);
   font-size: var(--text-sm);
+  line-height: 1.5;
   color: var(--neutral-text-muted);
 }
 
