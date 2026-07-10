@@ -124,7 +124,7 @@ function FeedThumb({ article }: { article: Article }) {
         src={article.image || fallbackImage}
         alt={article.title}
         fill
-        sizes="(max-width: 640px) 100vw, 200px"
+        sizes="(max-width: 640px) 100vw, 240px"
         className="object-cover object-center ds-motion-image"
       />
     </div>

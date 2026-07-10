@@ -53,7 +53,7 @@ export default function Card({
               alt={article.title}
               fill
               className="object-cover object-center ds-motion-image"
-              sizes="96px"
+              sizes="120px"
             />
           </div>
           <div className="ds-article-card__body">
