@@ -4533,6 +4533,23 @@ html.dark .ds-menu-segment__btn.is-active {
   font-size: var(--text-sm);
 }
 
+.ds-admin-search {
+  position: relative;
+}
+
+.ds-admin-search__icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--dash-fg-subtle);
+  pointer-events: none;
+}
+
+.ds-admin input.ds-admin-search__input:not([type='checkbox']):not([type='radio']):not([type='file']) {
+  padding-left: var(--space-10);
+}
+
 .ds-admin-input:focus {
   outline: none;
   border-color: var(--brand-primary);

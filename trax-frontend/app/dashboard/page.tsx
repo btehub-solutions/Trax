@@ -889,14 +889,14 @@ export default function DashboardPage() {
 
                   {/* Search + Filter Strip */}
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <div className="relative flex-1">
-                      <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5" style={{ color: 'var(--dash-fg-subtle)' }} />
+                    <div className="ds-admin-search flex-1">
+                      <Search className="ds-admin-search__icon h-4.5 w-4.5" />
                       <input
                         type="text"
                         placeholder="Search articles..."
                         value={articleSearch}
                         onChange={(e) => setArticleSearch(e.target.value)}
-                        className="w-full rounded-xl pl-10 pr-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
+                        className="ds-admin-search__input w-full rounded-xl pr-4 py-2.5 text-base md:text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600 transition-all border"
                       />
                     </div>
                     <div className="flex gap-2">
