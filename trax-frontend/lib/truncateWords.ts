@@ -1,6 +1,5 @@
 /** Editorial display limits — homepage & story cards */
-export const STORY_TITLE_MAX_WORDS = 7
-export const STORY_EXCERPT_MAX_WORDS = 15
+export const STORY_EXCERPT_MAX_WORDS = 25
 
 export function truncateWords(text: string, maxWords: number): string {
   if (!text) return ''
@@ -10,7 +9,8 @@ export function truncateWords(text: string, maxWords: number): string {
 }
 
 export function storyTitle(text: string): string {
-  return truncateWords(text, STORY_TITLE_MAX_WORDS)
+  // Let headlines wrap naturally to preserve the full context
+  return text ? text.trim() : ''
 }
 
 export function storyExcerpt(text: string): string {

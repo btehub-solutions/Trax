@@ -80,10 +80,10 @@ export default function LatestStoriesHero({
                 <SectionMarker title="Ogun Tech Tracker" className="ds-home-feed__tracker-marker" />
 
                 <div className="ds-home-feed__tracker-list">
-                  {pulse.map((article) =>
+                  {pulse.map((article, index) =>
                     isPreview ? (
                       <div key={article.id} className="ds-home-feed__tracker-item group">
-                        <TrackerCopy article={article} />
+                        <TrackerCopy article={article} index={index} />
                       </div>
                     ) : (
                       <Link
@@ -91,7 +91,7 @@ export default function LatestStoriesHero({
                         href={`/articles/${article.slug}`}
                         className="ds-home-feed__tracker-item group"
                       >
-                        <TrackerCopy article={article} />
+                        <TrackerCopy article={article} index={index} />
                       </Link>
                     ),
                   )}
@@ -158,18 +158,22 @@ function FeedCopy({ article }: { article: Article }) {
   )
 }
 
-function TrackerCopy({ article }: { article: Article }) {
+function TrackerCopy({ article, index }: { article: Article; index: number }) {
+  const formattedIndex = String(index + 1).padStart(2, '0')
   return (
     <>
-      <span className="ds-category-label">{article.category}</span>
-      <h4 className="ds-home-feed__tracker-title" title={article.title}>
-        {storyTitle(article.title)}
-      </h4>
-      <p className="type-meta ds-home-feed__meta">
-        <span>{article.author}</span>
-        <span aria-hidden>·</span>
-        <time>{formatDate(article)}</time>
-      </p>
+      <div className="ds-home-feed__tracker-number">{formattedIndex}</div>
+      <div className="ds-home-feed__tracker-details">
+        <span className="ds-category-label">{article.category}</span>
+        <h4 className="ds-home-feed__tracker-title" title={article.title}>
+          {storyTitle(article.title)}
+        </h4>
+        <p className="type-meta ds-home-feed__meta">
+          <span>{article.author}</span>
+          <span aria-hidden>·</span>
+          <time>{formatDate(article)}</time>
+        </p>
+      </div>
     </>
   )
 }

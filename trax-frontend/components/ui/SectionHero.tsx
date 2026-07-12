@@ -121,7 +121,7 @@ function FeaturedThumb({ article }: { article: Article }) {
         src={article.image || fallbackImage}
         alt={article.title}
         fill
-        sizes="120px"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 130px, 160px"
         className="object-cover object-center ds-motion-image"
       />
     </div>

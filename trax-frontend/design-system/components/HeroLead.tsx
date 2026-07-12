@@ -38,6 +38,17 @@ export default function HeroLead({
 
   const body = (
     <>
+      <div className="ds-hero-lead__media">
+        <Image
+          src={article.image || fallbackImage}
+          alt={article.title}
+          fill
+          priority={priority}
+          sizes="(max-width: 1023px) 100vw, 55vw"
+          className="object-cover object-center ds-motion-image"
+        />
+      </div>
+
       <div className="ds-hero-lead__copy">
         <div className="ds-hero-lead__meta">
           {article.breaking && (
@@ -88,17 +99,6 @@ export default function HeroLead({
             </>
           )}
         </div>
-      </div>
-
-      <div className="ds-hero-lead__media">
-        <Image
-          src={article.image || fallbackImage}
-          alt={article.title}
-          fill
-          priority={priority}
-          sizes="(max-width: 1023px) 100vw, 55vw"
-          className="object-cover object-center ds-motion-image"
-        />
       </div>
     </>
   )
