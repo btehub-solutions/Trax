@@ -77,21 +77,16 @@ export default function ArticleGrid({
     variant === 'featured-first' ? (
       <>
         <SectionHeader title={title} subtitle={subtitle} viewAllHref={viewAllHref} />
-        <div className="ds-home-briefing">
-          <div className="ds-home-briefing__lead">
-            {articles[0] && <Card article={articles[0]} variant="featured" />}
+        <div className="ds-home-briefing-grid">
+          <div className="ds-home-briefing-grid__top">
+            {articles.slice(0, 2).map((article, i) => (
+              <Card key={article.id} article={article} variant="featured" index={i} staggered />
+            ))}
           </div>
-          <div className="ds-home-briefing__side">
-            <div className="ds-home-briefing__compact-list">
-              {articles.slice(1, ADS_ENABLED ? 4 : 5).map((article, i) => (
-                <Card key={article.id} article={article} variant="compact" index={i} />
-              ))}
-            </div>
-            {ADS_ENABLED && (
-              <div className="ds-home-briefing__ad">
-                <AdSlot size="rectangle" label="Sponsor Advertisement" />
-              </div>
-            )}
+          <div className="ds-home-briefing-grid__bottom">
+            {articles.slice(2, 5).map((article, i) => (
+              <Card key={article.id} article={article} variant="default" index={i} staggered />
+            ))}
           </div>
         </div>
       </>

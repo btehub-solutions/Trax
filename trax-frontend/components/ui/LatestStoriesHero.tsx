@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import Card from '@/components/ui/Card'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Article } from '@/lib/articles'
@@ -12,10 +12,7 @@ import {
   viewportEditorial,
 } from '@/design-system/motion'
 import { useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
-import { storyExcerpt, storyTitle } from '@/lib/truncateWords'
-
-const fallbackImage =
-  'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&h=800&fit=crop&q=85'
+import { storyTitle } from '@/lib/truncateWords'
 
 function formatDate(article: Article) {
   return article.date || 'June 2026'
@@ -31,8 +28,8 @@ export default function LatestStoriesHero({
   articles = [],
   isPreview = false,
 }: LatestStoriesHeroProps) {
-  const feedArticles = articles.slice(0, 5).filter(Boolean)
-  const pulse = articles.slice(5, 9).filter(Boolean)
+  const feedArticles = articles.slice(0, 4).filter(Boolean)
+  const pulse = articles.slice(4, 8).filter(Boolean)
   const container = useMotionVariants(staggerSection, 'staggerSection')
   const itemSoft = useMotionVariants(fadeUpSoft, 'fadeUpSoft')
 
@@ -57,21 +54,15 @@ export default function LatestStoriesHero({
           </motion.div>
 
           <div className="ds-home-feed__grid">
-            <div className="ds-home-feed__list">
-              {feedArticles.map((article) => (
-                <motion.article key={article.id} variants={itemSoft} className="ds-home-feed__item group">
-                  {isPreview ? (
-                    <div className="ds-home-feed__item-inner">
-                      <FeedThumb article={article} />
-                      <FeedCopy article={article} />
-                    </div>
-                  ) : (
-                    <Link href={`/articles/${article.slug}`} className="ds-home-feed__item-inner">
-                      <FeedThumb article={article} />
-                      <FeedCopy article={article} />
-                    </Link>
-                  )}
-                </motion.article>
+            <div className="ds-home-feed__grid-list">
+              {feedArticles.map((article, i) => (
+                <Card
+                  key={article.id}
+                  article={article}
+                  variant="default"
+                  index={i}
+                  staggered
+                />
               ))}
             </div>
 
@@ -114,47 +105,6 @@ export default function LatestStoriesHero({
         </motion.div>
       </div>
     </section>
-  )
-}
-
-function FeedThumb({ article }: { article: Article }) {
-  return (
-    <div className="ds-home-feed__thumb">
-      <Image
-        src={article.image || fallbackImage}
-        alt={article.title}
-        fill
-        sizes="(max-width: 640px) 100vw, 240px"
-        className="object-cover object-center ds-motion-image"
-      />
-    </div>
-  )
-}
-
-function FeedCopy({ article }: { article: Article }) {
-  return (
-    <div className="ds-home-feed__copy">
-      <span className="ds-category-label">{article.category}</span>
-      <h3 className="ds-home-feed__title" title={article.title}>
-        {storyTitle(article.title)}
-      </h3>
-      {article.excerpt && (
-        <p className="type-excerpt ds-home-feed__excerpt" title={article.excerpt}>
-          {storyExcerpt(article.excerpt)}
-        </p>
-      )}
-      <p className="type-meta ds-home-feed__meta">
-        <span>{article.author}</span>
-        <span aria-hidden>·</span>
-        <time>{formatDate(article)}</time>
-        {article.readTime && (
-          <>
-            <span aria-hidden>·</span>
-            <span>{article.readTime}</span>
-          </>
-        )}
-      </p>
-    </div>
   )
 }
 
