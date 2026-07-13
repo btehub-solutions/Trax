@@ -871,7 +871,7 @@ html.dark .ds-masthead__stroke-text {
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   text-transform: uppercase;
-  color: var(--brand-on-dark);
+  color: #ffffff;
   background-color: var(--brand-primary);
   padding: 0.25rem 0.5rem;
   border-radius: var(--radius-full);
@@ -930,7 +930,7 @@ html.dark .ds-masthead__stroke-text {
 }
 
 .ds-platform-package--featured .ds-platform-package__cta {
-  color: var(--brand-on-dark);
+  color: #ffffff;
   background-color: var(--brand-primary);
   border-color: var(--brand-primary);
 }
@@ -941,7 +941,7 @@ html.dark .ds-masthead__stroke-text {
 }
 
 .ds-platform-package--featured .ds-platform-package__cta:hover {
-  color: var(--brand-on-dark);
+  color: #ffffff;
   background-color: var(--brand-primary-hover);
 }
 
