@@ -41,7 +41,7 @@ export default function PressRoomSection({ articles, isDemo = false }: PressRoom
       />
 
       <div className="ds-press-room__grid">
-        {articles.slice(0, 3).map((article) => (
+        {articles.slice(0, 6).map((article) => (
           <article key={article.id} className="ds-press-room__card group">
             {isDemo ? (
               <div className="ds-press-room__card-inner">

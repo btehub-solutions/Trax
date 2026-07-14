@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
@@ -11,6 +11,8 @@ import type { Article } from '@/lib/articles'
 import { resolveHeroStack } from '@/lib/heroArticles'
 import { staggerGrid, viewportGrid } from '@/design-system/motion'
 import { useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
+
+const PAGE_SIZE = 6
 
 export interface PressPartner {
   id: string
@@ -65,6 +67,7 @@ export default function PressPageLayout({
   partners = [],
 }: PressPageLayoutProps) {
   const [partnerId, setPartnerId] = useState<string | null>(null)
+  const [page, setPage] = useState(1)
   const grid = useMotionVariants(staggerGrid, 'staggerGrid')
 
   const filtered = useMemo(() => {
@@ -81,6 +84,17 @@ export default function PressPageLayout({
     featured.forEach((item) => heroIds.add(item.id))
     return filtered.filter((item) => !heroIds.has(item.id))
   }, [filtered, lead, featured])
+
+  // Reset to page 1 whenever the partner filter changes
+  useEffect(() => {
+    setPage(1)
+  }, [partnerId])
+
+  const totalPages = Math.max(1, Math.ceil(remainingPress.length / PAGE_SIZE))
+  const pagedPress = useMemo(
+    () => remainingPress.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [remainingPress, page],
+  )
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return ''
@@ -143,42 +157,75 @@ export default function PressPageLayout({
             <p className="type-meta ds-category-feed__empty">
               No press releases for this partner yet. Check back soon.
             </p>
-          ) : remainingPress.length > 0 ? (
-            <motion.div
-              variants={grid}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportGrid}
-              className="ds-press-room__grid"
-            >
-              {remainingPress.map((article) => {
-                const mapped = toLeadArticle(article)
-                return (
-                  <article key={article.id} className="ds-press-room__card group">
-                    <Link href={`/articles/${article.slug}`} className="ds-press-room__card-inner">
-                      <div className="ds-press-room__thumb">
-                        <Image
-                          src={mapped.image}
-                          alt={mapped.title}
-                          fill
-                          sizes="(max-width: 767px) 100vw, 33vw"
-                          className="object-cover object-center ds-motion-image"
-                        />
-                      </div>
-                      <div className="ds-press-room__card-body">
-                        <span className="ds-category-label">Partner</span>
-                        <h3 className="ds-press-room__title">{mapped.title}</h3>
-                        <p className="type-meta ds-press-room__meta">
-                          {article.partner?.name ?? 'Partner'}
-                          <span aria-hidden>·</span>
-                          {formatDate(article.publishedAt)}
-                        </p>
-                      </div>
-                    </Link>
-                  </article>
-                )
-              })}
-            </motion.div>
+          ) : pagedPress.length > 0 ? (
+            <>
+              <motion.div
+                key={page}
+                variants={grid}
+                initial="hidden"
+                animate="visible"
+                className="ds-press-room__grid"
+              >
+                {pagedPress.map((article) => {
+                  const mapped = toLeadArticle(article)
+                  return (
+                    <article key={article.id} className="ds-press-room__card group">
+                      <Link href={`/articles/${article.slug}`} className="ds-press-room__card-inner">
+                        <div className="ds-press-room__thumb">
+                          <Image
+                            src={mapped.image}
+                            alt={mapped.title}
+                            fill
+                            sizes="(max-width: 767px) 100vw, 33vw"
+                            className="object-cover object-center ds-motion-image"
+                          />
+                        </div>
+                        <div className="ds-press-room__card-body">
+                          <span className="ds-category-label">Partner</span>
+                          <h3 className="ds-press-room__title">{mapped.title}</h3>
+                          <p className="type-meta ds-press-room__meta">
+                            {article.partner?.name ?? 'Partner'}
+                            <span aria-hidden>·</span>
+                            {formatDate(article.publishedAt)}
+                          </p>
+                        </div>
+                      </Link>
+                    </article>
+                  )
+                })}
+              </motion.div>
+
+              {totalPages > 1 && (
+                <nav
+                  className="ds-press-room__pagination"
+                  aria-label="Press room pagination"
+                >
+                  <button
+                    type="button"
+                    className="ds-press-room__page-btn"
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    aria-label="Previous page"
+                  >
+                    ←
+                  </button>
+
+                  <span className="ds-press-room__page-indicator" aria-current="page">
+                    {page} / {totalPages}
+                  </span>
+
+                  <button
+                    type="button"
+                    className="ds-press-room__page-btn"
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                    aria-label="Next page"
+                  >
+                    →
+                  </button>
+                </nav>
+              )}
+            </>
           ) : (
             <p className="type-meta ds-category-feed__empty">
               More partner stories are on the way.
