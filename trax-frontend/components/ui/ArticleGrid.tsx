@@ -79,12 +79,12 @@ export default function ArticleGrid({
         <SectionHeader title={title} subtitle={subtitle} viewAllHref={viewAllHref} />
         <div className="ds-home-briefing-grid">
           <div className="ds-home-briefing-grid__top">
-            {articles.slice(0, 2).map((article, i) => (
-              <Card key={article.id} article={article} variant="featured" index={i} staggered />
+            {articles.slice(0, 3).map((article, i) => (
+              <Card key={article.id} article={article} variant="default" index={i} staggered />
             ))}
           </div>
           <div className="ds-home-briefing-grid__bottom">
-            {articles.slice(2, 5).map((article, i) => (
+            {articles.slice(3, 6).map((article, i) => (
               <Card key={article.id} article={article} variant="default" index={i} staggered />
             ))}
           </div>
