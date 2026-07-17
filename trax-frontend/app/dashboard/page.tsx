@@ -35,7 +35,7 @@ import { compressImage } from '@/lib/image-compressor';
 import { useTheme } from 'next-themes';
 import DashboardShell from '@/components/dashboard/DashboardShell';
 
-type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team' | 'partners';
+type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team' | 'partners' | 'ecosystem' | 'ecosystemEditor';
 
 const AD_SIZE_MAP: Record<string, string> = {
   LEADERBOARD: 'Leaderboard (1024x409)',
@@ -68,9 +68,11 @@ export default function DashboardPage() {
   const [categories, setCategories] = useState<any[]>([]);
   const [subscribers, setSubscribers] = useState<any[]>([]);
   const [adSlots, setAdSlots] = useState<any[]>([]);
+  const [ecosystemNodes, setEcosystemNodes] = useState<any[]>([]);
 
   // Search/Filters
   const [articleSearch, setArticleSearch] = useState('');
+  const [nodeSearch, setNodeSearch] = useState('');
   const [articleFilter, setArticleFilter] = useState<'ALL' | 'PUBLISHED' | 'DRAFT'>('ALL');
 
   // Pagination States
@@ -134,6 +136,19 @@ export default function DashboardPage() {
   const [avatarUploading, setAvatarUploading] = useState(false);
   const [avatarUploadError, setAvatarUploadError] = useState<string | null>(null);
   const [connectionError, setConnectionError] = useState<string | null>(null);
+
+  // Ecosystem Node Form State
+  const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
+  const [nodeFormData, setNodeFormData] = useState({
+    name: '',
+    category: 'STARTUP',
+    location: 'Abeokuta',
+    focus: '',
+    website: '',
+  });
+  const [nodeError, setNodeError] = useState<string | null>(null);
+  const [nodeSuccess, setNodeSuccess] = useState<string | null>(null);
+  const [nodeSaving, setNodeSaving] = useState(false);
 
   // Team Management State
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
@@ -295,6 +310,10 @@ export default function DashboardPage() {
       // 2. Fetch subscribers
       const subs = await api.get('/newsletter/subscribers');
       setSubscribers(subs);
+
+      // Fetch ecosystem nodes
+      const ecoNodes = await api.get('/ecosystem-nodes');
+      setEcosystemNodes(ecoNodes || []);
 
       // 3. Fetch ad slots
       const ads = await api.get('/ads/all');
@@ -731,6 +750,59 @@ export default function DashboardPage() {
     }
   };
 
+  const handleEcosystemSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setNodeSaving(true);
+    setNodeError(null);
+    setNodeSuccess(null);
+
+    const payload = {
+      ...nodeFormData,
+      website: nodeFormData.website || null,
+    };
+
+    try {
+      if (editingNodeId) {
+        await api.patch(`/ecosystem-nodes/${editingNodeId}`, payload);
+        setNodeSuccess('Listing updated successfully!');
+      } else {
+        await api.post('/ecosystem-nodes', payload);
+        setNodeSuccess('Listing created successfully!');
+      }
+      setNodeFormData({ name: '', category: 'STARTUP', location: 'Abeokuta', focus: '', website: '' });
+      setEditingNodeId(null);
+      fetchDashboardData();
+    } catch (err: any) {
+      setNodeError(err.message || 'Failed to save ecosystem listing');
+    } finally {
+      setNodeSaving(false);
+    }
+  };
+
+  const handleDeleteEcosystemNode = async (id: string, name: string) => {
+    if (!confirm(`Are you sure you want to delete listing "${name}"?`)) return;
+    try {
+      await api.delete(`/ecosystem-nodes/${id}`);
+      fetchDashboardData();
+    } catch (err: any) {
+      alert(err.message || 'Failed to delete listing');
+    }
+  };
+
+  const handleEditEcosystemNodeClick = (node: any) => {
+    setEditingNodeId(node.id);
+    setNodeFormData({
+      name: node.name,
+      category: node.category,
+      location: node.location,
+      focus: node.focus,
+      website: node.website || '',
+    });
+    setNodeError(null);
+    setNodeSuccess(null);
+    setActiveTab('ecosystemEditor');
+  };
+
   const filteredArticles = articles.filter(article => {
     const matchesSearch = article.title.toLowerCase().includes(articleSearch.toLowerCase()) || 
                           article.excerpt.toLowerCase().includes(articleSearch.toLowerCase());
@@ -743,6 +815,12 @@ export default function DashboardPage() {
 
   const totalSubscribersPages = Math.ceil(subscribers.length / 10) || 1;
   const paginatedSubscribers = subscribers.slice((subscribersPage - 1) * 10, subscribersPage * 10);
+
+  const filteredNodes = ecosystemNodes.filter(node => {
+    return (node.name || '').toLowerCase().includes(nodeSearch.toLowerCase()) ||
+           (node.focus || '').toLowerCase().includes(nodeSearch.toLowerCase()) ||
+           (node.location || '').toLowerCase().includes(nodeSearch.toLowerCase());
+  });
 
   // Sync page state when total pages drop
   useEffect(() => {
@@ -812,6 +890,114 @@ export default function DashboardPage() {
                         <span className="text-3xl font-black mt-2 block" style={{ color: 'var(--dash-fg)' }}>{card.value}</span>
                       </div>
                     ))}
+                  </div>
+
+                  {/* Visual Analytics Row */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Subscriber Conversion Donut / Gauge */}
+                    <div className="rounded-2xl p-6 ds-admin-card space-y-4">
+                      <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: 'var(--dash-fg)' }}>
+                        <Users className="h-5 w-5 text-red-600" />
+                        Subscriber Audience Mix
+                      </h3>
+                      <div className="flex flex-col sm:flex-row items-center justify-around gap-6 py-4">
+                        {/* SVG Gauge */}
+                        <div className="relative w-36 h-36 flex items-center justify-center">
+                          <svg className="w-full h-full transform -rotate-95" viewBox="0 0 100 100">
+                            {/* Background Track */}
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              fill="transparent"
+                              className="stroke-zinc-800"
+                              strokeWidth="8"
+                            />
+                            {/* Active Fill */}
+                            <circle
+                              cx="50"
+                              cy="50"
+                              r="40"
+                              fill="transparent"
+                              className="stroke-red-600"
+                              strokeWidth="8"
+                              strokeDasharray={`${2 * Math.PI * 40}`}
+                              strokeDashoffset={`${2 * Math.PI * 40 * (1 - (subscribers.length ? subscribers.filter((s: any) => s.confirmed).length / subscribers.length : 0))}`}
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="absolute text-center">
+                            <span className="text-2xl font-black block" style={{ color: 'var(--dash-fg)' }}>
+                              {subscribers.length 
+                                ? Math.round((subscribers.filter((s: any) => s.confirmed).length / subscribers.length) * 100) 
+                                : 0}%
+                            </span>
+                            <span className="text-[10px] uppercase font-bold text-zinc-400 block tracking-wider">Confirmed</span>
+                          </div>
+                        </div>
+
+                        {/* Legend */}
+                        <div className="space-y-3 flex-1 max-w-xs">
+                          <div className="flex justify-between items-center text-xs">
+                            <div className="flex items-center gap-2">
+                              <span className="h-3 w-3 rounded-full bg-red-600 block" />
+                              <span style={{ color: 'var(--dash-fg-secondary)' }}>Confirmed List</span>
+                            </div>
+                            <span className="font-bold" style={{ color: 'var(--dash-fg)' }}>
+                              {subscribers.filter((s: any) => s.confirmed).length}
+                            </span>
+                          </div>
+                          <div className="flex justify-between items-center text-xs">
+                            <div className="flex items-center gap-2">
+                              <span className="h-3 w-3 rounded-full bg-zinc-800 block" />
+                              <span style={{ color: 'var(--dash-fg-secondary)' }}>Unconfirmed (Pending)</span>
+                            </div>
+                            <span className="font-bold" style={{ color: 'var(--dash-fg)' }}>
+                              {subscribers.filter((s: any) => !s.confirmed).length}
+                            </span>
+                          </div>
+                          <hr className="border-zinc-800" />
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="font-semibold" style={{ color: 'var(--dash-fg-secondary)' }}>Total Audience</span>
+                            <span className="font-extrabold" style={{ color: 'var(--dash-fg)' }}>{subscribers.length}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Category Beat Distribution Horizontal Bars */}
+                    <div className="rounded-2xl p-6 ds-admin-card space-y-4">
+                      <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: 'var(--dash-fg)' }}>
+                        <TrendingUp className="h-5 w-5 text-red-600" />
+                        Article Beat Distribution
+                      </h3>
+                      <div className="space-y-3.5 max-h-[160px] overflow-y-auto pr-2">
+                        {categories.map((cat) => {
+                          const count = articles.filter(a => a.categoryId === cat.id).length;
+                          const pct = articles.length ? Math.round((count / articles.length) * 100) : 0;
+                          return (
+                            <div key={cat.id} className="space-y-1 text-xs">
+                              <div className="flex justify-between items-center">
+                                <span className="font-semibold" style={{ color: 'var(--dash-fg-secondary)' }}>{cat.name}</span>
+                                <span className="font-bold text-zinc-400">{count} story{count !== 1 ? 'ies' : ''} ({pct}%)</span>
+                              </div>
+                              <div className="h-2 w-full bg-zinc-900 rounded-full overflow-hidden">
+                                <div
+                                  className="h-full rounded-full transition-all duration-500"
+                                  style={{
+                                    backgroundColor: cat.color || 'var(--accent)',
+                                    width: `${pct}%`
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                        {categories.length === 0 && (
+                          <p className="text-xs text-center py-6" style={{ color: 'var(--dash-fg-muted)' }}>No beats loaded yet.</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Quick stats and recent events */}
@@ -2338,6 +2524,241 @@ export default function DashboardPage() {
                         </div>
                       </form>
                     </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 9: ECOSYSTEM DIRECTORY */}
+              {activeTab === 'ecosystem' && user?.role === 'ADMIN' && (
+                <div className="space-y-6">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h1 className="ds-admin__page-title">Ecosystem Map Directory</h1>
+                      <p className="ds-admin__page-desc">Manage verified startups, tech hubs, and academic labs featured on the interactive map.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingNodeId(null);
+                        setNodeFormData({ name: '', category: 'STARTUP', location: 'Abeokuta', focus: '', website: '' });
+                        setNodeError(null);
+                        setNodeSuccess(null);
+                        setActiveTab('ecosystemEditor');
+                      }}
+                      className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 px-4 rounded-xl text-xs transition-all shadow-lg shadow-red-600/10 flex items-center justify-center gap-2 self-start md:self-auto"
+                    >
+                      <PlusCircle size={16} />
+                      <span>Add Entry</span>
+                    </button>
+                  </div>
+
+                  <div className="ds-admin-card rounded-2xl overflow-hidden p-6 space-y-4">
+                    {/* Search bar */}
+                    <div className="relative max-w-md">
+                      <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" />
+                      <input
+                        type="text"
+                        value={nodeSearch}
+                        onChange={(e) => setNodeSearch(e.target.value)}
+                        placeholder="Search by name, location, focus beat..."
+                        className="w-full bg-zinc-900 border border-zinc-800 rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-red-600 transition-colors text-white"
+                      />
+                    </div>
+
+                    <div className="overflow-x-auto rounded-xl border border-zinc-800">
+                      <table className="w-full text-left border-collapse">
+                        <thead>
+                          <tr
+                            className="border-b text-xs font-semibold uppercase tracking-wider"
+                            style={{ borderColor: 'var(--dash-divider)', backgroundColor: 'var(--dash-thead)', color: 'var(--dash-fg-muted)' }}
+                          >
+                            <th className="py-4 px-6">Name</th>
+                            <th className="py-4 px-6">Category</th>
+                            <th className="py-4 px-6">Location</th>
+                            <th className="py-4 px-6">Focus</th>
+                            <th className="py-4 px-6 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-sm" style={{ color: 'var(--dash-fg-secondary)' }}>
+                          {filteredNodes.map((node) => (
+                            <tr
+                              key={node.id}
+                              className="border-b transition-colors"
+                              style={{ borderColor: 'var(--dash-divider)' }}
+                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'var(--dash-hover)'}
+                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                            >
+                              <td className="py-4 px-6 font-semibold" style={{ color: 'var(--dash-fg)' }}>
+                                {node.name}
+                              </td>
+                              <td className="py-4 px-6">
+                                <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                                  node.category === 'STARTUP'
+                                    ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                                    : node.category === 'HUB'
+                                    ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20'
+                                    : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                                }`}>
+                                  {node.category}
+                                </span>
+                              </td>
+                              <td className="py-4 px-6">{node.location}</td>
+                              <td className="py-4 px-6 max-w-xs truncate">{node.focus}</td>
+                              <td className="py-4 px-6 text-right font-medium">
+                                <div className="flex justify-end gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleEditEcosystemNodeClick(node)}
+                                    className="text-zinc-300 hover:text-white text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 px-3 py-1.5 rounded-lg border border-zinc-700 transition-all"
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteEcosystemNode(node.id, node.name)}
+                                    className="text-red-300 hover:text-red-100 text-xs font-semibold bg-red-500/10 hover:bg-red-500/20 px-3 py-1.5 rounded-lg border border-red-500/25 transition-all"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                          {filteredNodes.length === 0 && (
+                            <tr>
+                              <td colSpan={5}>
+                                <div className="flex flex-col items-center justify-center py-14 gap-3">
+                                  <div
+                                    className="w-12 h-12 rounded-full flex items-center justify-center"
+                                    style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', border: '1px solid rgba(255, 26, 26, 0.15)' }}
+                                  >
+                                    <Map className="h-5 w-5 text-red-600" />
+                                  </div>
+                                  <p className="text-sm font-semibold" style={{ color: 'var(--dash-fg)' }}>No listings found</p>
+                                  <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>Try a different search query or add a new entry</p>
+                                </div>
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 10: ECOSYSTEM ENTRY EDITOR */}
+              {activeTab === 'ecosystemEditor' && user?.role === 'ADMIN' && (
+                <div className="space-y-6">
+                  <div>
+                    <h1 className="ds-admin__page-title">
+                      {editingNodeId ? 'Edit Directory Listing' : 'Create Directory Listing'}
+                    </h1>
+                    <p className="ds-admin__page-desc">Enter the details for this startup, hub, or lab to display on the tech map.</p>
+                  </div>
+
+                  <div className="max-w-xl ds-admin-card rounded-2xl p-6">
+                    {nodeError && (
+                      <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-100 text-xs">
+                        {nodeError}
+                      </div>
+                    )}
+                    {nodeSuccess && (
+                      <div className="mb-4 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-200 text-xs">
+                        {nodeSuccess}
+                      </div>
+                    )}
+
+                    <form onSubmit={handleEcosystemSubmit} className="space-y-4 text-white">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold uppercase tracking-wider block text-zinc-400">Node Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={nodeFormData.name}
+                          onChange={(e) => setNodeFormData(prev => ({ ...prev, name: e.target.value }))}
+                          placeholder="e.g. Turnify Solutions"
+                          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-600 text-white"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block text-zinc-400">Category</label>
+                          <select
+                            value={nodeFormData.category}
+                            onChange={(e) => setNodeFormData(prev => ({ ...prev, category: e.target.value }))}
+                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-600 text-white"
+                          >
+                            <option value="STARTUP">Startup</option>
+                            <option value="HUB">Tech Hub / Incubator</option>
+                            <option value="LAB">Research / Academic Lab</option>
+                          </select>
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-semibold uppercase tracking-wider block text-zinc-400">Location (City)</label>
+                          <input
+                            type="text"
+                            required
+                            value={nodeFormData.location}
+                            onChange={(e) => setNodeFormData(prev => ({ ...prev, location: e.target.value }))}
+                            placeholder="e.g. Abeokuta, Sagamu, Ilaro"
+                            className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-600 text-white"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold uppercase tracking-wider block text-zinc-400">Focus / Specialty Description</label>
+                        <textarea
+                          required
+                          rows={3}
+                          value={nodeFormData.focus}
+                          onChange={(e) => setNodeFormData(prev => ({ ...prev, focus: e.target.value }))}
+                          placeholder="Brief summary of their focus (e.g. HealthTech clinician workflows or climate insurtech APIs)"
+                          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-600 text-white"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold uppercase tracking-wider block text-zinc-400">Website URL (Optional)</label>
+                        <input
+                          type="url"
+                          value={nodeFormData.website}
+                          onChange={(e) => setNodeFormData(prev => ({ ...prev, website: e.target.value }))}
+                          placeholder="https://example.com"
+                          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-red-600 text-white"
+                        />
+                      </div>
+
+                      <div className="flex gap-2.5 pt-2">
+                        <button
+                          type="submit"
+                          disabled={nodeSaving}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-lg shadow-red-600/10 flex items-center justify-center gap-2"
+                        >
+                          {nodeSaving ? (
+                            <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          ) : (
+                            editingNodeId ? 'Save Changes' : 'Create Listing'
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditingNodeId(null);
+                            setNodeFormData({ name: '', category: 'STARTUP', location: 'Abeokuta', focus: '', website: '' });
+                            setNodeError(null);
+                            setNodeSuccess(null);
+                            setActiveTab('ecosystem');
+                          }}
+                          className="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold py-2.5 px-4 rounded-xl text-xs border border-zinc-700 transition-all"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               )}

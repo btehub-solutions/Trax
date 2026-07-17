@@ -15,6 +15,7 @@ import {
   User,
   UserPlus,
   Users,
+  Map,
 } from 'lucide-react'
 import TraxWordmark from '@/design-system/components/TraxWordmark'
 import type { LucideIcon } from 'lucide-react'
@@ -28,6 +29,8 @@ export type DashboardTab =
   | 'profile'
   | 'team'
   | 'partners'
+  | 'ecosystem'
+  | 'ecosystemEditor'
 
 interface DashboardUser {
   name?: string
@@ -68,6 +71,7 @@ const baseNav: Array<{
 const adminNav: Array<{ id: DashboardTab; label: string; icon: LucideIcon }> = [
   { id: 'team', label: 'Team Management', icon: UserPlus },
   { id: 'partners', label: 'Partners Manager', icon: Building2 },
+  { id: 'ecosystem', label: 'Ecosystem Map', icon: Map },
 ]
 
 export default function DashboardShell({

@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { RevalidationService } from '../revalidation/revalidation.service';
 import {
   CreateArticleDto,
   UpdateArticleDto,
@@ -9,7 +10,10 @@ import { ArticleStatus } from '../prisma-enums';
 
 @Injectable()
 export class ArticlesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly revalidate: RevalidationService,
+  ) {}
 
   private readonly include = {
     author:   { select: { id: true, name: true, avatar: true, role: true } },
@@ -26,7 +30,7 @@ export class ArticlesService {
       ? new Date()
       : undefined;
 
-    return this.prisma.article.create({
+    const article = await this.prisma.article.create({
       data: {
         ...data,
         publishedAt,
@@ -37,6 +41,15 @@ export class ArticlesService {
       },
       include: this.include,
     });
+
+    if (article.status === ArticleStatus.PUBLISHED) {
+      void this.revalidate.triggerRevalidation({ tag: 'articles', path: '/' });
+      if (article.category?.slug) {
+        void this.revalidate.triggerRevalidation({ path: `/${article.category.slug}` });
+      }
+    }
+
+    return article;
   }
 
   async findAll(query: ArticleQueryDto) {
@@ -115,7 +128,7 @@ export class ArticlesService {
       }
     }
 
-    return this.prisma.article.update({
+    const article = await this.prisma.article.update({
       where: { id },
       data: {
         ...data,
@@ -129,6 +142,20 @@ export class ArticlesService {
       },
       include: this.include,
     });
+
+    // Revalidate if it was or now is published
+    if (article.status === ArticleStatus.PUBLISHED || existing.status === ArticleStatus.PUBLISHED) {
+      void this.revalidate.triggerRevalidation({ tag: 'articles', path: '/' });
+      void this.revalidate.triggerRevalidation({ path: `/articles/${article.slug}` });
+      if (existing.slug !== article.slug) {
+        void this.revalidate.triggerRevalidation({ path: `/articles/${existing.slug}` });
+      }
+      if (article.category?.slug) {
+        void this.revalidate.triggerRevalidation({ path: `/${article.category.slug}` });
+      }
+    }
+
+    return article;
   }
 
   async remove(id: string, userId: string, userRole: string) {
@@ -136,16 +163,33 @@ export class ArticlesService {
     this.assertOwnership(article, userId, userRole);
 
     await this.prisma.article.delete({ where: { id } });
+
+    if (article.status === ArticleStatus.PUBLISHED) {
+      void this.revalidate.triggerRevalidation({ tag: 'articles', path: '/' });
+      void this.revalidate.triggerRevalidation({ path: `/articles/${article.slug}` });
+      if (article.category?.slug) {
+        void this.revalidate.triggerRevalidation({ path: `/${article.category.slug}` });
+      }
+    }
+
     return { message: 'Article deleted' };
   }
 
   async publish(id: string) {
-    await this.findById(id);
-    return this.prisma.article.update({
+    const existing = await this.findById(id);
+    const article = await this.prisma.article.update({
       where: { id },
       data: { status: ArticleStatus.PUBLISHED, publishedAt: new Date() },
       include: this.include,
     });
+
+    void this.revalidate.triggerRevalidation({ tag: 'articles', path: '/' });
+    void this.revalidate.triggerRevalidation({ path: `/articles/${article.slug}` });
+    if (article.category?.slug) {
+      void this.revalidate.triggerRevalidation({ path: `/${article.category.slug}` });
+    }
+
+    return article;
   }
 
   async getFeatured(limit = 5) {

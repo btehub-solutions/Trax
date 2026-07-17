@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { AppModule } from './app.module';
 import { configureApp } from './app.bootstrap';
 import { CategoriesService } from './categories/categories.service';
+import { EcosystemNodesService } from './ecosystem-nodes/ecosystem-nodes.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,9 +24,13 @@ async function bootstrap() {
     const categoriesService = app.get(CategoriesService);
     await categoriesService.seed();
     console.log('✅ System categories verified/seeded');
+
+    const nodesService = app.get(EcosystemNodesService);
+    await nodesService.seed();
+    console.log('✅ Ecosystem directory verified/seeded');
   } catch (err) {
     // Non-fatal: server continues to run even if the DB is temporarily unavailable.
-    console.warn('⚠️  Could not verify system categories on startup:', (err as Error).message);
+    console.warn('⚠️  Could not verify system categories or ecosystem nodes on startup:', (err as Error).message);
   }
 }
 bootstrap();

@@ -12,6 +12,8 @@ import { AdsModule }         from './ads/ads.module';
 import { UploadsModule }      from './uploads/uploads.module';
 import { PartnersModule }     from './partners/partners.module';
 import { MailModule }           from './mail/mail.module';
+import { EcosystemNodesModule } from './ecosystem-nodes/ecosystem-nodes.module';
+import { RevalidationModule } from './revalidation/revalidation.module';
 import { AppController }      from './app.controller';
 import { AppService }         from './app.service';
 
@@ -39,6 +41,8 @@ import { AppService }         from './app.service';
     UploadsModule,
     PartnersModule,
     MailModule,
+    EcosystemNodesModule,
+    RevalidationModule,
   ],
   controllers: [AppController],
   providers: [

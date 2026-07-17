@@ -160,3 +160,21 @@ model Partner {
 
   @@map("partners")
 }
+
+// ─────────────────────────────────────────────
+// Ecosystem Node
+// ─────────────────────────────────────────────
+
+model EcosystemNode {
+  id          String   @id @default(cuid())
+  name        String
+  category    String   // "STARTUP" | "HUB" | "LAB"
+  location    String   // e.g. "Abeokuta", "Sagamu", "Ilaro"
+  focus       String
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("ecosystem_nodes")
+}
+
