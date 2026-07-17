@@ -1,21 +1,30 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 
 export const DEFAULT_CATEGORIES = [
-  { name: 'Startups', slug: 'startups', color: '#10B981', description: 'Spotlight on startups and ventures' },
-  { name: 'Funding', slug: 'funding', color: '#059669', description: 'Investments and VC updates' },
-  { name: 'News', slug: 'news', color: '#EF4444', description: 'Breaking news and general updates' },
-  { name: 'Tools', slug: 'tools', color: '#3B82F6', description: 'Libraries, code assets, and platforms' },
-  { name: 'People', slug: 'people', color: '#8B5CF6', description: 'Profiles and interviews of prominent figures' },
-  { name: 'Policy', slug: 'policy', color: '#D97706', description: 'Government roadmaps and regulations' },
-  { name: 'Research', slug: 'research', color: '#DB2777', description: 'Academic papers and ML breakthroughs' },
+  { name: 'Startups',  slug: 'startups',  color: '#10B981', description: 'Spotlight on startups and ventures' },
+  { name: 'Funding',   slug: 'funding',   color: '#059669', description: 'Investments and VC updates' },
+  { name: 'News',      slug: 'news',      color: '#EF4444', description: 'Breaking news and general updates' },
+  { name: 'Tools',     slug: 'tools',     color: '#3B82F6', description: 'Libraries, code assets, and platforms' },
+  { name: 'People',    slug: 'people',    color: '#8B5CF6', description: 'Profiles and interviews of prominent figures' },
+  { name: 'Policy',    slug: 'policy',    color: '#D97706', description: 'Government roadmaps and regulations' },
+  { name: 'Research',  slug: 'research',  color: '#DB2777', description: 'Academic papers and ML breakthroughs' },
   { name: 'Ecosystem', slug: 'ecosystem', color: '#C84B31', description: 'Tech hubs, clusters and networking' },
-  { name: 'Events', slug: 'events', color: '#0891B2', description: 'tech summits, meetups and hackathons' },
-  { name: 'Profiles', slug: 'profiles', color: '#7C3AED', description: 'Founder and builder spotlights' },
-  { name: 'Health', slug: 'health', color: '#2563EB', description: 'HealthTech and digital health innovations' },
+  { name: 'Events',    slug: 'events',    color: '#0891B2', description: 'tech summits, meetups and hackathons' },
+  { name: 'Profiles',  slug: 'profiles',  color: '#7C3AED', description: 'Founder and builder spotlights' },
+  { name: 'Health',    slug: 'health',    color: '#2563EB', description: 'HealthTech and digital health innovations' },
   { name: 'Interview', slug: 'interview', color: '#4F46E5', description: 'Exclusive executive interviews' },
 ];
+
+/**
+ * Slugs that are tied to frontend routes and cannot be deleted or have
+ * their slug renamed via the API. Display names and colours can still be
+ * changed freely.
+ */
+export const SYSTEM_CATEGORY_SLUGS = new Set(
+  DEFAULT_CATEGORIES.map((c) => c.slug),
+);
 
 @Injectable()
 export class CategoriesService {
@@ -53,12 +62,24 @@ export class CategoriesService {
   }
 
   async update(id: string, dto: UpdateCategoryDto) {
-    await this.findById(id);
+    const existing = await this.findById(id);
+    // Block slug changes on system-critical categories so frontend routes stay stable.
+    if (dto.slug && dto.slug !== existing.slug && SYSTEM_CATEGORY_SLUGS.has(existing.slug)) {
+      throw new ForbiddenException(
+        `Cannot change the slug of system category "${existing.slug}". You may still update its name or colour.`,
+      );
+    }
     return this.prisma.category.update({ where: { id }, data: dto });
   }
 
   async remove(id: string) {
-    await this.findById(id);
+    const existing = await this.findById(id);
+    // Block deletion of system-critical categories so core content is never orphaned.
+    if (SYSTEM_CATEGORY_SLUGS.has(existing.slug)) {
+      throw new ForbiddenException(
+        `Cannot delete system category "${existing.slug}". It is required by the platform.`,
+      );
+    }
     await this.prisma.category.delete({ where: { id } });
     return { message: 'Category deleted' };
   }
