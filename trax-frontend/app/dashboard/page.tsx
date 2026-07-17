@@ -28,6 +28,7 @@ import {
   ChevronRight,
   Building2,
   ExternalLink,
+  Map as MapIcon,
 } from 'lucide-react';
 import { api, fetchApi, BASE_URL, getApiHealth } from '@/lib/api';
 import Image from 'next/image';
@@ -2632,7 +2633,7 @@ export default function DashboardPage() {
                                     className="w-12 h-12 rounded-full flex items-center justify-center"
                                     style={{ backgroundColor: 'rgba(255, 26, 26, 0.08)', border: '1px solid rgba(255, 26, 26, 0.15)' }}
                                   >
-                                    <Map className="h-5 w-5 text-red-600" />
+                                    <MapIcon className="h-5 w-5 text-red-600" />
                                   </div>
                                   <p className="text-sm font-semibold" style={{ color: 'var(--dash-fg)' }}>No listings found</p>
                                   <p className="text-xs" style={{ color: 'var(--dash-fg-subtle)' }}>Try a different search query or add a new entry</p>
