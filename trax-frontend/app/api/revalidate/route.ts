@@ -16,18 +16,18 @@ export async function POST(request: NextRequest) {
 
   try {
     if (tag) {
-      revalidateTag(tag)
+      await revalidateTag(tag, 'max')
       console.log(`[Revalidation] Purged cache tag: ${tag}`)
     }
     if (path) {
-      revalidatePath(path)
+      await revalidatePath(path)
       console.log(`[Revalidation] Purged cache path: ${path}`)
     }
 
     // Default fallback if nothing specified: revalidate everything under home
     if (!tag && !path) {
-      revalidateTag('articles')
-      revalidatePath('/')
+      await revalidateTag('articles', 'max')
+      await revalidatePath('/')
       console.log('[Revalidation] Purged default cache (articles tag, root path)')
     }
 
