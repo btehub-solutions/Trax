@@ -33,6 +33,9 @@ export async function generateMetadata({
     if (token) {
       article = await fetchDraftArticleBySlug(slug, token)
     }
+    if (!article) {
+      article = await fetchArticleBySlug(slug)
+    }
   } else {
     article = await fetchArticleBySlug(slug)
   }
@@ -65,6 +68,9 @@ export default async function ArticlePage({
     const token = cookieStore.get('token')?.value
     if (token) {
       article = await fetchDraftArticleBySlug(slug, token)
+    }
+    if (!article) {
+      article = await fetchArticleBySlug(slug)
     }
   } else {
     article = await fetchArticleBySlug(slug)

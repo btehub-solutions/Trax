@@ -1179,10 +1179,13 @@ export default function DashboardPage() {
                                     </button>
                                   )}
                                   <Link
-                                    href={`/articles/${article.slug}?preview=true`}
+                                    href={article.status === 'PUBLISHED'
+                                      ? `/articles/${article.slug}`
+                                      : `/articles/${article.slug}?preview=true`
+                                    }
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    title="Preview Article"
+                                    title={article.status === 'PUBLISHED' ? "View Published Article" : "Preview Draft"}
                                     className="p-2 rounded-lg transition-all border inline-flex items-center"
                                     style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
                                   >
@@ -1577,7 +1580,7 @@ export default function DashboardPage() {
                               href={`/articles/${formData.slug}?preview=true`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all text-sm font-semibold border"
+                              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all text-sm font-semibold border whitespace-nowrap"
                               style={{ borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
                             >
                               <Eye className="h-4 w-4" />
@@ -1587,7 +1590,7 @@ export default function DashboardPage() {
                           <button
                             type="submit"
                             disabled={saving}
-                            className="flex-1 bg-red-600 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2"
+                            className="flex-1 bg-red-600 hover:bg-red-600 text-white font-semibold py-3 rounded-xl transition-all disabled:opacity-50 text-sm flex items-center justify-center gap-2 whitespace-nowrap"
                           >
                             {saving ? (
                               <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
