@@ -10,10 +10,10 @@ export const revalidate = 60
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>
+  searchParams?: Promise<{ q?: string }>
 }): Promise<Metadata> {
-  const { q: rawQ } = await searchParams
-  const q = rawQ?.trim() ?? ''
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const q = resolvedSearchParams.q?.trim() ?? ''
   return pageMetadata({
     title: q ? `Search results for "${q}"` : 'Search',
     description: q
@@ -26,10 +26,10 @@ export async function generateMetadata({
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>
+  searchParams?: Promise<{ q?: string }>
 }) {
-  const { q: rawQ } = await searchParams
-  const q = (rawQ ?? '').trim().toLowerCase()
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const q = (resolvedSearchParams.q ?? '').trim().toLowerCase()
 
   // Fetch all articles from the DB (falls back to demo articles automatically)
   const all = await getDbArticles()

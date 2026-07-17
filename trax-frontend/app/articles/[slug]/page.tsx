@@ -20,11 +20,11 @@ export async function generateMetadata({
   searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<{ preview?: string }>
+  searchParams?: Promise<{ preview?: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const { preview } = await searchParams
-  const isPreview = preview === 'true'
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const isPreview = resolvedSearchParams.preview === 'true'
 
   let article: Article | null = null
   if (isPreview) {
@@ -53,11 +53,11 @@ export default async function ArticlePage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>
-  searchParams: Promise<{ preview?: string }>
+  searchParams?: Promise<{ preview?: string }>
 }) {
   const { slug } = await params
-  const { preview } = await searchParams
-  const isPreview = preview === 'true'
+  const resolvedSearchParams = searchParams ? await searchParams : {}
+  const isPreview = resolvedSearchParams.preview === 'true'
 
   let article: Article | null = null
   if (isPreview) {
