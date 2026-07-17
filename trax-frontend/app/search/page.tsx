@@ -7,12 +7,13 @@ import SectionMarker from '@/design-system/components/SectionMarker'
 
 export const revalidate = 60
 
-export function generateMetadata({
+export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: { q?: string }
-}): Metadata {
-  const q = searchParams.q?.trim() ?? ''
+  searchParams: Promise<{ q?: string }>
+}): Promise<Metadata> {
+  const { q: rawQ } = await searchParams
+  const q = rawQ?.trim() ?? ''
   return pageMetadata({
     title: q ? `Search results for "${q}"` : 'Search',
     description: q
@@ -25,9 +26,10 @@ export function generateMetadata({
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: { q?: string }
+  searchParams: Promise<{ q?: string }>
 }) {
-  const q = (searchParams.q ?? '').trim().toLowerCase()
+  const { q: rawQ } = await searchParams
+  const q = (rawQ ?? '').trim().toLowerCase()
 
   // Fetch all articles from the DB (falls back to demo articles automatically)
   const all = await getDbArticles()
