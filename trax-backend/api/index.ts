@@ -18,6 +18,16 @@ async function bootstrapServer() {
 }
 
 export default async (req: any, res: any) => {
-  await bootstrapServer();
-  return server(req, res);
+  try {
+    await bootstrapServer();
+    return server(req, res);
+  } catch (err: any) {
+    console.error('Initialization error caught in Vercel handler:', err);
+    res.status(500).json({
+      error: 'Initialization Error',
+      message: err.message,
+      stack: err.stack,
+    });
+  }
 };
+
