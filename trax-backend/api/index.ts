@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../dist/src/app.module';
-import { configureApp } from '../dist/src/app.bootstrap';
+import { AppModule } from '../src/app.module';
+import { configureApp } from '../src/app.bootstrap';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 
