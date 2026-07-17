@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Clock, Bookmark, Share2, Link2, Check } from 'lucide-react'
+import { Clock, Bookmark, Share2, Link2, Check, Eye } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import type { Article } from '@/lib/articles'
 import AdSlot from '@/components/AdSlot'
@@ -73,6 +73,7 @@ interface ArticleReaderProps {
   related: Article[]
   prev: Article | null
   next: Article | null
+  isPreview?: boolean
 }
 
 function ArticlePagerLink({
@@ -99,7 +100,7 @@ function ArticlePagerLink({
   )
 }
 
-export default function ArticleReader({ article, related, prev, next }: ArticleReaderProps) {
+export default function ArticleReader({ article, related, prev, next, isPreview }: ArticleReaderProps) {
   const [bookmarked, setBookmarked] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -138,6 +139,19 @@ export default function ArticleReader({ article, related, prev, next }: ArticleR
       animate="visible"
       className="ds-article-reader"
     >
+      {isPreview && (
+        <div 
+          className="sticky top-0 z-50 py-3 px-4 text-center text-sm font-semibold tracking-wide uppercase select-none shadow-md flex items-center justify-center gap-2 border-b font-ui"
+          style={{ 
+            backgroundColor: '#E7040D', 
+            color: '#ffffff',
+            borderColor: 'rgba(255, 255, 255, 0.1)'
+          }}
+        >
+          <Eye size={16} className="animate-pulse" />
+          Draft Preview Mode — This article is not yet published
+        </div>
+      )}
       <div className="ds-article-reader__toolbar">
         <div className="container ds-article-reader__toolbar-inner">
           <Link href={categoryHref} className="ds-article-reader__back">

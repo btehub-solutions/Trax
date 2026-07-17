@@ -44,7 +44,17 @@ export class ArticlesController {
   @ApiOperation({ summary: 'Get a single article by slug' })
   @ApiResponse({ status: 404, description: 'Article not found' })
   findBySlug(@Param('slug') slug: string) {
-    return this.articlesService.findBySlug(slug);
+    return this.articlesService.findBySlug(slug, false);
+  }
+
+  @Get(':slug/preview')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('ADMIN', 'EDITOR', 'WRITER')
+  @ApiBearerAuth('access-token')
+  @ApiOperation({ summary: 'Get a single article for preview (draft or published)' })
+  @ApiResponse({ status: 404, description: 'Article not found' })
+  findPreviewBySlug(@Param('slug') slug: string) {
+    return this.articlesService.findBySlug(slug, true);
   }
 
   // ── Authenticated ─────────────────────────────────────────────────────────

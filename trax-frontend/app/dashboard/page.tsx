@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Newspaper,
@@ -357,6 +358,7 @@ export default function DashboardPage() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    document.cookie = 'token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
     router.push('/login');
   };
 
@@ -1176,6 +1178,16 @@ export default function DashboardPage() {
                                       <CheckCircle className="h-4 w-4" />
                                     </button>
                                   )}
+                                  <Link
+                                    href={`/articles/${article.slug}?preview=true`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title="Preview Article"
+                                    className="p-2 rounded-lg transition-all border inline-flex items-center"
+                                    style={{ backgroundColor: 'var(--dash-card)', borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
+                                  >
+                                    <Eye className="h-4 w-4" />
+                                  </Link>
                                   <button
                                     onClick={() => handleEditArticleClick(article)}
                                     title="Edit Article"
@@ -1551,7 +1563,7 @@ export default function DashboardPage() {
                           </div>
                         </div>
 
-                        <div className="flex gap-3 pt-4">
+                        <div className="flex gap-3 pt-4 flex-wrap">
                           <button
                             type="button"
                             onClick={() => { resetEditorForm(); setActiveTab('articles'); }}
@@ -1560,6 +1572,18 @@ export default function DashboardPage() {
                           >
                             Cancel
                           </button>
+                          {formData.slug && (
+                            <a
+                              href={`/articles/${formData.slug}?preview=true`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl transition-all text-sm font-semibold border"
+                              style={{ borderColor: 'var(--dash-card-border)', color: 'var(--dash-fg-secondary)' }}
+                            >
+                              <Eye className="h-4 w-4" />
+                              Preview Draft
+                            </a>
+                          )}
                           <button
                             type="submit"
                             disabled={saving}

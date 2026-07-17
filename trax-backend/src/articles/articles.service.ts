@@ -87,12 +87,15 @@ export class ArticlesService {
     };
   }
 
-  async findBySlug(slug: string) {
+  async findBySlug(slug: string, isPreview = false) {
     const article = await this.prisma.article.findUnique({
       where: { slug },
       include: this.include,
     });
     if (!article) throw new NotFoundException(`Article "${slug}" not found`);
+    if (article.status !== ArticleStatus.PUBLISHED && !isPreview) {
+      throw new NotFoundException(`Article "${slug}" not found`);
+    }
     return article;
   }
 

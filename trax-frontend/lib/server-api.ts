@@ -122,6 +122,22 @@ export const fetchArticleBySlug = cache(async (slug: string): Promise<Article | 
   return mockArticles.find((a) => a.slug === slug) ?? null
 })
 
+export const fetchDraftArticleBySlug = async (slug: string, token: string): Promise<Article | null> => {
+  try {
+    const res = await fetch(`${BASE_URL}/articles/${slug}/preview`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      cache: 'no-store'
+    })
+    if (!res.ok) return null
+    const article = await res.json()
+    return mapApiArticle(article)
+  } catch {
+    return null
+  }
+}
+
 export const fetchPressArticles = cache(async (limit = 6): Promise<{
   articles: PressArticle[]
   isDemo: boolean
