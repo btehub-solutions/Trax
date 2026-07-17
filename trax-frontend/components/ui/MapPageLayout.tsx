@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import PlatformPageShell from '@/components/ui/PlatformPageShell'
 import PlatformPageIntro from '@/components/ui/PlatformPageIntro'
 import { useNewsletterSubscribe } from '@/components/newsletter/NewsletterSubscribeFields'
@@ -21,6 +22,84 @@ const tabs: { id: Tab; label: string }[] = [
   { id: 'labs', label: 'Academic & labs' },
 ]
 
+// ── Directory data ────────────────────────────────────────────────────────────
+// Add new entries here. Each entry appears as a card under its tab.
+
+interface DirectoryEntry {
+  name: string
+  location: string
+  focus: string
+  website?: string
+}
+
+const DIRECTORY: Record<Tab, DirectoryEntry[]> = {
+  startups: [
+    {
+      name: 'Vnicom Solutions (Turnify)',
+      location: 'Abeokuta',
+      focus: 'HealthTech — clinician workflow & digital health platform',
+      website: 'https://turnify.ng',
+    },
+    {
+      name: 'Vant',
+      location: 'Ogun State',
+      focus: 'InsurTech — climate insurance and underwriting for cooperatives',
+    },
+    {
+      name: 'CheckWatt',
+      location: 'Sagamu',
+      focus: 'FinTech — electricity payment verification API for discos',
+    },
+    {
+      name: 'Gafrotech Hub',
+      location: 'Ilaro',
+      focus: 'GreenTech — compostable agro-waste packaging for e-commerce',
+    },
+    {
+      name: 'N.E.Y.I Techpreneurship Hub',
+      location: 'Ogun State',
+      focus: 'EdTech & incubation — startup acceleration and digital skills',
+    },
+  ],
+  hubs: [
+    {
+      name: 'N.E.Y.I Techpreneurship Hub',
+      location: 'Ogun State',
+      focus: 'Startup incubator — programmes, funding access, mentorship',
+    },
+    {
+      name: 'Ogun State Deep-Tech Incubator',
+      location: 'Abeokuta',
+      focus: 'Hardware & climate founders — 120-desk co-working facility',
+    },
+    {
+      name: 'IGA Youth Skills Centre',
+      location: 'Abeokuta',
+      focus: 'Digital skills — product, data, and engineering placements',
+    },
+  ],
+  labs: [
+    {
+      name: 'Federal University of Agriculture, Abeokuta (FUNAAB)',
+      location: 'Abeokuta',
+      focus: 'AgriTech, biotechnology, and applied computer science research',
+      website: 'https://funaab.edu.ng',
+    },
+    {
+      name: 'Olabisi Onabanjo University (OOU)',
+      location: 'Ago-Iwoye',
+      focus: 'Engineering, ICT, and health informatics research',
+      website: 'https://oouagoiwoye.edu.ng',
+    },
+    {
+      name: 'Moshood Abiola Polytechnic (MAPOLY)',
+      location: 'Ojere, Abeokuta',
+      focus: 'Applied technology, electronics, and software engineering',
+      website: 'https://mapoly.edu.ng',
+    },
+  ],
+}
+
 export default function MapPageLayout() {
   const [activeTab, setActiveTab] = useState<Tab>('startups')
   const {
@@ -35,6 +114,7 @@ export default function MapPageLayout() {
   } = useNewsletterSubscribe()
 
   const activeLabel = tabs.find((t) => t.id === activeTab)?.label ?? 'Startups'
+  const entries = DIRECTORY[activeTab]
 
   const switchTab = (tab: Tab) => {
     setActiveTab(tab)
@@ -51,6 +131,7 @@ export default function MapPageLayout() {
 
       <SectionBand variant="tint">
         <div className="container">
+          {/* Tab filter */}
           <div
             className="ds-category-filters"
             role="tablist"
@@ -70,63 +151,85 @@ export default function MapPageLayout() {
             ))}
           </div>
 
-          <div className="ds-premium-panel ds-platform-coming-soon">
-            <div className="ds-platform-coming-soon__copy">
-              <span className="ds-platform-coming-soon__status">
-                <Icon name="clock" size="xs" aria-hidden />
-                Directory in progress
-              </span>
-              <h2 className="ds-platform-coming-soon__title">
-                Mapping the {activeLabel.toLowerCase()} ecosystem
-              </h2>
-              <p className="type-excerpt">
-                We are verifying and onboarding tech nodes across Yewa, Ijebu, and Abeokuta to
-                build a comprehensive directory of Ogun State&apos;s digital infrastructure.
-              </p>
-            </div>
+          {/* Directory cards */}
+          <div
+            className="ds-platform-lineup"
+            role="tabpanel"
+            aria-label={activeLabel}
+          >
+            {entries.map((entry) => (
+              <div key={entry.name} className="ds-premium-panel">
+                <p className="ds-category-label">{entry.location}</p>
+                <h3 className="ds-platform-lineup__title">{entry.name}</h3>
+                <p className="type-excerpt">{entry.focus}</p>
+                {entry.website && (
+                  <Link
+                    href={entry.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ds-accent-link type-meta"
+                  >
+                    Visit website →
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
 
-            <div className="ds-platform-coming-soon__aside">
-              <p className="ds-premium-panel__title">Get directory alerts</p>
-              <p className="ds-premium-panel__desc">
-                Receive an update when we publish data for {activeLabel.toLowerCase()}.
-              </p>
+          {/* Alert to suggest additions */}
+          <p className="type-meta" style={{ marginTop: '1.5rem', color: 'var(--fg-muted)' }}>
+            Know a startup or hub we should add?{' '}
+            <Link href="/about#contact" className="ds-accent-link">
+              Let us know →
+            </Link>
+          </p>
+        </div>
+      </SectionBand>
 
-              {status === 'idle' ? (
-                <form onSubmit={handleSubmit} className="ds-platform-page__form">
-                  <label htmlFor="map-alerts-email" className="sr-only">
-                    Email address
-                  </label>
-                  <input
-                    id="map-alerts-email"
-                    type="email"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="you@company.com"
-                    className="ds-platform-page__input"
-                  />
-                  <MotionButton type="submit" variant="primary" disabled={loading} className="w-full">
-                    {loading ? 'Sending link…' : 'Notify me'}
-                  </MotionButton>
-                  {error && <p className="ds-platform-page__error">{error}</p>}
-                </form>
-              ) : (
-                <div className="ds-platform-page__success">
-                  <p className="ds-newsletter-card__success-title">
-                    {status === 'already' ? NEWSLETTER_ALREADY_TITLE : NEWSLETTER_PENDING_TITLE}
-                  </p>
-                  <p className="type-meta">
-                    {status === 'already'
-                      ? NEWSLETTER_ALREADY_TEXT
-                      : message || NEWSLETTER_PENDING_TEXT}
-                  </p>
-                </div>
-              )}
-            </div>
+      {/* Newsletter signup — kept exactly as before */}
+      <SectionBand variant="default">
+        <div className="container">
+          <SectionMarker
+            title="Get directory alerts"
+            subtitle="Receive an update when we add new listings"
+          />
+          <div className="ds-platform-coming-soon__aside">
+            {status === 'idle' ? (
+              <form onSubmit={handleSubmit} className="ds-platform-page__form">
+                <label htmlFor="map-alerts-email" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  id="map-alerts-email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  className="ds-platform-page__input"
+                />
+                <MotionButton type="submit" variant="primary" disabled={loading} className="w-full">
+                  {loading ? 'Sending link…' : 'Notify me'}
+                </MotionButton>
+                {error && <p className="ds-platform-page__error">{error}</p>}
+              </form>
+            ) : (
+              <div className="ds-platform-page__success">
+                <p className="ds-newsletter-card__success-title">
+                  {status === 'already' ? NEWSLETTER_ALREADY_TITLE : NEWSLETTER_PENDING_TITLE}
+                </p>
+                <p className="type-meta">
+                  {status === 'already'
+                    ? NEWSLETTER_ALREADY_TEXT
+                    : message || NEWSLETTER_PENDING_TEXT}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </SectionBand>
 
+      {/* What we track — kept exactly as before */}
       <SectionBand variant="default">
         <div className="container">
           <SectionMarker
