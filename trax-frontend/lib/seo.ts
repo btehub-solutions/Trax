@@ -181,6 +181,7 @@ export function articleJsonLd(article: {
         'https://x.com/traxnewsng',
         'https://www.instagram.com/traxnewsng',
         'https://youtube.com/@traxnewsng',
+        'https://www.linkedin.com/in/traxnewsng',
       ],
     },
     mainEntityOfPage: {
@@ -205,6 +206,7 @@ export function organizationJsonLd() {
       'https://x.com/traxnewsng',
       'https://www.instagram.com/traxnewsng',
       'https://youtube.com/@traxnewsng',
+      'https://www.linkedin.com/in/traxnewsng',
     ],
     description: siteConfig.description,
     email: 'traxnewsng@gmail.com',

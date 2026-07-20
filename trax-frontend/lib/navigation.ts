@@ -138,7 +138,7 @@ export const menuGroups: MenuGroup[] = [
 
 export const menuSocials = [
   { label: 'X (Twitter)', href: 'https://x.com/traxnewsng?s=11', placeholder: false },
-  { label: 'LinkedIn', href: 'https://linkedin.com', placeholder: true },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/traxnewsng', placeholder: false },
   { label: 'Instagram', href: 'https://www.instagram.com/traxnewsng?igsh=NmtzZm9idDhud294', placeholder: false },
   { label: 'YouTube', href: 'https://youtube.com/@traxnewsng?si=bcx4_kSXz9ZRAH-p', placeholder: false },
 ] as const

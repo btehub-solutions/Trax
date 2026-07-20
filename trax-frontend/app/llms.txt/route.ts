@@ -36,6 +36,7 @@ Trax is the premier tech media newsroom and ecosystem tracking platform for Ogun
 - **Official Contact**: traxnewsng@gmail.com
 - **Official Social Channels**:
   - X (Twitter): https://x.com/traxnewsng
+  - LinkedIn: https://www.linkedin.com/in/traxnewsng
   - Instagram: https://www.instagram.com/traxnewsng
   - YouTube: https://youtube.com/@traxnewsng
 

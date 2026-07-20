@@ -32,6 +32,7 @@ This document provides a comprehensive textual index of Trax's coverage of Ogun 
 - **Editorial Email**: traxnewsng@gmail.com
 - **Verified Social Media**:
   - X (Twitter): https://x.com/traxnewsng
+  - LinkedIn: https://www.linkedin.com/in/traxnewsng
   - Instagram: https://www.instagram.com/traxnewsng
   - YouTube: https://youtube.com/@traxnewsng
 
