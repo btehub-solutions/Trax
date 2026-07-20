@@ -4,7 +4,7 @@ import { useState, type ReactNode } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MotionButton } from '@/design-system/components'
-import { primaryNav } from '@/lib/navigation'
+import { primaryNav, menuSocials } from '@/lib/navigation'
 import {
   NEWSLETTER_ALREADY_TEXT,
   NEWSLETTER_ALREADY_TITLE,
@@ -26,29 +26,6 @@ const resourceLinks = [
   { label: 'Press Room', href: '/press' },
   { label: 'Funding DB', href: '/funding' },
   { label: 'Newsletter', href: '/#newsletter' },
-]
-
-const socials = [
-  {
-    label: 'X (Twitter)',
-    href: 'https://x.com/traxnewsng?s=11',
-    placeholder: false,
-  },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com',
-    placeholder: true,
-  },
-  {
-    label: 'Instagram',
-    href: 'https://instagram.com',
-    placeholder: true,
-  },
-  {
-    label: 'YouTube',
-    href: 'https://youtube.com',
-    placeholder: true,
-  },
 ]
 
 function FooterColumn({
@@ -199,7 +176,7 @@ export default function Footer() {
             </ul>
 
             <ul className="ds-footer-social" aria-label="Social media">
-              {socials.map(({ label, href, placeholder }) => (
+              {menuSocials.map(({ label, href, placeholder }) => (
                 <li key={label}>
                   <a
                     href={href}

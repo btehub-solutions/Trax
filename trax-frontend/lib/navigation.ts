@@ -139,8 +139,8 @@ export const menuGroups: MenuGroup[] = [
 export const menuSocials = [
   { label: 'X (Twitter)', href: 'https://x.com/traxnewsng?s=11', placeholder: false },
   { label: 'LinkedIn', href: 'https://linkedin.com', placeholder: true },
-  { label: 'Instagram', href: 'https://instagram.com', placeholder: true },
-  { label: 'YouTube', href: 'https://youtube.com', placeholder: true },
+  { label: 'Instagram', href: 'https://www.instagram.com/traxnewsng?igsh=NmtzZm9idDhud294', placeholder: false },
+  { label: 'YouTube', href: 'https://youtube.com/@traxnewsng?si=bcx4_kSXz9ZRAH-p', placeholder: false },
 ] as const
 
 export function resolveCategoryHref(category: string): string {

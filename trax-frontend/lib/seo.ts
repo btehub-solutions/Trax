@@ -156,7 +156,11 @@ export function organizationJsonLd() {
     name: siteConfig.name,
     url: siteConfig.url,
     logo: `${siteConfig.url}/logo.svg`,
-    sameAs: ['https://x.com/traxnewsng'],
+    sameAs: [
+      'https://x.com/traxnewsng',
+      'https://www.instagram.com/traxnewsng',
+      'https://youtube.com/@traxnewsng',
+    ],
     description: siteConfig.description,
   }
 }
