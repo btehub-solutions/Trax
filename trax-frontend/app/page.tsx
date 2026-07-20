@@ -1,6 +1,7 @@
 import HomeHero from '@/components/ui/HomeHero'
 import LatestStoriesHero from '@/components/ui/LatestStoriesHero'
 import ArticleGrid from '@/components/ui/ArticleGrid'
+import FundingWatchStrip from '@/components/ui/FundingWatchStrip'
 import NewsletterSection from '@/components/ui/NewsletterSection'
 import PressRoomSection from '@/components/ui/PressRoomSection'
 import { SectionBand } from '@/design-system/components'
@@ -43,6 +44,10 @@ export default async function HomePage() {
         </SectionBand>
 
         <SectionBand variant="tint">
+          <FundingWatchStrip articles={allArticles} />
+        </SectionBand>
+
+        <SectionBand variant="default">
           <PressRoomSection articles={press.articles} isDemo={press.isDemo} />
         </SectionBand>
 

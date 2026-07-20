@@ -1,10 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import Card from '@/components/ui/Card'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import type { Article } from '@/lib/articles'
 import SectionMarker from '@/design-system/components/SectionMarker'
+import { MotionButton } from '@/design-system/components'
 import { Icon } from '@/design-system/icons'
 import {
   staggerSection,
@@ -28,8 +30,15 @@ export default function LatestStoriesHero({
   articles = [],
   isPreview = false,
 }: LatestStoriesHeroProps) {
-  const feedArticles = articles.slice(0, 4).filter(Boolean)
-  const pulse = articles.slice(4, 8).filter(Boolean)
+  const [visibleCount, setVisibleCount] = useState(4)
+
+  const availableArticles = articles.filter(Boolean)
+  const feedArticles = availableArticles.slice(0, visibleCount)
+  const pulse = availableArticles.slice(visibleCount, visibleCount + 4).length > 0 
+    ? availableArticles.slice(visibleCount, visibleCount + 4) 
+    : availableArticles.slice(0, 4)
+  const hasMore = visibleCount + 4 <= availableArticles.length
+
   const container = useMotionVariants(staggerSection, 'staggerSection')
   const itemSoft = useMotionVariants(fadeUpSoft, 'fadeUpSoft')
 
@@ -64,6 +73,19 @@ export default function LatestStoriesHero({
                   staggered
                 />
               ))}
+
+              {hasMore && (
+                <div className="pt-2 flex justify-center">
+                  <MotionButton
+                    type="button"
+                    variant="outline"
+                    onClick={() => setVisibleCount((prev) => prev + 4)}
+                    className="w-full sm:w-auto text-sm"
+                  >
+                    Load More Stories
+                  </MotionButton>
+                </div>
+              )}
             </div>
 
             <motion.aside variants={itemSoft} className="ds-home-feed__sidebar">
