@@ -16,13 +16,23 @@ interface FundingWatchStripProps {
 export default function FundingWatchStrip({ articles }: FundingWatchStripProps) {
   const grid = useMotionVariants(staggerGrid, 'staggerGrid')
 
-  // Filter for funding articles, fallback to general articles if fewer than 4 funding stories
-  const fundingArticles = articles.filter(
-    (a) => a.category.toLowerCase() === 'funding' || a.category.toLowerCase() === 'venture'
-  )
-  const displayArticles = (fundingArticles.length >= 4 ? fundingArticles : articles).slice(0, 4)
+  // Strictly filter for funding & venture deal stories only
+  const displayArticles = articles
+    .filter(
+      (a) => a.category.toLowerCase() === 'funding' || a.category.toLowerCase() === 'venture'
+    )
+    .slice(0, 4)
 
   if (displayArticles.length === 0) return null
+
+  const gridColsClass =
+    displayArticles.length === 1
+      ? 'grid grid-cols-1 max-w-md gap-5'
+      : displayArticles.length === 2
+      ? 'grid grid-cols-1 sm:grid-cols-2 max-w-2xl gap-5'
+      : displayArticles.length === 3
+      ? 'grid grid-cols-1 sm:grid-cols-3 gap-5'
+      : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5'
 
   return (
     <div className="container ds-funding-watch-strip">
@@ -43,7 +53,7 @@ export default function FundingWatchStrip({ articles }: FundingWatchStripProps) 
         initial="hidden"
         whileInView="visible"
         viewport={viewportGrid}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+        className={gridColsClass}
       >
         {displayArticles.map((article, index) => (
           <Card key={article.id} article={article} index={index} staggered />
