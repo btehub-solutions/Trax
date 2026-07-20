@@ -10,7 +10,8 @@ import {
   getAdjacentArticles,
   getRelatedArticles,
 } from '@/lib/server-api'
-import { articleJsonLd, pageMetadata } from '@/lib/seo'
+import { articleJsonLd, breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { resolveCategoryHref } from '@/lib/navigation'
 import type { Article } from '@/lib/articles'
 
 export const revalidate = 60
@@ -85,7 +86,8 @@ export default async function ArticlePage({
   return (
     <>
       <JsonLd
-          data={articleJsonLd({
+        data={[
+          articleJsonLd({
             title: article.title,
             excerpt: article.excerpt,
             slug: article.slug,
@@ -94,7 +96,13 @@ export default async function ArticlePage({
             publishedAt: article.publishedAt,
             author: article.author,
             category: article.category,
-          })}
+          }),
+          breadcrumbJsonLd([
+            { name: 'Home', url: '/' },
+            { name: article.category, url: resolveCategoryHref(article.category) },
+            { name: article.title, url: `/articles/${article.slug}` },
+          ]),
+        ]}
       />
       <ArticleReader 
         article={article} 

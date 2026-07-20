@@ -27,6 +27,9 @@ const STATIC_ROUTES = [
   '/privacy',
   '/terms',
   '/cookies',
+  '/feed.xml',
+  '/llms.txt',
+  '/llms-full.txt',
 ] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

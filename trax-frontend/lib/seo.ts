@@ -32,10 +32,12 @@ export const defaultMetadata: Metadata = {
     'Southwest Nigeria tech',
     'Nigeria tech media',
     'Ogun ecosystem',
+    'African tech news',
+    'Trax newsroom',
   ],
-  authors: [{ name: 'Trax', url: siteConfig.url }],
-  creator: 'Trax',
-  publisher: 'Trax',
+  authors: [{ name: 'Trax Editorial Team', url: siteConfig.url }],
+  creator: 'Trax Media Ltd',
+  publisher: 'Trax Media Ltd',
   robots: {
     index: true,
     follow: true,
@@ -49,6 +51,9 @@ export const defaultMetadata: Metadata = {
   },
   alternates: {
     canonical: '/',
+    types: {
+      'application/rss+xml': `${siteConfig.url}/feed.xml`,
+    },
   },
   openGraph: {
     type: 'website',
@@ -94,7 +99,12 @@ export function pageMetadata({
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: {
+      canonical: path,
+      types: {
+        'application/rss+xml': `${siteConfig.url}/feed.xml`,
+      },
+    },
     openGraph: {
       type,
       locale: siteConfig.locale,
@@ -115,6 +125,19 @@ export function pageMetadata({
   }
 }
 
+export function breadcrumbJsonLd(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith('http') ? item.url : `${siteConfig.url}${item.url.startsWith('/') ? item.url : `/${item.url}`}`,
+    })),
+  }
+}
+
 export function articleJsonLd(article: {
   title: string
   excerpt: string
@@ -125,27 +148,49 @@ export function articleJsonLd(article: {
   author: string
   category: string
 }) {
+  const authorName = article.author || 'Trax Editorial Desk'
+  const pubDate = article.publishedAt || article.date
+
   return {
     '@context': 'https://schema.org',
     '@type': 'NewsArticle',
     headline: article.title,
     description: article.excerpt,
-    image: [article.image],
-    datePublished: article.publishedAt || article.date,
+    image: article.image ? [article.image] : [`${siteConfig.url}/opengraph-image`],
+    datePublished: pubDate,
+    dateModified: pubDate,
     author: {
       '@type': 'Person',
-      name: article.author,
+      name: authorName,
+      jobTitle: 'Technology Reporter',
+      worksFor: {
+        '@type': 'Organization',
+        name: siteConfig.name,
+        url: siteConfig.url,
+      },
     },
     publisher: {
       '@type': 'Organization',
       name: siteConfig.name,
       url: siteConfig.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteConfig.url}/logo.png`,
+      },
+      sameAs: [
+        'https://x.com/traxnewsng',
+        'https://www.instagram.com/traxnewsng',
+        'https://youtube.com/@traxnewsng',
+      ],
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `${siteConfig.url}/articles/${article.slug}`,
     },
     articleSection: article.category,
+    inLanguage: siteConfig.locale,
+    isAccessibleForFree: 'True',
+    publishingPrinciples: `${siteConfig.url}/about`,
   }
 }
 
@@ -155,13 +200,26 @@ export function organizationJsonLd() {
     '@type': 'NewsMediaOrganization',
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.svg`,
+    logo: `${siteConfig.url}/logo.png`,
     sameAs: [
       'https://x.com/traxnewsng',
       'https://www.instagram.com/traxnewsng',
       'https://youtube.com/@traxnewsng',
     ],
     description: siteConfig.description,
+    email: 'traxnewsng@gmail.com',
+    foundingLocation: {
+      '@type': 'Place',
+      name: 'Ogun State, Nigeria',
+    },
+    knowsAbout: [
+      'Ogun State Technology',
+      'Nigerian Startups',
+      'African Venture Capital',
+      'Tech Ecosystem Policy',
+      'Abeokuta Innovation Corridor',
+    ],
+    publishingPrinciples: `${siteConfig.url}/about`,
   }
 }
 
