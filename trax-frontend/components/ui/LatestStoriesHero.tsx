@@ -33,7 +33,8 @@ export default function LatestStoriesHero({
   const [visibleCount, setVisibleCount] = useState(4)
 
   const availableArticles = articles.filter(Boolean)
-  const feedArticles = availableArticles.slice(0, visibleCount)
+  const initialArticles = availableArticles.slice(0, 4)
+  const extraArticles = availableArticles.slice(4, visibleCount)
   const pulse = availableArticles.slice(0, 4)
   const hasMore = visibleCount < availableArticles.length
   const canShowLess = visibleCount > 4
@@ -46,7 +47,7 @@ export default function LatestStoriesHero({
   const container = useMotionVariants(staggerSection, 'staggerSection')
   const itemSoft = useMotionVariants(fadeUpSoft, 'fadeUpSoft')
 
-  if (feedArticles.length === 0 && pulse.length === 0) {
+  if (availableArticles.length === 0 && pulse.length === 0) {
     return null
   }
 
@@ -68,7 +69,7 @@ export default function LatestStoriesHero({
 
           <div className="ds-home-feed__grid">
             <div className="ds-home-feed__grid-list">
-              {feedArticles.map((article, i) => (
+              {initialArticles.map((article, i) => (
                 <Card
                   key={article.id}
                   article={article}
@@ -78,28 +79,16 @@ export default function LatestStoriesHero({
                 />
               ))}
 
-              {(hasMore || canShowLess) && (
-                <div className="pt-2 flex flex-wrap justify-center gap-3 col-span-full sm:col-span-2">
-                  {hasMore && (
-                    <MotionButton
-                      type="button"
-                      variant="outline"
-                      onClick={() => setVisibleCount((prev) => prev + 4)}
-                      className="w-full sm:w-auto text-sm"
-                    >
-                      Load More Stories
-                    </MotionButton>
-                  )}
-                  {canShowLess && (
-                    <MotionButton
-                      type="button"
-                      variant="ghost"
-                      onClick={handleShowLess}
-                      className="w-full sm:w-auto text-sm"
-                    >
-                      Show Less
-                    </MotionButton>
-                  )}
+              {!canShowLess && hasMore && (
+                <div className="pt-2 flex justify-center col-span-full sm:col-span-2">
+                  <MotionButton
+                    type="button"
+                    variant="outline"
+                    onClick={() => setVisibleCount((prev) => prev + 4)}
+                    className="w-full sm:w-auto text-sm"
+                  >
+                    Load More Stories
+                  </MotionButton>
                 </div>
               )}
             </div>
@@ -140,6 +129,45 @@ export default function LatestStoriesHero({
               </div>
             </motion.aside>
           </div>
+
+          {extraArticles.length > 0 && (
+            <div className="mt-8 lg:mt-12 pt-8 border-t border-[var(--neutral-border)]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+                {extraArticles.map((article, i) => (
+                  <Card
+                    key={article.id}
+                    article={article}
+                    variant="default"
+                    index={i}
+                    staggered={false}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {canShowLess && (
+            <div className="mt-8 pt-4 flex flex-wrap justify-center gap-3">
+              {hasMore && (
+                <MotionButton
+                  type="button"
+                  variant="outline"
+                  onClick={() => setVisibleCount((prev) => prev + 4)}
+                  className="w-full sm:w-auto text-sm"
+                >
+                  Load More Stories
+                </MotionButton>
+              )}
+              <MotionButton
+                type="button"
+                variant="ghost"
+                onClick={handleShowLess}
+                className="w-full sm:w-auto text-sm"
+              >
+                Show Less
+              </MotionButton>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
