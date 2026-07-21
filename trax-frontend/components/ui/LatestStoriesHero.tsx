@@ -34,10 +34,14 @@ export default function LatestStoriesHero({
 
   const availableArticles = articles.filter(Boolean)
   const feedArticles = availableArticles.slice(0, visibleCount)
-  const pulse = availableArticles.slice(visibleCount, visibleCount + 4).length > 0 
-    ? availableArticles.slice(visibleCount, visibleCount + 4) 
-    : availableArticles.slice(0, 4)
-  const hasMore = visibleCount + 4 <= availableArticles.length
+  const pulse = availableArticles.slice(0, 4)
+  const hasMore = visibleCount < availableArticles.length
+  const canShowLess = visibleCount > 4
+
+  const handleShowLess = () => {
+    setVisibleCount(4)
+    document.getElementById('more-stories')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const container = useMotionVariants(staggerSection, 'staggerSection')
   const itemSoft = useMotionVariants(fadeUpSoft, 'fadeUpSoft')
@@ -47,7 +51,7 @@ export default function LatestStoriesHero({
   }
 
   return (
-    <section className="ds-home-feed ds-premium-section" aria-label="More stories">
+    <section id="more-stories" className="ds-home-feed ds-premium-section" aria-label="More stories">
       <div className="container">
         <motion.div
           initial="hidden"
@@ -70,20 +74,32 @@ export default function LatestStoriesHero({
                   article={article}
                   variant="default"
                   index={i}
-                  staggered
+                  staggered={false}
                 />
               ))}
 
-              {hasMore && (
-                <div className="pt-2 flex justify-center">
-                  <MotionButton
-                    type="button"
-                    variant="outline"
-                    onClick={() => setVisibleCount((prev) => prev + 4)}
-                    className="w-full sm:w-auto text-sm"
-                  >
-                    Load More Stories
-                  </MotionButton>
+              {(hasMore || canShowLess) && (
+                <div className="pt-2 flex flex-wrap justify-center gap-3 col-span-full sm:col-span-2">
+                  {hasMore && (
+                    <MotionButton
+                      type="button"
+                      variant="outline"
+                      onClick={() => setVisibleCount((prev) => prev + 4)}
+                      className="w-full sm:w-auto text-sm"
+                    >
+                      Load More Stories
+                    </MotionButton>
+                  )}
+                  {canShowLess && (
+                    <MotionButton
+                      type="button"
+                      variant="ghost"
+                      onClick={handleShowLess}
+                      className="w-full sm:w-auto text-sm"
+                    >
+                      Show Less
+                    </MotionButton>
+                  )}
                 </div>
               )}
             </div>

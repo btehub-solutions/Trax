@@ -136,7 +136,7 @@ export default function Card({
       initial={staggered ? undefined : { opacity: 0, y: 24 }}
       whileInView={staggered ? undefined : { opacity: 1, y: 0 }}
       viewport={staggered ? undefined : viewportGrid}
-      transition={staggered ? undefined : { ...transitionEditorial, delay: index * 0.07 }}
+      transition={staggered ? undefined : { ...transitionEditorial, delay: (index % 4) * 0.07 }}
       whileHover={hoverLift}
       className="ds-article-card group"
     >
