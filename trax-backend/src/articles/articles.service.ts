@@ -29,11 +29,13 @@ export class ArticlesService {
       : data.status === ArticleStatus.PUBLISHED
       ? new Date()
       : undefined;
+    const eventDate = data.eventDate ? new Date(data.eventDate) : undefined;
 
     const article = await this.prisma.article.create({
       data: {
         ...data,
         publishedAt,
+        eventDate,
         authorId,
         tags: tagIds?.length
           ? { create: tagIds.map((tagId) => ({ tagId })) }
@@ -131,11 +133,17 @@ export class ArticlesService {
       }
     }
 
+    let eventDate: Date | null | undefined = undefined;
+    if (data.eventDate !== undefined) {
+      eventDate = data.eventDate ? new Date(data.eventDate) : null;
+    }
+
     const article = await this.prisma.article.update({
       where: { id },
       data: {
         ...data,
         ...(publishedAt !== undefined && { publishedAt }),
+        ...(eventDate !== undefined && { eventDate }),
         ...(tagIds !== undefined && {
           tags: {
             deleteMany: {},

@@ -44,6 +44,7 @@ export function mapApiArticle(a: any): Article {
     authorRole: a.author?.role || 'Reporter',
     authorAvatar: a.author?.avatar || null,
     officialLink: a.officialLink || null,
+    eventDate: a.eventDate || null,
     date: a.publishedAt
       ? new Date(a.publishedAt).toLocaleDateString('en-US', {
           month: 'long',

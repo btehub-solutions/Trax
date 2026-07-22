@@ -63,6 +63,11 @@ export class CreateArticleDto {
   @IsDateString()
   publishedAt?: string;
 
+  @ApiPropertyOptional({ example: '2026-08-15T00:00:00.000Z' })
+  @IsOptional()
+  @IsDateString()
+  eventDate?: string;
+
   @ApiPropertyOptional({ example: 'https://example.com' })
   @IsOptional()
   @IsString()
@@ -145,6 +150,11 @@ export class UpdateArticleDto {
   @IsOptional()
   @IsDateString()
   publishedAt?: string;
+
+  @ApiPropertyOptional({ example: '2026-08-15T00:00:00.000Z' })
+  @IsOptional()
+  @IsDateString()
+  eventDate?: string;
 
   @ApiPropertyOptional()
   @IsOptional()

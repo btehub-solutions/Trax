@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import Card from '@/components/ui/Card'
 import CategoryEmptyState from '@/components/ui/CategoryEmptyState'
@@ -23,11 +24,41 @@ interface EventsPageLayoutProps {
   upcomingTypes: UpcomingEvent[]
 }
 
+type EventFilterType = 'all' | 'upcoming' | 'past'
+
+const EVENT_FILTERS: { id: EventFilterType; label: string }[] = [
+  { id: 'all', label: 'All events' },
+  { id: 'upcoming', label: 'Upcoming' },
+  { id: 'past', label: 'Past events' },
+]
+
+function isUpcomingEvent(article: Article): boolean {
+  const rawDate = article.eventDate || article.publishedAt || article.date
+  if (!rawDate) return false
+  const eventTime = new Date(rawDate).getTime()
+  if (isNaN(eventTime)) return false
+
+  const startOfToday = new Date()
+  startOfToday.setHours(0, 0, 0, 0)
+  return eventTime >= startOfToday.getTime()
+}
+
 export default function EventsPageLayout({
   articles,
   upcomingTypes,
 }: EventsPageLayoutProps) {
+  const [activeFilter, setActiveFilter] = useState<EventFilterType>('all')
   const grid = useMotionVariants(staggerGrid, 'staggerGrid')
+
+  const filteredArticles = useMemo(() => {
+    if (activeFilter === 'upcoming') {
+      return articles.filter(isUpcomingEvent)
+    }
+    if (activeFilter === 'past') {
+      return articles.filter((article) => !isUpcomingEvent(article))
+    }
+    return articles
+  }, [articles, activeFilter])
 
   return (
     <div className="ds-platform-page ds-premium-home">
@@ -63,24 +94,54 @@ export default function EventsPageLayout({
       <SectionBand variant="tint">
         <div className="container">
           <SectionMarker
-            title="Upcoming events"
+            title="Events calendar"
             subtitle="Registrations and dispatches from across the corridor"
           />
+
+          {articles.length > 0 && (
+            <div
+              className="ds-category-filters"
+              role="tablist"
+              aria-label="Filter events by date"
+              style={{ marginBottom: '2rem' }}
+            >
+              {EVENT_FILTERS.map((filter) => {
+                const isActive = filter.id === activeFilter
+                return (
+                  <button
+                    key={filter.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    className={`ds-category-filters__pill${isActive ? ' is-active' : ''}`}
+                    onClick={() => setActiveFilter(filter.id)}
+                  >
+                    {filter.label}
+                  </button>
+                )
+              })}
+            </div>
+          )}
 
           {articles.length === 0 ? (
             <CategoryEmptyState
               categoryName="Events"
-              message="No upcoming events right now. Join the briefing to get notified when new events are announced."
+              message="No events listed right now. Join the briefing to get notified when new events are announced."
             />
+          ) : filteredArticles.length === 0 ? (
+            <p className="type-meta ds-category-feed__empty" style={{ padding: '3rem 0', textAlign: 'center' }}>
+              No {activeFilter} events found. Try selecting another filter.
+            </p>
           ) : (
             <motion.div
+              key={activeFilter}
               variants={grid}
               initial="hidden"
               whileInView="visible"
               viewport={viewportGrid}
               className="ds-category-feed__grid"
             >
-              {articles.map((article, index) => (
+              {filteredArticles.map((article, index) => (
                 <Card key={article.id} article={article} index={index} staggered />
               ))}
             </motion.div>

@@ -8,6 +8,7 @@ export interface Article {
   authorRole: string
   authorAvatar?: string | null
   officialLink?: string | null
+  eventDate?: string | null
   date: string
   publishedAt?: string
   readTime: string
