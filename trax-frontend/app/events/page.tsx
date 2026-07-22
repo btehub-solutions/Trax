@@ -1,22 +1,16 @@
 import type { Metadata } from 'next'
 import EventsPageLayout from '@/components/ui/EventsPageLayout'
+import { getDbArticles } from '@/lib/api'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Tech Events in Ogun State | Trax',
+export const revalidate = 60
+
+export const metadata: Metadata = pageMetadata({
+  title: 'Tech Events in Ogun State',
   description:
     'Hackathons, summits, and founder meetups across Ogun State. Get alerts when registrations open.',
-}
-
-const activeEvents: {
-  id: string
-  title: string
-  organizer: string
-  edition: string
-  flyerUrl: string
-  registrationUrl: string
-  isFree?: boolean
-  description: string
-}[] = []
+  path: '/events',
+})
 
 const upcomingTypes = [
   {
@@ -39,6 +33,13 @@ const upcomingTypes = [
   },
 ]
 
-export default function EventsPage() {
-  return <EventsPageLayout activeEvents={activeEvents} upcomingTypes={upcomingTypes} />
+export default async function EventsPage() {
+  const articles = await getDbArticles('events')
+
+  return (
+    <EventsPageLayout
+      articles={articles}
+      upcomingTypes={upcomingTypes}
+    />
+  )
 }

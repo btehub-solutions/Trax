@@ -1,24 +1,15 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
+import Card from '@/components/ui/Card'
+import CategoryEmptyState from '@/components/ui/CategoryEmptyState'
 import NewsletterSection from '@/components/ui/NewsletterSection'
 import NewsletterSubscribeFields from '@/components/newsletter/NewsletterSubscribeFields'
 import { SectionBand } from '@/design-system/components'
 import SectionMarker from '@/design-system/components/SectionMarker'
-import { Icon } from '@/design-system/icons'
-
-interface ActiveEvent {
-  id: string
-  title: string
-  organizer: string
-  edition: string
-  flyerUrl: string
-  registrationUrl: string
-  isFree?: boolean
-  description: string
-}
+import { staggerGrid, viewportGrid } from '@/design-system/motion'
+import { useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
+import type { Article } from '@/lib/articles'
 
 interface UpcomingEvent {
   title: string
@@ -28,14 +19,16 @@ interface UpcomingEvent {
 }
 
 interface EventsPageLayoutProps {
-  activeEvents: ActiveEvent[]
+  articles: Article[]
   upcomingTypes: UpcomingEvent[]
 }
 
 export default function EventsPageLayout({
-  activeEvents,
+  articles,
   upcomingTypes,
 }: EventsPageLayoutProps) {
+  const grid = useMotionVariants(staggerGrid, 'staggerGrid')
+
   return (
     <div className="ds-platform-page ds-premium-home">
       <SectionBand variant="default">
@@ -73,44 +66,25 @@ export default function EventsPageLayout({
             title="Upcoming events"
             subtitle="Registrations and dispatches from across the corridor"
           />
-          <div className="ds-platform-events">
-            {activeEvents.map((event) => (
-              <article key={event.id} className="ds-platform-event-card">
-                <div className="ds-platform-event-card__media">
-                  <Image
-                    src={event.flyerUrl}
-                    alt={event.title}
-                    width={480}
-                    height={640}
-                    className="ds-platform-event-card__flyer"
-                    priority
-                  />
-                </div>
-                <div className="ds-platform-event-card__body">
-                  <span className="ds-category-label">{event.organizer}</span>
-                  <h2 className="ds-platform-event-card__title">{event.title}</h2>
-                  <div className="ds-platform-event-card__tags">
-                    <span className="ds-platform-event-card__tag">{event.edition}</span>
-                    {event.isFree && (
-                      <span className="ds-platform-event-card__tag ds-platform-event-card__tag--accent">
-                        Free registration
-                      </span>
-                    )}
-                  </div>
-                  <p className="type-excerpt">{event.description}</p>
-                  <a
-                    href={event.registrationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ds-platform-event-card__cta"
-                  >
-                    Register
-                    <Icon name="arrow-right" size="xs" />
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
+
+          {articles.length === 0 ? (
+            <CategoryEmptyState
+              categoryName="Events"
+              message="No upcoming events right now. Join the briefing to get notified when new events are announced."
+            />
+          ) : (
+            <motion.div
+              variants={grid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={viewportGrid}
+              className="ds-category-feed__grid"
+            >
+              {articles.map((article, index) => (
+                <Card key={article.id} article={article} index={index} staggered />
+              ))}
+            </motion.div>
+          )}
         </div>
       </SectionBand>
 
