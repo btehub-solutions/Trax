@@ -14,22 +14,22 @@ export const metadata: Metadata = pageMetadata({
 
 const upcomingTypes = [
   {
-    title: 'Abeokuta AI Hackathon',
-    focus: 'Local LLMs and AgriTech',
-    status: 'Planning phase, Q3 2026',
-    desc: 'A weekend build session for engineers, researchers, and agronomists developing local-first solutions.',
+    title: "Founders' Friday",
+    focus: 'Startups & Founder Meetups',
+    status: 'Monthly — Last Friday of every month',
+    desc: 'A monthly gathering of startup builders, operators, and investors across Ogun State. Features live pitch teardowns, founder office hours, and collaborative problem-solving hosted across local hubs in Abeokuta and the corridor.',
   },
   {
-    title: 'Rock City Tech Summit',
-    focus: 'Founders, investors, policymakers',
-    status: 'Core planning, Q4 2026',
-    desc: 'Ogun State premier ecosystem gathering with startup sandboxes, policy panels, and venture sessions.',
+    title: 'Ogun Tech Community (OTC) Week',
+    focus: 'Policy, Talent & Ecosystem',
+    status: 'Annual — Q4 Summit',
+    desc: "The flagship annual convention connecting tech talent, academia, hubs, and government policymakers. Dedicated to advancing ICT policy frameworks, regional expansion, and positioning Ogun State as West Africa's primary tech corridor.",
   },
   {
-    title: 'Ogun Dev and Founder Meetups',
-    focus: 'Ecosystem networking',
-    status: 'Monthly mixers',
-    desc: 'Bi-weekly corridor mixers for demos, operator notes, and pitch practice across local hubs.',
+    title: 'Ogun Digital Summit (ODS)',
+    focus: 'Innovation & Future of Work',
+    status: 'Annual — November Gathering',
+    desc: "One of Southwest Nigeria's largest free technology gatherings, organized by Grazac. Unites thousands of students, early-stage builders, and industry leaders to explore emerging tech, digital skills, and startup ventures.",
   },
 ]
 
