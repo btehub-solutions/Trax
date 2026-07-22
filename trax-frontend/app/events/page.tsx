@@ -7,19 +7,16 @@ export const metadata: Metadata = {
     'Hackathons, summits, and founder meetups across Ogun State. Get alerts when registrations open.',
 }
 
-const activeEvents = [
-  {
-    id: 'students-conference-3',
-    title: 'Students Conference 3.0: FUTURE READY',
-    organizer: 'GEM Educational Foundation',
-    edition: 'Future Ready Edition',
-    flyerUrl: '/images/students_conference_flyer_new.png',
-    registrationUrl: 'https://bit.ly/4vHhjbo',
-    isFree: true,
-    description:
-      'Life-changing conversations and practical guidance for students preparing for university and career decisions across Ogun State.',
-  },
-]
+const activeEvents: {
+  id: string
+  title: string
+  organizer: string
+  edition: string
+  flyerUrl: string
+  registrationUrl: string
+  isFree?: boolean
+  description: string
+}[] = []
 
 const upcomingTypes = [
   {
