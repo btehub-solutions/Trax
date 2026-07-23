@@ -127,6 +127,32 @@ const MotionButton = forwardRef<HTMLButtonElement, MotionButtonProps>(
     const { motionOn, motionProps } = useButtonMotionProps(variant, disabled)
 
     if (href && !disabled) {
+      const isExternal =
+        href.startsWith('http://') ||
+        href.startsWith('https://') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:')
+
+      if (isExternal) {
+        return (
+          <motion.a
+            href={href}
+            className={classes}
+            onClick={onClick}
+            id={id}
+            title={title}
+            aria-label={ariaLabel}
+            target={href.startsWith('http') ? '_blank' : undefined}
+            rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            {...motionProps}
+          >
+            <ButtonContent arrow={arrow} arrowIcon={arrowIcon} motionOn={motionOn}>
+              {children}
+            </ButtonContent>
+          </motion.a>
+        )
+      }
+
       return (
         <MotionLink
           href={href}

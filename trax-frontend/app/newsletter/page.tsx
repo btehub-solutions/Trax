@@ -35,7 +35,7 @@ export default function NewsletterPage() {
       <PlatformPageIntro
         label="Subscribe"
         title="Get Ogun State's tech pulse in your inbox"
-        description="Join the growing tech community — one weekly briefing with the stories, deals, and people shaping the corridor."
+        description="Join the growing tech community: one weekly briefing with the stories, deals, and people shaping the corridor."
       />
 
       <SectionBand variant="tint">

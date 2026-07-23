@@ -216,7 +216,7 @@ export default function AdvertisePageLayout() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="ds-platform-page__success ds-platform-contact__success"
                 >
-                  Inquiry received — an account partner will be in touch shortly.
+                  Inquiry received · An account partner will be in touch shortly.
                 </motion.div>
               )}
             </AnimatePresence>

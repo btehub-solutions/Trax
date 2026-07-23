@@ -39,15 +39,18 @@ const EPISODES: Episode[] = [
 
 const showSegments = [
   {
-    title: 'Founder stories',
+    category: 'Startups & Builders',
+    title: 'Founder Stories',
     desc: 'Deep conversations with entrepreneurs building digital startups, logistics platforms, and agritech engines in Nigeria.',
   },
   {
-    title: 'Tech policy panel',
+    category: 'Policy & Governance',
+    title: 'Tech Policy Panel',
     desc: 'Analyzing regulatory frameworks, computational rights, and model governance with local digital policy advocates.',
   },
   {
-    title: 'Technical deep dives',
+    category: 'Architecture & Code',
+    title: 'Technical Deep Dives',
     desc: 'Interviews with engineers and researchers discussing architectures, open-source libraries, and dataset curation.',
   },
 ] as const
@@ -165,11 +168,15 @@ export default function PodcastPageLayout() {
           <SectionMarker title="Show segments" subtitle="Formats in development for the corridor" />
           <div className="ds-platform-lineup">
             {showSegments.map((seg) => (
-              <div key={seg.title} className="ds-premium-panel">
-                <p className="ds-category-label">{seg.title}</p>
-                <p className="type-excerpt">{seg.desc}</p>
-                <p className="type-meta ds-platform-lineup__status">
-                  <Icon name="clock" size="xs" aria-hidden /> Show in development
+              <div key={seg.title} className="ds-premium-panel ds-platform-lineup__item flex flex-col justify-between">
+                <div>
+                  <p className="ds-category-label">{seg.category}</p>
+                  <h3 className="ds-platform-lineup__title">{seg.title}</h3>
+                  <p className="type-excerpt">{seg.desc}</p>
+                </div>
+                <p className="type-meta ds-platform-lineup__status mt-4 flex items-center gap-1.5">
+                  <Icon name="clock" size="xs" aria-hidden />
+                  <span>Show in development</span>
                 </p>
               </div>
             ))}

@@ -149,7 +149,7 @@ export default function ArticleReader({ article, related, prev, next, isPreview 
           }}
         >
           <Eye size={16} className="animate-pulse" />
-          Draft Preview Mode — This article is not yet published
+          Draft Preview Mode · This article is not yet published
         </div>
       )}
       <div className="ds-article-reader__toolbar">

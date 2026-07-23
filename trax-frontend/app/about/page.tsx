@@ -73,7 +73,7 @@ export default function AboutPage() {
               unrecorded.
             </p>
             <p className="type-excerpt">
-              Trax fills that void — granular reporting, data-driven analysis, and thoughtful
+              Trax fills that void: granular reporting, data-driven analysis, and thoughtful
               commentary on the emerging Ogun State tech landscape.
             </p>
           </div>
@@ -98,7 +98,7 @@ export default function AboutPage() {
             <p className="ds-premium-panel__eyebrow">Contact</p>
             <p className="ds-premium-panel__title">Work with Trax</p>
             <p className="ds-premium-panel__desc">
-              Editorial tips, partnership inquiries, or press requests — reach the team directly.
+              Editorial tips, partnership inquiries, or press requests: reach the team directly.
             </p>
             <p className="type-excerpt">
               Email{' '}

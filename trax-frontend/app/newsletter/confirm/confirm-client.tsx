@@ -57,7 +57,7 @@ export default function NewsletterConfirmClient() {
           <h1 className="ds-platform-page__title">{title}</h1>
 
           {state === 'loading' && (
-            <p className="type-excerpt ds-platform-page__desc">Hang tight — this only takes a moment.</p>
+            <p className="type-excerpt ds-platform-page__desc">Hang tight · This only takes a moment.</p>
           )}
 
           {state !== 'loading' && (

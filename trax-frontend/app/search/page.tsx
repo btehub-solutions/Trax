@@ -17,7 +17,7 @@ export async function generateMetadata({
   return pageMetadata({
     title: q ? `Search results for "${q}"` : 'Search',
     description: q
-      ? `Trax articles matching "${q}" — startups, funding, ecosystem, and tech news from Ogun State.`
+      ? `Trax articles matching "${q}" · Startups, funding, ecosystem, and tech news from Ogun State.`
       : 'Search stories, startups, founders, and tech news from Ogun State.',
     path: '/search',
   })
