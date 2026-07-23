@@ -16,19 +16,19 @@ const upcomingTypes = [
   {
     title: "Founders' Friday",
     focus: 'Startups & Founder Meetups',
-    status: 'Monthly — Last Friday of every month',
+    status: 'Monthly · Last Friday of every month',
     desc: 'A monthly gathering of startup builders, operators, and investors across Ogun State. Features live pitch teardowns, founder office hours, and collaborative problem-solving hosted across local hubs in Abeokuta and the corridor.',
   },
   {
     title: 'Ogun Tech Community (OTC) Week',
     focus: 'Policy, Talent & Ecosystem',
-    status: 'Annual — Q4 Summit',
+    status: 'Annual · Q4 Summit',
     desc: "The flagship annual convention connecting tech talent, academia, hubs, and government policymakers. Dedicated to advancing ICT policy frameworks, regional expansion, and positioning Ogun State as West Africa's primary tech corridor.",
   },
   {
     title: 'Ogun Digital Summit (ODS)',
     focus: 'Innovation & Future of Work',
-    status: 'Annual — November Gathering',
+    status: 'Annual · November Gathering',
     desc: "One of Southwest Nigeria's largest free technology gatherings, organized by Grazac. Unites thousands of students, early-stage builders, and industry leaders to explore emerging tech, digital skills, and startup ventures.",
   },
 ]

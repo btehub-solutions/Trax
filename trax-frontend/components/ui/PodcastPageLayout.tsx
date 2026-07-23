@@ -33,7 +33,7 @@ const EPISODES: Episode[] = [
     title: 'Welcome to the Trax Podcast',
     host: 'Trax Team · Host',
     description:
-      'An introduction to the Trax Podcast — our vision to highlight the innovators, builders, and creators shaping technology in Ogun State.',
+      'An introduction to the Trax Podcast · Our vision to highlight the innovators, builders, and creators shaping technology in Ogun State.',
   },
 ]
 
@@ -98,7 +98,7 @@ export default function PodcastPageLayout() {
         <div className="container">
           <SectionMarker
             title="Latest episode"
-            subtitle={`${activeEpisode.label} — now playing`}
+            subtitle={`${activeEpisode.label} · Now playing`}
           />
           <article className="ds-premium-panel ds-platform-podcast-player">
             <div className="ds-platform-podcast-player__controls">
@@ -184,7 +184,7 @@ export default function PodcastPageLayout() {
             <p className="ds-category-label">New episodes</p>
             <h2 className="ds-platform-page__title">Never miss an episode</h2>
             <p className="type-excerpt ds-platform-page__desc">
-              Get notified when new conversations drop — founders, policy, and technical deep dives.
+              Get notified when new conversations drop: founders, policy, and technical deep dives.
             </p>
           </div>
 

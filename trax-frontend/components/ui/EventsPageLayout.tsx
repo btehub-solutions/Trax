@@ -8,6 +8,7 @@ import NewsletterSection from '@/components/ui/NewsletterSection'
 import NewsletterSubscribeFields from '@/components/newsletter/NewsletterSubscribeFields'
 import { SectionBand } from '@/design-system/components'
 import SectionMarker from '@/design-system/components/SectionMarker'
+import { Icon } from '@/design-system/icons'
 import { staggerGrid, viewportGrid } from '@/design-system/motion'
 import { useMotionVariants } from '@/design-system/motion/hooks/useMotionTransition'
 import type { Article } from '@/lib/articles'
@@ -154,11 +155,16 @@ export default function EventsPageLayout({
           <SectionMarker title="On the horizon" subtitle="Planned formats for the corridor calendar" />
           <div className="ds-platform-lineup">
             {upcomingTypes.map((event) => (
-              <div key={event.title} className="ds-premium-panel ds-platform-lineup__item">
-                <p className="ds-category-label">{event.focus}</p>
-                <h3 className="ds-platform-lineup__title">{event.title}</h3>
-                <p className="type-excerpt">{event.desc}</p>
-                <p className="type-meta ds-platform-lineup__status">{event.status}</p>
+              <div key={event.title} className="ds-premium-panel ds-platform-lineup__item flex flex-col justify-between">
+                <div>
+                  <p className="ds-category-label">{event.focus}</p>
+                  <h3 className="ds-platform-lineup__title">{event.title}</h3>
+                  <p className="type-excerpt">{event.desc}</p>
+                </div>
+                <p className="type-meta ds-platform-lineup__status mt-4 flex items-center gap-1.5">
+                  <Icon name="calendar" size="xs" aria-hidden />
+                  <span>{event.status}</span>
+                </p>
               </div>
             ))}
           </div>

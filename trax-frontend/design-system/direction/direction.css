@@ -1071,16 +1071,25 @@ html.dark .ds-masthead__stroke-text {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
+  border: 1px solid var(--neutral-border);
   border-radius: var(--radius-full);
-  background-color: var(--brand-primary);
-  color: var(--brand-on-dark);
+  background-color: var(--neutral-surface);
+  color: var(--brand-primary);
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
 }
 
 .ds-platform-podcast-player__play:hover {
-  background-color: var(--brand-primary-hover);
+  background-color: var(--neutral-surface-hover);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(229, 9, 20, 0.25);
+}
+
+.ds-platform-podcast-player__play:active {
+  transform: scale(0.96);
 }
 
 .ds-platform-podcast-player__icon {
