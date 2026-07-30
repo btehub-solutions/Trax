@@ -51,23 +51,15 @@ export default function LoginPage() {
     <div className="ds-login-page">
       <div className="ds-login-page__visual" aria-hidden>
         <img
-          src="/images/trax_login_visual.png"
+          src="/images/trax_login_visual.png.png"
           alt=""
           className="ds-login-page__visual-img"
         />
-        <div className="ds-login-page__visual-overlay" />
         <Link href="/" className="ds-login-page__back ds-login-page__back--desktop">
           <Icon name="arrow-left" size="xs" aria-hidden />
           Back to home
         </Link>
-        <div className="ds-login-page__visual-copy">
-          <h1 className="ds-login-page__visual-title">
-            Shaping Ogun State&apos;s <span>tech future</span>
-          </h1>
-          <p className="type-excerpt">
-            Tracking the startup ecosystem, research hubs, and media platform in real time.
-          </p>
-        </div>
+
       </div>
 
       <div className="ds-login-page__panel">

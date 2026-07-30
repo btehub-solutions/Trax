@@ -33,7 +33,9 @@ export default function LatestStoriesHero({
   const [visibleCount, setVisibleCount] = useState(4)
 
   const availableArticles = articles.filter(Boolean)
-  const displayedArticles = availableArticles.slice(0, visibleCount)
+  // First 4 articles sit alongside the sidebar; extras go in the full-width 3-col grid below
+  const initialArticles = availableArticles.slice(0, 4)
+  const extraArticles = availableArticles.slice(4, visibleCount)
   const pulse = availableArticles.slice(0, 4)
   const hasMore = visibleCount < availableArticles.length
   const canShowLess = visibleCount > 4
@@ -66,9 +68,10 @@ export default function LatestStoriesHero({
             />
           </motion.div>
 
+          {/* Initial 4 articles alongside the sidebar */}
           <div className="ds-home-feed__grid">
             <div className="ds-home-feed__grid-list">
-              {displayedArticles.map((article, i) => (
+              {initialArticles.map((article, i) => (
                 <Card
                   key={article.id}
                   article={article}
@@ -77,31 +80,6 @@ export default function LatestStoriesHero({
                   staggered={false}
                 />
               ))}
-
-              {(hasMore || canShowLess) && (
-                <div className="pt-4 flex flex-wrap justify-center gap-3 col-span-full">
-                  {hasMore && (
-                    <MotionButton
-                      type="button"
-                      variant="outline"
-                      onClick={() => setVisibleCount((prev) => prev + 4)}
-                      className="w-full sm:w-auto text-sm"
-                    >
-                      Load More Stories
-                    </MotionButton>
-                  )}
-                  {canShowLess && (
-                    <MotionButton
-                      type="button"
-                      variant="ghost"
-                      onClick={handleShowLess}
-                      className="w-full sm:w-auto text-sm"
-                    >
-                      Show Less
-                    </MotionButton>
-                  )}
-                </div>
-              )}
             </div>
 
             <motion.aside variants={itemSoft} className="ds-home-feed__sidebar">
@@ -140,6 +118,47 @@ export default function LatestStoriesHero({
               </div>
             </motion.aside>
           </div>
+
+          {/* Extra articles (Load More) in full-width 3-column grid */}
+          {extraArticles.length > 0 && (
+            <div className="ds-home-feed__expanded-grid">
+              {extraArticles.map((article, i) => (
+                <Card
+                  key={article.id}
+                  article={article}
+                  variant="default"
+                  index={initialArticles.length + i}
+                  staggered={false}
+                />
+              ))}
+            </div>
+          )}
+
+          {/* Load More / Show Less controls — always full width */}
+          {(hasMore || canShowLess) && (
+            <div className="pt-6 flex flex-wrap justify-center gap-3">
+              {hasMore && (
+                <MotionButton
+                  type="button"
+                  variant="outline"
+                  onClick={() => setVisibleCount((prev) => prev + 4)}
+                  className="w-full sm:w-auto text-sm"
+                >
+                  Load More Stories
+                </MotionButton>
+              )}
+              {canShowLess && (
+                <MotionButton
+                  type="button"
+                  variant="ghost"
+                  onClick={handleShowLess}
+                  className="w-full sm:w-auto text-sm"
+                >
+                  Show Less
+                </MotionButton>
+              )}
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
