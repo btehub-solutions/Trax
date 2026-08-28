@@ -6,6 +6,7 @@ import { Providers } from '@/components/providers/Providers'
 import ConditionalLayout from '@/components/ui/ConditionalLayout'
 import JsonLd from '@/components/seo/JsonLd'
 import { defaultMetadata, organizationJsonLd, websiteJsonLd } from '@/lib/seo'
+import { Analytics } from '@vercel/analytics/next'
 export const revalidate = 60
 
 const fraunces = Fraunces({
@@ -81,6 +82,7 @@ export default function RootLayout({
             {children}
           </ConditionalLayout>
         </Providers>
+        <Analytics />
       </body>
     </html>
   )
