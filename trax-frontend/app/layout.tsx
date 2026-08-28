@@ -36,7 +36,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+  const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-KC611DM9ZN'
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID
 
   return (
@@ -52,9 +52,9 @@ export default function RootLayout({
           <>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="lazyOnload"
+              strategy="afterInteractive"
             />
-            <Script id="google-analytics" strategy="lazyOnload">
+            <Script id="google-analytics" strategy="afterInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
