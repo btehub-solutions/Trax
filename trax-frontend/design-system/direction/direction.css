@@ -401,7 +401,7 @@ html.dark .ds-masthead__stroke-text {
 }
 
 .ds-premium-home .ds-home-briefing-grid .ds-article-card__thumb {
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .ds-premium-home .ds-home-feed__tracker-panel .ds-section-marker {
@@ -419,16 +419,16 @@ html.dark .ds-masthead__stroke-text {
   border-bottom: 1px solid var(--neutral-border);
 }
 
-/* Editorial images — refined radius */
+/* Editorial images — 90 degree square edges */
 .ds-home .ds-hero-lead__media,
 .ds-category-hero .ds-hero-lead__media {
-  border-radius: var(--radius-lg);
+  border-radius: 0;
 }
 
 .ds-home .ds-home-feed__thumb,
 .ds-hero-section .ds-hero-section__featured-thumb,
 .ds-home .ds-article-card__thumb {
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 /* ─── Hero section (homepage + category lead grid) ─── */
@@ -485,7 +485,7 @@ html.dark .ds-masthead__stroke-text {
 }
 
 .ds-category-page .ds-article-card__thumb {
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .ds-category-page .ds-article-card__body {
@@ -657,7 +657,7 @@ html.dark .ds-masthead__stroke-text {
 
 .ds-platform-event-card__media {
   overflow: hidden;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background-color: var(--surface-panel);
 }
 
@@ -1578,7 +1578,7 @@ html.dark .ds-masthead__stroke-text {
   overflow: hidden;
   background-color: var(--surface-panel);
   border: 1px solid var(--neutral-border);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
 }
 
 .ds-article-reader__figure-image {
@@ -1588,7 +1588,7 @@ html.dark .ds-masthead__stroke-text {
   max-height: min(68vh, 34rem);
   object-fit: contain;
   object-position: center;
-  border-radius: calc(var(--radius-lg) - 2px);
+  border-radius: 0;
 }
 
 .ds-article-reader__share {
@@ -2067,7 +2067,7 @@ html.dark .ds-masthead__stroke-text {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background-color: var(--surface-panel);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   width: 100%;
 }
 
@@ -2526,6 +2526,7 @@ html.dark .ds-masthead__stroke-text {
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background-color: var(--surface-panel);
+  border-radius: 0;
 }
 
 .ds-motion-image {
@@ -2709,7 +2710,7 @@ html.dark .ds-masthead__stroke-text {
   overflow: hidden;
   margin-bottom: 0;
   background-color: var(--surface-panel);
-  border-radius: var(--radius-md);
+  border-radius: 0;
 }
 
 .ds-press-room__card-body {
