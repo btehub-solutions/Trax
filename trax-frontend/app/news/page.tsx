@@ -5,8 +5,8 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Tech News & Updates',
-  description: "The latest news, reports, and breakthroughs in Ogun State's tech ecosystem.",
+  title: 'Tech News & Breaking Dispatches',
+  description: 'Breaking technology news, market analysis, and ecosystem updates across Nigeria, Africa, and global frontiers.',
   path: '/news',
 })
 export default async function NewsPage() {
@@ -14,7 +14,7 @@ export default async function NewsPage() {
 
   return (
     <CategoryPageLayout
-      description="Reports, analysis, and breaking updates from Ogun State's tech corridor and West Africa."
+      description="Breaking reports, deep analysis, and technology dispatches from across Nigeria, Africa, and global tech hubs."
       categoryName="News"
       articles={articles}
     />

@@ -12,9 +12,9 @@ import {
 import { useNewsletterSubscribe } from '@/components/newsletter/NewsletterSubscribeFields'
 
 const BRIEFING_POINTS = [
-  'Funding rounds and deal flow across Ogun and West Africa',
-  'Founder profiles, operator moves, and ecosystem shifts',
-  'Policy signals, events, and the week\'s must-reads',
+  'Funding rounds and venture capital flow across Africa and global markets',
+  'Founder profiles, operator moves, and technology shifts',
+  'Policy signals, events, and the week\'s essential reads',
 ] as const
 
 export default function NewsletterSection() {
@@ -40,9 +40,9 @@ export default function NewsletterSection() {
         <div className="ds-newsletter-card__inner">
           <div className="ds-newsletter-card__copy">
             <p className="ds-newsletter-card__eyebrow">The Trax briefing</p>
-            <h2 className="ds-newsletter-card__title">Ogun tech, distilled weekly</h2>
+            <h2 className="ds-newsletter-card__title">Tech intelligence, distilled weekly</h2>
             <p className="ds-newsletter-card__lead type-excerpt">
-              One email with the stories, deals, and people shaping the corridor, curated for
+              One email with the defining stories, deals, and innovators shaping tech, curated for
               founders, operators, and investors who want signal, not noise.
             </p>
             <ul className="ds-newsletter-card__list">

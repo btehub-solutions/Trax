@@ -5,9 +5,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Ogun State Tech Pioneers & Interviews',
+  title: 'Tech Pioneers, Founders & Interviews',
   description:
-    "In-depth interviews and profiles of the engineers, researchers, and founders leading Ogun State's tech initiatives.",
+    'In-depth interviews, executive profiles, and operator stories from founders and technologists shaping Africa and the world.',
   path: '/people',
 })
 
@@ -26,7 +26,7 @@ export default async function PeoplePage() {
   return (
     <CategoryPageLayout
       title="People & Profiles"
-      description="Founder profiles, operator interviews, and the people moving Ogun State's tech corridor forward."
+      description="Founder profiles, executive dialogues, and the engineers driving technology ecosystems forward."
       categoryName="People"
       articles={peopleArticles}
       filters={peopleFilters}

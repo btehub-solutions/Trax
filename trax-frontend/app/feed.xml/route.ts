@@ -56,7 +56,7 @@ export async function GET() {
     '    <title>' + escapeXml(siteConfig.title) + '</title>',
     '    <link>' + SITE_URL + '</link>',
     '    <description>' + escapeXml(siteConfig.description) + '</description>',
-    '    <language>en-ng</language>',
+    '    <language>en</language>',
     '    <lastBuildDate>' + new Date().toUTCString() + '</lastBuildDate>',
     '    <ttl>300</ttl>',
     '    <image>',

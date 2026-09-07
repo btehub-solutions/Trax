@@ -5,9 +5,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Tech Tools & Developer Resources',
+  title: 'Tech Tools, Software & Developer Resources',
   description:
-    "The best tech tools, open-source libraries, and developer resources for Ogun State builders.",
+    'The best developer tools, open-source libraries, cloud platforms, and engineering resources for modern tech builders.',
   path: '/tools',
 })
 
@@ -17,7 +17,7 @@ export default async function ToolsPage() {
   return (
     <CategoryPageLayout
       title="Developer Tools & Resources"
-      description="Showcasing practical, bandwidth-efficient developer tools, open-source models, datasets, and platforms built for the Ogun State tech stack."
+      description="Showcasing high-leverage developer tools, open-source frameworks, machine learning models, and modern cloud infrastructure."
       categoryName="Tools"
       articles={articles}
     />

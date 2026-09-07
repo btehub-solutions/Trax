@@ -33,7 +33,7 @@ const EPISODES: Episode[] = [
     title: 'Welcome to the Trax Podcast',
     host: 'Trax Team · Host',
     description:
-      'An introduction to the Trax Podcast · Our vision to highlight the innovators, builders, and creators shaping technology in Ogun State.',
+      'An introduction to the Trax Podcast · Our vision to highlight the innovators, builders, and creators shaping technology across Africa and the world.',
   },
 ]
 
@@ -93,7 +93,7 @@ export default function PodcastPageLayout() {
       <PlatformPageIntro
         label="Audio stories"
         title="Trax Podcast"
-        description="Conversations with the engineers, researchers, founders, and policy analysts building and regulating Ogun State's intelligent future."
+        description="Conversations with the engineers, researchers, founders, and investors building and shaping our intelligent technological future."
       />
 
       {/* ── Main player ───────────────────────────────────────────────── */}

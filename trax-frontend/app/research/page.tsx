@@ -6,8 +6,8 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Academic Research & ML Breakthroughs',
-  description: "Academic papers, technical research, and machine learning breakthroughs from Ogun State builders.",
+  title: 'AI, Machine Learning & Technical Research',
+  description: 'Academic papers, technical research, AI safety, machine learning advancements, and scientific breakthroughs from Africa and global research labs.',
   path: '/research',
 })
 
@@ -16,8 +16,8 @@ export default async function ResearchPage() {
 
   return (
     <CategoryPageLayout
-      title="Research"
-      description="Exploring technical research papers, open-source models, dataset curations, and scientific breakthroughs across the corridor."
+      title="Research & AI"
+      description="Exploring foundational papers, open-source model evaluations, dataset benchmarks, and breakthroughs in artificial intelligence and computing."
       categoryName="Research"
       articles={articles}
     />

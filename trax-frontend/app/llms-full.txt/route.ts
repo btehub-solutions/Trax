@@ -23,12 +23,12 @@ export async function GET() {
 
 > ${siteConfig.description}
 
-This document provides a comprehensive textual index of Trax's coverage of Ogun State's tech ecosystem, designed for AI search models, agents, and LLMs requiring full contextual background.
+This document provides a comprehensive textual index of Trax's coverage of tech ecosystems across Nigeria, Africa, and global frontiers, designed for AI search models, agents, and LLMs requiring full contextual background.
 
 ## Organization Identity
 - **Name**: Trax Media Ltd
 - **Domain**: ${SITE_URL}
-- **Focus**: Ogun State Tech Movement, Nigeria Startups, Venture Capital, Digital Policy, Abeokuta Innovation Corridor
+- **Focus**: Nigerian Startups, African Venture Capital, Pan-African Innovation, Global Tech Corridors, Tech Policy, Events & Ecosystem Intelligence
 - **Editorial Email**: traxnewsng@gmail.com
 - **Verified Social Media**:
   - X (Twitter): https://x.com/traxnewsng

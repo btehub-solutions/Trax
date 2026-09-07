@@ -7,9 +7,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'About Trax',
+  title: 'About Trax | African & Global Tech Intelligence',
   description:
-    "Learn about the mission, scope, and team behind Trax, Ogun State's premier tech media platform.",
+    'Learn about the mission, editorial standards, and vision behind Trax, tracking technology movements across Nigeria, Africa, and global frontiers.',
   path: '/about',
 })
 
@@ -23,19 +23,19 @@ const stats = [
 const coverage = [
   {
     title: 'Funding & ventures',
-    desc: 'Pre-seed to growth rounds, angel networks, and venture capital logs.',
+    desc: 'Pre-seed to growth rounds, angel syndicates, and institutional venture capital flows.',
   },
   {
     title: 'Profiles & interviews',
-    desc: 'Conversations with engineers training models and founders shipping products.',
+    desc: 'Conversations with the engineers training models and visionary founders shipping products.',
   },
   {
     title: 'Policy & governance',
-    desc: 'Digital rights, model registries, and governmental AI frameworks.',
+    desc: 'Digital economy frameworks, AI governance, and cross-border regulatory shifts.',
   },
   {
-    title: 'Technical breakthroughs',
-    desc: 'Research institutes, datasets, and open-source products for local languages.',
+    title: 'Technical breakthroughs & events',
+    desc: 'Flagship summits, open-source innovations, and frontier technologies defining modern software.',
   },
 ] as const
 
@@ -44,13 +44,13 @@ export default function AboutPage() {
     <PlatformPageShell>
       <PlatformPageIntro
         label="Our story"
-        title="Tracking Ogun State's tech movement"
-        description="Trax is Nigeria and Ogun State's leading tech media platform dedicated to documenting the builders, researchers, investors, and policies pushing technology forward."
+        title="Tracking African innovation and global tech movements"
+        description="Trax is an independent tech media organization dedicated to documenting the builders, researchers, investors, and policies pushing technology forward across Nigeria, Africa, and the world."
       />
 
       <SectionBand variant="tint">
         <div className="container">
-          <SectionMarker title="By the numbers" subtitle="Coverage expanding across the corridor" />
+          <SectionMarker title="By the numbers" subtitle="Coverage expanding across continental and global frontiers" />
           <div className="ds-platform-stats">
             {stats.map((stat) => (
               <div key={stat.label} className="ds-premium-panel ds-platform-stats__item">
@@ -67,14 +67,14 @@ export default function AboutPage() {
           <div className="ds-platform-about__block">
             <SectionMarker title="Our mission" />
             <p className="type-excerpt">
-              We believe the next decade of software in the state will be defined by modern
-              solutions and applied research. Yet the work of local engineers, researchers shipping
-              on regional datasets, and founders solving infrastructure bottlenecks is often
-              unrecorded.
+              We believe the next wave of global digital transformation is being forged across emerging
+              and established innovation corridors. Yet the high-impact work of bold founders solving
+              infrastructure bottlenecks, researchers training frontier models, and investors funding
+              game-changing startups often lacks the dedicated, rigorous coverage it deserves.
             </p>
             <p className="type-excerpt">
-              Trax fills that void: granular reporting, data-driven analysis, and thoughtful
-              commentary on the emerging Ogun State tech landscape.
+              Trax delivers that intelligence: rigorous reporting, data-driven deal analysis, and thoughtful
+              editorial commentary connecting local African ecosystems to the global stage.
             </p>
           </div>
 

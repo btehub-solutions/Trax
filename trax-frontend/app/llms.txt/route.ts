@@ -18,21 +18,22 @@ export async function GET() {
 
 > ${siteConfig.description}
 
-Trax is the premier tech media newsroom and ecosystem tracking platform for Ogun State and Southwest Nigeria. We document startups, funding rounds, venture capital flows, technology research, operator profiles, and digital policy across the corridor.
+Trax is an independent tech media platform and intelligence newsroom covering technology, startups, venture capital, and innovation across Nigeria, Africa, and the global ecosystem. We document high-impact builders, venture capital flows, technological breakthroughs, events, and digital policy.
 
 ## Core Beats & Coverage
 
-- **News**: ${SITE_URL}/news — Breaking tech news, announcements, and ecosystem dispatches.
-- **Startups**: ${SITE_URL}/startups — Profiles, product launches, and directories of Ogun State startups.
-- **Funding**: ${SITE_URL}/funding — Pre-seed to growth rounds, angel networks, and venture capital deals.
-- **People**: ${SITE_URL}/people — Interviews and profiles of founders, engineers, researchers, and operators.
-- **Ecosystem & Policy**: ${SITE_URL}/ecosystem — Policy shifts, innovation hubs, university labs, and digital infrastructure.
-- **Tools**: ${SITE_URL}/tools — Technology tools, software infrastructure, and technical tutorials.
+- **News**: ${SITE_URL}/news — Breaking tech news, announcements, and dispatches across Nigeria, Africa, and worldwide.
+- **Startups**: ${SITE_URL}/startups — Profiles, product launches, and directories of Nigerian, African, and international startups.
+- **Funding**: ${SITE_URL}/funding — Pre-seed to growth rounds, venture capital funds, and dealflow shaping digital markets.
+- **Events**: ${SITE_URL}/events — Tech conferences, summits, meetups, and hackathons across African capitals and global tech hubs.
+- **People**: ${SITE_URL}/people — Interviews and profiles of founders, engineers, investors, and operators.
+- **Ecosystem & Policy**: ${SITE_URL}/ecosystem — Policy shifts, digital governance, innovation hubs, and tech infrastructure.
+- **Tools**: ${SITE_URL}/tools — Software tools, developer platforms, and technical frameworks.
 
 ## Primary Entities & Context
 
 - **Publisher**: Trax Media Ltd
-- **Region**: Ogun State, Abeokuta, Southwest Nigeria, West Africa
+- **Coverage Region**: Nigeria, Pan-Africa, Global Emerging & Developed Tech Corridors
 - **Official Contact**: traxnewsng@gmail.com
 - **Official Social Channels**:
   - X (Twitter): https://x.com/traxnewsng

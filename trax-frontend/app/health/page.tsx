@@ -6,8 +6,8 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Digital Health & HealthTech',
-  description: "The latest HealthTech developments, digital medicine, and health innovations in Ogun State.",
+  title: 'HealthTech, Digital Medicine & Biotech',
+  description: 'The latest HealthTech developments, telemedicine breakthroughs, biotech innovations, and digital healthcare across Nigeria, Africa, and global frontiers.',
   path: '/health',
 })
 
@@ -17,7 +17,7 @@ export default async function HealthPage() {
   return (
     <CategoryPageLayout
       title="HealthTech"
-      description="Spotlighting digital health innovations, telemedicine services, and medical technology built for Ogun State and West Africa."
+      description="Spotlighting digital health innovations, clinical AI, telemedicine systems, and biotech breakthroughs advancing healthcare across Africa and globally."
       categoryName="Health"
       articles={articles}
     />

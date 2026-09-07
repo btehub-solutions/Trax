@@ -64,7 +64,7 @@ export default function LatestStoriesHero({
           <motion.div variants={itemSoft} className="ds-home-feed__header">
             <SectionMarker
               title="More Stories"
-              subtitle="From across Ogun State's tech corridor"
+              subtitle="From innovation hubs across Africa and global frontiers"
             />
           </motion.div>
 
@@ -84,7 +84,7 @@ export default function LatestStoriesHero({
 
             <motion.aside variants={itemSoft} className="ds-home-feed__sidebar">
               <div className="ds-premium-panel ds-home-feed__tracker-panel">
-                <SectionMarker title="Ogun Tech Tracker" className="ds-home-feed__tracker-marker" />
+                <SectionMarker title="Ecosystem Tracker" className="ds-home-feed__tracker-marker" />
 
                 <div className="ds-home-feed__tracker-list">
                   {pulse.map((article, index) =>
@@ -109,7 +109,7 @@ export default function LatestStoriesHero({
                 <p className="ds-premium-panel__eyebrow">Weekly digest</p>
                 <p className="ds-premium-panel__title">Get the Trax briefing</p>
                 <p className="ds-premium-panel__desc">
-                  Ogun tech, distilled weekly. Funding, founders, and corridor signals.
+                  African and global tech, distilled weekly. Deals, builders, and ecosystem signals.
                 </p>
                 <Link href="#newsletter" className="ds-premium-panel__link">
                   Subscribe free

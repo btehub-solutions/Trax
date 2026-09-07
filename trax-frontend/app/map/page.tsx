@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import MapPageLayout from '@/components/ui/MapPageLayout'
 
 export const metadata: Metadata = {
-  title: 'Ogun State Tech Map | Trax',
+  title: 'Tech Ecosystem Map | Trax',
   description:
-    'A curated directory of startups, tech hubs, and research labs across Ogun State.',
+    'An interactive directory mapping startups, tech hubs, research labs, and investment corridors across Nigeria, Africa, and global networks.',
 }
 
 export default function MapPage() {

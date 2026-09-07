@@ -5,9 +5,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: "Ogun State's Startups",
+  title: 'Startups & Emerging Tech Ventures',
   description:
-    'Track the founders, builders, and platforms creating the next generation of tech products in Ogun State.',
+    'Track high-growth startups, ambitious builders, and digital ventures launching across Nigeria, Africa, and global emerging corridors.',
   path: '/startups',
 })
 
@@ -20,7 +20,7 @@ export default async function StartupsPage() {
   return (
     <CategoryPageLayout
       title="Startups & Ventures"
-      description="Spotlighting the founders, builders, and companies building cutting-edge technology platforms for the Ogun State market."
+      description="Spotlighting the founders, builders, and audacious startups creating breakthrough products across Nigeria, Africa, and beyond."
       categoryName="Startups"
       articles={startupArticles}
     />

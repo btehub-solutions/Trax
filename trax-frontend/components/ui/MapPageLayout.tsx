@@ -119,8 +119,8 @@ export default function MapPageLayout() {
     <PlatformPageShell>
       <PlatformPageIntro
         label="Ecosystem directory"
-        title="Ogun State tech map"
-        description="A curated directory mapping active startup platforms, corporate labs, research centers, and infrastructure providers across the region."
+        title="Tech ecosystem map"
+        description="A curated directory mapping active startup platforms, innovation hubs, research centers, and infrastructure nodes across the ecosystem."
       />
 
       {/* ── Interactive Geopolitical Map Section ────────────────────────────── */}

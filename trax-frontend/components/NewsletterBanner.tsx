@@ -20,7 +20,7 @@ interface NewsletterBannerProps {
 }
 
 export default function NewsletterBanner({
-  headline = "Get Ogun State's tech news in your inbox",
+  headline = 'Get African & global tech intelligence in your inbox',
   subtext = 'Weekly digest. No spam. Free.',
   variant = 'banner',
 }: NewsletterBannerProps) {
@@ -272,7 +272,7 @@ export default function NewsletterBanner({
                 fontFamily: 'var(--font-family-ui)',
               }}
             >
-              Join Ogun State&apos;s growing tech community.{' '}
+              Join the African &amp; global tech community.{' '}
               <a href="/newsletter/unsubscribe" className="underline underline-offset-2">
                 Unsubscribe anytime
               </a>

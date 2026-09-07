@@ -5,22 +5,22 @@ import PlatformPageIntro from '@/components/ui/PlatformPageIntro'
 import { SectionBand } from '@/design-system/components'
 
 export const metadata: Metadata = {
-  title: 'Meet the Trax Team | Editors & Writers',
+  title: 'Meet the Trax Team | Editors, Analysts & Engineers',
   description:
-    "The writers, editors, and industry analysts bringing you Ogun State's most detailed tech reporting.",
+    'The writers, editors, and industry analysts bringing you authoritative tech intelligence across Nigeria, Africa, and global frontiers.',
 }
 
 const team = [
   {
     name: 'Ben Sam Oladoyin',
     role: 'Founder & AI/ML Engineer',
-    bio: 'Ben Sam Oladoyin is an AI/ML Engineer and the Founder of Trax, a specialized tech intelligence and media platform mapping the growth of the technology ecosystem across Ogun State and Nigeria. Leveraging expertise in machine learning and data engineering, Ben established Trax to document regional innovation, spotlight local builders, and connect emerging tech ecosystems with global visibility and venture opportunities.',
+    bio: 'Ben Sam Oladoyin is an AI/ML Engineer and the Founder of Trax, an independent tech intelligence and media platform mapping technology, venture capital, and startups across Nigeria, Africa, and the global ecosystem. Leveraging expertise in machine learning and data engineering, Ben established Trax to document transformative innovation, spotlight high-impact builders, and connect emerging tech ecosystems with global visibility and venture opportunities.',
     image: '/images/founder.jpg',
   },
   {
     name: 'Oyedele Damilare',
     role: 'Ecosystem Contributor',
-    bio: 'Oyedele Damilare is a key team member at Trax, supporting operations and data tracking across the regional startup ecosystem. Passionate about technology growth in Ogun State, he helps document local innovation, track builder milestones, and coordinate community coverage.',
+    bio: 'Oyedele Damilare is a key team member at Trax, supporting operations, market research, and data tracking across the startup ecosystem. Passionate about technology growth and digital economies, he helps document innovation, track builder milestones, and coordinate ecosystem coverage.',
     image: '/images/dami.png',
   },
 ] as const
@@ -31,7 +31,7 @@ export default function TeamPage() {
       <PlatformPageIntro
         label="Our team"
         title="The minds behind Trax"
-        description="Journalists, industry analysts, and tech correspondents reporting from hubs across Abeokuta, Ogun State, and Nigeria."
+        description="Journalists, engineers, data analysts, and tech correspondents reporting from hubs across Nigeria, Africa, and global innovation centers."
       />
 
       <SectionBand variant="tint">

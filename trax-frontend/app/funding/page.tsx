@@ -5,9 +5,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Funding Rounds & Venture Capital',
+  title: 'Venture Capital, Funding Rounds & Deals',
   description:
-    'Track seed rounds, grants, and capital flows into Ogun State startups and West African tech.',
+    'Track pre-seed to growth rounds, VC funds, angel syndicates, and capital flows shaping African tech and global markets.',
   path: '/funding',
 })
 export default async function FundingPage() {
@@ -15,7 +15,7 @@ export default async function FundingPage() {
 
   return (
     <CategoryPageLayout
-      description="Deal flow, investor moves, and capital signals shaping startups across Ogun State and West Africa."
+      description="Deal flow, investor syndicates, and institutional capital signals driving high-impact innovation across Africa and the world."
       categoryName="Funding"
       articles={articles}
     />

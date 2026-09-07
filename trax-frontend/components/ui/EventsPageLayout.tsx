@@ -68,10 +68,10 @@ export default function EventsPageLayout({
           <div className="ds-platform-page__intro-copy">
             <p className="ds-category-label">Tech calendar</p>
             <h1 className="ds-platform-page__title">
-              Connecting Ogun State&apos;s tech leaders
+              Connecting African &amp; global tech leaders
             </h1>
             <p className="type-excerpt ds-platform-page__desc">
-              Curated events across the corridor: hackathons, summits, and founder meetups.
+              Curated tech gatherings worldwide: hackathons, summits, investor roundtables, and founder meetups.
               Sign up for early access to tickets and registration alerts.
             </p>
           </div>

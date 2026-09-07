@@ -83,7 +83,7 @@ export default function AdvertisePageLayout() {
       <PlatformPageIntro
         label="Partnerships"
         title="Partner with Trax"
-        description="Connect your brand with the decision-makers, venture capitalists, technical founders, and developers building Ogun State's tech future."
+        description="Connect your brand with the decision-makers, venture capitalists, technical founders, and builders shaping technology across Nigeria, Africa, and global frontiers."
       />
 
       <SectionBand variant="tint">

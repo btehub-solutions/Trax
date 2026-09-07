@@ -6,9 +6,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Press Room',
+  title: 'Press Room & Partner Statements',
   description:
-    'Official partner statements, startup press releases, and sponsored dispatches from Ogun State tech.',
+    'Official partner statements, corporate tech announcements, and startup press releases from across Africa and global markets.',
   path: '/press',
 })
 
@@ -17,7 +17,7 @@ export default async function PressRoomPage() {
 
   return (
     <PressPageLayout
-      description="Partner stories, sponsored dispatches, and official announcements from across Ogun State tech."
+      description="Partner stories, sponsored dispatches, and official announcements shaping technology markets."
       articles={articles}
       partners={partners}
     />

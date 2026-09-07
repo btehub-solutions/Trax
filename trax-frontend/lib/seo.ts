@@ -8,11 +8,12 @@ const SITE_LOGO = `${SITE_URL}/icon.svg`
 
 export const siteConfig = {
   name: 'Trax',
-  title: "Trax | Tracking Ogun State's Tech Movement",
+  title: 'Trax | Tracking Tech Across Nigeria, Africa & the World',
   description:
-    "Ogun State's tech news and startup media platform covering startups, funding, people, policy, and events across the corridor.",
+    'Independent tech media tracking startups, venture capital, innovation, policy, and defining events shaping digital economies across Nigeria, Africa, and global frontiers.',
   url: SITE_URL,
-  locale: 'en_NG',
+  locale: 'en_US',
+  alternateLocales: ['en_NG', 'en_GB', 'en_KE', 'en_ZA'],
   twitter: '@traxnewsng',
   ogImage: DEFAULT_OG_IMAGE_ABSOLUTE,
 } as const
@@ -25,14 +26,18 @@ export const defaultMetadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    'Ogun State tech',
-    'Nigeria startups',
-    'Abeokuta tech',
-    'Ogun State funding',
-    'Southwest Nigeria tech',
-    'Nigeria tech media',
-    'Ogun ecosystem',
     'African tech news',
+    'Nigeria startups',
+    'Africa venture capital',
+    'Global tech intelligence',
+    'African innovation hubs',
+    'Nigerian tech ecosystem',
+    'Fintech Africa',
+    'Artificial Intelligence in Africa',
+    'Digital economy Africa',
+    'Tech policy and regulation',
+    'African tech funding and deals',
+    'Tech events Africa and global',
     'Trax newsroom',
   ],
   authors: [{ name: 'Trax Editorial Team', url: siteConfig.url }],
@@ -58,6 +63,7 @@ export const defaultMetadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: siteConfig.locale,
+    alternateLocale: [...siteConfig.alternateLocales],
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: siteConfig.title,
@@ -67,7 +73,7 @@ export const defaultMetadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: 'Trax: Ogun State tech news',
+        alt: 'Trax: African & Global Tech Intelligence',
       },
     ],
   },
@@ -87,18 +93,21 @@ export function pageMetadata({
   path,
   image,
   type = 'website',
+  keywords,
 }: {
   title: string
   description: string
   path: string
   image?: string
   type?: 'website' | 'article'
+  keywords?: string[]
 }): Metadata {
   const ogImage = image || DEFAULT_OG_IMAGE
 
   return {
     title,
     description,
+    keywords: keywords ?? defaultMetadata.keywords,
     alternates: {
       canonical: path,
       types: {
@@ -108,6 +117,7 @@ export function pageMetadata({
     openGraph: {
       type,
       locale: siteConfig.locale,
+      alternateLocale: [...siteConfig.alternateLocales],
       url: `${siteConfig.url}${path}`,
       siteName: siteConfig.name,
       title,
@@ -159,23 +169,28 @@ export function articleJsonLd(article: {
     image: article.image ? [article.image] : [`${siteConfig.url}/opengraph-image`],
     datePublished: pubDate,
     dateModified: pubDate,
+    spatialCoverage: ['Nigeria', 'Africa', 'Global'],
+    contentLocation: {
+      '@type': 'Place',
+      name: 'Africa',
+    },
     author: {
       '@type': 'Person',
       name: authorName,
       jobTitle: 'Technology Reporter',
       worksFor: {
-        '@type': 'Organization',
+        '@type': 'NewsMediaOrganization',
         name: siteConfig.name,
         url: siteConfig.url,
       },
     },
     publisher: {
-      '@type': 'Organization',
+      '@type': 'NewsMediaOrganization',
       name: siteConfig.name,
       url: siteConfig.url,
       logo: {
         '@type': 'ImageObject',
-        url: `${siteConfig.url}/logo.png`,
+        url: `${siteConfig.url}/icon.svg`,
       },
       sameAs: [
         'https://x.com/traxnewsng',
@@ -195,13 +210,56 @@ export function articleJsonLd(article: {
   }
 }
 
+export function eventJsonLd(event: {
+  name: string
+  description?: string
+  startDate: string
+  endDate?: string
+  location?: string
+  url?: string
+  image?: string
+  isVirtual?: boolean
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: event.name,
+    description: event.description || `${event.name} — African & Global Tech Event covered by Trax`,
+    startDate: event.startDate,
+    endDate: event.endDate || event.startDate,
+    eventAttendanceMode: event.isVirtual
+      ? 'https://schema.org/OnlineEventAttendanceMode'
+      : 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: event.isVirtual
+      ? {
+          '@type': 'VirtualLocation',
+          url: event.url || siteConfig.url,
+        }
+      : {
+          '@type': 'Place',
+          name: event.location || 'Africa / Global',
+          address: {
+            '@type': 'PostalAddress',
+            addressCountry: 'NG',
+          },
+        },
+    image: event.image ? [event.image] : [`${siteConfig.url}/opengraph-image`],
+    organizer: {
+      '@type': 'Organization',
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+  }
+}
+
 export function organizationJsonLd() {
   return {
     '@context': 'https://schema.org',
     '@type': 'NewsMediaOrganization',
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/logo.png`,
+    logo: `${siteConfig.url}/icon.svg`,
     sameAs: [
       'https://x.com/traxnewsng',
       'https://www.instagram.com/traxnewsng',
@@ -210,16 +268,19 @@ export function organizationJsonLd() {
     ],
     description: siteConfig.description,
     email: 'traxnewsng@gmail.com',
-    foundingLocation: {
-      '@type': 'Place',
-      name: 'Ogun State, Nigeria',
-    },
+    areaServed: [
+      { '@type': 'Country', name: 'Nigeria' },
+      { '@type': 'Continent', name: 'Africa' },
+      { '@type': 'AdministrativeArea', name: 'Global' },
+    ],
     knowsAbout: [
-      'Ogun State Technology',
+      'African Technology Ecosystem',
       'Nigerian Startups',
-      'African Venture Capital',
-      'Tech Ecosystem Policy',
-      'Abeokuta Innovation Corridor',
+      'Pan-African Venture Capital & Angel Investing',
+      'Global Tech Frontiers & AI',
+      'Tech Policy and Digital Infrastructure',
+      'Emerging Market Innovations',
+      'Tech Conferences and Summits',
     ],
     publishingPrinciples: `${siteConfig.url}/about`,
   }
@@ -233,12 +294,12 @@ export function websiteJsonLd() {
     url: siteConfig.url,
     description: siteConfig.description,
     publisher: {
-      '@type': 'Organization',
+      '@type': 'NewsMediaOrganization',
       name: siteConfig.name,
     },
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${siteConfig.url}/news?q={search_term_string}`,
+      target: `${siteConfig.url}/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   }

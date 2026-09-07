@@ -319,7 +319,7 @@ export default function CareersApplyModal({
                           rows={2}
                           value={formData.note}
                           onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-                          placeholder="Tell us briefly about your background and interest in covering Ogun State tech..."
+                          placeholder="Tell us briefly about your background and interest in tech journalism and research..."
                           className="ds-platform-page__input"
                           style={{
                             boxSizing: 'border-box',

@@ -70,7 +70,7 @@ export default function Footer() {
           <TraxWordmark id="footer-logo" className="ds-site-footer__logo" />
           <div className="ds-site-footer__mast-copy">
             <p className="ds-site-footer__tagline">
-              Ogun State&apos;s tech newsroom for startups, funding, people, and policy from the corridor.
+              African &amp; global tech intelligence tracking startups, venture capital, innovators, and policy.
             </p>
             <a href="mailto:traxnewsng@gmail.com" className="ds-footer-link ds-site-footer__email">
               traxnewsng@gmail.com
@@ -81,7 +81,7 @@ export default function Footer() {
         <div className="ds-site-footer__grid">
           <FooterColumn title="Get the briefing">
             <p className="ds-footer-col__text">
-              Weekly dispatches on funding, founders, and ecosystem moves across Ogun and West Africa.
+              Weekly dispatches on funding, high-impact builders, and defining technology movements across Africa and the world.
               Free. One email, no noise.
             </p>
             <AnimatePresence mode="wait">

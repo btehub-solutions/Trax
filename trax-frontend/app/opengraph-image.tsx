@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = "Trax | Tracking Ogun State's Tech Movement"
+export const alt = 'Trax | Tracking Tech Across Nigeria, Africa & the World'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -41,7 +41,7 @@ export default function OpenGraphImage() {
             color: '#E7040D',
           }}
         >
-          Tech newsroom
+          African &amp; Global Tech Intelligence
         </div>
         <div
           style={{
@@ -61,10 +61,10 @@ export default function OpenGraphImage() {
             fontWeight: 500,
             color: '#a1a1aa',
             lineHeight: 1.35,
-            maxWidth: 820,
+            maxWidth: 860,
           }}
         >
-          Tracking Ogun State's tech movement: startups, funding, people, and policy.
+          Tracking tech across Nigeria, Africa &amp; the world: startups, capital, innovation, and events.
         </div>
         <div
           style={{

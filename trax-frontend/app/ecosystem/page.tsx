@@ -5,9 +5,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Tech Ecosystem & Policy in Ogun State',
+  title: 'Tech Ecosystem, Hubs & Infrastructure',
   description:
-    "Policy, hubs, talent networks, and institutions shaping Ogun State's tech corridor.",
+    'Policy, innovation hubs, talent networks, and digital infrastructure shaping tech ecosystems across Nigeria, Africa, and global frontiers.',
   path: '/ecosystem',
 })
 
@@ -17,7 +17,7 @@ export default async function EcosystemPage() {
   return (
     <CategoryPageLayout
       title="Ecosystem & Policy"
-      description="Policy frameworks, tech hubs, talent networks, and the community signals accelerating innovation across Ogun State."
+      description="Policy frameworks, innovation hubs, talent networks, and structural signals accelerating digital economies."
       categoryName="Ecosystem"
       articles={articles}
     />

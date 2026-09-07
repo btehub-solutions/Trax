@@ -35,7 +35,7 @@ export default async function HomePage() {
           <ArticleGrid
             id="featured"
             title="Editor's Briefing"
-            subtitle="The most important local intelligence from Ogun State and West Africa"
+            subtitle="Essential intelligence on tech movements across Nigeria, Africa, and global frontiers"
             articles={featuredArticles.length ? featuredArticles : allArticles}
             variant="featured-first"
             viewAllHref="/news"

@@ -95,7 +95,7 @@ export default function HeroSection() {
               style={{ color: 'var(--accent-bright)', fontFamily: 'var(--font-family-editorial)' }}
             >
               <Radio size={12} className="animate-pulse" />
-              Ogun State&apos;s AI Media Platform
+              African &amp; Global Tech Intelligence
             </span>
             <div
               className="h-px w-12"

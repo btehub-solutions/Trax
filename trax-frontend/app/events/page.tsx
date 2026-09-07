@@ -6,9 +6,9 @@ import { pageMetadata } from '@/lib/seo'
 export const revalidate = 60
 
 export const metadata: Metadata = pageMetadata({
-  title: 'Tech Events in Ogun State',
+  title: 'Tech Events, Summits & Hackathons',
   description:
-    'Hackathons, summits, and founder meetups across Ogun State. Get alerts when registrations open.',
+    'Discover premier tech conferences, hackathons, investor summits, and founder gatherings across Nigeria, Africa, and global tech hubs.',
   path: '/events',
 })
 

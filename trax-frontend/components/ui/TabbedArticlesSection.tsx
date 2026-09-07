@@ -11,7 +11,7 @@ export default function TabbedArticlesSection({ articles }: TabbedArticlesSectio
     <ArticleGrid
       id="latest"
       title="Latest Intelligence"
-      subtitle="Fresh reporting from Ogun State and West Africa's startup corridors"
+      subtitle="Fresh reporting across Nigeria, Africa, and global tech corridors"
       articles={articles.slice(0, 6)}
       viewAllHref="/news"
       embedded

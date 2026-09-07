@@ -10,30 +10,30 @@ import {
 } from '@/components/ui/CareersApplyActions'
 
 export const metadata: Metadata = {
-  title: 'Careers at Trax | Join the Team',
+  title: 'Careers at Trax | Join the Newsroom',
   description:
-    'Join Trax and help build the leading tech media platform for Ogun State. View open roles in journalism, engineering, and growth.',
+    'Join Trax and help build the premier African & Global tech media platform. View open roles in journalism, data intelligence, engineering, and growth.',
 }
 
 const openRoles = [
   {
     id: 'contributing-tech-journalist',
-    category: 'Editorial · Volunteer Role',
+    category: 'Editorial · Contributor Role',
     title: 'Contributing Tech Journalist',
-    location: 'Remote / Ogun State Corridor',
-    type: 'Volunteer · Flexible Hours',
+    location: 'Remote (Nigeria / Pan-Africa / Global)',
+    type: 'Contributor · Flexible Hours',
     email: 'traxnewsng@gmail.com',
-    subject: 'Application: Contributing Tech Journalist (Volunteer)',
+    subject: 'Application: Contributing Tech Journalist',
     overview:
-      'We are seeking a skilled, research-driven tech journalist to join the Trax team as a volunteer contributor. In this role, you will write high-impact stories, founder profiles, and ecosystem dispatches covering technology, startups, and innovation across Ogun State.',
+      'We are seeking skilled, research-driven tech journalists to join the Trax newsroom. In this role, you will write high-impact stories, founder profiles, and ecosystem dispatches covering technology, startups, and capital flows across Nigeria, Africa, and global frontiers.',
     responsibilities: [
       'Write engaging, well-researched articles covering startup launches, funding transactions, and ecosystem developments.',
-      'Conduct interviews with founders, software engineers, and policy analysts across Abeokuta and regional tech hubs.',
-      'Work closely with the Trax editorial team to shape stories that inform thousands of monthly readers.',
+      'Conduct interviews with founders, software engineers, investors, and policy analysts.',
+      'Work closely with the Trax editorial team to shape stories that inform readers worldwide.',
     ],
     requirements: [
       'Strong command of written English with a clean, engaging editorial voice.',
-      'Genuine passion for tech, software engineering, and startup ecosystems in Nigeria.',
+      'Genuine passion for technology, software engineering, and startup ecosystems in Africa and globally.',
       'Ability to research topics independently and deliver clean, well-structured drafts.',
     ],
   },
@@ -45,14 +45,14 @@ export default function CareersPage() {
       <PlatformPageIntro
         label="Careers"
         title="Join Trax"
-        description="Help us write the history of the technology revolution in Ogun State. We are always looking for passionate writers, developers, and researchers."
+        description="Help us document the stories, innovators, and capital defining modern technology. We are always looking for passionate writers, developers, and researchers."
       />
 
       <SectionBand variant="tint">
         <div className="container">
           <SectionMarker
             title="Open roles"
-            subtitle="Opportunities to help shape tech journalism in Ogun State"
+            subtitle="Opportunities to shape the future of tech journalism"
           />
 
           <div className="mt-8">

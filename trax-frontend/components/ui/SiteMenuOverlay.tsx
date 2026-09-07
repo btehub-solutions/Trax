@@ -180,10 +180,10 @@ export default function SiteMenuOverlay({
                 <p className="ds-site-menu__label">Featured dispatch</p>
                 <div className="ds-site-menu__promo-card">
                   <p className="ds-site-menu__promo-title">
-                    Never miss a beat from the corridor.
+                    Never miss a defining tech movement.
                   </p>
                   <p className="ds-site-menu__promo-text">
-                    Weekly briefing on Ogun startups, funding, and ecosystem moves. Free, one email.
+                    Weekly briefing on African and global tech, startups, and capital flows. Free, one email.
                   </p>
                   <MotionButton
                     href="/#newsletter"
