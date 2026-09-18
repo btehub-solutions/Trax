@@ -48,6 +48,42 @@ export default function CareersPage() {
         description="Help us document the stories, innovators, and capital defining modern technology. We are always looking for passionate writers, developers, and researchers."
       />
 
+      <div className="container pt-6 pb-2">
+        <div className="p-4 sm:p-5 rounded-xl border border-[var(--border)] bg-[var(--surface-sunken)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-[var(--brand-primary)] text-white font-ui">
+                Trax Jobs Portal
+              </span>
+              <span className="text-xs font-semibold text-[var(--neutral-text-muted)] font-ui">Ecosystem Network</span>
+            </div>
+            <p className="text-sm font-medium text-[var(--neutral-text-high)] font-ui m-0">
+              Looking for engineering, product, or leadership roles across African tech startups?
+            </p>
+          </div>
+          <a
+            href="https://jobs.trax.ng"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ds-btn ds-btn--sm ds-btn--primary shrink-0 inline-flex items-center gap-1.5 font-ui"
+          >
+            <span>Explore Tech Jobs</span>
+            <svg
+              className="w-3.5 h-3.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </a>
+        </div>
+      </div>
+
       <SectionBand variant="tint">
         <div className="container">
           <SectionMarker

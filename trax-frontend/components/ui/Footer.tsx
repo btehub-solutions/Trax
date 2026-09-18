@@ -18,7 +18,8 @@ const companyLinks = [
   { label: 'About', href: '/about' },
   { label: 'Team', href: '/team' },
   { label: 'Advertise', href: '/advertise' },
-  { label: 'Careers', href: '/careers' },
+  { label: 'Trax Jobs ↗', href: 'https://jobs.trax.ng', external: true },
+  { label: 'Careers (Newsroom)', href: '/careers' },
   { label: 'Contact', href: '/about#contact' },
 ]
 
@@ -156,9 +157,20 @@ export default function Footer() {
             <ul className="ds-footer-links">
               {companyLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="ds-footer-link">
-                    {link.label}
-                  </Link>
+                  {'external' in link && link.external ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ds-footer-link inline-flex items-center gap-1"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link href={link.href} className="ds-footer-link">
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

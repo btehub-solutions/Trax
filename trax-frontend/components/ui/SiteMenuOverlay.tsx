@@ -89,6 +89,37 @@ export default function SiteMenuOverlay({
                   </Link>
                 )
               })}
+              <a
+                href="https://jobs.trax.ng"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className="ds-site-menu__section-link inline-flex items-center gap-1.5"
+                aria-label="Trax Jobs: Tech Opportunities in Africa (opens in new tab)"
+              >
+                <span>Jobs</span>
+                <span
+                  className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded leading-none"
+                  style={{
+                    backgroundColor: 'var(--brand-primary)',
+                    color: '#ffffff',
+                  }}
+                >
+                  New
+                </span>
+                <svg
+                  className="w-3 h-3 opacity-60"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </a>
             </div>
 
             <div className="ds-site-menu__body">
@@ -160,17 +191,44 @@ export default function SiteMenuOverlay({
                   <div key={group.title} className="ds-site-menu__column">
                     <h3 className="ds-site-menu__column-title">{group.title}</h3>
                     <ul className="ds-site-menu__links">
-                      {group.links.map((link) => (
-                        <li key={`${group.title}-${link.href}-${link.label}`}>
-                          <Link
-                            href={link.href}
-                            onClick={onClose}
-                            className="ds-site-menu__link"
-                          >
-                            {link.label}
-                          </Link>
-                        </li>
-                      ))}
+                      {group.links.map((link) => {
+                        const isExternal = link.href.startsWith('http')
+                        return (
+                          <li key={`${group.title}-${link.href}-${link.label}`}>
+                            {isExternal ? (
+                              <a
+                                href={link.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={onClose}
+                                className="ds-site-menu__link inline-flex items-center gap-1"
+                              >
+                                <span>{link.label}</span>
+                                <svg
+                                  className="w-3 h-3 opacity-60"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  aria-hidden="true"
+                                >
+                                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                                </svg>
+                              </a>
+                            ) : (
+                              <Link
+                                href={link.href}
+                                onClick={onClose}
+                                className="ds-site-menu__link"
+                              >
+                                {link.label}
+                              </Link>
+                            )}
+                          </li>
+                        )
+                      })}
                     </ul>
                   </div>
                 ))}

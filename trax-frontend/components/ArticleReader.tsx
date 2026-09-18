@@ -339,6 +339,46 @@ export default function ArticleReader({ article, related, prev, next, isPreview 
             )}
           </motion.div>
 
+          <motion.aside
+            variants={fadeUp}
+            aria-label="Trax Jobs & African Tech Talent Network"
+            className="my-8 p-5 rounded-xl border border-[var(--border)] bg-[var(--surface-sunken)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+          >
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--brand-primary)] text-white font-ui">
+                  Trax Jobs
+                </span>
+                <span className="text-xs font-semibold text-[var(--neutral-text-muted)] font-ui">
+                  Talent &amp; Opportunities
+                </span>
+              </div>
+              <p className="text-sm font-medium text-[var(--neutral-text-high)] font-ui m-0">
+                Hiring or seeking high-impact tech opportunities in African tech?
+              </p>
+            </div>
+            <a
+              href="https://jobs.trax.ng"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ds-btn ds-btn--sm ds-btn--primary shrink-0 inline-flex items-center gap-1.5 font-ui"
+            >
+              <span>Explore Roles &amp; Talent</span>
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </a>
+          </motion.aside>
+
           {(prev || next) && (
             <motion.nav
               variants={fadeUp}

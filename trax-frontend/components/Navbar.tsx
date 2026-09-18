@@ -149,6 +149,38 @@ export default function Navbar() {
                   </Link>
                 )
               })}
+              <a
+                href="https://jobs.trax.ng"
+                target="_blank"
+                rel="noopener noreferrer"
+                id="navbar-link-jobs"
+                className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[13px] font-medium tracking-wide transition-colors duration-200 hover:text-accent"
+                style={{
+                  color: 'var(--fg-muted)',
+                  fontFamily: 'var(--font-family-ui)',
+                }}
+                aria-label="Trax Jobs (opens in new tab)"
+              >
+                <span>Jobs</span>
+                <span
+                  className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded leading-none text-white"
+                  style={{ backgroundColor: 'var(--accent)' }}
+                >
+                  New
+                </span>
+                <svg
+                  className="w-3 h-3 opacity-60"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </a>
             </nav>
 
             {/* ── Right controls ────────────────────────────────────────── */}
@@ -185,7 +217,7 @@ export default function Navbar() {
 
               <motion.a
                 id="navbar-instagram"
-                href="https://www.instagram.com/traxnewsng?igsh=NmtzZm9idDhud294"
+                href="https://www.instagram.com/trax_newsng?stkn=am9pMm92MXJpbnVh"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Follow us on Instagram"
@@ -197,6 +229,21 @@ export default function Navbar() {
                   <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                   <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </motion.a>
+
+              <motion.a
+                id="navbar-facebook"
+                href="https://www.facebook.com/profile.php?id=61593926825413"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Follow us on Facebook"
+                whileTap={{ scale: 0.88 }}
+                className="hidden sm:flex items-center justify-center p-2 rounded-lg transition-colors duration-200 hover:text-accent hover:bg-[rgba(255, 26, 26, 0.08)]"
+                style={{ color: 'var(--fg-muted)' }}
+              >
+                <svg className="w-[17px] h-[17px]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
               </motion.a>
 
@@ -371,6 +418,47 @@ export default function Navbar() {
                   </motion.div>
                 )
               })}
+              <motion.div
+                custom={NAV_LINKS.length}
+                variants={linkItemVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <a
+                  href="https://jobs.trax.ng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-xl text-sm font-medium transition-colors duration-150 hover:text-accent"
+                  style={{
+                    color: 'var(--fg-muted)',
+                    fontFamily: 'var(--font-family-ui)',
+                  }}
+                  aria-label="Trax Jobs (opens in new tab)"
+                >
+                  <span className="flex items-center gap-1.5">
+                    <span>Jobs</span>
+                    <span
+                      className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded leading-none text-white"
+                      style={{ backgroundColor: 'var(--accent)' }}
+                    >
+                      New
+                    </span>
+                  </span>
+                  <svg
+                    className="w-3.5 h-3.5 opacity-60"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </a>
+              </motion.div>
             </nav>
           </motion.div>
         )}

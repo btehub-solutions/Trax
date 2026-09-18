@@ -194,7 +194,8 @@ export function articleJsonLd(article: {
       },
       sameAs: [
         'https://x.com/traxnewsng',
-        'https://www.instagram.com/traxnewsng',
+        'https://www.instagram.com/trax_newsng',
+        'https://www.facebook.com/profile.php?id=61593926825413',
         'https://youtube.com/@traxnewsng',
         'https://www.linkedin.com/in/traxnewsng',
       ],
@@ -262,7 +263,8 @@ export function organizationJsonLd() {
     logo: `${siteConfig.url}/icon.svg`,
     sameAs: [
       'https://x.com/traxnewsng',
-      'https://www.instagram.com/traxnewsng',
+      'https://www.instagram.com/trax_newsng',
+      'https://www.facebook.com/profile.php?id=61593926825413',
       'https://youtube.com/@traxnewsng',
       'https://www.linkedin.com/in/traxnewsng',
     ],

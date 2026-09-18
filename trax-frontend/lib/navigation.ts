@@ -128,6 +128,7 @@ export const menuGroups: MenuGroup[] = [
     links: [
       { label: 'About Trax', href: '/about' },
       { label: 'Advertise with Us', href: '/advertise' },
+      { label: 'Trax Jobs (Tech Careers)', href: 'https://jobs.trax.ng' },
       { label: 'Meet the Team', href: '/team' },
       { label: 'Join the Team', href: '/careers' },
       { label: 'Publisher Dashboard', href: '/dashboard' },
@@ -139,7 +140,8 @@ export const menuGroups: MenuGroup[] = [
 export const menuSocials = [
   { label: 'X (Twitter)', href: 'https://x.com/traxnewsng?s=11', placeholder: false },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/traxnewsng', placeholder: false },
-  { label: 'Instagram', href: 'https://www.instagram.com/traxnewsng?igsh=NmtzZm9idDhud294', placeholder: false },
+  { label: 'Instagram', href: 'https://www.instagram.com/trax_newsng?stkn=am9pMm92MXJpbnVh', placeholder: false },
+  { label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61593926825413', placeholder: false },
   { label: 'YouTube', href: 'https://youtube.com/@traxnewsng?si=bcx4_kSXz9ZRAH-p', placeholder: false },
 ] as const
 

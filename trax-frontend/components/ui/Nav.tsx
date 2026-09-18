@@ -165,6 +165,39 @@ export default function Nav() {
                   </span>
                 )
               })}
+              <span className="inline-flex items-center">
+                <a
+                  href="https://jobs.trax.ng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  id="nav-link-jobs"
+                  className="ds-category-link inline-flex items-center gap-1.5 font-medium"
+                  aria-label="Trax Jobs: Tech Opportunities in Africa (opens in new tab)"
+                >
+                  <span>Jobs</span>
+                  <span
+                    className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded leading-none"
+                    style={{
+                      backgroundColor: 'var(--brand-primary)',
+                      color: '#ffffff',
+                    }}
+                  >
+                    New
+                  </span>
+                  <svg
+                    className="w-3 h-3 opacity-60"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 17L17 7M17 7H7M17 7V17" />
+                  </svg>
+                </a>
+              </span>
             </div>
 
             <div className="ds-category-bar__end">

@@ -33,7 +33,8 @@ This document provides a comprehensive textual index of Trax's coverage of tech 
 - **Verified Social Media**:
   - X (Twitter): https://x.com/traxnewsng
   - LinkedIn: https://www.linkedin.com/in/traxnewsng
-  - Instagram: https://www.instagram.com/traxnewsng
+  - Instagram: https://www.instagram.com/trax_newsng
+  - Facebook: https://www.facebook.com/profile.php?id=61593926825413
   - YouTube: https://youtube.com/@traxnewsng
 
 ## Full Article Index (${articles.length} Recent Stories)

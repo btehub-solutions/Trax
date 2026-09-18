@@ -38,7 +38,8 @@ Trax is an independent tech media platform and intelligence newsroom covering te
 - **Official Social Channels**:
   - X (Twitter): https://x.com/traxnewsng
   - LinkedIn: https://www.linkedin.com/in/traxnewsng
-  - Instagram: https://www.instagram.com/traxnewsng
+  - Instagram: https://www.instagram.com/trax_newsng
+  - Facebook: https://www.facebook.com/profile.php?id=61593926825413
   - YouTube: https://youtube.com/@traxnewsng
 
 ## Latest Dispatches & Articles
