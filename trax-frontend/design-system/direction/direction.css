@@ -801,6 +801,12 @@ html.dark .ds-masthead__stroke-text {
   }
 }
 
+@media (min-width: 1024px) {
+  .ds-platform-team {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
 .ds-platform-team__card {
   background-color: var(--surface-section);
   border: 1px solid var(--neutral-border);
@@ -810,13 +816,13 @@ html.dark .ds-masthead__stroke-text {
 
 .ds-platform-team__media {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: 4 / 5;
   background-color: var(--surface-panel);
 }
 
 .ds-platform-team__image {
   object-fit: cover;
-  object-position: top;
+  object-position: top center;
 }
 
 .ds-platform-team__body {
