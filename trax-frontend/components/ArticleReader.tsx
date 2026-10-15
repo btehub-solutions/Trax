@@ -283,6 +283,8 @@ export default function ArticleReader({ article, related, prev, next, isPreview 
           <motion.div variants={fadeUp} className="ds-article-reader__prose type-prose">
             {article.excerpt && (
               <aside 
+                role="doc-abstract"
+                data-speakable="true"
                 aria-label="Executive Summary and Key Takeaways" 
                 className="ds-article-reader__key-takeaways mb-6 p-4 rounded-xl border border-[var(--border)] bg-[rgba(255,255,255,0.03)] dark:bg-[rgba(0,0,0,0.2)]"
               >
@@ -290,7 +292,7 @@ export default function ArticleReader({ article, related, prev, next, isPreview 
                   <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] inline-block" />
                   Key Takeaway
                 </p>
-                <p className="text-sm font-medium leading-relaxed text-[var(--fg)] opacity-90 font-ui">
+                <p className="text-sm font-medium leading-relaxed text-[var(--fg)] opacity-90 font-ui" data-speakable="true">
                   {article.excerpt}
                 </p>
               </aside>

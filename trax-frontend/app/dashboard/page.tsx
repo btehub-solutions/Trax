@@ -36,6 +36,7 @@ import Image from 'next/image';
 import { compressImage } from '@/lib/image-compressor';
 import { useTheme } from 'next-themes';
 import DashboardShell from '@/components/dashboard/DashboardShell';
+import { submitToIndexNow } from '@/lib/indexnow';
 
 type Tab = 'overview' | 'articles' | 'editor' | 'subscribers' | 'ads' | 'profile' | 'team' | 'partners' | 'ecosystem' | 'ecosystemEditor';
 
@@ -390,6 +391,9 @@ export default function DashboardPage() {
         await api.post('/articles', payload);
         setEditorSuccess('Article created successfully!');
       }
+      if (formData.status === 'PUBLISHED' && formData.slug) {
+        submitToIndexNow([`/articles/${formData.slug}`]);
+      }
       fetchDashboardData();
       setTimeout(() => {
         setActiveTab('articles');
@@ -439,6 +443,10 @@ export default function DashboardPage() {
   const handlePublishArticle = async (id: string) => {
     try {
       await api.patch(`/articles/${id}/publish`, {});
+      const pub = articles.find((a) => a.id === id);
+      if (pub?.slug) {
+        submitToIndexNow([`/articles/${pub.slug}`]);
+      }
       fetchDashboardData();
     } catch (err: any) {
       alert(err.message || 'Failed to publish article');

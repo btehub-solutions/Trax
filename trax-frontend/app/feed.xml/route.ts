@@ -26,9 +26,13 @@ export async function GET() {
     } else {
       pubDate = new Date().toUTCString()
     }
-    const enclosure =
+    const mediaTags =
       article.image && article.image.startsWith('http')
-        ? '<enclosure url="' + escapeXml(article.image) + '" type="image/jpeg" />'
+        ? [
+            '      <enclosure url="' + escapeXml(article.image) + '" type="image/jpeg" />',
+            '      <media:content url="' + escapeXml(article.image) + '" medium="image" type="image/jpeg" />',
+            '      <media:thumbnail url="' + escapeXml(article.image) + '" />',
+          ].join('\n')
         : ''
     return [
       '    <item>',
@@ -39,7 +43,7 @@ export async function GET() {
       '      <pubDate>' + pubDate + '</pubDate>',
       '      <category>' + escapeXml(article.category) + '</category>',
       '      <author>trax@trax.ng (' + escapeXml(article.author) + ')</author>',
-      enclosure ? '      ' + enclosure : '',
+      mediaTags,
       '    </item>',
     ].filter(Boolean).join('\n')
   }

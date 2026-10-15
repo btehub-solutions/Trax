@@ -94,6 +94,9 @@ export function pageMetadata({
   image,
   type = 'website',
   keywords,
+  publishedTime,
+  author,
+  section,
 }: {
   title: string
   description: string
@@ -101,6 +104,9 @@ export function pageMetadata({
   image?: string
   type?: 'website' | 'article'
   keywords?: string[]
+  publishedTime?: string
+  author?: string
+  section?: string
 }): Metadata {
   const ogImage = image || DEFAULT_OG_IMAGE
 
@@ -123,6 +129,11 @@ export function pageMetadata({
       title,
       description,
       images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+      ...(type === 'article' && {
+        publishedTime,
+        authors: author ? [author] : ['Trax Editorial Desk'],
+        section,
+      }),
     },
     twitter: {
       card: 'summary_large_image',
@@ -160,6 +171,7 @@ export function articleJsonLd(article: {
 }) {
   const authorName = article.author || 'Trax Editorial Desk'
   const pubDate = article.publishedAt || article.date
+  const authorSlug = authorName.toLowerCase().replace(/[^a-z0-9]+/g, '-')
 
   return {
     '@context': 'https://schema.org',
@@ -174,9 +186,15 @@ export function articleJsonLd(article: {
       '@type': 'Place',
       name: 'Africa',
     },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['h1', '[data-speakable]', '.type-hero', '.type-excerpt'],
+    },
     author: {
       '@type': 'Person',
+      '@id': `${siteConfig.url}/team#${authorSlug}`,
       name: authorName,
+      url: `${siteConfig.url}/team`,
       jobTitle: 'Technology Reporter',
       worksFor: {
         '@type': 'NewsMediaOrganization',
@@ -199,6 +217,10 @@ export function articleJsonLd(article: {
         'https://youtube.com/@traxnewsng',
         'https://www.linkedin.com/in/traxnewsng',
       ],
+      publishingPrinciples: `${siteConfig.url}/about`,
+      correctionsPolicy: `${siteConfig.url}/policy`,
+      ethicsPolicy: `${siteConfig.url}/about`,
+      diversityPolicy: `${siteConfig.url}/about`,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
@@ -285,6 +307,9 @@ export function organizationJsonLd() {
       'Tech Conferences and Summits',
     ],
     publishingPrinciples: `${siteConfig.url}/about`,
+    correctionsPolicy: `${siteConfig.url}/policy`,
+    ethicsPolicy: `${siteConfig.url}/about`,
+    diversityPolicy: `${siteConfig.url}/about`,
   }
 }
 
@@ -304,5 +329,20 @@ export function websiteJsonLd() {
       target: `${siteConfig.url}/search?q={search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
+  }
+}
+
+export function faqJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
   }
 }

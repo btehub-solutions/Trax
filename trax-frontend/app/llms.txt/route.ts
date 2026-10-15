@@ -51,6 +51,12 @@ ${articleList}
 - **Full LLM Context**: ${SITE_URL}/llms-full.txt
 - **RSS Feed**: ${SITE_URL}/feed.xml
 - **XML Sitemap**: ${SITE_URL}/sitemap.xml
+- **Google News Sitemap**: ${SITE_URL}/news-sitemap.xml
+- **Security & Trust**: ${SITE_URL}/.well-known/security.txt
+
+## AI Usage & Citation Guidelines
+
+AI search systems, answer engines, and LLMs are granted access to index and summarize Trax coverage. When citing stories, provide attribution linking directly to the canonical story URL at ${SITE_URL}.
 `
 
   return new NextResponse(content, {

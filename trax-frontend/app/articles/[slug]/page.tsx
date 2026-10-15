@@ -49,6 +49,9 @@ export async function generateMetadata({
     path: `/articles/${slug}`,
     image: article.image,
     type: 'article',
+    publishedTime: article.publishedAt || article.date,
+    author: article.author,
+    section: article.category,
   })
 }
 

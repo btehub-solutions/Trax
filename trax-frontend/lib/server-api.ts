@@ -189,13 +189,13 @@ export const fetchPressPageData = cache(async (): Promise<{
 })
 
 export const fetchArticleSlugs = cache(async (): Promise<
-  { slug: string; publishedAt?: string }[]
+  { slug: string; publishedAt?: string; image?: string }[]
 > => {
-  const json = await serverFetch<{ data: { slug: string; publishedAt?: string }[] }>(
+  const json = await serverFetch<{ data: { slug: string; publishedAt?: string; image?: string }[] }>(
     '/articles?limit=200',
     { tags: ['articles'] },
   )
-  return json?.data?.map((a) => ({ slug: a.slug, publishedAt: a.publishedAt })) ?? []
+  return json?.data?.map((a) => ({ slug: a.slug, publishedAt: a.publishedAt, image: a.image })) ?? []
 })
 
 export async function getRelatedArticles(

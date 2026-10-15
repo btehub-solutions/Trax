@@ -30,6 +30,8 @@ const STATIC_ROUTES = [
   '/feed.xml',
   '/llms.txt',
   '/llms-full.txt',
+  '/news-sitemap.xml',
+  '/.well-known/security.txt',
 ] as const
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -47,6 +49,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: article.publishedAt ? new Date(article.publishedAt) : new Date(),
     changeFrequency: 'weekly',
     priority: 0.7,
+    ...(article.image ? { images: [article.image] } : {}),
   }))
 
   return [...staticEntries, ...articleEntries]

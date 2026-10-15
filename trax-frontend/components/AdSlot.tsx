@@ -118,7 +118,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
 
     if (isImageOnly && imageUrl) {
       return (
-        <div className="w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center" data-nosnippet="true">
           <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
             Sponsored
           </span>
@@ -164,7 +164,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
     }
 
     return (
-      <div className="w-full flex flex-col items-center">
+      <div className="w-full flex flex-col items-center" data-nosnippet="true">
         <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
           Sponsored
         </span>
@@ -238,7 +238,7 @@ export default function AdSlot({ size, id, className = '', label }: AdSlotProps)
   }
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center" data-nosnippet="true">
       <span className="text-[8px] uppercase tracking-[0.25em] text-zinc-500 font-extrabold mb-1 select-none">
         Sponsored
       </span>

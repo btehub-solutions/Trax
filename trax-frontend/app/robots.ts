@@ -10,12 +10,31 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/dashboard', '/login', '/design-system', '/api/v1/admin'],
       },
       {
-        userAgent: ['GPTBot', 'ChatGPT-User', 'PerplexityBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'],
+        userAgent: [
+          'GPTBot',
+          'ChatGPT-User',
+          'OAI-SearchBot',
+          'PerplexityBot',
+          'ClaudeBot',
+          'Claude-Web',
+          'anthropic-ai',
+          'Google-Extended',
+          'Applebot',
+          'Applebot-Extended',
+          'cohere-ai',
+          'Meta-ExternalAgent',
+          'FacebookBot',
+          'Amazonbot',
+          'Bytespider',
+        ],
         allow: '/',
         disallow: ['/dashboard', '/login', '/design-system'],
       },
     ],
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: [
+      `${SITE_URL}/sitemap.xml`,
+      `${SITE_URL}/news-sitemap.xml`,
+    ],
     host: SITE_URL,
   }
 }
