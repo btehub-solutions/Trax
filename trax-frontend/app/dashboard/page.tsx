@@ -1383,7 +1383,7 @@ export default function DashboardPage() {
                           <label className="block text-xs font-semibold uppercase tracking-wider">Cover Image</label>
                           <div className="flex flex-col gap-3">
                             <div className="flex items-center gap-2">
-                              <label className="cursor-pointer bg-red-600 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                              <label className="cursor-pointer bg-red-600 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 shrink-0 whitespace-nowrap">
                                 <span>Choose Image</span>
                                 <input
                                   type="file"
@@ -1867,7 +1867,7 @@ export default function DashboardPage() {
                         <div className="space-y-1.5">
                           <label className="text-xs font-semibold uppercase tracking-wider block">Banner Image File (Optional)</label>
                           <div className="flex items-center gap-2">
-                            <label className="cursor-pointer bg-red-600 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                            <label className="cursor-pointer bg-red-600 hover:bg-red-600 text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 shrink-0 whitespace-nowrap">
                               <span>Choose Image</span>
                               <input
                                 type="file"
